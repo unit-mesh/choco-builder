@@ -6,7 +6,6 @@ Working process:
 
 1. DomainDetector. 
 2. QuestionAnalyzer.
-3. 
 3. QuestionClarifier. 
 4. SolutionExecutor. 
 
