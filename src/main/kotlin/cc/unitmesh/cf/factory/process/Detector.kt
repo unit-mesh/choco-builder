@@ -1,10 +1,10 @@
 package cc.unitmesh.cf.factory.process
 
-interface DomainDetector {
+interface Detector {
     fun detect(question: String): List<String>
 }
 
-class DomainDetectorPlaceholder : DomainDetector {
+class DetectorPlaceholder : Detector {
     override fun detect(question: String): List<String> {
         return listOf()
     }
