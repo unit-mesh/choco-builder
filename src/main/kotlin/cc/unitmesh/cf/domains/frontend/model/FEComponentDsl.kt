@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.frontend
+package cc.unitmesh.cf.domains.frontend.model
 
 import cc.unitmesh.cf.factory.dsl.Dsl
 import cc.unitmesh.cf.factory.dsl.DslBase
