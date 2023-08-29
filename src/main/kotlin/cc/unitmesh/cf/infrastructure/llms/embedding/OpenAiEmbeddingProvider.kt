@@ -12,7 +12,7 @@ import java.time.Duration
 @Component
 @Profile("openai")
 @ConditionalOnProperty(prefix = "openai", name = ["api-key"])
-class OpenAiEmbeddingApi(val config: OpenAiConfiguration) : EmbeddingApi {
+class OpenAiEmbeddingProvider(val config: OpenAiConfiguration) : EmbeddingProvider {
     var totalTokens = 0L
     private val openai: OpenAiService by lazy { OpenAiService(config.apiKey, Duration.ZERO) }
 

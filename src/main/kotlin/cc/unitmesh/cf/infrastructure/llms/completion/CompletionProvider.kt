@@ -4,7 +4,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-interface CompletionApi {
+interface CompletionProvider {
     fun prompt(promptText: String): String
 
     fun stream(promptText: String, systemPrompt: String): Flow<String> {
@@ -16,3 +16,4 @@ interface CompletionApi {
         }
     }
 }
+

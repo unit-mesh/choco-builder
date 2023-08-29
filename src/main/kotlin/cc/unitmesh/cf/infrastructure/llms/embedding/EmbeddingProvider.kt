@@ -2,7 +2,7 @@ package cc.unitmesh.cf.infrastructure.llms.embedding
 
 typealias Embedding = List<Double>
 
-interface EmbeddingApi {
+interface EmbeddingProvider {
     fun createEmbeddings(texts: List<String>): List<Embedding>
 
     fun createEmbedding(text: String): Embedding {
