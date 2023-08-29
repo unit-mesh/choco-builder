@@ -1,6 +1,12 @@
 # Chocolate Factory
 
-> Chocolate Factory 是一款先进的 LLM 应用引擎，旨在帮助您打造自己的人工智能助手。
+> Chocolate Factory 是一款开源的 LLM 应用引擎，旨在帮助您打造自己的人工智能助手。
+
+使用场景，基于知识库：
+
+- 一句话生成前端页面（特定框架与场景）
+- 一句话生成 SQL
+- 一句话生成 API
 
 Working process:
 
