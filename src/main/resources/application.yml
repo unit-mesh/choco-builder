@@ -1,0 +1,10 @@
+server:
+  port: 18080
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    hikari:
+      connection-timeout: 50000
