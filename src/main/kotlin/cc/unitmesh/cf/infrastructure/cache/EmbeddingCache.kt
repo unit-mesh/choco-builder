@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.infrastructure.cache
 
+import cc.unitmesh.cf.infrastructure.cache.utils.EmbeddingConverter
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 import cc.unitmesh.cf.infrastructure.utils.Constants
 import cc.unitmesh.cf.infrastructure.utils.nextId
@@ -21,7 +22,7 @@ class EmbeddingCache(
     val text: String,
 
     @Column(length = Constants.MAX_TOKEN_LENGTH)
-    @Convert(converter = DoubleArrayConverter::class)
+    @Convert(converter = EmbeddingConverter::class)
     @Comment("Vector Embedding")
     val embedding: Embedding,
 )

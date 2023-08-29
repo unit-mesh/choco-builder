@@ -1,15 +1,16 @@
-package cc.unitmesh.cf.infrastructure.cache
+package cc.unitmesh.cf.infrastructure.cache.utils
 
+import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
 
 @Converter
-class DoubleArrayConverter : AttributeConverter<List<Double>, String> {
-    override fun convertToDatabaseColumn(attribute: List<Double>?): String? {
+class EmbeddingConverter : AttributeConverter<Embedding, String> {
+    override fun convertToDatabaseColumn(attribute: Embedding?): String? {
         return attribute?.joinToString(separator = ",")
     }
 
-    override fun convertToEntityAttribute(dbData: String?): List<Double>? {
+    override fun convertToEntityAttribute(dbData: String?): Embedding? {
         if (dbData == null) {
             return null
         }

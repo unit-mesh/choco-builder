@@ -11,9 +11,8 @@ class CachedEmbedding(
     val cacheRepository: EmbeddingCacheRepository,
 ) {
     fun createEmbedding(text: String): Embedding {
-        val entry = cacheRepository.findByText(text) ?: cacheRepository.save(
-            EmbeddingCache(text = text, embedding = embeddingProvider.createEmbedding(text))
-        )
+        val cache = EmbeddingCache(text = text, embedding = embeddingProvider.createEmbedding(text))
+        val entry = cacheRepository.findByText(text) ?: cacheRepository.save(cache)
         return entry.embedding
     }
 }
