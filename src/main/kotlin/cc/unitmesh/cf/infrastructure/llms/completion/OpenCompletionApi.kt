@@ -1,10 +1,7 @@
 package cc.unitmesh.cf.infrastructure.llms.completion
 
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
-import cc.unitmesh.cf.infrastructure.llms.model.ChatChoice
-import cc.unitmesh.cf.infrastructure.llms.model.ChatMessage
-import cc.unitmesh.cf.infrastructure.llms.model.ChatRole
-import cc.unitmesh.cf.infrastructure.llms.model.FinishReason
+import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
@@ -20,7 +17,7 @@ class OpenAiCompletion(val config: OpenAiConfiguration) : CompletionProvider {
     private val openai: OpenAiService by lazy { OpenAiService(config.apiKey, Duration.ZERO) }
 
     @Cacheable("completion")
-    override fun createCompletions(messages: List<ChatMessage>): List<ChatChoice> {
+    override fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice> {
         val request =
             ChatCompletionRequest.builder()
                 .model("gpt-3.5-turbo")
@@ -35,7 +32,7 @@ class OpenAiCompletion(val config: OpenAiConfiguration) : CompletionProvider {
         return response.choices.map { it.toAbstract() }
     }
 
-    fun ChatMessage.toInternal() =
+    fun LlmMsg.ChatMessage.toInternal() =
         com.theokanning.openai.completion.chat.ChatMessage(this.role.name.lowercase(), this.content, this.name)
 
     override fun prompt(promptText: String): String {
@@ -43,22 +40,22 @@ class OpenAiCompletion(val config: OpenAiConfiguration) : CompletionProvider {
     }
 }
 
-private fun ChatCompletionChoice.toAbstract(): ChatChoice {
-    return ChatChoice(
-        index = index, message = message.toAbstract(), finishReason = FinishReason.fromValue(finishReason)
+private fun ChatCompletionChoice.toAbstract(): LlmMsg.ChatChoice {
+    return LlmMsg.ChatChoice(
+        index = index, message = message.toAbstract(), finishReason = LlmMsg.FinishReason.fromValue(finishReason)
     )
 }
 
-private fun FinishReason.Companion.fromValue(finishReason: String): FinishReason {
-    return enumValues<FinishReason>().find { it.value == finishReason }
-        ?: throw EnumConstantNotPresentException(FinishReason::class.java, finishReason)
+private fun LlmMsg.FinishReason.Companion.fromValue(finishReason: String): LlmMsg.FinishReason {
+    return enumValues<LlmMsg.FinishReason>().find { it.value == finishReason }
+        ?: throw EnumConstantNotPresentException(LlmMsg.FinishReason::class.java, finishReason)
 }
 
-private fun com.theokanning.openai.completion.chat.ChatMessage.toAbstract(): ChatMessage {
-    return ChatMessage(role = ChatRole.fromValue(role), content = content, name = name)
+private fun com.theokanning.openai.completion.chat.ChatMessage.toAbstract(): LlmMsg.ChatMessage {
+    return LlmMsg.ChatMessage(role = LlmMsg.ChatRole.fromValue(role), content = content, name = name)
 }
 
-private fun ChatRole.Companion.fromValue(role: String): ChatRole {
-    return enumValues<ChatRole>().find { it.value == role }
-        ?: throw EnumConstantNotPresentException(ChatRole::class.java, role)
+private fun LlmMsg.ChatRole.Companion.fromValue(role: String): LlmMsg.ChatRole {
+    return enumValues<LlmMsg.ChatRole>().find { it.value == role }
+        ?: throw EnumConstantNotPresentException(LlmMsg.ChatRole::class.java, role)
 }
