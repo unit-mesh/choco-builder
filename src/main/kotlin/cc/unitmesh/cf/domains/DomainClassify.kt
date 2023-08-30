@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains
 
 import cc.unitmesh.cf.core.process.DomainDetector
-import cc.unitmesh.cf.core.process.DomainDetectorPlaceholder
+import cc.unitmesh.cf.core.process.impl.DomainDetectorPlaceholder
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 import org.reflections.Reflections
