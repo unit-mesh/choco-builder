@@ -6,4 +6,6 @@ enum class ChatRole(val value: String) {
     Assistant("assistant"),
     Function("function"),
     ;
+
+    companion object
 }
