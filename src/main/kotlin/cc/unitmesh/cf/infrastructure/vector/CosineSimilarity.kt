@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.vector
 
-import cc.unitmesh.cf.factory.dsl.BaseEmbedding
+import cc.unitmesh.cf.core.dsl.BaseEmbedding
 import kotlin.math.sqrt
 import org.springframework.stereotype.Component
 

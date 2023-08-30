@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.frontend.model
 
-import cc.unitmesh.cf.factory.dsl.Dsl
-import cc.unitmesh.cf.factory.dsl.DslBase
+import cc.unitmesh.cf.core.dsl.Dsl
+import cc.unitmesh.cf.core.dsl.DslBase
 import com.fasterxml.jackson.annotation.JsonGetter
 
 /**

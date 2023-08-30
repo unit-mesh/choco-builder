@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.factory.dsl
+package cc.unitmesh.cf.core.dsl
 
 interface Interpreter {
     fun canInterpret(dsl: Dsl): Boolean

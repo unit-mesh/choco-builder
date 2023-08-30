@@ -1,6 +1,6 @@
-package cc.unitmesh.cf.factory.context
+package cc.unitmesh.cf.core.context
 
-import cc.unitmesh.cf.factory.dsl.InterpreterContext
+import cc.unitmesh.cf.core.dsl.InterpreterContext
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
 import cc.unitmesh.cf.infrastructure.vector.Similarity
 

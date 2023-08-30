@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.ktor
 
-import cc.unitmesh.cf.factory.dsl.Dsl
-import cc.unitmesh.cf.factory.dsl.Interpreter
+import cc.unitmesh.cf.core.dsl.Dsl
+import cc.unitmesh.cf.core.dsl.Interpreter
 
 class KotlinInterpreter : Interpreter {
     override fun canInterpret(dsl: Dsl): Boolean {

@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.factory.dsl
+package cc.unitmesh.cf.core.dsl
 
 import cc.unitmesh.cf.infrastructure.utils.nextId
 import com.fasterxml.jackson.annotation.JsonIgnore

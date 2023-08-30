@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.factory.process
+package cc.unitmesh.cf.core.process
 
 import cc.unitmesh.cf.core.Domain
 

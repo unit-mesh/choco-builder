@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.factory.base
+package cc.unitmesh.cf.core.base
 
 enum class ClarificationAction {
     CONTINUE,
