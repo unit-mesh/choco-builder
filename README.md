@@ -4,7 +4,10 @@
 
 Tech Stack:
 
-- [Kotlin Dataframe](https://github.com/Kotlin/dataframe)  typesafe in-memory structured data processing for JVM.
+- [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
+- [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
+- [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
+- [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is a typesafe in-memory structured data processing for JVM.
 - [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
   ML models (written via ONNX) in Kotlin.
 
@@ -23,7 +26,6 @@ Tech Stack:
     2. 确认与澄清问题
     3. 分析问题与数据
     4. 生成 SQL 与图表 (Kotlin Jupyter, [Lets-Plot](https://github.com/JetBrains/lets-plot-kotlin))
-- 一句话生成 API
 
 ## License
 
