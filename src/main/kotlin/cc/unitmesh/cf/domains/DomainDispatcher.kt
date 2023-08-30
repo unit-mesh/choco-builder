@@ -1,15 +1,28 @@
 package cc.unitmesh.cf.domains
 
-import cc.unitmesh.cf.factory.process.Detector
-import cc.unitmesh.cf.factory.process.DetectorPlaceholder
+import cc.unitmesh.cf.core.Domain
+import cc.unitmesh.cf.factory.process.DomainDetector
+import cc.unitmesh.cf.factory.process.DomainDetectorPlaceholder
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
+import org.springframework.stereotype.Component
+import org.reflections.Reflections
 
+@Component
 class DomainDispatcher(
-    private val cachedEmbedding: CachedEmbedding
+    private val cachedEmbedding: CachedEmbedding,
 ) {
-    fun dispatch(question: String): Detector {
+    fun dispatch(question: String): DomainDetector {
         val question: Embedding = cachedEmbedding.createEmbedding(question)
-        return DetectorPlaceholder()
+        return DomainDetectorPlaceholder()
+    }
+
+    fun lookupDomains(): List<Class<out DomainDetector>> {
+        val reflections = Reflections(this.javaClass.`package`.name)
+        return reflections.getTypesAnnotatedWith(Domain::class.java)
+            .filter {
+                it.superclass == DomainDetector::class.java
+            }
+            .toList() as List<Class<out DomainDetector>>
     }
 }
