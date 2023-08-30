@@ -8,7 +8,7 @@ import org.reflections.Reflections
 import org.springframework.stereotype.Component
 
 @Component
-class DomainDispatcher(
+class DomainClassify(
     private val cachedEmbedding: CachedEmbedding,
 ) {
     val cachedDomains: MutableList<Class<out DomainDetector>> = mutableListOf()
@@ -22,7 +22,7 @@ class DomainDispatcher(
             return cachedDomains
         }
 
-        val domains = Reflections(DomainDispatcher::class.java.`package`.name).getSubTypesOf(DomainDetector::class.java)
+        val domains = Reflections(DomainClassify::class.java.`package`.name).getSubTypesOf(DomainDetector::class.java)
             .toList()
 
         this.cachedDomains.addAll(domains)

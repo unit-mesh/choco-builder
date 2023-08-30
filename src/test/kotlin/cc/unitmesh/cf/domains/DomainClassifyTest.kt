@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
-class DomainDispatcherTest {
+class DomainClassifyTest {
 
     @MockK
     lateinit var cachedEmbedding: CachedEmbedding
@@ -20,8 +20,8 @@ class DomainDispatcherTest {
 
     @Test
     fun should_enable_lookup_domains() {
-        val domainDispatcher = DomainDispatcher(cachedEmbedding)
-        val domain = domainDispatcher.lookupDomains()
+        val domainClassify = DomainClassify(cachedEmbedding)
+        val domain = domainClassify.lookupDomains()
 
         domain.size shouldBeGreaterThanOrEqual   1
     }
