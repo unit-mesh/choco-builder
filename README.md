@@ -7,7 +7,7 @@ Tech Stack:
 - [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
 - [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
 - [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
-- [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is a typesafe in-memory structured data processing for JVM.
+- [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
 - [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
   ML models (written via ONNX) in Kotlin.
 

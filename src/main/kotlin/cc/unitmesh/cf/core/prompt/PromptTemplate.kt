@@ -2,6 +2,7 @@ package cc.unitmesh.cf.core.prompt
 
 import cc.unitmesh.cf.infrastructure.utils.nextId
 import jakarta.persistence.Id
+import kotlinx.serialization.Serializable
 
 class PromptTemplate(
     @Id
@@ -28,6 +29,7 @@ class PromptTemplate(
     }
 }
 
+@Serializable
 data class PromptExample(
     val question: String,
     val answer: String,
