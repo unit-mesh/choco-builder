@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.Domain
 import cc.unitmesh.cf.core.process.DomainDetector
 
 @Domain(name = "frontend", description = "domain for create frontend component, page, etc.")
-class FrontendDomainDetector: DomainDetector {
+class FEDomainDetector: DomainDetector {
     override fun detect(question: String): List<String> {
         return listOf()
     }
