@@ -45,7 +45,7 @@ data class Property(
 
 @Serializable
 data class Event(
-    @get:JsonGetter("事件名称") val name: String,
+    @get:JsonGetter("事件名称") val eventName: String,
     @get:JsonGetter("说明") val description: String,
     @get:JsonGetter("回调参数") val callbackParameter: String,
 )

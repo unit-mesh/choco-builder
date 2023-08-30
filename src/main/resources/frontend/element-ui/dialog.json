@@ -118,22 +118,22 @@
   ],
   "events": [
     {
-      "name": "open",
+      "eventName": "open",
       "description": "Dialog 打开的回调",
       "callbackParameter": "—"
     },
     {
-      "name": "opened",
+      "eventName": "opened",
       "description": "Dialog 打开动画结束时的回调",
       "callbackParameter": "—"
     },
     {
-      "name": "close",
+      "eventName": "close",
       "description": "Dialog 关闭的回调",
       "callbackParameter": "—"
     },
     {
-      "name": "closed",
+      "eventName": "closed",
       "description": "Dialog 关闭动画结束时的回调",
       "callbackParameter": "—"
     }
