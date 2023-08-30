@@ -5,8 +5,7 @@ import cc.unitmesh.cf.core.dsl.DslBase
 import com.fasterxml.jackson.annotation.JsonGetter
 
 /**
- * Design system basic dsl
- * // https://ant.design/docs/spec/font-cn
+ * Design system basic dsl, https://ant.design/docs/spec/font-cn
  */
 data class DesignSystemDsl(
     @get:JsonGetter("色彩")

@@ -1,0 +1,137 @@
+{
+  "type": "frontend",
+  "name": "Pagination",
+  "description": "分页组件用于展示数据分页，并提供用户切换页面的功能。",
+  "properties": [
+    {
+      "parameter": "small",
+      "description": "是否使用小型分页样式",
+      "type": "boolean",
+      "optionalValue": "—",
+      "defaultValue": "false"
+    },
+    {
+      "parameter": "background",
+      "description": "是否为分页按钮添加背景色",
+      "type": "boolean",
+      "optionalValue": "—",
+      "defaultValue": "false"
+    },
+    {
+      "parameter": "page-size",
+      "description": "每页显示条目个数，支持 .sync 修饰符",
+      "type": "number",
+      "optionalValue": "—",
+      "defaultValue": "10"
+    },
+    {
+      "parameter": "total",
+      "description": "总条目数",
+      "type": "number",
+      "optionalValue": "—",
+      "defaultValue": "—"
+    },
+    {
+      "parameter": "page-count",
+      "description": "总页数，total 和 page-count 设置任意一个就可以达到显示页码的功能；如果要支持 page-sizes 的更改，则需要使用 total 属性",
+      "type": "number",
+      "optionalValue": "—",
+      "defaultValue": "—"
+    },
+    {
+      "parameter": "pager-count",
+      "description": "页码按钮的数量，当总页数超过该值时会折叠",
+      "type": "number",
+      "optionalValue": "大于等于 5 且小于等于 21 的奇数",
+      "defaultValue": "7"
+    },
+    {
+      "parameter": "current-page",
+      "description": "当前页数，支持 .sync 修饰符",
+      "type": "number",
+      "optionalValue": "—",
+      "defaultValue": "1"
+    },
+    {
+      "parameter": "layout",
+      "description": "组件布局，子组件名用逗号分隔",
+      "type": "string",
+      "optionalValue": "sizes, prev, pager, next, jumper, ->, total, slot",
+      "defaultValue": "'prev, pager, next, jumper, ->, total'"
+    },
+    {
+      "parameter": "page-sizes",
+      "description": "每页显示个数选择器的选项设置",
+      "type": "number[]",
+      "optionalValue": "—",
+      "defaultValue": "[10, 20, 30, 40, 50, 100]"
+    },
+    {
+      "parameter": "popper-class",
+      "description": "每页显示个数选择器的下拉框类名",
+      "type": "string",
+      "optionalValue": "—",
+      "defaultValue": "—"
+    },
+    {
+      "parameter": "prev-text",
+      "description": "替代图标显示的上一页文字",
+      "type": "string",
+      "optionalValue": "—",
+      "defaultValue": "—"
+    },
+    {
+      "parameter": "next-text",
+      "description": "替代图标显示的下一页文字",
+      "type": "string",
+      "optionalValue": "—",
+      "defaultValue": "—"
+    },
+    {
+      "parameter": "disabled",
+      "description": "是否禁用",
+      "type": "boolean",
+      "optionalValue": "—",
+      "defaultValue": "false"
+    },
+    {
+      "parameter": "hide-on-single-page",
+      "description": "只有一页时是否隐藏",
+      "type": "boolean",
+      "optionalValue": "—",
+      "defaultValue": "-"
+    }
+  ],
+  "events": [
+    {
+      "eventName": "size-change",
+      "description": "pageSize 改变时会触发",
+      "callbackParameter": "每页条数"
+    },
+    {
+      "eventName": "current-change",
+      "description": "currentPage 改变时会触发",
+      "callbackParameter": "当前页"
+    },
+    {
+      "eventName": "prev-click",
+      "description": "用户点击上一页按钮改变当前页后触发",
+      "callbackParameter": "当前页"
+    },
+    {
+      "eventName": "next-click",
+      "description": "用户点击下一页按钮改变当前页后触发",
+      "callbackParameter": "当前页"
+    }
+  ],
+  "examples": [
+    {
+      "question": "基础用法",
+      "answer": " <el-pagination\n    layout=\"prev, pager, next\"\n    :total=\"50\">\n  </el-pagination>"
+    },
+    {
+      "question": "设置最大页码按钮数",
+      "answer": "<el-pagination\n  :page-size=\"20\"\n  :pager-count=\"11\"\n  layout=\"prev, pager, next\"\n  :total=\"1000\">\n</el-pagination>"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "type": "frontend",
+  "name": "PageHeader 页头",
+  "description": "如果页面的路径比较简单，推荐使用页头组件而非面包屑组件。",
+  "properties": [
+    {
+      "parameter": "title",
+      "description": "标题",
+      "type": "string",
+      "optionalValue": "—",
+      "defaultValue": "返回"
+    },
+    {
+      "parameter": "content",
+      "description": "内容",
+      "type": "string",
+      "optionalValue": "—",
+      "defaultValue": "—"
+    }
+  ],
+  "events": [
+    {
+      "eventName": "back",
+      "description": "点击左侧区域触发",
+      "callbackParameter": "—"
+    }
+  ],
+  "examples": [
+    {
+      "question": "基础",
+      "answer": "<el-page-header @back=\"goBack\" content=\"详情页面\">\n</el-page-header>\n\n<script>\n  export default {\n    methods: {\n      goBack() {\n        console.log('go back');\n      }\n    }\n  }\n</script>"
+    }
+  ]
+}

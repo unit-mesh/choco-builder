@@ -2,6 +2,7 @@ package cc.unitmesh.cf.domains.frontend.model
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslBase
+import cc.unitmesh.cf.core.dsl.EmbeddingElement
 import cc.unitmesh.cf.core.prompt.PromptExample
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
