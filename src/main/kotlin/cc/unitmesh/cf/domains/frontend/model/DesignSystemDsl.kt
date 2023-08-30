@@ -69,10 +69,10 @@ data class FontStyle(
 )
 
 data class LayoutStyle(
-    @get:JsonGetter("类型")
+    @get:JsonGetter("名称")
     val type: String,
     @get:JsonGetter("说明")
     val description: String,
-    @get:JsonGetter("样式")
-    val style: String,
+    @get:JsonGetter("示例")
+    val example: String,
 )

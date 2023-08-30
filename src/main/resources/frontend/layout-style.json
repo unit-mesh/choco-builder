@@ -1,0 +1,56 @@
+[
+  {
+    "name": "流式布局",
+    "english": "Flow Layout",
+    "description": "元素按照其在HTML中出现的顺序从上到下进行布局，自动换行。",
+    "example": "<div>Element 1</div>\n<div>Element 2</div>\n<div>Element 3</div>"
+  },
+  {
+    "name": "浮动布局",
+    "english": "Float Layout",
+    "description": "通过浮动属性使元素脱离文档流，可左右移动。需要处理清除浮动。",
+    "example": "<div style=\"float: left;\">Element 1</div>\n<div style=\"float: left;\">Element 2</div>\n<div style=\"clear: both;\"></div>"
+  },
+  {
+    "name": "弹性盒子布局",
+    "english": "Flexbox Layout",
+    "description": "使用弹性容器和弹性项目实现灵活布局，控制分布、对齐、增长和收缩。灵活性高。",
+    "example": "<div style=\"display: flex; justify-content: space-between;\">\n  <div>Element 1</div>\n  <div>Element 2</div>\n  <div>Element 3</div>\n</div>"
+  },
+  {
+    "name": "栅格布局",
+    "english": "Grid Layout",
+    "description": "通过定义网格控制元素布局，精确控制行、列和单元格。适用于复杂网格布局。",
+    "example": "<div style=\"display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px;\">\n  <div>Element 1</div>\n  <div>Element 2</div>\n  <div>Element 3</div>\n</div>"
+  },
+  {
+    "name": "定位布局",
+    "english": "Positioning Layout",
+    "description": "使用相对定位、绝对定位等属性控制元素位置。用途包括创建重叠效果和特殊布局。",
+    "example": "<div style=\"position: relative;\">\n  <div style=\"position: absolute; top: 0; left: 0;\">Element 1</div>\n  <div style=\"position: absolute; top: 50px; left: 50px;\">Element 2</div>\n</div>"
+  },
+  {
+    "name": "多列布局",
+    "english": "Multi-column Layout",
+    "description": "将内容分割成多个列，类似于报纸杂志的版面。可控制列的数量和宽度。",
+    "example": "<div style=\"column-count: 3; column-gap: 20px;\">\n  <div>Column 1</div>\n  <div>Column 2</div>\n  <div>Column 3</div>\n</div>"
+  },
+  {
+    "name": "网格布局",
+    "english": "WebGrid Layout",
+    "description": "类似于栅格布局，专注于响应式设计，适应不同屏幕尺寸的网格化布局。",
+    "example": "<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 10px;\">\n  <div>Element 1</div>\n  <div>Element 2</div>\n  <div>Element 3</div>\n</div>"
+  },
+  {
+    "name": "自适应布局",
+    "english": "Responsive Layout",
+    "description": "使用媒体查询等技术，根据不同屏幕调整布局和样式，提供更好的用户体验。",
+    "example": "<div style=\"width: 100%;\">\n  <div>Element 1</div>\n  <div>Element 2</div>\n  <div>Element 3</div>\n</div>"
+  },
+  {
+    "name": "流体布局",
+    "english": "Fluid Layout",
+    "description": "使用百分比或其他相对单位定义元素宽高，保持流动性，适应不同屏幕尺寸。",
+    "example": "<div style=\"width: 33.33%;\">Element 1</div>\n<div style=\"width: 33.33%;\">Element 2</div>\n<div style=\"width: 33.33%;\">Element 3</div>"
+  }
+]
