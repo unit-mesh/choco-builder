@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslBase
 import com.fasterxml.jackson.annotation.JsonGetter
 
-data class FEComponentDsl(
+data class ComponentDsl(
     @get:JsonGetter("类型")
     val type: String,
 

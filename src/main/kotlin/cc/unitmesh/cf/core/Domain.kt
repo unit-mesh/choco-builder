@@ -8,6 +8,14 @@ annotation class Domain(
     val description: String,
 )
 
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class SubDomain(
+    val name: String,
+    val description: String,
+)
+
 annotation class ToolSchema(
     val name: String,
     val args: Array<String>,

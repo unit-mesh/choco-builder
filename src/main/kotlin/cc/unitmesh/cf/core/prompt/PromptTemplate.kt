@@ -1,10 +1,7 @@
 package cc.unitmesh.cf.core.prompt
 
-import cc.unitmesh.cf.infrastructure.utils.Constants
 import cc.unitmesh.cf.infrastructure.utils.nextId
-import jakarta.persistence.Column
 import jakarta.persistence.Id
-import org.hibernate.annotations.Comment
 
 class PromptTemplate(
     @Id
