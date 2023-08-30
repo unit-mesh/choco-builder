@@ -8,6 +8,8 @@ plugins {
     kotlin("plugin.spring") version "1.8.22"
     kotlin("plugin.jpa") version "1.8.22"
     id("org.jetbrains.kotlin.kapt") version "1.8.22"
+
+    id("org.jetbrains.kotlinx.dataframe") version "0.11.1"
 }
 
 group = "cc.unitmesh"
@@ -49,6 +51,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
+
+    // data convert
+    implementation("org.jetbrains.kotlinx:dataframe:0.11.1")
 
     // database dependencies
     runtimeOnly("com.h2database:h2")

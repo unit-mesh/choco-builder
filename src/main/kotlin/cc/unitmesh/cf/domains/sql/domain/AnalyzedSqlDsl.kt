@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.sql
+package cc.unitmesh.cf.domains.sql.domain
 
 import cc.unitmesh.cf.factory.dsl.Dsl
 import cc.unitmesh.cf.factory.dsl.DslBase
