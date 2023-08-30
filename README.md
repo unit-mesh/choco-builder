@@ -15,7 +15,8 @@ Tech Stack:
 
 - 一句话生成前端页面 (特定框架与场景)
     1. 确认需求
-    2. 确认布局
+    2. 确认布局方式
+         - [ ] 搜索历史组件布局  
     3. 生成页面 (React, React Runtime)
 - 一句话生成后端 API (Ktor, Spring, Kotless）
     1. 确认需求与输入和输出

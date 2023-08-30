@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 class DslBase(
     override val id: String = nextId(),
-    val name: String,
+    override val name: String,
     val description: String,
-): BaseEmbedding {
+): EmbeddingElement {
     @JsonIgnore
     override lateinit var embedding: List<Double>
 }

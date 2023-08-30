@@ -1,11 +1,11 @@
 package cc.unitmesh.cf.infrastructure.vector
 
-import cc.unitmesh.cf.core.dsl.BaseEmbedding
+import cc.unitmesh.cf.core.dsl.EmbeddingElement
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 
 // todo: test in real world
 class JaccardSimilarity : Similarity {
-    override fun <T : BaseEmbedding> findNearest(
+    override fun <T : EmbeddingElement> findNearest(
         data: List<T>,
         questionVector: Embedding,
         maxDistance: Double,

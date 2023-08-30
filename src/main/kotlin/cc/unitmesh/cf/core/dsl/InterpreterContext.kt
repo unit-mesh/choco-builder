@@ -11,10 +11,10 @@ abstract class InterpreterContext(
 
     @Comment("名称")
     @get:JsonGetter("名称")
-    val name: String,
+    override val name: String,
 
     @Comment("说明")
     @get:JsonGetter("说明")
     val description: String,
-) : BaseEmbedding {
+) : EmbeddingElement {
 }

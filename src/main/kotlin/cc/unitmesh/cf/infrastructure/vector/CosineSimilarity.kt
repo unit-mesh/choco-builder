@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.vector
 
-import cc.unitmesh.cf.core.dsl.BaseEmbedding
+import cc.unitmesh.cf.core.dsl.EmbeddingElement
 import kotlin.math.sqrt
 import org.springframework.stereotype.Component
 
@@ -29,7 +29,7 @@ class CosineSimilarity : Similarity {
         }
     }
 
-    override fun <T : BaseEmbedding> findNearest(
+    override fun <T : EmbeddingElement> findNearest(
         data: List<T>,
         questionVector: List<Double>,
         maxDistance: Double,
