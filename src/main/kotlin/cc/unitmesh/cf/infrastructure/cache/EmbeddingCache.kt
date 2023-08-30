@@ -3,7 +3,7 @@ package cc.unitmesh.cf.infrastructure.cache
 import cc.unitmesh.cf.infrastructure.cache.utils.EmbeddingConverter
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 import cc.unitmesh.cf.infrastructure.utils.Constants
-import cc.unitmesh.cf.infrastructure.utils.nextId
+import cc.unitmesh.cf.infrastructure.utils.uuid
 
 import jakarta.persistence.Column
 import jakarta.persistence.Convert
@@ -15,7 +15,7 @@ import org.hibernate.annotations.Comment
 @Comment("Embedding 模型缓存")
 class EmbeddingCache(
     @Id
-    val id: String = nextId(),
+    val id: String = uuid(),
 
     @Column(unique = true)
     @Comment("Embedding 文本")

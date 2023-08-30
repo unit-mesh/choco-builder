@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.frontend.data
+package cc.unitmesh.cf.domains.frontend.prompt
 
 import cc.unitmesh.cf.core.prompt.PromptTemplate
 
@@ -41,8 +41,6 @@ object DefaultFEPrompt {
             |
             |以下是您和当前用户的交互历史：{交互历史}
         """.trimMargin(),
-        examples = listOf(
-
-        )
+        examples = listOf()
     )
 }

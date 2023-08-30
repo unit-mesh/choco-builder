@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonGetter
 /**
  * Design system basic dsl, https://ant.design/docs/spec/font-cn
  */
-data class DesignSystemDsl(
+data class DesignSystem(
     @get:JsonGetter("色彩")
     val color: BrandColor,
 

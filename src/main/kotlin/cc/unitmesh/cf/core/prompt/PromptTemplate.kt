@@ -1,11 +1,11 @@
 package cc.unitmesh.cf.core.prompt
 
-import cc.unitmesh.cf.infrastructure.utils.nextId
+import cc.unitmesh.cf.infrastructure.utils.uuid
 import jakarta.persistence.Id
 
 class PromptTemplate(
     @Id
-    val id: String = nextId(),
+    val id: String = uuid(),
     val phase: Phase,
     val template: String,
     val examples: List<PromptExample>

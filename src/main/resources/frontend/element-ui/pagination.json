@@ -1,6 +1,6 @@
 {
   "type": "frontend",
-  "name": "Pagination",
+  "name": "Pagination 分页",
   "description": "分页组件用于展示数据分页，并提供用户切换页面的功能。",
   "properties": [
     {

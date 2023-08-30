@@ -2,6 +2,6 @@ package cc.unitmesh.cf.infrastructure.utils
 
 import java.util.*
 
-fun nextId(): String {
+fun uuid(): String {
     return UUID.randomUUID().toString()
 }

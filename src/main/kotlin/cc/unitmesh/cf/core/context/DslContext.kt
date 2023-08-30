@@ -9,6 +9,5 @@ abstract class DslContext(
      */
     val nearestInterpreters: List<InterpreterContext>,
     val chatHistories: String,
-    val time: LocalDate,
 ) {
 }
