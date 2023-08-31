@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.frontend.model
 
 import cc.unitmesh.cf.core.dsl.Dsl
-import cc.unitmesh.cf.core.dsl.DslBase
+import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.prompt.CoTExample
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
@@ -31,7 +31,7 @@ data class ComponentDsl(
 ) : Dsl {
     override var domain: String = ""
 
-    override var interpreters: List<DslBase> = emptyList()
+    override var interpreters: List<DslInterpreter> = emptyList()
 }
 
 @Serializable

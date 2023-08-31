@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.openapi
 
 import cc.unitmesh.cf.core.dsl.Dsl
-import cc.unitmesh.cf.core.dsl.DslBase
+import cc.unitmesh.cf.core.dsl.DslInterpreter
 import com.fasterxml.jackson.annotation.JsonGetter
 
 data class OpenApiDsl(
@@ -22,5 +22,5 @@ data class OpenApiDsl(
 ) : Dsl {
     override var domain: String = ""
 
-    override lateinit var interpreters: List<DslBase>
+    override lateinit var interpreters: List<DslInterpreter>
 }

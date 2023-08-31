@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DslBase(
+class DslInterpreter(
     override val id: String = uuid(),
     override val name: String,
     val description: String,

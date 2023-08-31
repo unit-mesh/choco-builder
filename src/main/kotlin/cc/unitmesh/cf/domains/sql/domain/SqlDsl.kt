@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.sql.domain
 
 import cc.unitmesh.cf.core.dsl.Dsl
-import cc.unitmesh.cf.core.dsl.DslBase
+import cc.unitmesh.cf.core.dsl.DslInterpreter
 
 class SqlDsl(
     val type: String,
@@ -13,7 +13,7 @@ class SqlDsl(
 ) : Dsl {
     override var domain: String = ""
 
-    override lateinit var interpreters: List<DslBase>
+    override lateinit var interpreters: List<DslInterpreter>
 
     lateinit var from: List<Table>
 

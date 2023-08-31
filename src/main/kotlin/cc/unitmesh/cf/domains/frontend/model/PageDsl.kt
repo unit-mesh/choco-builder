@@ -2,7 +2,7 @@ package cc.unitmesh.cf.domains.frontend.model
 
 import cc.unitmesh.cf.core.SubDomain
 import cc.unitmesh.cf.core.dsl.Dsl
-import cc.unitmesh.cf.core.dsl.DslBase
+import cc.unitmesh.cf.core.dsl.DslInterpreter
 import com.fasterxml.jackson.annotation.JsonGetter
 
 @SubDomain(name = "页面", description = "某个页面的 DSL 描述")
@@ -21,5 +21,5 @@ data class PageDsl(
 ) : Dsl {
     override var domain: String = ""
 
-    override lateinit var interpreters: List<DslBase>
+    override lateinit var interpreters: List<DslInterpreter>
 }

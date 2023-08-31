@@ -5,5 +5,5 @@ interface Dsl {
 
     //    var subDomain: String
 
-    var interpreters: List<DslBase>
+    var interpreters: List<DslInterpreter>
 }
