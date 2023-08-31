@@ -1,16 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.3"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("org.graalvm.buildtools.native") version "0.9.24"
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.spring") version "1.9.10"
     kotlin("plugin.jpa") version "1.9.10"
     kotlin("plugin.serialization") version "1.9.10"
-//    id("org.jetbrains.kotlin.kapt") version "1.9.10"
+
+    id("org.springframework.boot") version "3.1.3"
+    id("io.spring.dependency-management") version "1.1.3"
+    id("org.graalvm.buildtools.native") version "0.9.24"
+
     id("org.jetbrains.kotlinx.dataframe") version "0.11.1"
 
+    // no use in correctly
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
 
