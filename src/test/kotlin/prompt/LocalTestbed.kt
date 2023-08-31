@@ -10,16 +10,17 @@ open class LocalTestbed {
     private var completion: CompletionProvider
 
     init {
-        val dotenv = dotenv {
-            directory = "."
-            filename = ".env"
-        }
+        try {
+            val dotenv = dotenv()
 
-        OpenAiConfiguration().apply {
-            apiKey = dotenv["OPENAI_KEY"] ?: ""
-            serverAddress = dotenv["OPENAI_SERVER_ADDRESS"]
-        }.let {
-            completion = OpenAiCompletion(it)
+            OpenAiConfiguration().apply {
+                apiKey = dotenv["OPENAI_KEY"] ?: ""
+                serverAddress = dotenv["OPENAI_SERVER_ADDRESS"]
+            }.let {
+                completion = OpenAiCompletion(it)
+            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 }

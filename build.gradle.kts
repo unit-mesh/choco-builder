@@ -8,12 +8,12 @@ plugins {
 
     id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
-    id("org.graalvm.buildtools.native") version "0.9.24"
-
     id("org.jetbrains.kotlinx.dataframe") version "0.11.1"
 
     // no use in correctly
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
+
+//    id("org.graalvm.buildtools.native") version "0.9.24"
 }
 
 group = "cc.unitmesh"
