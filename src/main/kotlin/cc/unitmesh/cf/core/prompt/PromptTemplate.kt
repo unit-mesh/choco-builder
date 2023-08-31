@@ -2,6 +2,7 @@ package cc.unitmesh.cf.core.prompt
 
 import cc.unitmesh.cf.infrastructure.utils.uuid
 import jakarta.persistence.Id
+import org.jetbrains.annotations.TestOnly
 
 data class PromptTemplate(
     @Id
@@ -43,6 +44,13 @@ data class PromptTemplate(
         Execute("execute"),
 
         Custom("custom")
+    }
+
+    @TestOnly
+    fun forTestFormat(): String {
+        return systemPrompt + "\n\n" + examples.joinToString("\n\n") {
+            "Q:${it.question}\nA:\n```design\n${it.answer}\n```"
+        }
     }
 }
 
