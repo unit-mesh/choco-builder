@@ -12,7 +12,7 @@ data class PromptTemplate(
      */
     val systemPrompt: String,
     val exampleType: ExampleType = ExampleType.NONE,
-    val examples: List<PromptExample> = listOf(),
+    val examples: List<CoTExample> = listOf(),
 ) {
     /**
      * 范例类型

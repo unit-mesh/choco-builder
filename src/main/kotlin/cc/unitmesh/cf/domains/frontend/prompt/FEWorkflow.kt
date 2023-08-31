@@ -1,9 +1,18 @@
 package cc.unitmesh.cf.domains.frontend.prompt
 
-import cc.unitmesh.cf.core.prompt.PromptExample
+import cc.unitmesh.cf.core.prompt.CoTExample
 import cc.unitmesh.cf.core.prompt.PromptTemplate
+import cc.unitmesh.cf.core.prompt.Workflow
 
-object DefaultFEPrompt {
+class FEWorkflow : Workflow() {
+    override val prompts: LinkedHashMap<PromptTemplate.Phase, PromptTemplate>
+        get() = linkedMapOf(
+            CLARIFY.phase to CLARIFY,
+            ANALYZE.phase to ANALYZE,
+            DESIGN.phase to DESIGN,
+            EXECUTE.phase to EXECUTE
+        )
+
     val CLARIFY: PromptTemplate = PromptTemplate(
         id = "FrontendClarify",
         phase = PromptTemplate.Phase.Clarify,
@@ -48,7 +57,29 @@ object DefaultFEPrompt {
         phase = PromptTemplate.Phase.Analyze,
         systemPrompt = """""",
         examples = listOf(
-            PromptExample(
+            CoTExample(
+                question = "",
+                answer = ""
+            )
+        )
+    )
+    val DESIGN: PromptTemplate = PromptTemplate(
+        id = "FrontendDesign",
+        phase = PromptTemplate.Phase.Design,
+        systemPrompt = """""",
+        examples = listOf(
+            CoTExample(
+                question = "",
+                answer = ""
+            )
+        )
+    )
+    val EXECUTE: PromptTemplate = PromptTemplate(
+        id = "FrontendExecute",
+        phase = PromptTemplate.Phase.Execute,
+        systemPrompt = """""",
+        examples = listOf(
+            CoTExample(
                 question = "",
                 answer = ""
             )

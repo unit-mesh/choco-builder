@@ -3,7 +3,7 @@ package cc.unitmesh.cf.core.prompt
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PromptExample(
+data class CoTExample(
     val question: String,
     val answer: String,
 )
