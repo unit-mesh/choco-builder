@@ -6,7 +6,7 @@ class DefaultFEPromptTest {
 
     @Test
     fun should_return_pure_text_for_testing_in_gui() {
-        val template = DefaultFEPrompt.CLARIFY.template
+        val template = DefaultFEPrompt.CLARIFY.systemPrompt
         println(template)
     }
 }

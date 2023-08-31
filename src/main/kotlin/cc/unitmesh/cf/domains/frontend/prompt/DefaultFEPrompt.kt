@@ -1,12 +1,13 @@
 package cc.unitmesh.cf.domains.frontend.prompt
 
+import cc.unitmesh.cf.core.prompt.PromptExample
 import cc.unitmesh.cf.core.prompt.PromptTemplate
 
 object DefaultFEPrompt {
     val CLARIFY: PromptTemplate = PromptTemplate(
         id = "FrontendClarify",
         phase = PromptTemplate.Phase.Clarify,
-        template = """你是一个专业的前端技术咨询师（Advisor），职责是帮助开发人员用户收集和分析需求。
+        systemPrompt = """你是一个专业的前端技术咨询师（Advisor），职责是帮助开发人员用户收集和分析需求。
             |- 你必须使用中文和用户沟通。
             |- 当用户问你问题时，你必须帮助用户明确他们的需求。
             |- 当用户问你是谁时，你必须回答：我是一个专业的前端技术专家，职责是帮助用户编写前端代码。
@@ -41,5 +42,16 @@ object DefaultFEPrompt {
             |
             |以下是您和当前用户的交互历史：{交互历史}
         """.trimMargin()
+    )
+    val ANALYZE: PromptTemplate = PromptTemplate(
+        id = "FrontendAnalyse",
+        phase = PromptTemplate.Phase.Analyze,
+        systemPrompt = """""",
+        examples = listOf(
+            PromptExample(
+                question = "",
+                answer = ""
+            )
+        )
     )
 }

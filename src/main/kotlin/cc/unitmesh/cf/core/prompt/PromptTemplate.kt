@@ -7,7 +7,10 @@ data class PromptTemplate(
     @Id
     val id: String = uuid(),
     val phase: Phase,
-    val template: String,
+    /**
+     * 对于一个不支持 system prompt 的 LLM，需要把 prompt 与用户的输入结合到一起。
+     */
+    val systemPrompt: String,
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<PromptExample> = listOf(),
 ) {
@@ -23,20 +26,23 @@ data class PromptTemplate(
         MULTI_CHAT,
     }
 
-    enum class Phase {
+    enum class Phase(val value: String) {
         // 归类
-        Classify,
+        Classify("classify"),
 
         // 澄清
-        Clarify,
+        Clarify("clarify"),
 
         // 分析
-        Analyze,
+        Analyze("analyze"),
 
         // 设计
-        Design,
+        Design("design"),
 
         // 执行
-        Execute,
+        Execute("execute"),
+
+        Custom("custom")
     }
 }
+
