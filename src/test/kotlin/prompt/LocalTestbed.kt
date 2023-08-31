@@ -1,6 +1,7 @@
 package prompt
 
 import cc.unitmesh.cf.infrastructure.llms.completion.CompletionProvider
+import cc.unitmesh.cf.infrastructure.llms.completion.MockCompletionProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.OpenAiCompletion
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import io.github.cdimascio.dotenv.dotenv
@@ -20,7 +21,8 @@ open class LocalTestbed {
                 completion = OpenAiCompletion(it)
             }
         } catch (e: Exception) {
-            throw e
+            println("Failed to initialize OpenAI Completion")
+            completion = MockCompletionProvider()
         }
     }
 }

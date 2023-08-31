@@ -14,7 +14,7 @@ data class PageDsl(
     val name: String,
 
     @get:JsonGetter("布局方式")
-    val layouts: List<LayoutStyle>,
+    val layoutStyle: LayoutStyle,
 
     @get:JsonGetter("组件")
     val components: List<ComponentDsl>,
@@ -23,3 +23,4 @@ data class PageDsl(
 
     override lateinit var interpreters: List<DslInterpreter>
 }
+
