@@ -10,4 +10,9 @@ abstract class DslContext(
     val nearestInterpreters: List<InterpreterContext>,
     val chatHistories: String,
 ) {
+    /**
+     * resolve variables in prompts, to make them more human-friendly
+     * should consider use [cc.unitmesh.cf.core.context.variable.VariableResolver] to resolve variables
+     */
+    abstract fun compileVariable(text: String): String
 }

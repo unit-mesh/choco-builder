@@ -24,7 +24,7 @@ class FEWorkflow : Workflow() {
             |---
             |
             |已有布局方式如下：
-            |{#layouts}
+            |{layouts}
             |---
             |
             |请严格用以下格式输出:

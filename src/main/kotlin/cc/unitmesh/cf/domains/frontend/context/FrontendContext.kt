@@ -16,9 +16,9 @@ class FrontendDslContext(
      */
     private val relatedComponents: List<String>,
 ) : DslContext(nearestInterpreters = listOf(), chatHistories = "") {
-    fun expansion(text: String): String {
+    override fun compileVariable(text: String): String {
         return text
-            .replace("{#layouts}", similarLayouts.joinToString(separator = ","))
-            .replace("{#components}", relatedComponents.joinToString(separator = ","))
+            .replace("{layouts}", similarLayouts.joinToString(separator = ","))
+            .replace("{components}", relatedComponents.joinToString(separator = ","))
     }
 }
