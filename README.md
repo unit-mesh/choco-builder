@@ -11,6 +11,13 @@ Tech Stack:
 - [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
   ML models (written via ONNX) in Kotlin.
 
+## Usage
+
+- [ ] API calling
+- [ ] code Trigger
+
+## Usecases
+
 使用场景，基于知识库的：
 
 - 一句话生成前端页面 (特定框架与场景)
@@ -27,8 +34,10 @@ Tech Stack:
     2. 确认与澄清问题
     3. 分析问题与数据
     4. 生成 SQL 与图表 (Kotlin Jupyter, [Lets-Plot](https://github.com/JetBrains/lets-plot-kotlin))
-
-## Roadmap
+- 一句话生成测试用例数据
+    1. 识别需求
+    2. 生成初步测试用例
+    3. 生成初步测试数据集
 
 ## License
 
