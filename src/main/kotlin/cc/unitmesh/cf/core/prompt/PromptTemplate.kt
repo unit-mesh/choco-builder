@@ -13,7 +13,8 @@ data class PromptTemplate(
      */
     val systemPrompt: String,
     val exampleType: ExampleType = ExampleType.NONE,
-    val examples: List<CoTExample> = listOf(),
+    val examples: List<QAExample> = listOf(),
+    val qaAdjust: List<QAAdjustExample> = listOf(),
 ) {
     /**
      * 范例类型
@@ -48,9 +49,23 @@ data class PromptTemplate(
 
     @TestOnly
     fun forTestFormat(): String {
-        return systemPrompt + "\n\n" + examples.joinToString("\n\n") {
+        var output = systemPrompt + "\n"
+        output += examples.joinToString("\n\n") {
             "Q:${it.question}\nA:\n```design\n${it.answer}\n```"
         }
+
+        output += qaAdjust.joinToString("\n\n") {
+            val base = "input:${it.input}\noutput:\n```design\n${it.output}\n```\n"
+            base + if (it.action.isNotEmpty()) {
+                "action:${it.action}\nanswer:\n```design\n${it.answer}\n```"
+            } else {
+                ""
+            }
+
+            base
+        }
+
+        return output
     }
 }
 

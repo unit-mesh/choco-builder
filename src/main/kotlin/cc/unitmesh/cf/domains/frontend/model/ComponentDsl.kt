@@ -2,7 +2,7 @@ package cc.unitmesh.cf.domains.frontend.model
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
-import cc.unitmesh.cf.core.prompt.CoTExample
+import cc.unitmesh.cf.core.prompt.QAExample
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
 
@@ -27,7 +27,7 @@ data class ComponentDsl(
     val methods: List<String> = emptyList(),
 
     @get:JsonGetter("示例")
-    val examples: List<CoTExample> = emptyList(),
+    val examples: List<QAExample> = emptyList(),
 ) : Dsl {
     override var domain: String = ""
 

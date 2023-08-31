@@ -1,8 +1,6 @@
 package cc.unitmesh.cf.domains.frontend.prompt
 
-import cc.unitmesh.cf.core.prompt.CoTExample
-import cc.unitmesh.cf.core.prompt.PromptTemplate
-import cc.unitmesh.cf.core.prompt.Workflow
+import cc.unitmesh.cf.core.prompt.*
 
 class FEWorkflow : Workflow() {
     override val prompts: LinkedHashMap<PromptTemplate.Phase, PromptTemplate>
@@ -65,18 +63,24 @@ class FEWorkflow : Workflow() {
             |// Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
             |```
         """.trimMargin(),
-        examples = listOf(
-            CoTExample(
-                question = "生成一个导航栏的 mockup",
-                answer = """
+        qaAdjust = listOf(
+            QAAdjustExample(
+                input = "生成一个导航栏的 mockup",
+                output = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |--------------------------------------
             || a("home") | p("博客") | p("Login")  |
             |--------------------------------------                     
+                """.trimMargin(),
+                action = "这里的 login 应该是 button，而不是 a",
+                answer = """
+            |--------------------------------------
+            || a("home") | p("博客") | button("Login")  |
+            |--------------------------------------                     
                 """.trimMargin()
             ),
-            CoTExample(
-                question = "生成一个包含图片的博客列表面 mockup",
-                answer = """
+            QAAdjustExample(
+                input = "生成一个包含图片的博客列表面 mockup",
+                output = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |----------------------------------------------
             ||      Navigation(10x)                       |
             |----------------------------------------------
@@ -86,7 +90,8 @@ class FEWorkflow : Workflow() {
             |----------------------------------------------
             || Footer(10x)                                |
             |----------------------------------------------
-                """.trimMargin()
+                """.trimMargin(),
+                action = "YES",
             )
         )
     )
@@ -95,7 +100,7 @@ class FEWorkflow : Workflow() {
         phase = PromptTemplate.Phase.Design,
         systemPrompt = """""",
         examples = listOf(
-            CoTExample(
+            QAExample(
                 question = "",
                 answer = ""
             )
@@ -106,7 +111,7 @@ class FEWorkflow : Workflow() {
         phase = PromptTemplate.Phase.Execute,
         systemPrompt = """""",
         examples = listOf(
-            CoTExample(
+            QAExample(
                 question = "",
                 answer = ""
             )
