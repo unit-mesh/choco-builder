@@ -52,6 +52,7 @@ dependencies {
     implementation("com.theokanning.openai-gpt3-java:service:0.14.0")
 
     // data serialization dependencies
+    implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
@@ -66,6 +67,9 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("org.apache.velocity:velocity-engine-core:2.3")
+
+    // load config from .env file for testing
+    testImplementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 
     // testing dependencies
     testImplementation("io.mockk:mockk:1.13.5")
