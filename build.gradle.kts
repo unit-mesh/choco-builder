@@ -65,6 +65,8 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    implementation("org.apache.velocity:velocity-engine-core:2.3")
+
     // testing dependencies
     testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
