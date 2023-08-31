@@ -53,15 +53,16 @@ class FEWorkflow : Workflow() {
         id = "FrontendAnalyse",
         phase = PromptTemplate.Phase.Analyze,
         systemPrompt = """你是一个专业的前端技术咨询师（Advisor），请以如下的 ASCII 描述用户所需要的页面。
-            | - 如果用户没有给出页面元素的描述，请自行补充。
-            | - 你需要等待用户确认，确认后才能继续。
+            |- 如果用户没有给出页面元素的描述，请自行补充。
+            |- 你需要等待用户确认，确认后才能继续。
             | 
-            |请按如上的 ASCII格式输出，以便用户以程序解析它：
-            |```text
-            |// a(), p() 以小写字母开头的函数，表示页面元素
-            |// Footer,BlogList 以大写字母开头的函数，表示页面组件
-            |// Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
-            |```
+            |如下是基本的 ASCII 规则，以便用户以程序解析它：
+            |
+            |- a(), p() 以小写字母开头的函数，表示页面元素
+            |- Footer(10x),BlogList(10x) 以大写字母开头的函数，表示页面组件
+            |- Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
+            |- Navigation(10x) 表示导航栏, 10x 表示页面元素的宽度为 10x栅格宽度
+            |
         """.trimMargin(),
         qaAdjust = listOf(
             QAAdjustExample(
