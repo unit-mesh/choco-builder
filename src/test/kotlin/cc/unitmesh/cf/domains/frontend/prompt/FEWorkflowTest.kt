@@ -9,7 +9,7 @@ class FEWorkflowTest {
         val clarifyPrompt = FEWorkflow().CLARIFY.systemPrompt
         println(clarifyPrompt)
 
-        val analysePrompt = FEWorkflow().ANALYZE.forTestFormat()
+        val analysePrompt = FEWorkflow().CLARIFY.forTestFormat()
         println(analysePrompt)
     }
 }

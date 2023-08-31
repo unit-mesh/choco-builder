@@ -6,7 +6,6 @@ class FEWorkflow : Workflow() {
     override val prompts: LinkedHashMap<PromptTemplate.Phase, PromptTemplate>
         get() = linkedMapOf(
             CLARIFY.phase to CLARIFY,
-            ANALYZE.phase to ANALYZE,
             DESIGN.phase to DESIGN,
             EXECUTE.phase to EXECUTE
         )
@@ -49,19 +48,19 @@ class FEWorkflow : Workflow() {
             |以下是您和当前用户的交互历史：{交互历史}
         """.trimMargin()
     )
-    val ANALYZE: PromptTemplate = PromptTemplate(
-        id = "FrontendAnalyse",
-        phase = PromptTemplate.Phase.Analyze,
-        systemPrompt = """""",
-    )
     val DESIGN: PromptTemplate = PromptTemplate(
         id = "FrontendDesign",
         phase = PromptTemplate.Phase.Design,
         systemPrompt = """你是一个专业的前端技术咨询师（Advisor），请以如下的 ASCII 描述用户所需要的页面。
             |
-            |- 如果用户没有给出页面元素的描述，请自行补充。
-            |- 你需要等待用户确认，确认后才能继续。
+            |- 如果用户没有给出页面元素的描述，你必须自己补充。
+            |- 你必须等待用户确认，确认后才能继续。
             | 
+            |所有的组件列表如下：
+            |###
+            |{components}
+            |###
+            |
             |如下是基本的 ASCII 规则，以便用户以程序解析它：
             |
             |- a(), p() 以小写字母开头的函数，表示页面元素
@@ -105,10 +104,19 @@ class FEWorkflow : Workflow() {
     val EXECUTE: PromptTemplate = PromptTemplate(
         id = "FrontendExecute",
         phase = PromptTemplate.Phase.Execute,
-        systemPrompt = """你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求，生成对应的前端代码。
-            |---
-            |请根据用户提供的查询方案，合成 SQL 语句。
-            |---
+        systemPrompt = """你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求和页面，生成对应的前端代码。
+            |- 项目的技术栈是 React + TypeScript + Ant Design。
+            |
+            |
+            |###
+            |请根据用户提供的问题，生成前端代码。
+            |###
+            |
+            |用户提供的问题：
+            |{question}
+            |
+            |业务布局：
+            |{layout}
         """.trimMargin(),
         examples = listOf(
             QAExample(
