@@ -16,7 +16,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 import java.time.Duration
 
 @Component
-@Profile("openai")
+//@Profile("openai")
 @ConditionalOnProperty(prefix = "openai", name = ["api-key"])
 class OpenAiCompletion(val config: OpenAiConfiguration) : CompletionProvider {
     var totalTokens = 0L;

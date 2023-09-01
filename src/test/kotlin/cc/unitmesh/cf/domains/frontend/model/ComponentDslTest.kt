@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class ComponentDslTest {
     @Test
     fun test() {
-        val resource = ComponentDsl::class.java.getResource("/frontend/element-ui/dialog.json").readText()
+        val resource = ComponentDsl::class.java.getResource("/frontend/components/dialog.json").readText()
         val dsl = Json.decodeFromString<ComponentDsl>(resource)
         dsl.name shouldBe "Dialog"
     }
