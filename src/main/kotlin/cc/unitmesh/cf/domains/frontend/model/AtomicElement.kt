@@ -3,10 +3,12 @@ package cc.unitmesh.cf.domains.frontend.model
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import com.fasterxml.jackson.annotation.JsonGetter
+import kotlinx.serialization.Serializable
 
 /**
  * Design system basic dsl, https://ant.design/docs/spec/font-cn
  */
+@Serializable
 data class DesignSystem(
     @get:JsonGetter("色彩")
     val color: BrandColor,
@@ -25,6 +27,7 @@ data class DesignSystem(
     override lateinit var interpreters: List<DslInterpreter>
 }
 
+@Serializable
 data class BrandColor(
     @get:JsonGetter("主色")
     val primary: String,
@@ -56,6 +59,7 @@ enum class FontStyles(val displayName: String) {
     LAYOUT_BACKGROUND("布局背景"),
 }
 
+@Serializable
 data class FontStyle(
     @get:JsonGetter("类型")
     val type: FontStyles,
@@ -67,9 +71,12 @@ data class FontStyle(
     val fontWeight: Double,
 )
 
+@Serializable
 data class LayoutStyle(
     @get:JsonGetter("名称")
-    val type: String,
+    val name: String,
+    @get:JsonGetter("说明")
+    val english: String,
     @get:JsonGetter("说明")
     val description: String,
     @get:JsonGetter("示例")

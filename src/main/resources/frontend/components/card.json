@@ -1,6 +1,7 @@
 {
   "type": "frontend",
   "name": "Card 卡片",
+  "tagName": "<el-card>",
   "description": "将信息聚合在卡片容器中展示。",
   "properties": [
     {

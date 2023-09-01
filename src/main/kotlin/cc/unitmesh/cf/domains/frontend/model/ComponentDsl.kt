@@ -2,17 +2,24 @@ package cc.unitmesh.cf.domains.frontend.model
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
+import cc.unitmesh.cf.core.dsl.IndexElement
 import cc.unitmesh.cf.core.prompt.QAExample
+import cc.unitmesh.cf.infrastructure.utils.uuid
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ComponentDsl(
-    @get:JsonGetter("类型")
-    val type: String,
+    override val id: String = uuid(),
 
     @get:JsonGetter("名称")
-    val name: String,
+    override val name: String,
+
+    @get:JsonGetter("标签名称")
+    val tagName: String,
+
+    @get:JsonGetter("类型")
+    val type: String,
 
     @get:JsonGetter("说明")
     val description: String,
@@ -28,7 +35,7 @@ data class ComponentDsl(
 
     @get:JsonGetter("示例")
     val examples: List<QAExample> = emptyList(),
-) : Dsl {
+) : Dsl, IndexElement {
     override var domain: String = ""
 
     override var interpreters: List<DslInterpreter> = emptyList()

@@ -1,6 +1,7 @@
 {
   "type": "frontend",
   "name": "Tag",
+  "tagName": "<el-tag>",
   "description": "一种用于识别、分类或描述内容的短文本片段，它们在许多用户界面中都有广泛的应用，如文章标签、产品分类、搜索筛选等。",
   "properties": [
     {
@@ -57,12 +58,12 @@
     {
       "eventName": "click",
       "description": "点击 Tag 时触发的事件",
-      "callbackParameters": "—"
+      "callbackParameter": "—"
     },
     {
       "eventName": "close",
       "description": "关闭 Tag 时触发的事件",
-      "callbackParameters": "—"
+      "callbackParameter": "—"
     }
   ],
   "examples": [

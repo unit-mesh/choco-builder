@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.domains.frontend.prompt
 
+import cc.unitmesh.cf.domains.frontend.context.FEWorkflow
 import org.junit.jupiter.api.Test
 
 class FEWorkflowTest {

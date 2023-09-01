@@ -1,6 +1,7 @@
 {
   "type": "frontend",
   "name": "Dialog",
+  "tagName": "<el-dialog>",
   "description": "一种常见的用户界面元素，用于在当前页面的上层显示一块浮动的区域，通常用于展示一些重要信息、交互或者需要用户确认的操作。",
   "properties": [
     {

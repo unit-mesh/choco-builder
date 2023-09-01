@@ -4,7 +4,7 @@ import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.Velocity
 import java.io.StringWriter
 
-class BasicVariableResolver : VariableResolver {
+class BasicVariableResolver : VariableResolver<String> {
     override fun resolve(): String {
         TODO("Not yet implemented")
     }
