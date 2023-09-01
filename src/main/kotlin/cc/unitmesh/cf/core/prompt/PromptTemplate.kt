@@ -48,16 +48,16 @@ data class PromptTemplate(
     }
 
     @TestOnly
-    fun forTestFormat(): String {
+    fun format(): String {
         var output = systemPrompt + "\n"
-        output += examples.joinToString("\n\n") {
-            "Q:${it.question}\nA:\n```design\n${it.answer}\n```"
+        output += examples.joinToString("\n") {
+            "Q:${it.question}\nA:\n${it.answer}\n"
         }
 
-        output += qaAdjust.joinToString("\n\n") {
-            val base = "input:${it.input}\noutput:\n```design\n${it.output}\n```\n"
+        output += qaAdjust.joinToString("\n") {
+            val base = "input:${it.input}\noutput:${it.output}\n"
             base + if (it.action.isNotEmpty()) {
-                "action:${it.action}\nanswer:\n```design\n${it.answer}\n```"
+                "action:${it.action}\nanswer:${it.answer}\n"
             } else {
                 ""
             }

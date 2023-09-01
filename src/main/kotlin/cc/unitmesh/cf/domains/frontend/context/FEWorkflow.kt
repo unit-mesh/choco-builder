@@ -49,6 +49,10 @@ class FEWorkflow : Workflow() {
             |以下是您和当前用户的交互历史：${'$'}{history}
         """.trimMargin()
         )
+
+        /**
+         * UI 布局 DSL 基于： [https://github.com/phodal/design](https://github.com/phodal/design)
+         */
         val DESIGN: PromptTemplate = PromptTemplate(
             id = "FrontendDesign",
             phase = PromptTemplate.Phase.Design,
@@ -74,20 +78,28 @@ class FEWorkflow : Workflow() {
                 QAAdjustExample(
                     input = "生成一个导航栏的 mockup",
                     output = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+            |```design
+            |pageName: 导航栏
             |--------------------------------------
             || a("home") | p("博客") | p("Login")  |
-            |--------------------------------------                     
+            |--------------------------------------
+            |```
                 """.trimMargin(),
                     action = "这里的 login 应该是 button，而不是 a",
                     answer = """
+            |```design
+            |pageName: 导航栏
             |--------------------------------------
             || a("home") | p("博客") | button("Login")  |
-            |--------------------------------------                     
+            |--------------------------------------
+            |```
                 """.trimMargin()
                 ),
                 QAAdjustExample(
                     input = "生成一个包含图片的博客列表面 mockup",
                     output = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+            |```design
+            |pageName: 博客列表
             |----------------------------------------------
             ||      Navigation(10x)                       |
             |----------------------------------------------
@@ -97,6 +109,7 @@ class FEWorkflow : Workflow() {
             |----------------------------------------------
             || Footer(10x)                                |
             |----------------------------------------------
+            |```
                 """.trimMargin(),
                     action = "YES",
                 )
@@ -107,7 +120,6 @@ class FEWorkflow : Workflow() {
             phase = PromptTemplate.Phase.Execute,
             systemPrompt = """你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求和页面，生成对应的前端代码。
             |- 项目的技术栈是 React + TypeScript + Ant Design。
-            |
             |
             |###
             |请根据用户提供的问题，生成前端代码。

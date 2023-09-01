@@ -7,8 +7,8 @@ class FEWorkflowTest {
 
     @Test
     fun should_return_pure_text_for_testing_in_gui() {
-        println(FEWorkflow.CLARIFY.forTestFormat())
-        println(FEWorkflow.DESIGN.forTestFormat())
-        println(FEWorkflow.EXECUTE.forTestFormat())
+        println(FEWorkflow.CLARIFY.format())
+        println(FEWorkflow.DESIGN.format())
+        println(FEWorkflow.EXECUTE.format())
     }
 }
