@@ -51,10 +51,7 @@ dependencies {
     implementation("com.theokanning.openai-gpt3-java:service:0.14.0")
 
     // data serialization dependencies
-    implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
+    implementation(libs.bundles.jackson)
 
     // data convert
     implementation(kotlin("reflect"))
@@ -70,11 +67,9 @@ dependencies {
     // load config from .env file for testing
     testImplementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 
-    // testing dependencies
-    testImplementation("io.mockk:mockk:1.13.5")
-    testImplementation("io.kotest:kotest-assertions-core:5.6.2")
-    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation(libs.bundles.test)
+    testRuntimeOnly(libs.test.junit.engine)
 }
 
 tasks.withType<KotlinCompile> {

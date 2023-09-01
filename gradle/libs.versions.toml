@@ -8,7 +8,7 @@ jupyterApi = "0.11.0-398"
 
 junit = "5.9.1"
 kotlinTest = "5.5.4"
-mockk = "1.13.3"
+mockk = "1.13.5"
 assertj = "3.22.0"
 
 chapi = "2.1.2"
@@ -40,10 +40,6 @@ serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializ
 # Coroutines
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 
-# chapi
-chapi-domain = { group = "com.phodal.chapi", name = "chapi-domain", version.ref = "chapi" }
-chapi-java = { group = "com.phodal.chapi", name = "chapi-ast-java", version.ref = "chapi" }
-chapi-kotlin = { group = "com.phodal.chapi", name = "chapi-ast-kotlin", version.ref = "chapi" }
 
 # Testing
 test-junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
@@ -62,6 +58,11 @@ logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", versi
 jupyter-api = { group = "org.jetbrains.kotlinx", name = "kotlin-jupyter-api", version.ref = "jupyterApi" }
 jupyter-kernel = { group = "org.jetbrains.kotlinx", name = "kotlin-jupyter-kernel", version.ref = "jupyterApi" }
 jupyter-shared-compiler = { group = "org.jetbrains.kotlinx", name = "kotlin-jupyter-shared-compiler", version.ref = "jupyterApi" }
+
+# chapi
+chapi-domain = { group = "com.phodal.chapi", name = "chapi-domain", version.ref = "chapi" }
+chapi-java = { group = "com.phodal.chapi", name = "chapi-ast-java", version.ref = "chapi" }
+chapi-kotlin = { group = "com.phodal.chapi", name = "chapi-ast-kotlin", version.ref = "chapi" }
 
 # archguard
 # implementation("org.archguard.aaac:lang:2.0.0-beta.5")
@@ -85,31 +86,28 @@ commonmark-heading-anchor = "org.commonmark:commonmark-ext-gfm-tables:0.21.0"
 
 openai-gpt3 = "com.theokanning.openai-gpt3-java:service:0.12.0"
 retrofit2-converter-jackson = "com.squareup.retrofit2:converter-jackson:2.9.0"
-dotenv = "io.github.cdimascio:dotenv-java:3.0.0"
+jackson-module-kotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2"
+jackson-module-jsonSchema = "com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2"
+jackson-dataformat-yaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2"
 
-langtorch = "ai.knowly:langtorch:0.0.11"
+dotenv = "io.github.cdimascio:dotenv-java:3.0.0"
 
 # log
 slf4j-simple = "org.slf4j:slf4j-simple:2.0.7"
 
-onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.0"
-huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.22.1"
-jtokkit = "com.knuddels:jtokkit:0.5.0"
-
-plantuml = "net.sourceforge.plantuml:plantuml:1.2023.8"
+onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.1"
+huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.23.0"
+jtokkit = "com.knuddels:jtokkit:0.6.1"
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-jupyter = { id = "org.jetbrains.kotlin.jupyter.api", version.ref = "jupyterApi" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" }
-
-# for clui
-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 
 [bundles]
 test = ["test-junit-params", "kotlin-test", "test-kotlintest-assertions", "test-mockk", "test-assertj"]
+
+jackson = ["jackson-module-jsonSchema", "jackson-module-kotlin", "jackson-dataformat-yaml"]
 
 # llm bundle
 openai = ["openai-gpt3", "retrofit2-converter-jackson"]
