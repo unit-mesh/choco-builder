@@ -17,7 +17,7 @@ class OpenAiEmbeddingProvider(val config: OpenAiConfiguration) : EmbeddingProvid
     private val openai: OpenAiService by lazy { OpenAiService(config.apiKey, Duration.ZERO) }
 
     @Cacheable("embedding")
-    override fun createEmbeddings(texts: List<String>): List<List<Double>> {
+    override fun createEmbeddings(texts: List<String>): List<Embedding> {
         val request = EmbeddingRequest.builder().model("text-embedding-ada-002").input(texts).build();
         val response = openai.createEmbeddings(request)
         totalTokens += response.usage.totalTokens

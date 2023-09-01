@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.10"
+    alias(libs.plugins.jvm)
+    alias(libs.plugins.serialization)
+
     kotlin("plugin.spring") version "1.9.10"
     kotlin("plugin.jpa") version "1.9.10"
-    kotlin("plugin.serialization") version "1.9.10"
 
     id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
@@ -13,18 +14,33 @@ plugins {
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
 
-group = "cc.unitmesh"
-version = "0.0.1-SNAPSHOT"
-
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 repositories {
     mavenCentral()
 }
 
+allprojects {
+    apply(plugin = "java")
+    apply(plugin = "jacoco")
+
+    group = "cc.unitmesh"
+    version = "0.0.1-SNAPSHOT"
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
 dependencies {
+    implementation(projects.cocoaLocalEmbedding)
     // kotlin dependencies
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation(libs.serialization.json)
