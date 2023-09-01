@@ -1,6 +1,5 @@
 package cc.unitmesh.cf.domains
 
-import cc.unitmesh.cf.core.Domain
 import cc.unitmesh.cf.core.process.DomainDeclaration
 import cc.unitmesh.cf.core.process.impl.DomainDeclarationPlaceholder
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
@@ -13,11 +12,9 @@ import org.springframework.stereotype.Component
 class DomainClassify(
     private val cachedEmbedding: CachedEmbedding,
 ) {
-    //    val cachedDomains: MutableList<Class<out DomainDeclaration>> = mutableListOf()
-    // to hashmap
     val cachedDomains: MutableMap<String, DomainDeclaration> = mutableMapOf()
 
-    fun dispatch(question: String): DomainDeclaration {
+    fun semanticSearch(question: String): DomainDeclaration {
         val question: Embedding = cachedEmbedding.createEmbedding(question)
         return DomainDeclarationPlaceholder()
     }

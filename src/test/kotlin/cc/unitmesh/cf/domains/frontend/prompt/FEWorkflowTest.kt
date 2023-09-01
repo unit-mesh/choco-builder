@@ -6,10 +6,8 @@ class FEWorkflowTest {
 
     @Test
     fun should_return_pure_text_for_testing_in_gui() {
-        val clarifyPrompt = FEWorkflow().CLARIFY.systemPrompt
-        println(clarifyPrompt)
-
-        val analysePrompt = FEWorkflow().CLARIFY.forTestFormat()
-        println(analysePrompt)
+        println(FEWorkflow().CLARIFY.forTestFormat())
+        println(FEWorkflow().DESIGN.forTestFormat())
+        println(FEWorkflow().EXECUTE.forTestFormat())
     }
 }
