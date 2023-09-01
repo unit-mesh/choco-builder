@@ -2,7 +2,7 @@ package cc.unitmesh.cf.core.context
 
 import cc.unitmesh.cf.core.dsl.InterpreterContext
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
-import cc.unitmesh.cf.infrastructure.vector.Similarity
+import cc.unitmesh.cf.infrastructure.similarity.Similarity
 
 abstract class DslContextBuilder(
     private val similarity: Similarity,

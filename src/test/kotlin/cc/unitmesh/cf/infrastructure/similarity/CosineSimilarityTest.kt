@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.infrastructure.vector
+package cc.unitmesh.cf.infrastructure.similarity
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
