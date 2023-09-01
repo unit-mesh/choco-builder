@@ -23,7 +23,7 @@ class AgentController(
         return "TODO"
     }
 
-    @GetMapping("/domain/{domainName}/prompt")
+    @GetMapping("/domain/{domainName}/prompts")
     fun domainAgent(@PathVariable domainName: String): List<PromptTemplate> {
         val domains = classify.lookupDomains()
         log.info("domains: {}", domains)
