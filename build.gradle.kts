@@ -10,10 +10,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.3"
     id("org.jetbrains.kotlinx.dataframe") version "0.11.1"
 
-    // no use in correctly
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
-
-//    id("org.graalvm.buildtools.native") version "0.9.24"
 }
 
 group = "cc.unitmesh"
@@ -39,7 +36,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -47,25 +43,25 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // llm dependencies
-    implementation("com.azure:azure-ai-openai:1.0.0-beta.3")
-    implementation("com.theokanning.openai-gpt3-java:service:0.14.0")
+    implementation(libs.azure.openai)
+    implementation(libs.bundles.openai)
 
     // data serialization dependencies
     implementation(libs.bundles.jackson)
 
     // data convert
     implementation(kotlin("reflect"))
-    implementation("org.reflections:reflections:0.10.2")
-    implementation("org.jetbrains.kotlinx:dataframe:0.11.1")
+    implementation(libs.reflections)
+    implementation(libs.dataframe)
 
     // database dependencies
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
-    implementation("org.apache.velocity:velocity-engine-core:2.3")
+    implementation(libs.velocity.engine)
 
     // load config from .env file for testing
-    testImplementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    testImplementation(libs.dotenv.kotlin)
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation(libs.bundles.test)
