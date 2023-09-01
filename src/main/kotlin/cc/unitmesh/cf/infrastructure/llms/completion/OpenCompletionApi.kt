@@ -6,9 +6,7 @@ import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -16,8 +14,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 import java.time.Duration
 
 @Component
-//@Profile("openai")
-@ConditionalOnProperty(prefix = "openai", name = ["api-key"])
 class OpenAiCompletion(val config: OpenAiConfiguration) : CompletionProvider {
     var totalTokens = 0L;
     private val openai: OpenAiService by lazy {
