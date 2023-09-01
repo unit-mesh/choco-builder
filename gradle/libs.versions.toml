@@ -1,0 +1,116 @@
+[versions]
+kotlin = "1.9.10"
+
+kotlinxCoroutines = "1.7.3"
+kotlinxSerialization = "1.6.0"
+
+jupyterApi = "0.11.0-398"
+
+junit = "5.9.1"
+kotlinTest = "5.5.4"
+mockk = "1.13.3"
+assertj = "3.22.0"
+
+chapi = "2.1.2"
+
+slf4j = "2.0.5"
+
+archguard = "2.0.1"
+
+logback = "1.4.5"
+kotlinLogging = "4.0.0-beta-19"
+
+gson = "2.10.1"
+shadowJar = "7.1.2"
+
+compose = "1.3.0"
+
+[libraries]
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
+
+kotlin-scripting-jvm = { group = "org.jetbrains.kotlin", name = "kotlin-scripting-jvm", version.ref = "kotlin" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+reflections = { group = "org.reflections", name = "reflections", version = "0.10.2" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+
+# Kotlinx Serialization
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
+# Coroutines
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+
+# chapi
+chapi-domain = { group = "com.phodal.chapi", name = "chapi-domain", version.ref = "chapi" }
+chapi-java = { group = "com.phodal.chapi", name = "chapi-ast-java", version.ref = "chapi" }
+chapi-kotlin = { group = "com.phodal.chapi", name = "chapi-ast-kotlin", version.ref = "chapi" }
+
+# Testing
+test-junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+test-junit-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
+test-junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+test-kotlintest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotlinTest" }
+test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+test-assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
+
+# Logging
+logging-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+logging-logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version.ref = "kotlinLogging" }
+
+# DSL
+jupyter-api = { group = "org.jetbrains.kotlinx", name = "kotlin-jupyter-api", version.ref = "jupyterApi" }
+jupyter-kernel = { group = "org.jetbrains.kotlinx", name = "kotlin-jupyter-kernel", version.ref = "jupyterApi" }
+jupyter-shared-compiler = { group = "org.jetbrains.kotlinx", name = "kotlin-jupyter-shared-compiler", version.ref = "jupyterApi" }
+
+# archguard
+# implementation("org.archguard.aaac:lang:2.0.0-beta.5")
+archguard-dsl = { group = "org.archguard.aaac", name = "dsl", version.ref = "archguard" }
+archguard-analyser-sca = { group = "org.archguard.scanner", name = "analyser_sca", version.ref = "archguard" }
+archguard-lang-kotlin = { group = "org.archguard.scanner", name = "lang_kotlin", version.ref = "archguard" }
+archguard-lang-java = { group = "org.archguard.scanner", name = "lang_java", version.ref = "archguard" }
+archguard-lang-python = { group = "org.archguard.scanner", name = "lang_python", version.ref = "archguard" }
+archguard-lang-typescript = { group = "org.archguard.scanner", name = "lang_typescript", version.ref = "archguard" }
+archguard-lang-golang = { group = "org.archguard.scanner", name = "lang_golang", version.ref = "archguard" }
+
+archguard-feat-apicalls = { group = "org.archguard.scanner", name = "feat_apicalls", version.ref = "archguard" }
+archguard-feat-datamap = { group = "org.archguard.scanner", name = "feat_datamap", version.ref = "archguard" }
+
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+# llm part
+commonmark-core = "org.commonmark:commonmark:0.21.0"
+commonmark-gfm-tables = "org.commonmark:commonmark-ext-gfm-tables:0.21.0"
+commonmark-heading-anchor = "org.commonmark:commonmark-ext-gfm-tables:0.21.0"
+
+openai-gpt3 = "com.theokanning.openai-gpt3-java:service:0.12.0"
+retrofit2-converter-jackson = "com.squareup.retrofit2:converter-jackson:2.9.0"
+dotenv = "io.github.cdimascio:dotenv-java:3.0.0"
+
+langtorch = "ai.knowly:langtorch:0.0.11"
+
+# log
+slf4j-simple = "org.slf4j:slf4j-simple:2.0.7"
+
+onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.0"
+huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.22.1"
+jtokkit = "com.knuddels:jtokkit:0.5.0"
+
+plantuml = "net.sourceforge.plantuml:plantuml:1.2023.8"
+
+[plugins]
+jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jupyter = { id = "org.jetbrains.kotlin.jupyter.api", version.ref = "jupyterApi" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" }
+
+# for clui
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+
+[bundles]
+test = ["test-junit-params", "kotlin-test", "test-kotlintest-assertions", "test-mockk", "test-assertj"]
+
+# llm bundle
+openai = ["openai-gpt3", "retrofit2-converter-jackson"]
+markdown = ["commonmark-core", "commonmark-gfm-tables", "commonmark-heading-anchor"]

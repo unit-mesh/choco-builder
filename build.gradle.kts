@@ -30,8 +30,8 @@ repositories {
 dependencies {
     // kotlin dependencies
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation(libs.serialization.json)
+    implementation(libs.coroutines.core)
 
     // spring dependencies
     implementation("org.springframework.boot:spring-boot-starter")
@@ -45,7 +45,6 @@ dependencies {
 
     // spring dev dependencies
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-//    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
     // llm dependencies
     implementation("com.azure:azure-ai-openai:1.0.0-beta.3")
