@@ -4,7 +4,10 @@ import cc.unitmesh.cf.core.context.variable.VariableResolver
 import cc.unitmesh.cf.domains.frontend.model.ComponentDsl
 import cc.unitmesh.cf.domains.frontend.model.LayoutStyle
 import kotlinx.serialization.json.Json
+import org.apache.velocity.VelocityContext
+import org.apache.velocity.app.Velocity
 import org.springframework.stereotype.Component
+import java.io.StringWriter
 import java.nio.file.Files.walk
 import kotlin.io.path.Path
 import kotlin.io.path.extension
@@ -12,6 +15,7 @@ import kotlin.io.path.isRegularFile
 
 @Component
 class FEVariableResolver : VariableResolver<FEVariables> {
+    override var variables: FEVariables? = null
 
     override fun resolve(): FEVariables {
         // load from resources
@@ -32,16 +36,26 @@ class FEVariableResolver : VariableResolver<FEVariables> {
             .toList()
             .flatten()
 
-        return FEVariables(
+        variables = FEVariables(
             layouts = layouts.joinToString(separator = ",") { it.name },
             components = components.joinToString(separator = ",") {
                 it.name + "(" + it.tagName + ")"
             }
         )
+
+        return variables!!
     }
 
     override fun compile(input: String): String {
-        TODO("Not yet implemented")
+        val sw = StringWriter()
+        val velocityContext = VelocityContext()
+
+        velocityContext.put("layouts", this.variables!!.layouts)
+        velocityContext.put("components", this.variables!!.components)
+
+        Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, input)
+
+        return sw.toString()
     }
 }
 

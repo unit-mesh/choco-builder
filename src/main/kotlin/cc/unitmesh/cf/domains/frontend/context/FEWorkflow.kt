@@ -22,7 +22,7 @@ class FEWorkflow : Workflow() {
             |---
             |
             |已有布局方式如下：
-            |{layouts}
+            |${'$'}{layouts}
             |---
             |
             |请严格用以下格式输出:
@@ -59,7 +59,7 @@ class FEWorkflow : Workflow() {
             | 
             |所有的组件列表如下：
             |###
-            |{components}
+            |${'$'}{components}
             |###
             |
             |如下是基本的 ASCII 规则，以便用户以程序解析它：
@@ -114,10 +114,10 @@ class FEWorkflow : Workflow() {
             |###
             |
             |用户提供的问题：
-            |{question}
+            |${'$'}{question}
             |
             |业务布局：
-            |{layout}
+            |${'$'}{layout}
         """.trimMargin(),
             examples = listOf(
                 QAExample(

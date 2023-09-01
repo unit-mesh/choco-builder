@@ -3,7 +3,7 @@ package cc.unitmesh.cf.domains.frontend.context
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import org.junit.jupiter.api.Test
 
-class FEVariablesResolverTest {
+class FEVariableResolverTest {
 
     @Test
     fun should_get_all_variables() {
@@ -13,6 +13,7 @@ class FEVariablesResolverTest {
         variables.components.length shouldBeGreaterThan 1
         variables.layouts.length shouldBeGreaterThan 1
 
-        println(variables)
+        val compile = resolver.compile("""layouts: ${'$'}{layouts}""")
+        println(compile)
     }
 }
