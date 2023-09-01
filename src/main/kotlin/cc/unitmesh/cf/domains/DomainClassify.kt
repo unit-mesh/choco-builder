@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains
 
-import cc.unitmesh.cf.core.process.DomainDetector
-import cc.unitmesh.cf.core.process.impl.DomainDetectorPlaceholder
+import cc.unitmesh.cf.core.process.DomainDeclaration
+import cc.unitmesh.cf.core.process.impl.DomainDeclarationPlaceholder
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 import org.reflections.Reflections
@@ -11,18 +11,18 @@ import org.springframework.stereotype.Component
 class DomainClassify(
     private val cachedEmbedding: CachedEmbedding,
 ) {
-    val cachedDomains: MutableList<Class<out DomainDetector>> = mutableListOf()
-    fun dispatch(question: String): DomainDetector {
+    val cachedDomains: MutableList<Class<out DomainDeclaration>> = mutableListOf()
+    fun dispatch(question: String): DomainDeclaration {
         val question: Embedding = cachedEmbedding.createEmbedding(question)
-        return DomainDetectorPlaceholder()
+        return DomainDeclarationPlaceholder()
     }
 
-    fun lookupDomains(): List<Class<out DomainDetector>> {
+    fun lookupDomains(): List<Class<out DomainDeclaration>> {
         if (cachedDomains.isNotEmpty()) {
             return cachedDomains
         }
 
-        val domains = Reflections(DomainClassify::class.java.`package`.name).getSubTypesOf(DomainDetector::class.java)
+        val domains = Reflections(DomainClassify::class.java.`package`.name).getSubTypesOf(DomainDeclaration::class.java)
             .toList()
 
         this.cachedDomains.addAll(domains)
