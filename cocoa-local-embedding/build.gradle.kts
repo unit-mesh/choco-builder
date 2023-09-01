@@ -10,7 +10,6 @@ dependencies {
 
     implementation(libs.onnxruntime)
     implementation(libs.huggingface.tokenizers)
-    implementation(libs.jtokkit)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)

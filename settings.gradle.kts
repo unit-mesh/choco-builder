@@ -6,3 +6,11 @@ rootProject.name = "chocolate-factory"
 
 include(":cocoa-core")
 include(":cocoa-local-embedding")
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
