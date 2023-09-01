@@ -9,6 +9,7 @@ import org.apache.velocity.app.Velocity
 import org.springframework.stereotype.Component
 import java.io.StringWriter
 import java.nio.file.Files.walk
+import java.nio.file.Paths
 import kotlin.io.path.Path
 import kotlin.io.path.extension
 import kotlin.io.path.isRegularFile
@@ -20,16 +21,20 @@ class FEVariableResolver : VariableResolver<FEVariables> {
 
     override fun resolve(question: String) {
         // walk through the dir and load all components
-        val dir = this.javaClass.getResource("/frontend/components").path
-        val components: List<ComponentDsl> = walk(Path(dir))
+        val resourceUrl = this.javaClass.getResource("/frontend/components")!!
+        val dir = Paths.get(resourceUrl.toURI())
+
+        val components: List<ComponentDsl> = walk(dir)
             .filter { it.isRegularFile() && it.extension == "json" }
             .map { it.toFile().readText() }
             .map { Json.decodeFromString<ComponentDsl>(it) }
             .toList()
 
         // walk through the dir and load all layouts
-        val layoutDir = this.javaClass.getResource("/frontend/layout").path
-        val layouts: List<LayoutStyle> = walk(Path(layoutDir))
+        val layoutUrl = this.javaClass.getResource("/frontend/layout")!!
+        val layoutDir = Paths.get(layoutUrl.toURI())
+
+        val layouts: List<LayoutStyle> = walk(layoutDir)
             .filter { it.isRegularFile() && it.extension == "json" }
             .map { it.toFile().readText() }
             .map { Json.decodeFromString<List<LayoutStyle>>(it) }
