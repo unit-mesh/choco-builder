@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.presentation.agent
 
+import cc.unitmesh.cf.core.process.DomainDeclaration
 import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.*
 
@@ -23,4 +24,19 @@ class AgentController(
         val domains = classify.lookupDomains()
         return "TODO"
     }
+
+    // domains list
+    @GetMapping("/domains")
+    fun domains(): List<DomainResponse> {
+        val domains: MutableMap<String, DomainDeclaration> = classify.lookupDomains()
+        return domains.map {
+            val clazz = it.value
+            DomainResponse(clazz.name, clazz.description)
+        }
+    }
 }
+
+data class DomainResponse(
+    val name: String,
+    val description: String
+)

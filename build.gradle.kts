@@ -45,7 +45,7 @@ dependencies {
 
     // spring dev dependencies
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+//    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
     // llm dependencies
     implementation("com.azure:azure-ai-openai:1.0.0-beta.3")
