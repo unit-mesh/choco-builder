@@ -1,14 +1,18 @@
 package cc.unitmesh.cf.presentation.agent
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
+import cc.unitmesh.cf.core.prompt.PromptTemplate
 import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/agent")
 class AgentController(
-    val classify: DomainClassify
+    val classify: DomainClassify,
 ) {
+    companion object {
+        private val log = org.slf4j.LoggerFactory.getLogger(AgentController::class.java)
+    }
 
     @PostMapping("/smart")
     fun smartAgent(@RequestParam("q") query: String): String {
@@ -19,10 +23,20 @@ class AgentController(
         return "TODO"
     }
 
-    @PostMapping("/domain/{domainName}")
-    fun domainAgent(@RequestParam("q") query: String, @PathVariable domainName: String): String {
+    @GetMapping("/domain/{domainName}/prompt")
+    fun domainAgent(@PathVariable domainName: String): List<PromptTemplate> {
         val domains = classify.lookupDomains()
-        return "TODO"
+        log.info("domains: {}", domains)
+        val domain = domains[domainName]
+        if (domain == null) {
+            log.warn("domain [{}] not found!", domainName)
+            return emptyList()
+        }
+        val workflow = domain.workflow(domainName)
+
+        return workflow.prompts.map {
+            it.value
+        }
     }
 
     // domains list
@@ -31,12 +45,12 @@ class AgentController(
         val domains: MutableMap<String, DomainDeclaration> = classify.lookupDomains()
         return domains.map {
             val clazz = it.value
-            DomainResponse(clazz.name, clazz.description)
+            DomainResponse(clazz.domainName, clazz.description)
         }
     }
 }
 
 data class DomainResponse(
     val name: String,
-    val description: String
+    val description: String,
 )

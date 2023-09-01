@@ -29,8 +29,8 @@ class DomainClassify(
         Reflections(packageName)
             .getSubTypesOf(DomainDeclaration::class.java)
             .map {
-                val newInstance = Class.forName(it.name).getDeclaredConstructor().newInstance()
-                cachedDomains[it.name] = newInstance as DomainDeclaration
+                val newInstance = Class.forName(it.name).getDeclaredConstructor().newInstance() as DomainDeclaration
+                cachedDomains[newInstance.domainName] = newInstance
             }
 
         return cachedDomains
