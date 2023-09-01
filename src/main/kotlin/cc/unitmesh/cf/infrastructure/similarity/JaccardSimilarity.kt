@@ -2,8 +2,9 @@ package cc.unitmesh.cf.infrastructure.similarity
 
 import cc.unitmesh.cf.core.dsl.EmbeddingElement
 import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
+import org.springframework.stereotype.Component
 
-// todo: test in real world
+@Component
 class JaccardSimilarity : Similarity {
     override fun <T : EmbeddingElement> findNearest(
         data: List<T>,
