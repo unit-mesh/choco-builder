@@ -46,7 +46,7 @@ class FEWorkflow : Workflow() {
             |行动：FINISH
             |最终输出：编写一个栅格布局的登录页面
             |
-            |以下是您和当前用户的交互历史：{交互历史}
+            |以下是您和当前用户的交互历史：${'$'}{history}
         """.trimMargin()
         )
         val DESIGN: PromptTemplate = PromptTemplate(
