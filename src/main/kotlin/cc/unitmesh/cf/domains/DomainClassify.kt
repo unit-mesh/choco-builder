@@ -11,21 +11,28 @@ import org.springframework.stereotype.Component
 class DomainClassify(
     private val cachedEmbedding: CachedEmbedding,
 ) {
-    val cachedDomains: MutableList<Class<out DomainDeclaration>> = mutableListOf()
+    //    val cachedDomains: MutableList<Class<out DomainDeclaration>> = mutableListOf()
+    // to hashmap
+    val cachedDomains: MutableMap<String, Class<out DomainDeclaration>> = mutableMapOf()
+
     fun dispatch(question: String): DomainDeclaration {
         val question: Embedding = cachedEmbedding.createEmbedding(question)
         return DomainDeclarationPlaceholder()
     }
 
-    fun lookupDomains(): List<Class<out DomainDeclaration>> {
+    private val packageName = DomainClassify::class.java.`package`.name
+
+    fun lookupDomains(): MutableMap<String, Class<out DomainDeclaration>> {
         if (cachedDomains.isNotEmpty()) {
             return cachedDomains
         }
 
-        val domains = Reflections(DomainClassify::class.java.`package`.name).getSubTypesOf(DomainDeclaration::class.java)
-            .toList()
+        Reflections(packageName)
+            .getSubTypesOf(DomainDeclaration::class.java)
+            .map {
+                cachedDomains[it.name] = it
+            }
 
-        this.cachedDomains.addAll(domains)
-        return domains
+        return cachedDomains
     }
 }

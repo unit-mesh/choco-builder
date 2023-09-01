@@ -1,10 +1,14 @@
 package cc.unitmesh.cf.presentation.agent
 
+import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/agent")
-class AgentController {
+class AgentController(
+    val classify: DomainClassify
+) {
+
     @PostMapping("/smart")
     fun smartAgent(@RequestParam("q") query: String): String {
         // 1. find problem domain
@@ -16,7 +20,7 @@ class AgentController {
 
     @PostMapping("/domain/{domainName}")
     fun domainAgent(@RequestParam("q") query: String, @PathVariable domainName: String): String {
-
+        val domains = classify.lookupDomains()
         return "TODO"
     }
 }
