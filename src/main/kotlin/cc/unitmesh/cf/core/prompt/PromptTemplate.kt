@@ -15,7 +15,7 @@ data class PromptTemplate(
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<QAExample> = listOf(),
     val updateExamples: List<QAUpdateExample> = listOf(),
-) {
+) : StringTemplate() {
     /**
      * 范例类型
      * NONE: 没有范例
