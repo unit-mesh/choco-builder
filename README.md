@@ -6,6 +6,9 @@ Tech Stack:
 
 - [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
 - [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
+
+To spike:
+
 - [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
 - [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
 - [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
@@ -27,14 +30,18 @@ Tech Stack:
 使用场景，基于知识库的：
 
 - 一句话生成前端页面 (特定框架与场景)
-    1. 确认需求
-    2. 确认布局方式
+    1. Clarify: 确认需求
+        - [ ] 匹配现有需求
+    2. Design: 设计布局
         - [ ] 搜索历史组件布局
-    3. 生成页面 (React, React Runtime)
+    3. Execute: 生成页面 (React, React Runtime)
+        - [ ] Code Interpreter by [Unit Runtime](https://github.com/unit-mesh/unit-runtime)
 - 一句话生成后端 API (Ktor, Spring, Kotless）
-    1. 确认需求与输入和输出
-    2. 确认数据库表
-    3. 确认 API
+    1. 确认需求
+    2. 输入和输出
+    3. 确认数据库表
+        - [ ] 搜索历史数据库表
+    4. 确认生成的 API
 - 一句话生成 SQL 图表
     1. 识别问题领域
     2. 确认与澄清问题
