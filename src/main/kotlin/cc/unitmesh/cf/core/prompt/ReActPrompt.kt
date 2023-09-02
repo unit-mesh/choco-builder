@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 class ReActPrompt(
     @SerialName("输入")
-    val input: String,
+    override val question: String,
     @SerialName("输出")
-    val output: String,
+    override val answer: String,
     @SerialName("思考")
     val thought: String = "",
     @SerialName("动作")
@@ -19,5 +19,5 @@ class ReActPrompt(
     val ask: String = "",
     @SerialName("最终输出")
     val finalOutput: String = "",
-) {
+) : PromptExample {
 }

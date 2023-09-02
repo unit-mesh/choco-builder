@@ -74,10 +74,10 @@ class FEWorkflow : Workflow() {
             |- Navigation(10x) 表示导航栏, 10x 表示页面元素的宽度为 10x栅格宽度
             |
         """.trimMargin(),
-            qaAdjust = listOf(
-                QAAdjustExample(
-                    input = "生成一个导航栏的 mockup",
-                    output = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+            updateExamples = listOf(
+                QAUpdateExample(
+                    question = "生成一个导航栏的 mockup",
+                    answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
             |pageName: 导航栏
             |--------------------------------------
@@ -85,8 +85,8 @@ class FEWorkflow : Workflow() {
             |--------------------------------------
             |```
                 """.trimMargin(),
-                    action = "这里的 login 应该是 button，而不是 a",
-                    answer = """
+                    nextAction = "这里的 login 应该是 button，而不是 a",
+                    finalOutput = """
             |```design
             |pageName: 导航栏
             |--------------------------------------
@@ -95,9 +95,9 @@ class FEWorkflow : Workflow() {
             |```
                 """.trimMargin()
                 ),
-                QAAdjustExample(
-                    input = "生成一个包含图片的博客列表面 mockup",
-                    output = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+                QAUpdateExample(
+                    question = "生成一个包含图片的博客列表面 mockup",
+                    answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
             |pageName: 博客列表
             |----------------------------------------------
@@ -111,7 +111,7 @@ class FEWorkflow : Workflow() {
             |----------------------------------------------
             |```
                 """.trimMargin(),
-                    action = "YES",
+                    nextAction = "YES",
                 )
             )
         )

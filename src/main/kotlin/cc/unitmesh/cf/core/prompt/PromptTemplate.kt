@@ -14,7 +14,7 @@ data class PromptTemplate(
     val systemPrompt: String,
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<QAExample> = listOf(),
-    val qaAdjust: List<QAAdjustExample> = listOf(),
+    val updateExamples: List<QAUpdateExample> = listOf(),
 ) {
     /**
      * 范例类型
@@ -54,10 +54,10 @@ data class PromptTemplate(
             "Q:${it.question}\nA:\n${it.answer}\n"
         }
 
-        output += qaAdjust.joinToString("\n") {
-            val base = "input:${it.input}\noutput:${it.output}\n"
-            base + if (it.action.isNotEmpty()) {
-                "action:${it.action}\nanswer:${it.answer}\n"
+        output += updateExamples.joinToString("\n") {
+            val base = "input:${it.question}\noutput:${it.answer}\n"
+            base + if (it.nextAction.isNotEmpty()) {
+                "action:${it.nextAction}\nanswer:${it.finalOutput}\n"
             } else {
                 ""
             }
