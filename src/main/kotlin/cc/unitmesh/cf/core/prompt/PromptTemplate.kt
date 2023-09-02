@@ -2,7 +2,6 @@ package cc.unitmesh.cf.core.prompt
 
 import cc.unitmesh.cf.infrastructure.utils.uuid
 import jakarta.persistence.Id
-import org.jetbrains.annotations.TestOnly
 
 data class PromptTemplate(
     @Id
@@ -15,7 +14,7 @@ data class PromptTemplate(
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<QAExample> = listOf(),
     val updateExamples: List<QAUpdateExample> = listOf(),
-) : StringTemplate() {
+) : StringTemplate {
     /**
      * 范例类型
      * NONE: 没有范例
@@ -47,8 +46,7 @@ data class PromptTemplate(
         Custom("custom")
     }
 
-    @TestOnly
-    fun format(): String {
+    override fun format(): String {
         var output = systemPrompt + "\n"
         output += examples.joinToString("\n") {
             "Q:${it.question}\nA:\n${it.answer}\n"

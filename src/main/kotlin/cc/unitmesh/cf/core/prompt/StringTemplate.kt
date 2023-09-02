@@ -1,5 +1,5 @@
 package cc.unitmesh.cf.core.prompt
 
-open class StringTemplate {
-
+interface StringTemplate {
+    fun format(): String
 }
