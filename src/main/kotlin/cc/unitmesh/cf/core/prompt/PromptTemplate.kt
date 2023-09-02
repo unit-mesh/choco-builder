@@ -53,9 +53,9 @@ data class PromptTemplate(
         }
 
         output += updateExamples.joinToString("\n") {
-            val base = "input:${it.question}\noutput:${it.answer}\n"
+            val base = "question:${it.question}\nanswer:${it.answer}\n"
             base + if (it.nextAction.isNotEmpty()) {
-                "action:${it.nextAction}\nanswer:${it.finalOutput}\n"
+                "action:${it.nextAction}\nfinalOutput:${it.finalOutput}\n"
             } else {
                 ""
             }
