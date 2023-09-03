@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.frontend.context
 
 import cc.unitmesh.cf.core.context.variable.VariableResolver
-import cc.unitmesh.cf.domains.frontend.model.ComponentDsl
+import cc.unitmesh.cf.domains.frontend.model.UiComponent
 import cc.unitmesh.cf.domains.frontend.model.LayoutStyle
 import kotlinx.serialization.json.Json
 import org.apache.velocity.VelocityContext
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component
 import java.io.StringWriter
 import java.nio.file.Files.walk
 import java.nio.file.Paths
-import kotlin.io.path.Path
 import kotlin.io.path.extension
 import kotlin.io.path.isRegularFile
 
@@ -24,10 +23,10 @@ class FEVariableResolver : VariableResolver<FEVariables> {
         val resourceUrl = this.javaClass.getResource("/frontend/components")!!
         val dir = Paths.get(resourceUrl.toURI())
 
-        val components: List<ComponentDsl> = walk(dir)
+        val components: List<UiComponent> = walk(dir)
             .filter { it.isRegularFile() && it.extension == "json" }
             .map { it.toFile().readText() }
-            .map { Json.decodeFromString<ComponentDsl>(it) }
+            .map { Json.decodeFromString<UiComponent>(it) }
             .toList()
 
         // walk through the dir and load all layouts

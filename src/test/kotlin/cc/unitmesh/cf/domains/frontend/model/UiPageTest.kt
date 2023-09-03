@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class PageDslTest {
+class UiPageTest {
 
     @Test
     fun should_throwIllegalArgumentException_when_languageIsNotDesign() {
@@ -14,7 +14,7 @@ class PageDslTest {
                 "}\n" +
                 "```"
 
-        assertThrows<IllegalArgumentException> { PageDsl.parse(string) }
+        assertThrows<IllegalArgumentException> { UiPage.parse(string) }
     }
 
     @Test
@@ -35,10 +35,10 @@ pageName: 聊天详细页
 ```"""
 
         // when
-        val result = PageDsl.parse(string)
+        val result = UiPage.parse(string)
 
         // then
-        assertEquals("聊天详细页", result.pageName)
+        assertEquals("聊天详细页", result.name)
         assertEquals(
             """----------------------------------------------
 |      Navigation(10x)                       |

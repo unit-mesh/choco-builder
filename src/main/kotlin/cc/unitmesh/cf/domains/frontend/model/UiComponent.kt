@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ComponentDsl(
+data class UiComponent(
     override val id: String = uuid(),
 
     @get:JsonGetter("名称")
