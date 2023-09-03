@@ -18,10 +18,6 @@ class FESolutionDesigner(
         ).filter { it.content.isNotBlank() }
 
         val completion = completion.createCompletion(messages)
-        // parse page name
-        return UiPage(
-            name = question,
-            layout = completion.content
-        )
+        return UiPage.parse(completion.content)
     }
 }
