@@ -6,5 +6,5 @@ import cc.unitmesh.cf.core.dsl.Interpreter
 
 interface SolutionExecutor {
     val interpreters: List<Interpreter>
-    abstract fun execute(solution: Dsl): Answer
+    fun execute(solution: Dsl): Answer
 }

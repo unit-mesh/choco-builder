@@ -13,11 +13,10 @@ at [Aligning organization and architecture with strategic DDD](https://speakerde
 
 a user query is processed by the following steps:
 
-1. [DomainDeclaration.kt](src/main/kotlin/cc/unitmesh/cf/core/process/DomainDeclaration.kt)
-2. [ProblemClarifier.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemClarifier.kt)
-3. [ProblemAnalyzer.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemAnalyzer.kt)
-4. [SolutionDesigner.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionDesigner.kt)
-5. [SolutionExecutor.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionExecutor.kt)
+1. [ProblemClarifier.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemClarifier.kt)
+2. [ProblemAnalyzer.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemAnalyzer.kt)
+3. [SolutionDesigner.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionDesigner.kt)
+4. [SolutionExecutor.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionExecutor.kt)
 
 ## Dev
 
