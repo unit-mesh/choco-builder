@@ -11,6 +11,14 @@ the core concepts of Chocolate Factory are:
 (PS: Origin made by Michael Plöd
 at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
 
+a user query is processed by the following steps:
+
+1. [DomainDeclaration.kt](src/main/kotlin/cc/unitmesh/cf/core/process/DomainDeclaration.kt)
+2. [ProblemClarifier.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemClarifier.kt)
+3. [ProblemAnalyzer.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemAnalyzer.kt)
+4. [SolutionDesigner.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionDesigner.kt)
+5. [SolutionExecutor.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionExecutor.kt)
+
 ## Dev
 
 Tech Stack:
