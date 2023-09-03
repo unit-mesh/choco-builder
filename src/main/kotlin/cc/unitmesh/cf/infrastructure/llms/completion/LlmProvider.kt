@@ -5,7 +5,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-interface CompletionProvider {
+interface LlmProvider {
     fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice>
 
     fun createCompletion(messages: List<LlmMsg.ChatMessage>): LlmMsg.ChatMessage {

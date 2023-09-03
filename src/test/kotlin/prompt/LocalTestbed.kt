@@ -1,14 +1,14 @@
 package prompt
 
-import cc.unitmesh.cf.infrastructure.llms.completion.CompletionProvider
-import cc.unitmesh.cf.infrastructure.llms.completion.MockCompletionProvider
-import cc.unitmesh.cf.infrastructure.llms.completion.OpenAiCompletion
+import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.infrastructure.llms.completion.MockProvider
+import cc.unitmesh.cf.infrastructure.llms.completion.OpenAiProvider
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import io.github.cdimascio.dotenv.dotenv
 
 
 open class LocalTestbed {
-    private var completion: CompletionProvider
+    private var completion: LlmProvider
 
     init {
         try {
@@ -18,11 +18,11 @@ open class LocalTestbed {
                 apiKey = dotenv["OPENAI_KEY"] ?: ""
                 serverAddress = dotenv["OPENAI_SERVER_ADDRESS"]
             }.let {
-                completion = OpenAiCompletion(it)
+                completion = OpenAiProvider(it)
             }
         } catch (e: Exception) {
             println("Failed to initialize OpenAI Completion")
-            completion = MockCompletionProvider()
+            completion = MockProvider()
         }
     }
 }

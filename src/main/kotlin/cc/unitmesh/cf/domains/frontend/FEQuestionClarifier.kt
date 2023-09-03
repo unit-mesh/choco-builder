@@ -4,12 +4,12 @@ import cc.unitmesh.cf.core.base.ClarificationAction
 import cc.unitmesh.cf.core.process.QuestionClarifier
 import cc.unitmesh.cf.domains.frontend.context.FEWorkflow
 import cc.unitmesh.cf.domains.frontend.dsl.FEDslContextBuilder
-import cc.unitmesh.cf.infrastructure.llms.completion.CompletionProvider
+import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 
 class FEQuestionClarifier(
     private val contextBuilder: FEDslContextBuilder,
-    private val completion: CompletionProvider,
+    private val completion: LlmProvider,
 ) : QuestionClarifier {
     override fun clarify(
         domain: String,

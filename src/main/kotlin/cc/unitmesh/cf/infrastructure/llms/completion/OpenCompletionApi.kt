@@ -14,7 +14,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 import java.time.Duration
 
 @Component
-class OpenAiCompletion(val config: OpenAiConfiguration) : CompletionProvider {
+class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
     var totalTokens = 0L;
     private val openai: OpenAiService by lazy {
         // for proxy
