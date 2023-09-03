@@ -2,6 +2,17 @@
 
 > Chocolate Factory 是一款开源的 LLM 应用引擎/LLM 应用框架，旨在帮助您打造 LLM 生成助手。
 
+## Key concepts
+
+the core concepts of Chocolate Factory are:
+
+![Chocolate Factory Concepts](docs/chocolate-factory.svg)
+
+(PS: Origin made by Michael Plöd
+at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
+
+## Dev
+
 Tech Stack:
 
 - [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
