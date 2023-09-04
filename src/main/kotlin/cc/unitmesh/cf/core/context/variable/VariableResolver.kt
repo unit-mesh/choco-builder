@@ -7,7 +7,7 @@ interface VariableResolver<T> {
 
     val velocityContext: VelocityContext
 
-    fun resolve(question: String)
+    fun resolve(question: String = "")
 
     fun put(key: String, value: Any) {
         velocityContext.put(key, value)

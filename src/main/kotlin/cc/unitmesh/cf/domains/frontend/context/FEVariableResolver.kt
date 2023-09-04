@@ -18,6 +18,10 @@ class FEVariableResolver : VariableResolver<FEVariables> {
     override var variables: FEVariables? = null
     override val velocityContext = VelocityContext()
 
+    init {
+        this.resolve()
+    }
+
     override fun resolve(question: String) {
         // walk through the dir and load all components
         val resourceUrl = this.javaClass.getResource("/frontend/components")!!
@@ -48,6 +52,10 @@ class FEVariableResolver : VariableResolver<FEVariables> {
                 it.name + "(" + it.tagName + ")"
             }
         )
+    }
+
+    fun updateQuestion(question: String) {
+        variables = variables!!.copy(question = question)
     }
 
     override fun compile(input: String): String {
