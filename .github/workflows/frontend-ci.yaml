@@ -15,10 +15,15 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
+
       - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: Installing my packages
         run: pnpm install
@@ -27,7 +32,7 @@ jobs:
         run: npm run build && npm run export && touch ../out/.nojekyll
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: public # The branch the action will deploy to
