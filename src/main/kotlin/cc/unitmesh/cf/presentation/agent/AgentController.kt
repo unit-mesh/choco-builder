@@ -6,7 +6,7 @@ import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/agent")
+@RequestMapping("/agents")
 class AgentController(
     val classify: DomainClassify,
 ) {
@@ -23,7 +23,7 @@ class AgentController(
         return "TODO"
     }
 
-    @GetMapping("/domain/{domainName}/prompts")
+    @GetMapping("/domains/{domainName}/prompts")
     fun domainAgent(@PathVariable domainName: String): List<PromptTemplate> {
         val domains = classify.lookupDomains()
         log.info("domains: {}", domains)
