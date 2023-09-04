@@ -1,25 +1,28 @@
-import { UseChatHelpers } from 'ai/react'
-
-import { Button } from '@/components/ui/button'
 import { ExternalLink } from '@/components/external-link'
-import { IconArrowRight } from '@/components/ui/icons'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
+import { useState } from 'react'
 
-const exampleMessages = [
+const domains = [
   {
-    heading: 'Explain technical concepts',
-    message: `What is a "serverless function"?`
-  },
-  {
-    heading: 'Summarize an article',
-    message: 'Summarize the following article for a 2nd grader: \n'
-  },
-  {
-    heading: 'Draft an email',
-    message: `Draft an email to my boss about the following: \n`
+    label: 'Frontend',
+    value: 'frontend'
   }
 ]
 
-export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
+type EmptyScreenType = {
+  setDomain: (value: string | null) => void
+}
+
+export function EmptyScreen({ setDomain }: EmptyScreenType) {
+  const [value, setValue] = useState('frontend')
+
   return (
     <div className="mx-auto max-w-2xl px-4">
       <div className="rounded-lg border bg-background p-8">
@@ -27,25 +30,43 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
           Welcome to use Chocolate Factory!
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground">
-          This is an open source LLM application engine designed to empower you in creating your very own AI assistant.
-          Built with{' '}
-          <ExternalLink href="https://unitmesh.cc">Unit Mesh Team</ExternalLink>.
+          This is an open source LLM application engine designed to empower you
+          in creating your very own AI assistant. Built with{' '}
+          <ExternalLink href="https://unitmesh.cc">Unit Mesh Team</ExternalLink>
+          .
         </p>
         <p className="leading-normal text-muted-foreground">
-          You can start a conversation here or try the following examples:
+          You can start with select a LLM helper here:
         </p>
         <div className="mt-4 flex flex-col items-start space-y-2">
-          {exampleMessages.map((message, index) => (
-            <Button
-              key={index}
-              variant="link"
-              className="h-auto p-0 text-base"
-              onClick={() => setInput(message.message)}
-            >
-              <IconArrowRight className="mr-2 text-muted-foreground" />
-              {message.heading}
-            </Button>
-          ))}
+          <Select
+            value={value}
+            onValueChange={value => {
+              console.log(value)
+              setDomain(value)
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue
+                placeholder="Select a fruit…"
+                aria-label={value}>
+                {domains.find(d => d.value === value)?.label}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {domains.map(domain => (
+                  <SelectItem
+                    key={domain.value}
+                    value={domain.value}
+                    disabled={domain.value === value}
+                  >
+                    {domain.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>
