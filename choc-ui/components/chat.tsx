@@ -29,6 +29,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       .then(res => res.json())
       .then(data => {
         setWorkflow(data)
+        setPromptStage(data?.length ? data[0] : null)
       })
   }, [domain])
 
@@ -50,7 +51,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         domain
       },
       onResponse: response => {
-        console.log(response)
+        console.log(response.body)
       }
     })
   return (

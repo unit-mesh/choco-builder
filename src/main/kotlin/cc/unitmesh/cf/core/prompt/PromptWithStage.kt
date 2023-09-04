@@ -36,21 +36,21 @@ data class PromptWithStage(
     @Serializable
     enum class Stage(@JsonValue val value: String) {
         // 归类
-        Classify("classify"),
+        Classify("Classify"),
 
         // 澄清
-        Clarify("clarify"),
+        Clarify("Clarify"),
 
         // 分析
-        Analyze("analyze"),
+        Analyze("Analyze"),
 
         // 设计
-        Design("design"),
+        Design("Design"),
 
         // 执行
-        Execute("execute"),
+        Execute("Execute"),
 
-        Custom("custom")
+        Custom("Custom")
     }
 
     override fun format(): String {
