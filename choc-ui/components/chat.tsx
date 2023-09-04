@@ -32,7 +32,7 @@ enum Stage {
 export function Chat({ id, initialMessages, className }: ChatProps) {
   const [domain, setDomain] = useLocalStorage<string | null>(
     'ai-domain',
-    'frontend'
+    'Frontend'
   )
 
   // sent request to /api/domains/frontend

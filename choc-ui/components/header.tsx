@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
-import { IconGitHub, IconNextChat } from '@/components/ui/icons'
+import { IconGitHub } from '@/components/ui/icons'
 
 export async function Header() {
   return (

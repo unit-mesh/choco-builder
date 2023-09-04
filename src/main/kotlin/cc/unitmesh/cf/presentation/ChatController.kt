@@ -1,6 +1,7 @@
 package cc.unitmesh.cf.presentation
 
 import cc.unitmesh.cf.core.prompt.PromptTemplate
+import cc.unitmesh.cf.domains.SupportedDomains
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -32,6 +33,7 @@ data class MessageRequest(
     val messages: List<Message>,
     val id: String,
     val stage: PromptTemplate.Stage,
-    val domain: String,
+    val domain: SupportedDomains,
     val previewToken: String?,
 )
+
