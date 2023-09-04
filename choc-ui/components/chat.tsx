@@ -7,6 +7,9 @@ import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
+import { OpenAIStream, StreamingTextResponse } from 'ai'
+import { toast } from 'react-hot-toast'
+import {ChatList} from "@/components/chat-list";
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -30,6 +33,12 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       body: {
         id,
         domain
+      },
+      onResponse(response) {
+        if (response.status === 401) {
+          toast.error(response.statusText)
+        }
+        console.log(messages)
       }
     })
   return (
@@ -37,7 +46,8 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
         {messages.length ? (
           <>
-            <ChatScrollAnchor trackVisibility={isLoading} />
+              <ChatList messages={messages} />
+              <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
           <EmptyScreen setDomain={setDomain} />
@@ -51,7 +61,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         reload={reload}
         messages={messages}
         input={input}
-        domain={domain}
         setInput={setInput}
       />
     </>
