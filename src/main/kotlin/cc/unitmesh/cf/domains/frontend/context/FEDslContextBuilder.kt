@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.frontend.dsl
+package cc.unitmesh.cf.domains.frontend.context
 
 import cc.unitmesh.cf.core.context.DslContext
 import cc.unitmesh.cf.core.context.DslContextBuilder

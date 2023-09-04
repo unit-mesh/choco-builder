@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.base.ClarificationAction
 import cc.unitmesh.cf.core.process.ProblemClarifier
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.domains.frontend.context.FEWorkflow
-import cc.unitmesh.cf.domains.frontend.dsl.FEDslContextBuilder
+import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 
