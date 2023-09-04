@@ -8,25 +8,7 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { useState } from 'react'
-
-const domains = [
-  {
-    label: 'Frontend',
-    value: 'Frontend'
-  },
-  {
-    label: 'Ktor',
-    value: 'Ktor'
-  },
-  {
-    label: 'SQL',
-    value: 'SQL'
-  },
-  {
-    label: 'Custom',
-    value: 'Custom'
-  }
-]
+import { domains } from '@/components/workflow/domains'
 
 type EmptyScreenType = {
   setDomain: (value: string | null) => void
@@ -54,7 +36,6 @@ export function EmptyScreen({ setDomain }: EmptyScreenType) {
           <Select
             value={value}
             onValueChange={value => {
-              console.log(value)
               setValue(value)
               setDomain(value)
             }}

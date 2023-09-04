@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { type Message, useChat } from 'ai/react'
 
 import { cn } from '@/lib/utils'
@@ -8,8 +8,8 @@ import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { ChatList } from '@/components/chat-list'
-import { Stage } from '@/components/workflow/stage'
-import { Workflow } from '@/components/workflow/workflow'
+import { StagePrompt, Workflow } from '@/components/workflow/workflow'
+import { domains } from '@/components/workflow/domains'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -17,17 +17,23 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
-  const [domain, setDomain] = useLocalStorage<string | null>(
-    'ai-domain',
-    'Frontend'
-  )
-  const [stage, setStage] = useState<Stage>(Stage.Clarify)
+  const [domain, setDomain] = useState<string | null>(domains[0].value)
   const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
+  const [stage, setStage] = useState<StagePrompt | null>(
+    workflow?.prompts?.length ? workflow.prompts[0] : null
+  )
 
-  // sent request to /api/domains/frontend
+  // sent request to /api/workflows/frontend
+  useEffect(() => {
+    fetch(`http://localhost:18080/api/workflows/${domain}`)
+      .then(res => res.json())
+      .then(data => {
+        setWorkflow(data)
+      })
+  }, [domain])
+
   const updateDomain = (value: string | null) => {
     setDomain(value)
-    setStage(Stage.Classify)
   }
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
@@ -42,6 +48,9 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         stage,
         id,
         domain
+      },
+      onResponse: response => {
+        console.log(response)
       }
     })
   return (

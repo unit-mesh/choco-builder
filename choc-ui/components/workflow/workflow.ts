@@ -10,7 +10,7 @@ export enum ExampleType {
   MULTI_CHAT
 }
 
-export class PromptTemplate {
+export class StagePrompt {
   id: string
   stage: Stage
   systemPrompt: string
@@ -38,10 +38,15 @@ export class PromptTemplate {
 }
 
 export class Workflow {
-  prompts: PromptTemplate[]
+  prompts: StagePrompt[]
 
   constructor() {
     this.prompts = []
+  }
+
+  // iteration prompts and find the first prompt that is not done
+  get currentPrompt() {
+    return this.prompts.find(prompt => !prompt.isDone)
   }
 
   static default() {

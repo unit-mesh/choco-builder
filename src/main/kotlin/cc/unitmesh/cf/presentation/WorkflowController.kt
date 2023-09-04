@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/workflows")
 class WorkflowController(val classify: DomainClassify) {
+    val domains = classify.lookupDomains()
+
     companion object {
         private val log = org.slf4j.LoggerFactory.getLogger(AgentController::class.java)
     }
 
     @GetMapping("/{domainName}")
     fun domainAgent(@PathVariable domainName: String): List<PromptTemplate> {
-        val domains = classify.lookupDomains()
         log.info("domains: {}", domains)
         val domain = domains[domainName]
         if (domain == null) {
