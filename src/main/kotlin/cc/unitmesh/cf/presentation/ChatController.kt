@@ -6,11 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
-@CrossOrigin(maxAge = 3600)
 @RestController
 class PostController {
 
-    @CrossOrigin
     @PostMapping("/chat")
     fun chat(@RequestBody messageRequest: MessageRequest): SseEmitter {
         val emitter = SseEmitter()

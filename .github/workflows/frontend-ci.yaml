@@ -50,5 +50,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: public # The branch the action will deploy to
-          FOLDER: out # The folder the action will deploy to
+          FOLDER: out
