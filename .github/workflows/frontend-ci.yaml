@@ -49,15 +49,10 @@ jobs:
       - name: Build my App
         run: npm run build && touch ./out/.nojekyll
 
-      - name: echo dir
-        run:  |
-          pwd
-          ls -la
-
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY-NAME: unit-mesh/chocolate-factory-deploy
           BRANCH: public
-          FOLDER: out
+          FOLDER: choc-ui/out

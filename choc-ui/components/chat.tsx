@@ -35,6 +35,8 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'frontend'
   )
 
+  // sent request to /api/domains/frontend
+
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       api: 'http://localhost:18080/api/chat',
@@ -47,12 +49,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         stage: Stage,
         id,
         domain
-      },
-      onResponse(response) {
-        if (response.status === 401) {
-          toast.error(response.statusText)
-        }
-        console.log(messages)
       }
     })
   return (
