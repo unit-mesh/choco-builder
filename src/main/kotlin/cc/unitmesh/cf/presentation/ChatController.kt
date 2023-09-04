@@ -2,7 +2,7 @@ package cc.unitmesh.cf.presentation
 
 import cc.unitmesh.cf.core.prompt.PromptWithStage
 import cc.unitmesh.cf.domains.SupportedDomains
-import cc.unitmesh.cf.domains.frontend.context.FEWorkflow
+import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -12,16 +12,18 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 @RestController
-class ChatController {
+class ChatController(
+    val feFlow: FEWorkflow,
+) {
     @PostMapping("/chat")
     fun chat(@RequestBody request: ChatRequest): SseEmitter {
         val emitter = SseEmitter()
-        var output = "..."
+        val output = "..."
 
         // 1. search by domains
         val workflow = when (request.domain) {
             SupportedDomains.Frontend -> {
-                FEWorkflow()
+                feFlow
             }
 
             SupportedDomains.Ktor -> TODO()
@@ -29,16 +31,15 @@ class ChatController {
             SupportedDomains.Custom -> TODO()
         }
 
-        println(request.stage)
         // 2. searches by stage
         val prompt = workflow.prompts[request.stage]
             ?: throw RuntimeException("prompt not found!")
 
+        // 3. execute stage with prompt
         println(prompt)
 
-        // 3. search by id
-
-        val response = MessageResponse(output, request.id, PromptWithStage.Stage.Analyze, true)
+        // 4. return response
+        val response = MessageResponse(output, request.id, prompt.stage, true)
 
         emitter.send(Json.encodeToString(response))
         emitter.complete()

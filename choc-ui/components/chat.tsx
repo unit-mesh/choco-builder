@@ -23,7 +23,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     workflow?.prompts?.length ? workflow.prompts[0] : null
   )
 
-  // sent request to /api/workflows/frontend
   useEffect(() => {
     fetch(`http://localhost:18080/api/workflows/${domain}`)
       .then(res => res.json())
