@@ -1,6 +1,9 @@
 package cc.unitmesh.cf.domains.frontend
 
-import cc.unitmesh.cf.core.prompt.*
+import cc.unitmesh.cf.core.prompt.PromptWithStage
+import cc.unitmesh.cf.core.prompt.QAExample
+import cc.unitmesh.cf.core.prompt.QAUpdateExample
+import cc.unitmesh.cf.core.prompt.Workflow
 import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Component
 class FEWorkflow(
     private val contextBuilder: FEDslContextBuilder,
     private val completion: LlmProvider,
-    private val variable: FEVariableResolver,
+    private val variable: FEVariableResolver
 ) : Workflow() {
     override val prompts: LinkedHashMap<PromptWithStage.Stage, PromptWithStage>
         get() = linkedMapOf(
