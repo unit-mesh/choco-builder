@@ -52,7 +52,6 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
           repository-name: unit-mesh/chocolate-factory-deploy
-          branch: master
           folder: choc-ui/out

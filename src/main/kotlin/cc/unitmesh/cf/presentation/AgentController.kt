@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.agent
+package cc.unitmesh.cf.presentation
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
 import cc.unitmesh.cf.core.prompt.PromptTemplate
