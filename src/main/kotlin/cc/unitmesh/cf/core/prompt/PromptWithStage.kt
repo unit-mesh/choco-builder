@@ -1,10 +1,11 @@
 package cc.unitmesh.cf.core.prompt
 
 import cc.unitmesh.cf.infrastructure.utils.uuid
+import com.fasterxml.jackson.annotation.JsonValue
 import jakarta.persistence.Id
 import kotlinx.serialization.Serializable
 
-data class PromptTemplate(
+data class PromptWithStage(
     @Id
     val id: String = uuid(),
     val stage: Stage,
@@ -33,7 +34,7 @@ data class PromptTemplate(
     }
 
     @Serializable
-    enum class Stage(val value: String) {
+    enum class Stage(@JsonValue val value: String) {
         // 归类
         Classify("classify"),
 

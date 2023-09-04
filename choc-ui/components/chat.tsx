@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
-import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { ChatList } from '@/components/chat-list'
-import { StagePrompt, Workflow } from '@/components/workflow/workflow'
+import { PromptWithStage, Workflow } from '@/components/workflow/workflow'
 import { domains } from '@/components/workflow/domains'
+import { Stage } from '@/components/workflow/stage'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -19,7 +19,7 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 export function Chat({ id, initialMessages, className }: ChatProps) {
   const [domain, setDomain] = useState<string | null>(domains[0].value)
   const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
-  const [stage, setStage] = useState<StagePrompt | null>(
+  const [promptStage, setPromptStage] = useState<PromptWithStage | null>(
     workflow?.prompts?.length ? workflow.prompts[0] : null
   )
 
@@ -45,7 +45,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         'Content-Type': 'application/json'
       },
       body: {
-        stage,
+        stage: promptStage?.stage ?? Stage.Classify,
         id,
         domain
       },

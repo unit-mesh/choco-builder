@@ -3,7 +3,7 @@ package cc.unitmesh.cf.domains.frontend.context
 import cc.unitmesh.cf.core.prompt.*
 
 class FEWorkflow : Workflow() {
-    override val prompts: LinkedHashMap<PromptTemplate.Stage, PromptTemplate>
+    override val prompts: LinkedHashMap<PromptWithStage.Stage, PromptWithStage>
         get() = linkedMapOf(
             CLARIFY.stage to CLARIFY,
             DESIGN.stage to DESIGN,
@@ -11,9 +11,9 @@ class FEWorkflow : Workflow() {
         )
 
     companion object {
-        val CLARIFY: PromptTemplate = PromptTemplate(
+        val CLARIFY: PromptWithStage = PromptWithStage(
             id = "FrontendClarify",
-            stage = PromptTemplate.Stage.Clarify,
+            stage = PromptWithStage.Stage.Clarify,
             systemPrompt = """你是一个专业的前端技术咨询师（Advisor），职责是帮助开发人员用户收集和分析需求。
             |- 你必须使用中文和用户沟通。
             |- 当用户问你问题时，你必须帮助用户明确他们的需求。
@@ -53,9 +53,9 @@ class FEWorkflow : Workflow() {
         /**
          * UI 布局 DSL 基于： [https://github.com/phodal/design](https://github.com/phodal/design)
          */
-        val DESIGN: PromptTemplate = PromptTemplate(
+        val DESIGN: PromptWithStage = PromptWithStage(
             id = "FrontendDesign",
-            stage = PromptTemplate.Stage.Design,
+            stage = PromptWithStage.Stage.Design,
             systemPrompt = """你是一个专业的前端技术咨询师（Advisor），请以如下的 ASCII 描述用户所需要的页面。
             |
             |- 如果用户没有给出页面元素的描述，你必须自己补充。
@@ -115,9 +115,9 @@ class FEWorkflow : Workflow() {
                 )
             )
         )
-        val EXECUTE: PromptTemplate = PromptTemplate(
+        val EXECUTE: PromptWithStage = PromptWithStage(
             id = "FrontendExecute",
-            stage = PromptTemplate.Stage.Execute,
+            stage = PromptWithStage.Stage.Execute,
             systemPrompt = """你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求和页面，生成对应的前端代码。
             |- 项目的技术栈是 React + TypeScript + Ant Design。
             |
