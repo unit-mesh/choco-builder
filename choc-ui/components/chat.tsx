@@ -1,5 +1,5 @@
 'use client'
-
+import { useState } from 'react'
 import { type Message, useChat } from 'ai/react'
 
 import { cn } from '@/lib/utils'
@@ -7,26 +7,12 @@ import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
-import { toast } from 'react-hot-toast'
 import { ChatList } from '@/components/chat-list'
+import { Stage } from '@/components/workflow/stage'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
-}
-
-enum Stage {
-  // 问题归类
-  Classify = 'Classify',
-  // 问题澄清
-  Clarify = 'Clarify',
-  // 问题分析
-  Analyze = 'Analyze',
-  // 解决方案设计
-  Design = 'Design',
-  // 解决方案实现
-  Execute = 'Execute',
-  Custom = 'Custom'
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
@@ -34,8 +20,14 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'ai-domain',
     'Frontend'
   )
+  const [stage, setStage] = useState<Stage>(Stage.Clarify)
+  const [workflow, setWorkflow] = useState<Workflow>([])
 
   // sent request to /api/domains/frontend
+  const updateDomain = (value: string | null) => {
+    setDomain(value)
+    setStage(Stage.Classify)
+  }
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
@@ -46,7 +38,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         'Content-Type': 'application/json'
       },
       body: {
-        stage: Stage.Clarify,
+        stage,
         id,
         domain
       }
@@ -60,7 +52,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
-          <EmptyScreen setDomain={setDomain} />
+          <EmptyScreen setDomain={updateDomain} />
         )}
       </div>
       <ChatPanel

@@ -18,7 +18,9 @@ class PostController {
         val emitter = SseEmitter()
 
         val output = "Hello World!"
-        emitter.send(Json.encodeToString(MessageResponse(output, messageRequest.id, PromptTemplate.Stage.Analyze, true)))
+        val response = MessageResponse(output, messageRequest.id, PromptTemplate.Stage.Analyze, true)
+
+        emitter.send(Json.encodeToString(response))
         emitter.complete()
         return emitter
     }

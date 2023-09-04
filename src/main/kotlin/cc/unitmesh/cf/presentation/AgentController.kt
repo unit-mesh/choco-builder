@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/agents")
-class AgentController(
-    val classify: DomainClassify,
-) {
+class AgentController(val classify: DomainClassify) {
     companion object {
         private val log = org.slf4j.LoggerFactory.getLogger(AgentController::class.java)
     }
@@ -22,35 +20,4 @@ class AgentController(
         // 4. execute solution
         return "TODO"
     }
-
-    @GetMapping("/domains/{domainName}")
-    fun domainAgent(@PathVariable domainName: String): List<PromptTemplate> {
-        val domains = classify.lookupDomains()
-        log.info("domains: {}", domains)
-        val domain = domains[domainName]
-        if (domain == null) {
-            log.warn("domain [{}] not found!", domainName)
-            return emptyList()
-        }
-        val workflow = domain.workflow(domainName)
-
-        return workflow.prompts.map {
-            it.value
-        }
-    }
-
-    // domains list
-    @GetMapping("/domains")
-    fun domains(): List<DomainResponse> {
-        val domains: MutableMap<String, DomainDeclaration> = classify.lookupDomains()
-        return domains.map {
-            val clazz = it.value
-            DomainResponse(clazz.domainName, clazz.description)
-        }
-    }
 }
-
-data class DomainResponse(
-    val name: String,
-    val description: String,
-)
