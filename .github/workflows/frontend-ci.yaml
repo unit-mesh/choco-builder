@@ -9,10 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
-        run:
-            working-directory: ./choc-ui
+      run:
+        working-directory: ./choc-ui
 
-    steps:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
