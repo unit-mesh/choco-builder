@@ -12,7 +12,19 @@ import { useState } from 'react'
 const domains = [
   {
     label: 'Frontend',
-    value: 'frontend'
+    value: 'Frontend'
+  },
+  {
+    label: 'Ktor',
+    value: 'Ktor'
+  },
+  {
+    label: 'SQL',
+    value: 'SQL'
+  },
+  {
+    label: 'Custom',
+    value: 'Custom'
   }
 ]
 
@@ -21,7 +33,7 @@ type EmptyScreenType = {
 }
 
 export function EmptyScreen({ setDomain }: EmptyScreenType) {
-  const [value, setValue] = useState('frontend')
+  const [value, setValue] = useState(domains[0].value)
 
   return (
     <div className="mx-auto max-w-2xl px-4">
@@ -48,9 +60,7 @@ export function EmptyScreen({ setDomain }: EmptyScreenType) {
             }}
           >
             <SelectTrigger>
-              <SelectValue
-                placeholder="Select a fruit…"
-                aria-label={value}>
+              <SelectValue placeholder="Select a domain…" aria-label={value}>
                 {domains.find(d => d.value === value)?.label}
               </SelectValue>
             </SelectTrigger>
