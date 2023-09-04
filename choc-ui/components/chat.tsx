@@ -14,7 +14,6 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
-  const [previewToken] = useLocalStorage<string | null>('ai-token', null)
   const [domain, setDomain] = useLocalStorage<string | null>(
     'ai-domain',
     'frontend'
@@ -22,13 +21,15 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
-      api: 'http://localhost:18080',
+      api: 'http://localhost:18080/api/chat',
       initialMessages,
       id,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: {
         id,
-        domain,
-        previewToken
+        domain
       }
     })
   return (
