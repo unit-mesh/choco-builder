@@ -2,6 +2,7 @@ package cc.unitmesh.cf.core.prompt
 
 import cc.unitmesh.cf.infrastructure.utils.uuid
 import jakarta.persistence.Id
+import kotlinx.serialization.Serializable
 
 data class PromptTemplate(
     @Id
@@ -27,6 +28,7 @@ data class PromptTemplate(
         MULTI_CHAT,
     }
 
+    @Serializable
     enum class Stage(val value: String) {
         // 归类
         Classify("classify"),

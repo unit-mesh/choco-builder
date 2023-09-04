@@ -17,16 +17,16 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 
 enum Stage {
   // 问题归类
-  Classify = 'classify',
+  Classify = 'Classify',
   // 问题澄清
-  Clarify = 'clarify',
+  Clarify = 'Clarify',
   // 问题分析
-  Analyze = 'analyze',
+  Analyze = 'Analyze',
   // 解决方案设计
-  Design = 'design',
+  Design = 'Design',
   // 解决方案实现
-  Execute = 'execute',
-  Custom = 'custom'
+  Execute = 'Execute',
+  Custom = 'Custom'
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
@@ -46,7 +46,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         'Content-Type': 'application/json'
       },
       body: {
-        stage: Stage,
+        stage: Stage.Clarify,
         id,
         domain
       }
