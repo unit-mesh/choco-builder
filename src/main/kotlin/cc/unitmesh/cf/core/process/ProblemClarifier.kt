@@ -2,6 +2,9 @@ package cc.unitmesh.cf.core.process
 
 import cc.unitmesh.cf.core.base.ClarificationAction
 
+
+typealias ClarifyResult = Pair<ClarificationAction, String>;
+
 /**
  *
  */

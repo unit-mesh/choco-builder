@@ -10,11 +10,7 @@ import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import org.springframework.stereotype.Component
 
 @Component
-class FEWorkflow(
-    private val contextBuilder: FEDslContextBuilder,
-    private val completion: LlmProvider,
-    private val variable: FEVariableResolver
-) : Workflow() {
+class FEWorkflow() : Workflow() {
     override val prompts: LinkedHashMap<PromptWithStage.Stage, PromptWithStage>
         get() = linkedMapOf(
             CLARIFY.stage to CLARIFY,
