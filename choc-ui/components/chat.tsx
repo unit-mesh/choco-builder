@@ -7,13 +7,26 @@ import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { toast } from 'react-hot-toast'
-import {ChatList} from "@/components/chat-list";
+import { ChatList } from '@/components/chat-list'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
+}
+
+enum Stage {
+  // 问题归类
+  Classify = 'classify',
+  // 问题澄清
+  Clarify = 'clarify',
+  // 问题分析
+  Analyze = 'analyze',
+  // 解决方案设计
+  Design = 'design',
+  // 解决方案实现
+  Execute = 'execute',
+  Custom = 'custom'
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
@@ -31,6 +44,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         'Content-Type': 'application/json'
       },
       body: {
+        stage: Stage,
         id,
         domain
       },
@@ -46,8 +60,8 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
         {messages.length ? (
           <>
-              <ChatList messages={messages} />
-              <ChatScrollAnchor trackVisibility={isLoading} />
+            <ChatList messages={messages} />
+            <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
           <EmptyScreen setDomain={setDomain} />

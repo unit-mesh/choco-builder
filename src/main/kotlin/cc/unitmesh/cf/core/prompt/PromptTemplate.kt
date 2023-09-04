@@ -6,7 +6,7 @@ import jakarta.persistence.Id
 data class PromptTemplate(
     @Id
     val id: String = uuid(),
-    val phase: Phase,
+    val stage: Stage,
     /**
      * 对于一个不支持 system prompt 的 LLM，需要把 prompt 与用户的输入结合到一起。
      */
@@ -27,7 +27,7 @@ data class PromptTemplate(
         MULTI_CHAT,
     }
 
-    enum class Phase(val value: String) {
+    enum class Stage(val value: String) {
         // 归类
         Classify("classify"),
 

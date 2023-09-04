@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.presentation
 
+import cc.unitmesh.cf.core.prompt.PromptTemplate
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,6 +26,7 @@ data class Message(val role: String, val content: String)
 data class MessageRequest(
     val messages: List<Message>,
     val id: String,
+    val stage: PromptTemplate.Stage,
     val domain: String,
     val previewToken: String?,
 )
