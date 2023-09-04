@@ -43,6 +43,7 @@ export function EmptyScreen({ setDomain }: EmptyScreenType) {
             value={value}
             onValueChange={value => {
               console.log(value)
+              setValue(value)
               setDomain(value)
             }}
           >

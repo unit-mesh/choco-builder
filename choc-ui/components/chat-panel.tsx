@@ -18,6 +18,7 @@ export interface ChatPanelProps
     | 'setInput'
   > {
   id?: string
+  domain: string | null
 }
 
 export function ChatPanel({
@@ -28,7 +29,8 @@ export function ChatPanel({
   reload,
   input,
   setInput,
-  messages
+  messages,
+  domain
 }: ChatPanelProps) {
   return (
     <div className="fixed inset-x-0 bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50%">
