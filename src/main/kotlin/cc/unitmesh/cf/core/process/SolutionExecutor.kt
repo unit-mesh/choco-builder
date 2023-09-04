@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.base.Answer
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.Interpreter
 
-interface SolutionExecutor {
+interface SolutionExecutor<in T: Dsl> {
     val interpreters: List<Interpreter>
-    fun execute(solution: Dsl): Answer
+    fun execute(solution: T): Answer
 }
