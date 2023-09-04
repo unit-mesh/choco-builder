@@ -1,9 +1,9 @@
-interface PromptExample {
+export interface PromptExample {
   question: string
   answer: string
 }
 
-class QAExample implements PromptExample {
+export class QAExample implements PromptExample {
   question: string
   answer: string
 
@@ -13,7 +13,7 @@ class QAExample implements PromptExample {
   }
 }
 
-class QAUpdateExample implements PromptExample {
+export class QAUpdateExample implements PromptExample {
   question: string
   answer: string
   nextAction: string

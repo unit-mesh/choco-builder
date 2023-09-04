@@ -9,6 +9,7 @@ import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { ChatList } from '@/components/chat-list'
 import { Stage } from '@/components/workflow/stage'
+import { Workflow } from '@/components/workflow/workflow'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -21,7 +22,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'Frontend'
   )
   const [stage, setStage] = useState<Stage>(Stage.Clarify)
-  const [workflow, setWorkflow] = useState<Workflow>([])
+  const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
 
   // sent request to /api/domains/frontend
   const updateDomain = (value: string | null) => {

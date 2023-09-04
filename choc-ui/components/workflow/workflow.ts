@@ -1,25 +1,31 @@
 import { Stage } from '@/components/workflow/stage'
+import {
+  QAExample,
+  QAUpdateExample
+} from '@/components/workflow/prompt-example'
 
-enum ExampleType {
+export enum ExampleType {
   NONE,
   ONE_CHAT,
   MULTI_CHAT
 }
 
-class PromptTemplate {
+export class PromptTemplate {
   id: string
   stage: Stage
   systemPrompt: string
   exampleType: ExampleType
   examples: QAExample[]
   updateExamples: QAUpdateExample[]
+  isDone: boolean = false
 
   constructor(
     stage: Stage,
     systemPrompt: string,
     exampleType: ExampleType = ExampleType.NONE,
     examples: QAExample[] = [],
-    updateExamples: QAUpdateExample[] = []
+    updateExamples: QAUpdateExample[] = [],
+    isDone: boolean = false
   ) {
     this.id = ''
     this.stage = stage
@@ -27,13 +33,18 @@ class PromptTemplate {
     this.exampleType = exampleType
     this.examples = examples
     this.updateExamples = updateExamples
+    this.isDone = isDone
   }
 }
 
-class Workflow {
+export class Workflow {
   prompts: PromptTemplate[]
 
   constructor() {
     this.prompts = []
+  }
+
+  static default() {
+    return new Workflow()
   }
 }

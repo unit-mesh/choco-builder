@@ -15,6 +15,10 @@ data class PromptTemplate(
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<QAExample> = listOf(),
     val updateExamples: List<QAUpdateExample> = listOf(),
+    /**
+     * when FINISH, isDone is true
+     */
+    val isDone: Boolean = false,
 ) : StringTemplate {
     /**
      * 范例类型
