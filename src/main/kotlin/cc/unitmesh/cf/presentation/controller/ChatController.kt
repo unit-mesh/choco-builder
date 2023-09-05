@@ -5,6 +5,7 @@ import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.Serializable
@@ -12,7 +13,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
-import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -54,13 +54,6 @@ class ChatController(val feFlow: FEWorkflow) {
 
     companion object {
         private val log = LoggerFactory.getLogger(ChatController::class.java)
-    }
-}
-
-class SseEmitterUtf8 : SseEmitter() {
-    override fun extendResponse(outputMessage: ServerHttpResponse) {
-        super.extendResponse(outputMessage)
-        outputMessage.headers.contentType = MediaType(MediaType.TEXT_EVENT_STREAM, Charsets.UTF_8)
     }
 }
 
