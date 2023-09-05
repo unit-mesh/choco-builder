@@ -11,3 +11,8 @@ spring:
   datasource:
     hikari:
       connection-timeout: 50000
+
+# config in application-dev.yml
+#openai:
+#  api-host:
+#  api-key:

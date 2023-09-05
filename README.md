@@ -76,6 +76,15 @@ To spike:
     3. 生成初步测试用例
     4. 生成结果（测试数据集）
 
+### Setup
+
+### Export keys in Local
+
+```bash
+export OPENAI_API_KEY=
+export OPENAI_HOST=
+```
+
 ## License
 
 This code is distributed under the MPL 2.0 license. See `LICENSE` in this directory.
