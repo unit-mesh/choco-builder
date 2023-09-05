@@ -22,14 +22,13 @@ enum class ClarificationAction {
                     Pair(action, extractContent(FINAL_OUTPUT_REGEX, content))
                 }
 
-                else -> throw RuntimeException("Action parsing failed.")
+                else -> throw RuntimeException("Action parsing failed: $content")
             }
         }
 
-
         private fun extractContent(pattern: Regex, content: String) =
             pattern.find(content)?.groupValues?.get(2)
-                ?: throw RuntimeException("Content parsing failed.")
+                ?: throw RuntimeException("Content parsing failed: $content")
     }
 }
 

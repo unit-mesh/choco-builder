@@ -53,6 +53,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         if (response.choices[0].finishReason != "stop") {
             throw OpenAiCompletionException("Completion failed: ${response.choices[0].finishReason}")
         }
+
         return response.choices.map { it.toAbstract() }
     }
 

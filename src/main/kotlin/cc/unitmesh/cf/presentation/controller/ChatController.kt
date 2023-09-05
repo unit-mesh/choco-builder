@@ -1,6 +1,7 @@
 package cc.unitmesh.cf.presentation.controller
 
 import cc.unitmesh.cf.core.workflow.StageContext
+import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
@@ -38,17 +39,23 @@ class ChatController(val feFlow: FEWorkflow) {
         val chatWebContext = ChatWebContext.fromRequest(request)
         val result = feFlow.execute(prompt, chatWebContext)
 
+        println("result: $result")
         // 4. return response
-        val response = MessageResponse(output, request.id, prompt.stage, true)
+        val response = MessageResponse(request.id, result)
 
+        println("response: $response")
         emitter.send(Json.encodeToString(response))
         emitter.complete()
         return emitter
     }
+
+    companion object {
+        private val log = org.slf4j.LoggerFactory.getLogger(ChatController::class.java)
+    }
 }
 
 @Serializable
-data class MessageResponse(val message: String, val id: String, val stage: StageContext.Stage, val isDone: Boolean)
+data class MessageResponse(val id: String, val result: WorkflowResult?)
 
 data class Message(val role: String, val content: String)
 

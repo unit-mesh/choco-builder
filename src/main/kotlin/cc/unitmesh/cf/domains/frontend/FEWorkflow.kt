@@ -65,7 +65,7 @@ class FEWorkflow() : Workflow() {
                     currentStage = StageContext.Stage.Clarify,
                     nextStage = nextStage,
                     responseMsg = clarify.second,
-                    resultType = String::class.java,
+                    resultType = String::class.java.toString(),
                     result = clarify.second
                 )
             }
@@ -82,8 +82,8 @@ class FEWorkflow() : Workflow() {
                     currentStage = StageContext.Stage.Design,
                     nextStage = StageContext.Stage.Design,
                     responseMsg = design.toString(),
-                    resultType = UiPage::class.java,
-                    result = design
+                    resultType = UiPage::class.java.toString(),
+                    result = design.toString()
                 )
             }
 
@@ -94,8 +94,8 @@ class FEWorkflow() : Workflow() {
                     currentStage = StageContext.Stage.Execute,
                     nextStage = StageContext.Stage.Execute,
                     responseMsg = answer.values.toString(),
-                    resultType = String::class.java,
-                    result = answer
+                    resultType = String::class.java.toString(),
+                    result = answer.toString()
                 )
             }
 
