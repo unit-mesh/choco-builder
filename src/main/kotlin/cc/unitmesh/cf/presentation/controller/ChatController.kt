@@ -8,6 +8,7 @@ import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 @RestController
 class ChatController(val feFlow: FEWorkflow) {
-    @PostMapping("/chat")
+    @PostMapping( "/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody request: ChatRequest): SseEmitter {
         val emitter = SseEmitter()
 

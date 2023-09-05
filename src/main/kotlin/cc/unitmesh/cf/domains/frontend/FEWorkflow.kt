@@ -45,7 +45,6 @@ class FEWorkflow() : Workflow() {
             stage = StageContext.Stage.Execute
         }
 
-
         when (stage) {
             StageContext.Stage.Classify -> throw IllegalStateException("Frontend workflow should not be used for classify")
             StageContext.Stage.Clarify -> {
@@ -102,8 +101,6 @@ class FEWorkflow() : Workflow() {
             StageContext.Stage.Custom -> TODO()
             StageContext.Stage.Done -> TODO()
         }
-
-        return null
     }
 
     companion object {

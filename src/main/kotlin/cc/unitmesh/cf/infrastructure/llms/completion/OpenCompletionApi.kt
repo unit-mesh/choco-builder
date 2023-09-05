@@ -48,7 +48,12 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
                 .temperature(0.0)
                 .messages(messages.map { it.toInternal() }).build()
 
-        val response = openai.createChatCompletion(request)
+        val response = try {
+            openai.createChatCompletion(request)
+        } catch (e: Exception) {
+            throw OpenAiCompletionException("Completion failed: ${e.message}")
+        }
+
         totalTokens += response.usage.totalTokens
         if (response.choices[0].finishReason != "stop") {
             throw OpenAiCompletionException("Completion failed: ${response.choices[0].finishReason}")
