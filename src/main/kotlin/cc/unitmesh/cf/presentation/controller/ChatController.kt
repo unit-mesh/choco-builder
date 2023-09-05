@@ -18,7 +18,6 @@ class ChatController(val feFlow: FEWorkflow) {
     @PostMapping("/chat")
     fun chat(@RequestBody request: ChatRequest): SseEmitter {
         val emitter = SseEmitter()
-        val output = "..."
 
         // 1. search by domains
         val workflow = when (request.domain) {
@@ -39,12 +38,12 @@ class ChatController(val feFlow: FEWorkflow) {
         val chatWebContext = ChatWebContext.fromRequest(request)
         val result = feFlow.execute(prompt, chatWebContext)
 
-        println("result: $result")
         // 4. return response
         val response = MessageResponse(request.id, result)
 
-        println("response: $response")
-        emitter.send(Json.encodeToString(response))
+        val encodeToString = Json.encodeToString(response)
+        println(encodeToString)
+        emitter.send(encodeToString)
         emitter.complete()
         return emitter
     }

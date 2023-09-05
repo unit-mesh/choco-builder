@@ -42,15 +42,12 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       initialMessages,
       id,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=UTF-8'
       },
       body: {
         stage: promptStage?.stage ?? Stage.Classify,
         id,
         domain
-      },
-      onResponse: response => {
-        console.log(response.body)
       }
     })
   return (

@@ -12,6 +12,8 @@ export function ChatList({ messages }: ChatList) {
         return null
     }
 
+    console.log(messages)
+
     return (
         <div className="relative mx-auto max-w-3xl px-4">
             {messages.map((message, index) => (
