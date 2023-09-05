@@ -1,23 +1,19 @@
 package cc.unitmesh.cf.domains
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
-import cc.unitmesh.cf.core.process.impl.DomainDeclarationPlaceholder
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
-import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
 import org.reflections.Reflections
 import org.springframework.stereotype.Component
 
 
 @Component
-class DomainClassify(
-    private val cachedEmbedding: CachedEmbedding,
-) {
+class DomainClassify(private val cachedEmbedding: CachedEmbedding, ) {
     val cachedDomains: MutableMap<String, DomainDeclaration> = mutableMapOf()
 
-    fun semanticSearch(question: String): DomainDeclaration {
-        val question: Embedding = cachedEmbedding.createEmbedding(question)
-        return DomainDeclarationPlaceholder()
-    }
+//    fun semanticSearch(question: String): DomainDeclaration {
+//        val question: Embedding = cachedEmbedding.createEmbedding(question)
+//        return DomainDeclarationPlaceholder()
+//    }
 
     private val packageName = DomainClassify::class.java.`package`.name
 

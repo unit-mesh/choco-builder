@@ -2,6 +2,8 @@
 
 > Chocolate Factory 是一款开源的 LLM 应用引擎/LLM 应用框架，旨在帮助您打造 LLM 生成助手。
 
+Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
+
 ## Key concepts
 
 the core concepts of Chocolate Factory are:
