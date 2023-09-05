@@ -6,9 +6,7 @@ import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
