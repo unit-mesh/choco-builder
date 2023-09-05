@@ -28,7 +28,7 @@ class FEProblemClarifier(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, clarifyContext.questionPrefix + question),
         ).filter { it.content.isNotBlank() }
 
-        val completion = completion.createCompletion(messages)
-        return ClarificationAction.parse(completion.content)
+        val completion = completion.simpleCompletion(messages)
+        return ClarificationAction.parse(completion)
     }
 }

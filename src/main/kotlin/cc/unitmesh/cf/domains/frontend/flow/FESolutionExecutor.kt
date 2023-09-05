@@ -23,10 +23,10 @@ class FESolutionExecutor(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(basePrompt)),
         ).filter { it.content.isNotBlank() }
 
-        val completion = completion.createCompletion(messages)
+        val completion = completion.simpleCompletion(messages)
         return object : Answer {
             override var executor: String = ""
-            override var values: Any = completion.content
+            override var values: Any = completion
         }
     }
 }

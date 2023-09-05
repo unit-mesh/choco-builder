@@ -6,6 +6,10 @@ import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
@@ -46,15 +50,8 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
 
     @Cacheable("completion")
     override fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice> {
-        val request =
-            ChatCompletionRequest.builder()
-                .model("gpt-3.5-turbo")
-                .temperature(0.0)
-                .messages(messages.map { it.toInternal() })
-                .stream(false)
-                .build()
+        val request = prepareRequest(messages)
 
-        log.info("request: $request")
         val response = openai.createChatCompletion(request)
 
         totalTokens += response.usage.totalTokens
@@ -65,11 +62,31 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         return response.choices.map { it.toAbstract() }
     }
 
+    private fun prepareRequest(messages: List<LlmMsg.ChatMessage>): ChatCompletionRequest? {
+        return ChatCompletionRequest.builder()
+            .model("gpt-3.5-turbo")
+            .temperature(0.0)
+            .messages(messages.map { it.toInternal() })
+            .stream(false)
+            .build()
+    }
+
     fun LlmMsg.ChatMessage.toInternal() =
         com.theokanning.openai.completion.chat.ChatMessage(this.role.name.lowercase(), this.content)
 
-    override fun prompt(promptText: String): String {
-        TODO("Not yet implemented")
+    override fun simpleCompletion(messages: List<LlmMsg.ChatMessage>): String {
+        val request = prepareRequest(messages)
+
+        var result = ""
+        openai.streamChatCompletion(request)
+            .blockingForEach { response ->
+                val completion = response.choices[0].message
+                if (completion != null && completion.content != null) {
+                    result += completion.content
+                }
+            }
+
+        return result
     }
 }
 

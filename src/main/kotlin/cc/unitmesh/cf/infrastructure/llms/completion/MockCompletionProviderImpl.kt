@@ -6,4 +6,8 @@ class MockProvider : LlmProvider {
     override fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice> {
         return listOf()
     }
+
+    override fun simpleCompletion(messages: List<LlmMsg.ChatMessage>): String {
+        return ""
+    }
 }

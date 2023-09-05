@@ -19,7 +19,7 @@ class FESolutionDesigner(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, question),
         ).filter { it.content.isNotBlank() }
 
-        val completion = completion.createCompletion(messages)
-        return UiPage.parse(completion.content)
+        val completion = completion.simpleCompletion(messages)
+        return UiPage.parse(completion)
     }
 }
