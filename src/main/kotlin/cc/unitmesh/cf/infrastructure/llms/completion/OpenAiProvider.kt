@@ -2,17 +2,11 @@ package cc.unitmesh.cf.infrastructure.llms.completion
 
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
-import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.jackson.JacksonConverterFactory
 import java.time.Duration
 
 @Component
@@ -21,29 +15,9 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         private val log = org.slf4j.LoggerFactory.getLogger(OpenAiProvider::class.java)
     }
 
-    private val timeout = Duration.ofSeconds(600)
-
     var totalTokens = 0L;
     private val openai: OpenAiService by lazy {
-        // for proxy
-        if (config.apiHost != null) {
-            val mapper = OpenAiService.defaultObjectMapper()
-            val client = OpenAiService.defaultClient(config.apiKey, timeout)
-
-            val host = config.apiHost!!.removeSurrounding("\"")
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl(host)
-                .client(client)
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-
-            val api = retrofit.create(OpenAiApi::class.java)
-            OpenAiService(api)
-        } else {
-            OpenAiService(config.apiKey, Duration.ZERO)
-        }
+        OpenAiService(config.apiKey, Duration.ZERO)
     }
 
     @Cacheable("completion")
