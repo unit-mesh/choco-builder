@@ -1,11 +1,14 @@
-package cc.unitmesh.cf.core.prompt
+package cc.unitmesh.cf.core.workflow
 
+import cc.unitmesh.cf.core.prompt.QAExample
+import cc.unitmesh.cf.core.prompt.QAUpdateExample
+import cc.unitmesh.cf.core.prompt.StringTemplate
 import cc.unitmesh.cf.infrastructure.utils.uuid
 import com.fasterxml.jackson.annotation.JsonValue
 import jakarta.persistence.Id
 import kotlinx.serialization.Serializable
 
-data class PromptWithStage(
+data class StageContext(
     @Id
     val id: String = uuid(),
     val stage: Stage,

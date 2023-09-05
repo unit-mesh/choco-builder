@@ -10,7 +10,7 @@ export enum ExampleType {
   MULTI_CHAT
 }
 
-export class PromptWithStage {
+export class StageContext {
   id: string
   stage: Stage
   systemPrompt: string
@@ -38,7 +38,7 @@ export class PromptWithStage {
 }
 
 export class Workflow {
-  prompts: PromptWithStage[]
+  prompts: StageContext[]
 
   constructor() {
     this.prompts = []

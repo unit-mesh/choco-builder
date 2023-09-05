@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.presentation.controller
 
-import cc.unitmesh.cf.core.prompt.PromptWithStage
+import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
@@ -48,14 +48,14 @@ class ChatController(val feFlow: FEWorkflow) {
 }
 
 @Serializable
-data class MessageResponse(val message: String, val id: String, val stage: PromptWithStage.Stage, val isDone: Boolean)
+data class MessageResponse(val message: String, val id: String, val stage: StageContext.Stage, val isDone: Boolean)
 
 data class Message(val role: String, val content: String)
 
 data class ChatRequest(
     val messages: List<Message>,
     val id: String,
-    val stage: PromptWithStage.Stage,
+    val stage: StageContext.Stage,
     val domain: SupportedDomains,
     val previewToken: String?,
 )

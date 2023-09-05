@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.presentation.controller
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
-import cc.unitmesh.cf.core.prompt.PromptWithStage
+import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,7 +18,7 @@ class WorkflowController(val classify: DomainClassify) {
     }
 
     @GetMapping("/{domainName}")
-    fun domainAgent(@PathVariable domainName: String): List<PromptWithStage> {
+    fun domainAgent(@PathVariable domainName: String): List<StageContext> {
         log.info("domains: {}", domains)
         val domain = domains[domainName]
         if (domain == null) {

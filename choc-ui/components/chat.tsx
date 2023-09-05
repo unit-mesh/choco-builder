@@ -7,7 +7,7 @@ import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { ChatList } from '@/components/chat-list'
-import { PromptWithStage, Workflow } from '@/components/workflow/workflow'
+import { StageContext, Workflow } from '@/components/workflow/workflow'
 import { domains } from '@/components/workflow/domains'
 import { Stage } from '@/components/workflow/stage'
 
@@ -19,7 +19,7 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 export function Chat({ id, initialMessages, className }: ChatProps) {
   const [domain, setDomain] = useState<string | null>(domains[0].value)
   const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
-  const [promptStage, setPromptStage] = useState<PromptWithStage | null>(
+  const [promptStage, setPromptStage] = useState<StageContext | null>(
     workflow?.prompts?.length ? workflow.prompts[0] : null
   )
 
