@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 @RestController
 class ChatController(val feFlow: FEWorkflow) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-    fun chat(@RequestBody chat: ChatRequest, request: HttpServletRequest, response: HttpServletResponse): SseEmitter {
+    fun chat(@RequestBody chat: ChatRequest): SseEmitter {
         val emitter = SseEmitterUtf8()
 
         // 1. search by domains
