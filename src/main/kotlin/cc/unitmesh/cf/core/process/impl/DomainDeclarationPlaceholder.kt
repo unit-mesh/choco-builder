@@ -1,8 +1,8 @@
 package cc.unitmesh.cf.core.process.impl
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
-import cc.unitmesh.cf.core.prompt.DefaultWorkflow
-import cc.unitmesh.cf.core.prompt.Workflow
+import cc.unitmesh.cf.core.workflow.DefaultWorkflow
+import cc.unitmesh.cf.core.workflow.Workflow
 import org.springframework.stereotype.Component
 
 @Component

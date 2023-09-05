@@ -1,7 +1,8 @@
 package cc.unitmesh.cf.domains.frontend
 
-import cc.unitmesh.cf.core.process.ClarifyResult
 import cc.unitmesh.cf.core.prompt.*
+import cc.unitmesh.cf.core.workflow.Workflow
+import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.domains.frontend.flow.FEProblemClarifier

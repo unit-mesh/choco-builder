@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.frontend
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
-import cc.unitmesh.cf.core.prompt.Workflow
+import cc.unitmesh.cf.core.workflow.Workflow
 import org.springframework.stereotype.Component
 
 @Component
