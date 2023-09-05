@@ -17,6 +17,10 @@ import java.time.Duration
 
 @Component
 class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
+    companion object {
+        private val log = org.slf4j.LoggerFactory.getLogger(OpenAiProvider::class.java)
+    }
+
     var totalTokens = 0L;
     private val openai: OpenAiService by lazy {
         // for proxy
@@ -48,6 +52,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
                 .temperature(0.0)
                 .messages(messages.map { it.toInternal() }).build()
 
+        log.info("request: $request")
         val response = try {
             openai.createChatCompletion(request)
         } catch (e: Exception) {
@@ -63,7 +68,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
     }
 
     fun LlmMsg.ChatMessage.toInternal() =
-        com.theokanning.openai.completion.chat.ChatMessage(this.role.name.lowercase(), this.content, this.name)
+        com.theokanning.openai.completion.chat.ChatMessage(this.role.name.lowercase(), this.content)
 
     override fun prompt(promptText: String): String {
         TODO("Not yet implemented")

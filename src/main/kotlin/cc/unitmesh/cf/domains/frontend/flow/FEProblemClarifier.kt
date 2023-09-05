@@ -13,15 +13,19 @@ class FEProblemClarifier(
     private val completion: LlmProvider,
     private val variable: FEVariableResolver,
 ) : ProblemClarifier {
+    private val clarifyContext = FEWorkflow.CLARIFY
+
     override fun clarify(
         domain: String,
         question: String,
         histories: List<String>,
     ): Pair<ClarificationAction, String> {
+        variable.updateQuestion(question)
+        variable.histories(histories)
+
         val messages = listOf(
-            LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(FEWorkflow.CLARIFY.format())),
-            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, "你必须按格式输出！"),
-            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, question),
+            LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(clarifyContext.format())),
+            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, clarifyContext.questionPrefix + question),
         ).filter { it.content.isNotBlank() }
 
         val completion = completion.createCompletion(messages)

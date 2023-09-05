@@ -16,6 +16,10 @@ data class StageContext(
      * 对于一个不支持 system prompt 的 LLM，需要把 prompt 与用户的输入结合到一起。
      */
     val systemPrompt: String,
+    /**
+     * for example: "Q:", or `"输入："`
+     */
+    val questionPrefix: String = "",
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<QAExample> = listOf(),
     val updateExamples: List<QAUpdateExample> = listOf(),

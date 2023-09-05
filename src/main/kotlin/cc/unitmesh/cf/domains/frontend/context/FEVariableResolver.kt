@@ -58,10 +58,15 @@ class FEVariableResolver : VariableResolver<FEVariables> {
         variables = variables!!.copy(question = question)
     }
 
+    fun histories(histories: List<String>) {
+        variables = variables!!.copy(histories = histories)
+    }
+
     override fun compile(input: String): String {
         velocityContext.put("question", variables!!.question)
         velocityContext.put("layouts", variables!!.layouts)
         velocityContext.put("components", variables!!.components)
+        velocityContext.put("histories", variables!!.histories)
 
         val sw = StringWriter()
         Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, input)

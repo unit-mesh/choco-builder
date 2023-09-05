@@ -107,6 +107,7 @@ class FEWorkflow() : Workflow() {
         val CLARIFY: StageContext = StageContext(
             id = "FrontendClarify",
             stage = StageContext.Stage.Clarify,
+            questionPrefix = "输入：",
             systemPrompt = """你是一个专业的前端技术咨询师（Advisor），职责是帮助开发人员用户收集和分析需求。
             |- 你必须使用中文和用户沟通。
             |- 当用户问你问题时，你必须帮助用户明确他们的需求。
@@ -139,7 +140,7 @@ class FEWorkflow() : Workflow() {
             |行动：FINISH
             |最终输出：编写一个栅格布局的登录页面
             |
-            |以下是您和当前用户的交互历史：${'$'}{history}
+            |以下是您和当前用户的交互历史：${'$'}{histories}
         """.trimMargin()
         )
 
