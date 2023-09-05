@@ -53,6 +53,8 @@ data class StageContext(
         // 执行
         Execute("Execute"),
 
+        Done("Done"),
+
         Custom("Custom")
     }
 

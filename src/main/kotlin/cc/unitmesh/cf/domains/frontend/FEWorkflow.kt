@@ -1,5 +1,7 @@
 package cc.unitmesh.cf.domains.frontend
 
+import cc.unitmesh.cf.core.base.Answer
+import cc.unitmesh.cf.core.base.ClarificationAction
 import cc.unitmesh.cf.core.prompt.*
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
@@ -7,6 +9,9 @@ import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.domains.frontend.flow.FEProblemClarifier
+import cc.unitmesh.cf.domains.frontend.flow.FESolutionDesigner
+import cc.unitmesh.cf.domains.frontend.flow.FESolutionExecutor
+import cc.unitmesh.cf.domains.frontend.model.UiPage
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,20 +39,68 @@ class FEWorkflow() : Workflow() {
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
         val messages = chatWebContext.messages
 
-        when (prompt.stage) {
+        var stage = prompt.stage
+
+        if (chatWebContext.stage == StageContext.Stage.Design && chatWebContext.messages.last().content == "YES") {
+            stage = StageContext.Stage.Execute
+        }
+
+
+        when (stage) {
             StageContext.Stage.Classify -> throw IllegalStateException("Frontend workflow should not be used for classify")
             StageContext.Stage.Clarify -> {
-                FEProblemClarifier(contextBuilder, llmProvider, variableResolver).clarify(
-                    domain = "frontend",
-                    question = messages[0].content,
-                    histories = messages.map { it.content }
+                val clarify = FEProblemClarifier(contextBuilder, llmProvider, variableResolver)
+                    .clarify(
+                        domain = "frontend",
+                        question = messages.last().content,
+                        histories = messages.map { it.content }
+                    )
+
+                val nextStage = when (clarify.first) {
+                    ClarificationAction.CONTINUE -> StageContext.Stage.Clarify
+                    ClarificationAction.FINISH -> StageContext.Stage.Design
+                }
+
+                return WorkflowResult(
+                    currentStage = StageContext.Stage.Clarify,
+                    nextStage = nextStage,
+                    responseMsg = clarify.second,
+                    resultType = String::class.java,
+                    result = clarify.second
                 )
             }
 
             StageContext.Stage.Analyze -> TODO()
-            StageContext.Stage.Design -> TODO()
-            StageContext.Stage.Execute -> TODO()
+            StageContext.Stage.Design -> {
+                val design = FESolutionDesigner(contextBuilder, llmProvider, variableResolver).design(
+                    domain = "frontend",
+                    question = messages.last().content,
+                    histories = messages.map { it.content }
+                )
+
+                return WorkflowResult(
+                    currentStage = StageContext.Stage.Design,
+                    nextStage = StageContext.Stage.Design,
+                    responseMsg = design.toString(),
+                    resultType = UiPage::class.java,
+                    result = design
+                )
+            }
+
+            StageContext.Stage.Execute -> {
+                val uiPage = UiPage.parse(messages.last().content)
+                val answer: Answer = FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
+                return WorkflowResult(
+                    currentStage = StageContext.Stage.Execute,
+                    nextStage = StageContext.Stage.Execute,
+                    responseMsg = answer.values.toString(),
+                    resultType = String::class.java,
+                    result = answer
+                )
+            }
+
             StageContext.Stage.Custom -> TODO()
+            StageContext.Stage.Done -> TODO()
         }
 
         return null
