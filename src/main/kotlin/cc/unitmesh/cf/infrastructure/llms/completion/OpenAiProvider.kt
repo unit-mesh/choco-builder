@@ -55,11 +55,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
                 .build()
 
         log.info("request: $request")
-        val response = try {
-            openai.createChatCompletion(request)
-        } catch (e: Exception) {
-            throw OpenAiCompletionException("Completion failed: $e")
-        }
+        val response = openai.createChatCompletion(request)
 
         totalTokens += response.usage.totalTokens
         if (response.choices[0].finishReason != "stop") {
