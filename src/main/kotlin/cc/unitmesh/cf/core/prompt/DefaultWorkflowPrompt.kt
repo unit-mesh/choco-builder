@@ -5,14 +5,17 @@ import cc.unitmesh.cf.core.process.ClarifyResult
 import cc.unitmesh.cf.core.process.DesignResult
 import cc.unitmesh.cf.core.process.ExecuteResult
 import cc.unitmesh.cf.core.prompt.PromptWithStage.*
+import cc.unitmesh.cf.presentation.domain.ChatWebContext
 
-open class Workflow {
+abstract class Workflow {
+    val chatWebContext: ChatWebContext? = null
+
     /**
      * save prompt list for debug in GUI
      */
     open val prompts: LinkedHashMap<Stage, PromptWithStage> = linkedMapOf()
 
-    fun result(stage: Stage, result: Any): WorkflowResult {
+    open fun result(stage: Stage, result: Any): WorkflowResult {
         return when (stage) {
             Stage.Classify -> TODO()
             Stage.Clarify -> WorkflowResult(stage, result.javaClass, result as ClarifyResult)
@@ -22,6 +25,8 @@ open class Workflow {
             Stage.Custom -> TODO()
         }
     }
+
+    abstract fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult
 }
 
 class WorkflowResult(
@@ -29,5 +34,3 @@ class WorkflowResult(
     val resultType: Class<*>,
     val result: Any,
 )
-
-class DefaultWorkflow : Workflow()

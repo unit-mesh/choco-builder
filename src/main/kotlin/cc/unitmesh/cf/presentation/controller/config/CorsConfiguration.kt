@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.config
+package cc.unitmesh.cf.presentation.controller.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry

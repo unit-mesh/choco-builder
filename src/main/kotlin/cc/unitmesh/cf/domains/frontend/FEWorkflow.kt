@@ -1,12 +1,7 @@
 package cc.unitmesh.cf.domains.frontend
 
-import cc.unitmesh.cf.core.prompt.PromptWithStage
-import cc.unitmesh.cf.core.prompt.QAExample
-import cc.unitmesh.cf.core.prompt.QAUpdateExample
-import cc.unitmesh.cf.core.prompt.Workflow
-import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
-import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.core.prompt.*
+import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import org.springframework.stereotype.Component
 
 @Component
@@ -17,6 +12,10 @@ class FEWorkflow() : Workflow() {
             DESIGN.stage to DESIGN,
             EXECUTE.stage to EXECUTE
         )
+
+    override fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult {
+        TODO("Not yet implemented")
+    }
 
     companion object {
         val CLARIFY: PromptWithStage = PromptWithStage(

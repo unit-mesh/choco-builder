@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation
+package cc.unitmesh.cf.presentation.controller
 
 import cc.unitmesh.cf.core.process.DomainDeclaration
 import cc.unitmesh.cf.core.prompt.PromptWithStage
