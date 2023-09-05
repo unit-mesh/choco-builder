@@ -15,7 +15,9 @@ abstract class Workflow {
      */
     open val prompts: LinkedHashMap<Stage, PromptWithStage> = linkedMapOf()
 
-    open fun result(stage: Stage, result: Any): WorkflowResult {
+    abstract fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult?
+
+    open fun result(stage: Stage, result: Any): WorkflowResult? {
         return when (stage) {
             Stage.Classify -> TODO()
             Stage.Clarify -> WorkflowResult(stage, result.javaClass, result as ClarifyResult)
@@ -25,8 +27,6 @@ abstract class Workflow {
             Stage.Custom -> TODO()
         }
     }
-
-    abstract fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult
 }
 
 class WorkflowResult(
@@ -34,3 +34,9 @@ class WorkflowResult(
     val resultType: Class<*>,
     val result: Any,
 )
+
+class DefaultWorkflow : Workflow() {
+    override fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult? {
+        return null
+    }
+}

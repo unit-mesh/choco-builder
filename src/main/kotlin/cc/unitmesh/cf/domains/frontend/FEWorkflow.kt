@@ -1,11 +1,27 @@
 package cc.unitmesh.cf.domains.frontend
 
+import cc.unitmesh.cf.core.process.ClarifyResult
 import cc.unitmesh.cf.core.prompt.*
+import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
+import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
+import cc.unitmesh.cf.domains.frontend.flow.FEProblemClarifier
+import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
 class FEWorkflow() : Workflow() {
+    @Autowired
+    private lateinit var contextBuilder: FEDslContextBuilder
+
+    @Autowired
+    private lateinit var variableResolver: FEVariableResolver
+
+    @Autowired
+    private lateinit var llmProvider: LlmProvider
+
+
     override val prompts: LinkedHashMap<PromptWithStage.Stage, PromptWithStage>
         get() = linkedMapOf(
             CLARIFY.stage to CLARIFY,
@@ -13,8 +29,26 @@ class FEWorkflow() : Workflow() {
             EXECUTE.stage to EXECUTE
         )
 
-    override fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult {
-        TODO("Not yet implemented")
+    override fun execute(prompt: PromptWithStage, chatWebContext: ChatWebContext): WorkflowResult? {
+        val messages = chatWebContext.messages
+
+        when (prompt.stage) {
+            PromptWithStage.Stage.Classify -> throw IllegalStateException("Frontend workflow should not be used for classify")
+            PromptWithStage.Stage.Clarify -> {
+                FEProblemClarifier(contextBuilder, llmProvider, variableResolver).clarify(
+                    domain = "frontend",
+                    question = messages[0].content,
+                    histories = messages.map { it.content }
+                )
+            }
+
+            PromptWithStage.Stage.Analyze -> TODO()
+            PromptWithStage.Stage.Design -> TODO()
+            PromptWithStage.Stage.Execute -> TODO()
+            PromptWithStage.Stage.Custom -> TODO()
+        }
+
+        return null
     }
 
     companion object {
