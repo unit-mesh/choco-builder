@@ -6,11 +6,13 @@ import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
+import com.azure.ai.openai.models.ChatRole
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,7 +25,6 @@ class ChatController(val feFlow: FEWorkflow) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest, request: HttpServletRequest, response: HttpServletResponse): SseEmitter {
         val emitter = SseEmitterUtf8()
-        emitter.send("")
 
         // 1. search by domains
         val workflow = when (chat.domain) {
@@ -45,7 +46,7 @@ class ChatController(val feFlow: FEWorkflow) {
         val result = feFlow.execute(prompt, chatWebContext)
 
         // 4. return response
-        val encodeToString = Json.encodeToString(MessageResponse(chat.id, result))
+        val encodeToString = Json.encodeToString(MessageResponse.from(chat.id, result))
 
         emitter.send(encodeToString)
         emitter.complete()
@@ -58,7 +59,28 @@ class ChatController(val feFlow: FEWorkflow) {
 }
 
 @Serializable
-data class MessageResponse(val id: String, val result: WorkflowResult?)
+data class MessageResponse(
+    val id: String,
+    val `object`: WorkflowResult?,
+    val created: Long = DateTime.now().millis,
+    val model: String = "gpt-3.5-turbo",
+    val choices: List<MsgChoice> = emptyList(),
+) {
+
+    @Serializable
+    data class MsgChoice(val index: Int, val delta: MsgDelta, val finish_reason: String = "stop")
+
+    @Serializable
+    data class MsgDelta(val role: String, val content: String)
+
+    companion object {
+        fun from(id: String, result: WorkflowResult?): MessageResponse {
+            val delta = MsgDelta("assistant", result?.responseMsg ?: "")
+            val choices = listOf(MsgChoice(0, delta))
+            return MessageResponse(id, result, choices = choices)
+        }
+    }
+}
 
 data class Message(val role: String, val content: String)
 
