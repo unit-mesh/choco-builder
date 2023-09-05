@@ -52,7 +52,9 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
             ChatCompletionRequest.builder()
                 .model("gpt-3.5-turbo")
                 .temperature(0.0)
-                .messages(messages.map { it.toInternal() }).build()
+                .messages(messages.map { it.toInternal() })
+                .stream(false)
+                .build()
 
         log.info("request: $request")
         val response = try {
