@@ -51,7 +51,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         val response = try {
             openai.createChatCompletion(request)
         } catch (e: Exception) {
-            throw OpenAiCompletionException("Completion failed: ${e.message}")
+            throw OpenAiCompletionException("Completion failed: $e")
         }
 
         totalTokens += response.usage.totalTokens
