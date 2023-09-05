@@ -13,8 +13,10 @@ import java.time.Duration
 @Profile("openai")
 @ConditionalOnProperty(prefix = "openai", name = ["api-key"])
 class OpenAiEmbeddingProvider(val config: OpenAiConfiguration) : EmbeddingProvider {
+    private val timeout = Duration.ofSeconds(600)
     var totalTokens = 0L
-    private val openai: OpenAiService by lazy { OpenAiService(config.apiKey, Duration.ZERO) }
+
+    private val openai: OpenAiService by lazy { OpenAiService(config.apiKey, timeout) }
 
     @Cacheable("embedding")
     override fun createEmbeddings(texts: List<String>): List<Embedding> {

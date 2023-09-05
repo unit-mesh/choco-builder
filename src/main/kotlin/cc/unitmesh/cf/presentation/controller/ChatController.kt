@@ -61,7 +61,7 @@ class ChatController(val feFlow: FEWorkflow) {
 @Serializable
 data class MessageResponse(
     val id: String,
-    val `object`: WorkflowResult?,
+    val `object`: String,
     val created: Long = DateTime.now().millis,
     val model: String = "gpt-3.5-turbo",
     val choices: List<MsgChoice> = emptyList(),
@@ -77,7 +77,7 @@ data class MessageResponse(
         fun from(id: String, result: WorkflowResult?): MessageResponse {
             val delta = MsgDelta("assistant", result?.responseMsg ?: "")
             val choices = listOf(MsgChoice(0, delta))
-            return MessageResponse(id, result, choices = choices)
+            return MessageResponse(id, Json.encodeToString(result), choices = choices)
         }
     }
 }

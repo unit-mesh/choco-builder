@@ -21,12 +21,14 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         private val log = org.slf4j.LoggerFactory.getLogger(OpenAiProvider::class.java)
     }
 
+    private val timeout = Duration.ofSeconds(600)
+
     var totalTokens = 0L;
     private val openai: OpenAiService by lazy {
         // for proxy
         if (config.apiHost != null) {
             val mapper = OpenAiService.defaultObjectMapper()
-            val client = OpenAiService.defaultClient(config.apiKey, Duration.ZERO)
+            val client = OpenAiService.defaultClient(config.apiKey, timeout)
 
             val host = config.apiHost!!.removeSurrounding("\"")
 
