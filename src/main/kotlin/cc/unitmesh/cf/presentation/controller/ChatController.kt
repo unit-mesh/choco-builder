@@ -6,6 +6,9 @@ import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
+import com.azure.ai.openai.models.ChatRole
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -65,7 +68,7 @@ data class MessageResponse(
 ) {
 
     @Serializable
-    data class MsgChoice(val index: Int, val delta: MsgDelta)
+    data class MsgChoice(val index: Int, val delta: MsgDelta, val finish_reason: String = "stop")
 
     @Serializable
     data class MsgDelta(val role: String, val content: String)
