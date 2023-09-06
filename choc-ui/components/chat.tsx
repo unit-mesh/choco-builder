@@ -43,7 +43,8 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       initialMessages,
       id,
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Experimental-Stream-Data': 'true'
       },
       body: {
         stage: promptStage?.stage ?? Stage.Classify,

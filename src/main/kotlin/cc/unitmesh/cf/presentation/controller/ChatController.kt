@@ -6,9 +6,6 @@ import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
-import com.azure.ai.openai.models.ChatRole
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -64,24 +61,17 @@ data class MessageResponse(
     val `object`: String,
     val created: Long = DateTime.now().millis,
     val model: String = "gpt-3.5-turbo",
-    val choices: List<MsgChoice> = emptyList(),
+    val messages: List<Message> = emptyList(),
 ) {
-
-    @Serializable
-    data class MsgChoice(val index: Int, val delta: MsgDelta, val finish_reason: String = "stop")
-
-    @Serializable
-    data class MsgDelta(val role: String, val content: String)
-
     companion object {
         fun from(id: String, result: WorkflowResult?): MessageResponse {
-            val delta = MsgDelta("assistant", result?.responseMsg ?: "")
-            val choices = listOf(MsgChoice(0, delta))
-            return MessageResponse(id, Json.encodeToString(result), choices = choices)
+            val messages = listOf(Message("assistant", result?.responseMsg ?: ""))
+            return MessageResponse(id, Json.encodeToString(result), messages = messages)
         }
     }
 }
 
+@Serializable
 data class Message(val role: String, val content: String)
 
 data class ChatRequest(

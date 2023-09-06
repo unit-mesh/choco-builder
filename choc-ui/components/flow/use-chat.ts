@@ -302,6 +302,10 @@ const getStreamedResponse = async (
       }
       // Update the chat state with the new message tokens.
       streamedResponse += decode(value)
+      // if streamedResponse starts with `data:\s` with regex, then remove data:\s prefix
+      if (streamedResponse.startsWith('data:')) {
+        streamedResponse = streamedResponse.replace('data:', '')
+      }
 
       if (streamedResponse.startsWith('{"function_call":')) {
         // While the function call is streaming, it will be a string.
