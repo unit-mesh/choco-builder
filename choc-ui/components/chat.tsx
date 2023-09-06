@@ -59,6 +59,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         domain
       },
       onError: (err: any) => {
+        console.error(err)
         toast.error(JSON.stringify(err))
       },
       onFinish: (data: any) => {

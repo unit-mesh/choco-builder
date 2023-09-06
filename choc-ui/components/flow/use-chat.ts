@@ -317,15 +317,19 @@ const getStreamedResponse = async (
         // While the function call is streaming, it will be a string.
         responseMessage['function_call'] = streamedResponse
       } else {
-        let parsed = JSON.parse(streamedResponse)
-        let content = parsed['messages'][0]['content']
-        console.log(content)
-        if (typeof content === 'object') {
-          content = (JSON.stringify(content) as any)['content']
-        }
+        try {
+          let parsed = JSON.parse(streamedResponse)
+          let content = parsed['messages'][0]['content']
+          console.log(content)
+          if (typeof content === 'object') {
+            content = (JSON.stringify(content) as any)['content']
+          }
 
-        responseMessage['content'] = content
-        responseMessage['object'] = parsed
+          responseMessage['content'] = content
+          responseMessage['object'] = parsed
+        } catch (e) {
+            responseMessage['content'] = streamedResponse
+        }
       }
 
       mutate([...chatRequest.messages, { ...responseMessage }], false)

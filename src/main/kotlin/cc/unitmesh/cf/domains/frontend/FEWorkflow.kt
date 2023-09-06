@@ -250,15 +250,18 @@ class FEWorkflow() : Workflow() {
             |用户提供的问题：
             |${'$'}{question}
             |
-            |业务布局：
+            |页面布局要求：
             |${'$'}{userLayout}
+            |
+            |现在请你生成前端代码，使用 ```vue 开始你的回答。
+            |
         """.trimMargin(),
-            examples = listOf(
-                QAExample(
-                    question = "",
-                    answer = ""
-                )
-            )
+//            examples = listOf(
+//                QAExample(
+//                    question = "",
+//                    answer = ""
+//                )
+//            )
         )
     }
 }

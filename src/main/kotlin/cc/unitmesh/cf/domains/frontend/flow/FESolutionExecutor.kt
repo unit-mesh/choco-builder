@@ -26,15 +26,15 @@ class FESolutionExecutor(
         variable.put("userLayout", solution.layout)
         val components = variable.getComponents()
 
-        val userComponents : List<String> = listOf()
+        val userComponents : MutableList<String> = mutableListOf()
         solution.components.filter { it.isNotBlank() }.forEach {
-            val component = components.find { c -> c.name == it }
+            val component = components.find { c -> c.name.lowercase() == it.lowercase() }
             if (component != null && component.examples.isNotEmpty()) {
                 // componentName: componentExample
-                userComponents.plus("${component.name}: ${component.examples[0].answer}")
+                userComponents += "${component.name}: ${component.tagName}"
             }
         }
-        variable.put("userComponents", userComponents.joinToString(separator = ","))
+        variable.put("userComponents", userComponents.joinToString(separator = "\n"))
 
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(basePrompt)),
