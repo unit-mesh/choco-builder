@@ -11,6 +11,7 @@ import { domains } from '@/components/workflow/domains'
 import { Stage } from '@/components/workflow/stage'
 import { useChat } from '@/components/flow/use-chat'
 import { Message } from 'ai'
+import { MessageResponse } from '@/components/workflow/workflow-dto'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -22,6 +23,9 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
   const [promptStage, setPromptStage] = useState<StageContext | null>(
     workflow?.prompts?.length ? workflow.prompts[0] : null
+  )
+  const [stage, setStage] = useState<Stage>(
+    promptStage?.stage ?? Stage.Classify
   )
 
   useEffect(() => {
@@ -47,12 +51,15 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         'X-Experimental-Stream-Data': 'true'
       },
       body: {
-        stage: promptStage?.stage ?? Stage.Classify,
+        stage,
         id,
         domain
       },
-        onFinish: (data: any) => {
-        console.log(data)
+      onFinish: (data: any) => {
+        let msgResponse: MessageResponse = data['object']
+        if (msgResponse.result!!) {
+          setStage(msgResponse.result?.nextStage!!)
+        }
       }
     })
   return (
