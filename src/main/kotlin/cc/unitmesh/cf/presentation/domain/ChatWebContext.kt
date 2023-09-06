@@ -5,7 +5,7 @@ import cc.unitmesh.cf.presentation.controller.ChatRequest
 import cc.unitmesh.cf.presentation.controller.Message
 
 data class ChatWebContext(
-    val messages: List<Message>,
+    var messages: List<Message>,
     val id: String,
     val stage: StageContext.Stage,
 ) {

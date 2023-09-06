@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.frontend
 
 import cc.unitmesh.cf.core.base.Answer
-import cc.unitmesh.cf.core.base.ClarificationAction
+import cc.unitmesh.cf.core.base.FlowActionFlag
 import cc.unitmesh.cf.core.prompt.*
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
@@ -13,7 +13,10 @@ import cc.unitmesh.cf.domains.frontend.flow.FESolutionDesigner
 import cc.unitmesh.cf.domains.frontend.flow.FESolutionExecutor
 import cc.unitmesh.cf.domains.frontend.model.UiPage
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.presentation.controller.Message
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import com.azure.ai.openai.models.ChatRole
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -56,8 +59,18 @@ class FEWorkflow() : Workflow() {
                     )
 
                 val nextStage = when (clarify.first) {
-                    ClarificationAction.CONTINUE -> StageContext.Stage.Clarify
-                    ClarificationAction.FINISH -> StageContext.Stage.Design
+                    FlowActionFlag.CONTINUE -> StageContext.Stage.Clarify
+                    FlowActionFlag.FINISH -> StageContext.Stage.Design
+                }
+
+                // if current stage finish, then go to next stage
+                if (nextStage == StageContext.Stage.Design) {
+                    chatWebContext.messages += Message(
+                        role = LlmMsg.ChatRole.Assistant.value,
+                        content = clarify.second,
+                    )
+
+                    return execute(DESIGN, chatWebContext)
                 }
 
                 return WorkflowResult(
@@ -68,7 +81,6 @@ class FEWorkflow() : Workflow() {
                     result = clarify.second
                 )
             }
-
             StageContext.Stage.Analyze -> TODO()
             StageContext.Stage.Design -> {
                 val design = FESolutionDesigner(contextBuilder, llmProvider, variableResolver).design(

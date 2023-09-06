@@ -4,15 +4,15 @@ private val ASK_REGEX = Regex("(询问|ask)[：:]\\s?(.*)")
 private val ACTION_REGEX = Regex("(行动|action)[：:]\\s?(.*)")
 private val FINAL_OUTPUT_REGEX = Regex("(最终输出|output)[：:]\\s?(.*)")
 
-enum class ClarificationAction {
+enum class FlowActionFlag {
     CONTINUE,
     FINISH;
 
     companion object {
 
-        fun parse(content: String): Pair<ClarificationAction, String> {
+        fun parse(content: String): Pair<FlowActionFlag, String> {
             val value = extractContent(ACTION_REGEX, content)
-            val action = safeValueOf<ClarificationAction>(value)
+            val action = safeValueOf<FlowActionFlag>(value)
             return when (action) {
                 CONTINUE -> {
                     Pair(action, extractContent(ASK_REGEX, content))

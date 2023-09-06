@@ -19,7 +19,6 @@ class WorkflowController(val classify: DomainClassify) {
 
     @GetMapping("/{domainName}")
     fun domainAgent(@PathVariable domainName: String): List<StageContext> {
-        log.info("domains: {}", domains)
         val domain = domains[domainName]
         if (domain == null) {
             log.warn("domain [{}] not found!", domainName)

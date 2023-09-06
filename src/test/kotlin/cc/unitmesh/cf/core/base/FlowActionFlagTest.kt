@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
-class ClarificationActionTest {
+class FlowActionFlagTest {
 
     @Test
     fun should_return_continue_action_and_ask_content() {
@@ -12,10 +12,10 @@ class ClarificationActionTest {
         val content = "行动:CONTINUE\n询问: What is your name?"
 
         // when
-        val result = ClarificationAction.parse(content)
+        val result = FlowActionFlag.parse(content)
 
         // then
-        assertEquals(ClarificationAction.CONTINUE, result.first)
+        assertEquals(FlowActionFlag.CONTINUE, result.first)
         assertEquals("What is your name?", result.second)
     }
 
@@ -25,10 +25,10 @@ class ClarificationActionTest {
         val content = "行动:FINISH\n最终输出: Thank you!"
 
         // when
-        val result = ClarificationAction.parse(content)
+        val result = FlowActionFlag.parse(content)
 
         // then
-        assertEquals(ClarificationAction.FINISH, result.first)
+        assertEquals(FlowActionFlag.FINISH, result.first)
         assertEquals("Thank you!", result.second)
     }
 
@@ -39,7 +39,7 @@ class ClarificationActionTest {
 
         // when-then
         assertThrows(RuntimeException::class.java) {
-            ClarificationAction.parse(content)
+            FlowActionFlag.parse(content)
         }
     }
 }

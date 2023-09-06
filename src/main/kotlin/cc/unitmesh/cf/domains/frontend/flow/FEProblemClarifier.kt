@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.domains.frontend.flow
 
-import cc.unitmesh.cf.core.base.ClarificationAction
+import cc.unitmesh.cf.core.base.FlowActionFlag
 import cc.unitmesh.cf.core.process.ProblemClarifier
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
@@ -19,7 +19,7 @@ class FEProblemClarifier(
         domain: String,
         question: String,
         histories: List<String>,
-    ): Pair<ClarificationAction, String> {
+    ): Pair<FlowActionFlag, String> {
         variable.updateQuestion(question)
         variable.histories(histories)
 
@@ -29,6 +29,6 @@ class FEProblemClarifier(
         ).filter { it.content.isNotBlank() }
 
         val completion = completion.simpleCompletion(messages)
-        return ClarificationAction.parse(completion)
+        return FlowActionFlag.parse(completion)
     }
 }

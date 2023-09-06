@@ -12,6 +12,7 @@ import { Stage } from '@/components/workflow/stage'
 import { useChat } from '@/components/flow/use-chat'
 import { Message } from 'ai'
 import { MessageResponse } from '@/components/workflow/workflow-dto'
+import { toast } from 'react-hot-toast'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -33,7 +34,9 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       .then(res => res.json())
       .then(data => {
         setWorkflow(data)
-        setPromptStage(data?.length ? data[0] : null)
+        let stage: StageContext = data?.length ? data[0] : null
+        setPromptStage(stage)
+        setStage(stage.stage ?? Stage.Classify)
       })
   }, [domain])
 
@@ -54,6 +57,9 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         stage,
         id,
         domain
+      },
+      onError: (err: any) => {
+        toast.error(err)
       },
       onFinish: (data: any) => {
         let msgResponse: MessageResponse = data['object']
