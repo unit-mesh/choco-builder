@@ -18,6 +18,9 @@ data class UiPage(
     @get:JsonGetter("布局")
     val layout: String,
 
+    @get:JsonGetter("内容")
+    val content: String = "",
+
     @get:JsonGetter("组件")
     val components: List<UiComponent> = listOf(),
 ) : Dsl, IndexElement {
@@ -48,8 +51,8 @@ data class UiPage(
          *
          * 请确认以上设计是否符合您的要求。如果需要进行任何修改或调整，请提出您的具体要求。
          */
-        fun parse(string: String): UiPage {
-            val code = MarkdownCode.parse(string);
+        fun parse(content: String): UiPage {
+            val code = MarkdownCode.parse(content);
             if (code.language != "design") {
                 throw IllegalArgumentException("不支持的语言: ${code.language}")
             }
@@ -57,7 +60,7 @@ data class UiPage(
             val lines = code.text.lines()
             val pageName = lines[0].substringAfter(":").trim()
             val layout = lines.subList(1, lines.size).joinToString("\n")
-            return UiPage(name = pageName, layout = layout)
+            return UiPage(name = pageName, layout = layout, content = content)
         }
     }
 }

@@ -7,7 +7,6 @@ interface LlmProvider {
 
     fun simpleCompletion(messages: List<LlmMsg.ChatMessage>): String
 
-
     class CompletionResultNotFoundException(val messages: List<LlmMsg.ChatMessage>) :
         RuntimeException("自动补齐无结果，提示词：${messages}")
 }

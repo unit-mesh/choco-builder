@@ -15,6 +15,10 @@ class FEProblemClarifier(
 ) : ProblemClarifier {
     private val clarifyContext = FEWorkflow.CLARIFY
 
+    companion object {
+        val log = org.slf4j.LoggerFactory.getLogger(FEProblemClarifier::class.java)
+    }
+
     override fun clarify(
         domain: String,
         question: String,
@@ -28,7 +32,9 @@ class FEProblemClarifier(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, clarifyContext.questionPrefix + question),
         ).filter { it.content.isNotBlank() }
 
+        log.info("Clarify messages: {}", messages)
         val completion = completion.simpleCompletion(messages)
+        log.info("Clarify completion: {}", completion)
         return FlowActionFlag.parse(completion)
     }
 }

@@ -17,13 +17,20 @@ class FESolutionExecutor(
 ) : SolutionExecutor<UiPage> {
     override val interpreters: List<Interpreter> = listOf()
 
+    companion object {
+        val log = org.slf4j.LoggerFactory.getLogger(FESolutionExecutor::class.java)
+    }
+
     override fun execute(solution: UiPage): Answer {
         val basePrompt = FEWorkflow.EXECUTE.format()
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(basePrompt)),
         ).filter { it.content.isNotBlank() }
 
+        log.info("Execute messages: {}", messages)
         val completion = completion.simpleCompletion(messages)
+        log.info("Execute completion: {}", completion)
+
         return object : Answer {
             override var executor: String = ""
             override var values: Any = completion
