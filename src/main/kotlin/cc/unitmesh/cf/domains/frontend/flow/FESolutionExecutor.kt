@@ -23,6 +23,8 @@ class FESolutionExecutor(
 
     override fun execute(solution: UiPage): Answer {
         val basePrompt = FEWorkflow.EXECUTE.format()
+        variable.put("userLayout", solution.layout)
+
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(basePrompt)),
         ).filter { it.content.isNotBlank() }

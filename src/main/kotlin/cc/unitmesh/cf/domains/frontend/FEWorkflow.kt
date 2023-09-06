@@ -233,7 +233,7 @@ class FEWorkflow() : Workflow() {
             id = "FrontendExecute",
             stage = StageContext.Stage.Execute,
             systemPrompt = """你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求和页面，生成对应的前端代码。
-            |- 项目的技术栈是 React + TypeScript + Ant Design。
+            |- 项目的技术栈是 Vue + TypeScript + Element UI。
             |
             |###
             |请根据用户提供的问题，生成前端代码。
@@ -243,7 +243,7 @@ class FEWorkflow() : Workflow() {
             |${'$'}{question}
             |
             |业务布局：
-            |${'$'}{layout}
+            |${'$'}{userLayout}
         """.trimMargin(),
             examples = listOf(
                 QAExample(
