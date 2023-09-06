@@ -31,7 +31,7 @@ allprojects {
     apply(plugin = "jacoco")
 
     group = "cc.unitmesh"
-    version = "0.0.2-SNAPSHOT"
+    version = "0.0.3"
 
     repositories {
         mavenCentral()
