@@ -4,11 +4,37 @@ import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
 import cc.unitmesh.cf.core.workflow.WorkflowResult
+import cc.unitmesh.cf.domains.code.flow.CodeInput
+import cc.unitmesh.cf.domains.code.flow.CodeSolutionExecutor
+import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
+@Component
 class CodeInterpreterWorkflow : Workflow() {
+    @Autowired
+    private lateinit var llmProvider: LlmProvider
+
+    override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
+        get() = linkedMapOf(
+            StageContext.Stage.Execute to EXECUTE
+        )
+
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
-        TODO("Not yet implemented")
+        val answer = CodeSolutionExecutor(llmProvider).execute(
+            CodeInput(
+                question = EXECUTE.format()
+            )
+        )
+
+        return WorkflowResult(
+            currentStage = StageContext.Stage.Execute,
+            nextStage = StageContext.Stage.Execute,
+            responseMsg = answer.values.toString(),
+            resultType = String::class.java.toString(),
+            result = answer.toString()
+        )
     }
 
     companion object {

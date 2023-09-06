@@ -33,7 +33,6 @@ class FEWorkflow() : Workflow() {
     @Autowired
     private lateinit var llmProvider: LlmProvider
 
-
     override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
             CLARIFY.stage to CLARIFY,
@@ -112,7 +111,7 @@ class FEWorkflow() : Workflow() {
                 val answer: Answer = FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
                 return WorkflowResult(
                     currentStage = StageContext.Stage.Execute,
-                    nextStage = StageContext.Stage.Execute,
+                    nextStage = StageContext.Stage.Done,
                     responseMsg = answer.values.toString(),
                     resultType = String::class.java.toString(),
                     result = answer.toString()

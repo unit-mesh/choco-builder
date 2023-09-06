@@ -3,6 +3,7 @@ package cc.unitmesh.cf.presentation.controller
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
+import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 @RestController
-class ChatController(val feFlow: FEWorkflow) {
+class ChatController(
+    val feFlow: FEWorkflow,
+    val codeFlow: CodeInterpreterWorkflow,
+) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest): SseEmitter {
         val emitter = SseEmitterUtf8()
@@ -30,6 +34,9 @@ class ChatController(val feFlow: FEWorkflow) {
             SupportedDomains.Ktor -> TODO()
             SupportedDomains.SQL -> TODO()
             SupportedDomains.Custom -> TODO()
+            SupportedDomains.CodeInterpreter -> {
+                codeFlow
+            }
         }
 
         // 2. searches by stage
