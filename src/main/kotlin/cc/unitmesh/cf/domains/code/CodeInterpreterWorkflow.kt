@@ -23,9 +23,7 @@ class CodeInterpreterWorkflow : Workflow() {
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
         val answer = CodeSolutionExecutor(llmProvider).execute(
-            CodeInput(
-                question = EXECUTE.format()
-            )
+            CodeInput(content = chatWebContext.messages.last().content)
         )
 
         return WorkflowResult(

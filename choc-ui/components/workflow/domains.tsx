@@ -14,7 +14,7 @@ export const domains: DomainFormItem[] = [
   },
   {
     label: 'Code Interpreter (Kotlin)',
-    value: 'kotlin-interpreter'
+    value: 'code-interpreter'
   },
   {
     label: 'TestCase',

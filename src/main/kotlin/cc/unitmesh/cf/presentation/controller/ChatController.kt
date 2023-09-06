@@ -45,7 +45,7 @@ class ChatController(
 
         // 3. execute stage with prompt
         val chatWebContext = ChatWebContext.fromRequest(chat)
-        val result = feFlow.execute(prompt, chatWebContext)
+        val result = workflow.execute(prompt, chatWebContext)
 
         // 4. return response
         emitter.send(MessageResponse.from(chat.id, result))
