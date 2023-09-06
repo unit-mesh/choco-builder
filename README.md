@@ -20,6 +20,12 @@ a user query is processed by the following steps:
 3. [SolutionDesigner.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionDesigner.kt)
 4. [SolutionExecutor.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionExecutor.kt)
 
+## Examples:
+
+### Frontend Screenshot
+
+[Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
+
 ## Dev
 
 Tech Stack:

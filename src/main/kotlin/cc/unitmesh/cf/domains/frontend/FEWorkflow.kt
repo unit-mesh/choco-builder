@@ -17,6 +17,8 @@ import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 import cc.unitmesh.cf.presentation.controller.Message
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import com.azure.ai.openai.models.ChatRole
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -92,9 +94,9 @@ class FEWorkflow() : Workflow() {
                 return WorkflowResult(
                     currentStage = StageContext.Stage.Design,
                     nextStage = StageContext.Stage.Design,
-                    responseMsg = design.toString(),
+                    responseMsg = design.content,
                     resultType = UiPage::class.java.toString(),
-                    result = design.toString()
+                    result = Json.encodeToString(design)
                 )
             }
 

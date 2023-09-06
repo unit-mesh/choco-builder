@@ -319,6 +319,7 @@ const getStreamedResponse = async (
       } else {
         let parsed = JSON.parse(streamedResponse)
         let content = parsed['messages'][0]['content']
+        console.log(content)
         if (typeof content === 'object') {
           content = (JSON.stringify(content) as any)['content']
         }
