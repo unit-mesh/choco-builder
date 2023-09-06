@@ -22,6 +22,17 @@ class ChatController(val feFlow: FEWorkflow) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest): SseEmitter {
         val emitter = SseEmitterUtf8()
+//        emitter.send(
+//            MessageResponse.from(
+//                chat.id, WorkflowResult(
+//                    StageContext.Stage.Clarify,
+//                    StageContext.Stage.Clarify,
+//                    "Hello, world",
+//                    resultType = "text",
+//                    result = "Hello, world",
+//                )
+//            )
+//        )
 
         // 1. search by domains
         val workflow = when (chat.domain) {
@@ -43,9 +54,8 @@ class ChatController(val feFlow: FEWorkflow) {
         val result = feFlow.execute(prompt, chatWebContext)
 
         // 4. return response
-        val encodeToString = Json.encodeToString(MessageResponse.from(chat.id, result))
+        emitter.send(MessageResponse.from(chat.id, result))
 
-        emitter.send(encodeToString)
         emitter.complete()
         return emitter
     }
@@ -58,7 +68,7 @@ class ChatController(val feFlow: FEWorkflow) {
 @Serializable
 data class MessageResponse(
     val id: String,
-    val `object`: String,
+    val `object`: WorkflowResult?,
     val created: Long = DateTime.now().millis,
     val model: String = "gpt-3.5-turbo",
     val messages: List<Message> = emptyList(),
@@ -66,7 +76,7 @@ data class MessageResponse(
     companion object {
         fun from(id: String, result: WorkflowResult?): MessageResponse {
             val messages = listOf(Message("assistant", result?.responseMsg ?: ""))
-            return MessageResponse(id, Json.encodeToString(result), messages = messages)
+            return MessageResponse(id, result, messages = messages)
         }
     }
 }

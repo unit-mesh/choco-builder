@@ -50,6 +50,9 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         stage: promptStage?.stage ?? Stage.Classify,
         id,
         domain
+      },
+        onFinish: (data: any) => {
+        console.log(data)
       }
     })
   return (

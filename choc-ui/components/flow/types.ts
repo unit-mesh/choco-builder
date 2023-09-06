@@ -23,6 +23,7 @@ export type Message = {
    * not be set.
    */
   function_call?: string | ChatCompletionMessage.FunctionCall;
+  object?: any;
 };
 
 export type CreateMessage = Omit<Message, 'id'> & {

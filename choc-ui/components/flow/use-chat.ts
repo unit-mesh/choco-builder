@@ -311,7 +311,9 @@ const getStreamedResponse = async (
         // While the function call is streaming, it will be a string.
         responseMessage['function_call'] = streamedResponse
       } else {
-        responseMessage['content'] = streamedResponse
+        let parsed = JSON.parse(streamedResponse);
+        responseMessage['object'] = parsed;
+        responseMessage['content'] = parsed['messages'][0]['content'];
       }
 
       mutate([...chatRequest.messages, { ...responseMessage }], false)
