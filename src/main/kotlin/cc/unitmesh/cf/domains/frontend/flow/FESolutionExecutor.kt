@@ -24,6 +24,17 @@ class FESolutionExecutor(
     override fun execute(solution: UiPage): Answer {
         val basePrompt = FEWorkflow.EXECUTE.format()
         variable.put("userLayout", solution.layout)
+        val components = variable.getComponents()
+
+        val userComponents : List<String> = listOf()
+        solution.components.filter { it.isNotBlank() }.forEach {
+            val component = components.find { c -> c.name == it }
+            if (component != null && component.examples.isNotEmpty()) {
+                // componentName: componentExample
+                userComponents.plus("${component.name}: ${component.examples[0].answer}")
+            }
+        }
+        variable.put("userComponents", userComponents.joinToString(separator = ","))
 
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(basePrompt)),

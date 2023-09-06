@@ -13,6 +13,10 @@ interface VariableResolver<T> {
         velocityContext.put(key, value)
     }
 
+    fun get(key: String): Any? {
+        return velocityContext.get(key)
+    }
+
     fun compile(input: String): String
 }
 

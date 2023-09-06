@@ -1,6 +1,6 @@
 {
   "type": "frontend",
-  "name": "PageHeader 页头",
+  "name": "PageHeader",
   "tagName": "<el-page-header>",
   "description": "如果页面的路径比较简单，推荐使用页头组件而非面包屑组件。",
   "properties": [

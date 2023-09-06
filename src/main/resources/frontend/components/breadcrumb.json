@@ -1,6 +1,6 @@
 {
   "type": "frontend",
-  "name": "Breadcrumb 面包屑",
+  "name": "Breadcrumb",
   "tagName": "<el-breadcrumb>",
   "description": "显示当前页面的路径，快速返回之前的任意页面。",
   "properties": [

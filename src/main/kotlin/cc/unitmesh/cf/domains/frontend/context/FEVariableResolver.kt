@@ -18,8 +18,14 @@ class FEVariableResolver : VariableResolver<FEVariables> {
     override var variables: FEVariables? = null
     override val velocityContext = VelocityContext()
 
+    val componentList: MutableList<UiComponent> = mutableListOf()
+
     init {
-        this.resolve()
+        try {
+            this.resolve()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun resolve(question: String) {
@@ -32,6 +38,9 @@ class FEVariableResolver : VariableResolver<FEVariables> {
             .map { it.toFile().readText() }
             .map { Json.decodeFromString<UiComponent>(it) }
             .toList()
+
+        componentList.clear()
+        componentList.addAll(components)
 
         // walk through the dir and load all layouts
         val layoutUrl = this.javaClass.getResource("/frontend/layout")!!
@@ -71,6 +80,10 @@ class FEVariableResolver : VariableResolver<FEVariables> {
         val sw = StringWriter()
         Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, input)
         return sw.toString()
+    }
+
+    fun getComponents(): MutableList<UiComponent> {
+       return componentList
     }
 }
 

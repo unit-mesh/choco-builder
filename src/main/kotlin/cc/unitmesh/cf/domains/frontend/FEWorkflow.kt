@@ -244,6 +244,9 @@ class FEWorkflow() : Workflow() {
             |请根据用户提供的问题，生成前端代码。
             |###
             |
+            |相关的组件列表如下：
+            |${'$'}{userComponents}
+            |
             |用户提供的问题：
             |${'$'}{question}
             |
