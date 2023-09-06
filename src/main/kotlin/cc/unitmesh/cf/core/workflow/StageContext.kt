@@ -3,6 +3,7 @@ package cc.unitmesh.cf.core.workflow
 import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.prompt.QAUpdateExample
 import cc.unitmesh.cf.core.prompt.StringTemplate
+import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.infrastructure.utils.uuid
 import com.fasterxml.jackson.annotation.JsonValue
 import jakarta.persistence.Id
@@ -27,6 +28,8 @@ data class StageContext(
      * when FINISH, isDone is true
      */
     val isDone: Boolean = false,
+
+    val temperature: TemperatureMode = TemperatureMode.Default,
 ) : StringTemplate {
     /**
      * 范例类型

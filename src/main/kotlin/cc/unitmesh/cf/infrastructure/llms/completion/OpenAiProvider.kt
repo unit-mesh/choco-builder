@@ -25,6 +25,8 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
 
     private val timeout = Duration.ofSeconds(600)
 
+    override var temperature = 0.0
+
     var totalTokens = 0L;
     private val openai: OpenAiService by lazy {
         // for proxy
@@ -65,7 +67,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
     private fun prepareRequest(messages: List<LlmMsg.ChatMessage>): ChatCompletionRequest? {
         return ChatCompletionRequest.builder()
             .model("gpt-3.5-turbo")
-            .temperature(0.0)
+            .temperature(temperature)
             .messages(messages.map { it.toInternal() })
             .stream(false)
             .build()
