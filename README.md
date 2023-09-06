@@ -26,6 +26,11 @@ a user query is processed by the following steps:
 
 ![Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
 
+- 步骤 1：ProblemClarifier：使用响应式布局，编写一个聊天页面
+    - 步骤 1.1：ProblemClarifier：左边是一个导航，中间是聊天区，聊天区的下方是一个输入按钮。
+- 步骤 2：SolutionDesigner：请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+- 步骤 3：SolutionExecutor：生成一个聊天页面
+
 ## Dev
 
 Tech Stack:
