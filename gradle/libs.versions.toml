@@ -25,6 +25,8 @@ shadowJar = "7.1.2"
 
 compose = "1.3.0"
 
+kotless = "0.2.0"
+
 [libraries]
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-stdlib-jdk8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
@@ -106,6 +108,17 @@ slf4j-simple = "org.slf4j:slf4j-simple:2.0.7"
 onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.1"
 huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.23.0"
 jtokkit = "com.knuddels:jtokkit:0.6.1"
+
+# 	// Serverless Kotlin Language Binding
+kotless-lang = { group = "io.kotless", name = "kotless-lang", version.ref = "kotless" }
+kotless-lang-local = { group = "io.kotless", name = "kotless-lang-local", version.ref = "kotless" }
+
+kotless-spring-boot-lang = { group = "io.kotless", name = "spring-boot-lang", version.ref = "kotless" }
+kotless-spring-boot-lang-local = { group = "io.kotless", name = "spring-boot-lang-local", version.ref = "kotless" }
+kotless-spring-lang-parser = { group = "io.kotless", name = "spring-lang-parser", version.ref = "kotless" }
+
+kotless-ktor-lang = { group = "io.kotless", name = "ktor-lang", version.ref = "kotless" }
+kotless-ktor-lang-local = { group = "io.kotless", name = "ktor-lang-local", version.ref = "kotless" }
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
