@@ -10,7 +10,6 @@ import { ChatList } from '@/components/chat-list'
 import { StageContext, Workflow } from '@/components/workflow/workflow'
 import { domains } from '@/components/workflow/domains'
 import { Stage } from '@/components/workflow/stage'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
