@@ -253,15 +253,9 @@ class FEWorkflow() : Workflow() {
             |页面布局要求：
             |${'$'}{userLayout}
             |
-            |现在请你生成前端代码，使用 ```vue 开始你的回答。
+            |现在请你生成前端代码，代码使用 Markdown 语言编写，以便用户可以直接复制到项目中。
             |
-        """.trimMargin(),
-//            examples = listOf(
-//                QAExample(
-//                    question = "",
-//                    answer = ""
-//                )
-//            )
+        """.trimMargin()
         )
     }
 }
