@@ -41,6 +41,8 @@ allprojects {
 
 dependencies {
     implementation(projects.cocoaLocalEmbedding)
+    implementation(projects.cocoaCore)
+
     // kotlin dependencies
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation(libs.serialization.json)
