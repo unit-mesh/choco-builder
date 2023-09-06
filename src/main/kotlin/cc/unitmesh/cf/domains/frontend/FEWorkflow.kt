@@ -190,21 +190,21 @@ class FEWorkflow() : Workflow() {
         """.trimMargin(),
             updateExamples = listOf(
                 QAUpdateExample(
-                    question = "生成一个导航栏的 mockup",
+                    question = "生成一个导航栏组件的 mockup",
                     answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
-            |pageName: 导航栏
+            |componentName: 导航栏
             |--------------------------------------
-            || a("home") | p("博客") | p("Login")  |
+            || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
             |```
                 """.trimMargin(),
                     nextAction = "这里的 login 应该是 button，而不是 a",
                     finalOutput = """
             |```design
-            |pageName: 导航栏
+            |componentName: 导航栏
             |--------------------------------------
-            || a("home") | p("博客") | button("Login")  |
+            || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
             |```
                 """.trimMargin()
@@ -214,15 +214,15 @@ class FEWorkflow() : Workflow() {
                     answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
             |pageName: 博客列表
-            |----------------------------------------------
-            ||      Navigation(10x)                       |
-            |----------------------------------------------
-            || Empty(2x) | TitleComponent(6x) | Empty(2x) |
-            |----------------------------------------------
-            || BlogList(8x)           | Archives(2x)      |
-            |----------------------------------------------
-            || Footer(10x)                                |
-            |----------------------------------------------
+            |------------------------------------------------------
+            ||      PageHeader(10x)                               |
+            |------------------------------------------------------
+            || Empty(2x) | TitleComponent(6x) | Empty(2x)         |
+            |------------------------------------------------------
+            || BlogListComponent(8x)     | ArchivesComponent(2x)  |
+            |------------------------------------------------------
+            || Footer(10x)                                        |
+            |------------------------------------------------------
             |```
                 """.trimMargin(),
                     nextAction = "YES",

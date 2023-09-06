@@ -15,6 +15,6 @@
     "name": "响应式布局",
     "english": "Responsive Layout",
     "description": "使网页能够适应不同尺寸和类型的设备，以提供一致的用户体验。",
-    "example": "\n\n<el-row :gutter=\"10\">\n  <el-col :xs=\"8\" :sm=\"6\" :md=\"4\" :lg=\"3\" :xl=\"1\"><div class=\"grid-content bg-purple\"></div></el-col>\n  <el-col :xs=\"4\" :sm=\"6\" :md=\"8\" :lg=\"9\" :xl=\"11\"><div class=\"grid-content bg-purple-light\"></div></el-col>\n</el-row>"
+    "example": "\<el-row :gutter=\"10\">\n  <el-col :xs=\"8\" :sm=\"6\" :md=\"4\" :lg=\"3\" :xl=\"1\"><div class=\"grid-content bg-purple\"></div></el-col>\n  <el-col :xs=\"4\" :sm=\"6\" :md=\"8\" :lg=\"9\" :xl=\"11\"><div class=\"grid-content bg-purple-light\"></div></el-col>\n</el-row>"
   }
 ]
