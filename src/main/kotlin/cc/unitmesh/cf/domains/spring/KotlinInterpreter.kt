@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.ktor
+package cc.unitmesh.cf.domains.spring
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.Interpreter

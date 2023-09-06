@@ -5,7 +5,7 @@ import cc.unitmesh.cf.core.workflow.Workflow
 import org.springframework.stereotype.Component
 
 @Component
-class FEDomainDecl() : DomainDeclaration {
+class FEDomainDecl : DomainDeclaration {
     override val domainName: String get() = "frontend"
     override val description: String get() = "设计前端 UI，生成前端代码、组件等"
 

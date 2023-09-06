@@ -13,8 +13,8 @@ export const domains: DomainFormItem[] = [
     value: 'openapi'
   },
   {
-    label: 'Ktor',
-    value: 'ktor'
+    label: '后端（Spring 框架）',
+    value: 'spring'
   },
   {
     label: 'TestCase',
