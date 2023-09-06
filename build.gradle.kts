@@ -53,6 +53,7 @@ allprojects {
 dependencies {
     implementation(projects.cocoaLocalEmbedding)
     implementation(projects.cocoaCore)
+    implementation(projects.codeInterpreter)
 
     // kotlin dependencies
     implementation("org.jetbrains.kotlin:kotlin-reflect")

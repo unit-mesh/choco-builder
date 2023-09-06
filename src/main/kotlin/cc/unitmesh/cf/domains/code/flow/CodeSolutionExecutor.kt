@@ -6,11 +6,14 @@ import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.Interpreter
 import cc.unitmesh.cf.core.process.SolutionExecutor
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
+import cc.unitmesh.cf.domains.code.CodeInterpreter
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
 
 class CodeSolutionExecutor(
     private val completion: LlmProvider,
+    private val codeInterpreter: CodeInterpreter,
 ) : SolutionExecutor<CodeInput> {
     override val interpreters: List<Interpreter> = listOf()
 
@@ -28,9 +31,18 @@ class CodeSolutionExecutor(
         val completion = completion.simpleCompletion(messages)
         log.info("Execute completion: {}", completion)
 
+        var evalResult = ""
+
+        val code = MarkdownCode.parse(completion)
+        if (code.language == "kotlin") {
+            val result = codeInterpreter.interpret(CodeInput(content = code.text));
+            log.info("Execute result: {}", result)
+            evalResult = result.toString()
+        }
+
         return object : Answer {
             override var executor: String = ""
-            override var values: Any = completion
+            override var values: Any = "$completion\n\nevalResult: $evalResult"
         }
     }
 

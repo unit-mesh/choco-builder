@@ -16,13 +16,16 @@ class CodeInterpreterWorkflow : Workflow() {
     @Autowired
     private lateinit var llmProvider: LlmProvider
 
+    @Autowired
+    private lateinit var codeInterpreter: CodeInterpreter
+
     override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
             StageContext.Stage.Execute to EXECUTE
         )
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
-        val answer = CodeSolutionExecutor(llmProvider).execute(
+        val answer = CodeSolutionExecutor(llmProvider, codeInterpreter).execute(
             CodeInput(content = chatWebContext.messages.last().content)
         )
 
