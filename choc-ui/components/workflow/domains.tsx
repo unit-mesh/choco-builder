@@ -13,8 +13,8 @@ export const domains: DomainFormItem[] = [
     value: 'openapi'
   },
   {
-    label: '后端（Spring 框架）',
-    value: 'spring'
+    label: 'Code Interpreter (Kotlin)',
+    value: 'kotlin-interpreter'
   },
   {
     label: 'TestCase',

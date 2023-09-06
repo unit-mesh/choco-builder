@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.spring.context
+package cc.unitmesh.cf.domains.code.context
 
 data class SpringVariables(
     val question: String,
