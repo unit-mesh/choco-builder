@@ -10,6 +10,7 @@ class SqlDsl(
     val where: List<Filter>,
     val orderBy: List<Sort>,
     val limit: String?,
+    override val content: String = "",
 ) : Dsl {
     override var domain: String = ""
 

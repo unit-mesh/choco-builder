@@ -35,6 +35,8 @@ data class UiComponent(
 
     @get:JsonGetter("示例")
     val examples: List<QAExample> = emptyList(),
+
+    override val content: String = ""
 ) : Dsl, IndexElement {
     override var domain: String = ""
 

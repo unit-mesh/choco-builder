@@ -19,7 +19,7 @@ data class UiPage(
     val layout: String,
 
     @get:JsonGetter("内容")
-    val content: String = "",
+    override val content: String = "",
 
     @get:JsonGetter("组件")
     val components: List<UiComponent> = listOf(),

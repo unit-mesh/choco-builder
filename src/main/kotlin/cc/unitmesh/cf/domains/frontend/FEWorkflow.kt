@@ -99,7 +99,13 @@ class FEWorkflow() : Workflow() {
             }
 
             StageContext.Stage.Execute -> {
-                val uiPage = UiPage.parse(messages.last().content)
+                 // the layout should be the last - 1 message
+                if (messages.size < 2) {
+                    throw IllegalStateException("messages size should be greater than 2")
+                }
+
+                val layout = messages[messages.size - 2].content
+                val uiPage = UiPage.parse(layout)
                 val answer: Answer = FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
                 return WorkflowResult(
                     currentStage = StageContext.Stage.Execute,

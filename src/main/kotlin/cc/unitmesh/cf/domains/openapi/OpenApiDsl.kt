@@ -19,6 +19,8 @@ data class OpenApiDsl(
 
     @get:JsonGetter("标签")
     val tags: List<String>,
+
+    override val content: String = "",
 ) : Dsl {
     override var domain: String = ""
 

@@ -21,6 +21,8 @@ data class DesignSystem(
 
     @get:JsonGetter("布局方式")
     val layouts: List<LayoutStyle>,
+
+    override val content: String = "",
 ) : Dsl {
     override var domain: String = ""
 
