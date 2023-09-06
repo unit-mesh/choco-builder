@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { type Message, useChat } from 'ai/react'
 
 import { cn } from '@/lib/utils'
 import { ChatPanel } from '@/components/chat-panel'
@@ -10,6 +9,8 @@ import { ChatList } from '@/components/chat-list'
 import { StageContext, Workflow } from '@/components/workflow/workflow'
 import { domains } from '@/components/workflow/domains'
 import { Stage } from '@/components/workflow/stage'
+import { useChat } from '@/components/flow/use-chat'
+import { Message } from 'ai'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -55,7 +56,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
         {messages.length ? (
           <>
-            <ChatList messages={messages} />
+            <ChatList messages={messages as Message[]} />
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
@@ -68,7 +69,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         stop={stop}
         append={append}
         reload={reload}
-        messages={messages}
+        messages={messages as Message[]}
         input={input}
         setInput={setInput}
       />
