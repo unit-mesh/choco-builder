@@ -83,6 +83,7 @@ class FEWorkflow() : Workflow() {
                     result = clarify.second
                 )
             }
+
             StageContext.Stage.Analyze -> TODO()
             StageContext.Stage.Design -> {
                 val design = FESolutionDesigner(contextBuilder, llmProvider, variableResolver).design(
@@ -101,7 +102,7 @@ class FEWorkflow() : Workflow() {
             }
 
             StageContext.Stage.Execute -> {
-                 // the layout should be the last - 1 message
+                // the layout should be the last - 1 message
                 if (messages.size < 2) {
                     throw IllegalStateException("messages size should be greater than 2")
                 }
@@ -185,7 +186,8 @@ class FEWorkflow() : Workflow() {
             |- a(), p() 以小写字母开头的函数，表示页面元素
             |- Footer(10x),BlogList(10x) 以大写字母开头的函数，表示页面组件
             |- Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
-            |- Navigation(10x) 表示导航栏, 10x 表示页面元素的宽度为 10x栅格宽度
+            |- NavComponent(10x) 表示导航栏, 10x 表示页面元素的宽度为 10x栅格宽度
+            |- 以 Component 结尾，表示是一个新的页面组件，如 NavComponent, BlogListComponent 等
             |
         """.trimMargin(),
             updateExamples = listOf(
@@ -193,7 +195,8 @@ class FEWorkflow() : Workflow() {
                     question = "生成一个导航栏组件的 mockup",
                     answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
-            |componentName: 导航栏
+            |componentName: NavComponent
+            |usedComponents: Link, Button
             |--------------------------------------
             || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
@@ -202,7 +205,8 @@ class FEWorkflow() : Workflow() {
                     nextAction = "这里的 login 应该是 button，而不是 a",
                     finalOutput = """
             |```design
-            |componentName: 导航栏
+            |componentName: NavComponent
+            |usedComponents: Link, Button
             |--------------------------------------
             || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
@@ -214,10 +218,11 @@ class FEWorkflow() : Workflow() {
                     answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
             |pageName: 博客列表
+            |usedComponents: NavComponent, Text, BlogListComponent, ArchivesComponent, Footer
             |------------------------------------------------------
-            ||      PageHeader(10x)                               |
+            ||      NavComponent(10x)                             |
             |------------------------------------------------------
-            || Empty(2x) | TitleComponent(6x) | Empty(2x)         |
+            || Empty(2x) | Text(6x)           | Empty(2x)         |
             |------------------------------------------------------
             || BlogListComponent(8x)     | ArchivesComponent(2x)  |
             |------------------------------------------------------

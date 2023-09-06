@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.domains.frontend.model;
 
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -21,6 +22,7 @@ class UiPageTest {
     fun should_returnPageDsl_when_languageIsDesign() {
         val string = """```design
 pageName: 聊天详细页
+usedComponents: PageHeader, Empty, ChatHeader, MessageList, Input, Button, Footer
 ----------------------------------------------
 |      Navigation(10x)                       |
 ----------------------------------------------
@@ -38,7 +40,18 @@ pageName: 聊天详细页
         val result = UiPage.parse(string)
 
         // then
-        assertEquals("聊天详细页", result.name)
+//        assertEquals("聊天详细页", result.name)
+        result.name shouldBe "聊天详细页"
+        result.components shouldBe listOf(
+            "PageHeader",
+            "Empty",
+            "ChatHeader",
+            "MessageList",
+            "Input",
+            "Button",
+            "Footer"
+        )
+
         assertEquals(
             """----------------------------------------------
 |      Navigation(10x)                       |

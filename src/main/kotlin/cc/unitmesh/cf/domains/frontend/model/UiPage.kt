@@ -24,7 +24,7 @@ data class UiPage(
     override val content: String = "",
 
     @get:JsonGetter("组件")
-    val components: List<UiComponent> = listOf(),
+    val components: List<String> = listOf(),
 ) : Dsl, IndexElement {
 
     override var domain: String = "frontend"
@@ -38,6 +38,7 @@ data class UiPage(
          * output:请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
          * ```design
          * pageName: 聊天详细页
+         * usedComponents: PageHeader, Empty, ChatHeader, MessageList, Input, Button, Footer
          * ----------------------------------------------
          * |      PageHeader(10x)                       |
          * ----------------------------------------------
@@ -61,8 +62,15 @@ data class UiPage(
 
             val lines = code.text.lines()
             val pageName = lines[0].substringAfter(":").trim()
-            val layout = lines.subList(1, lines.size).joinToString("\n")
-            return UiPage(name = pageName, layout = layout, content = content)
+
+            val usedComponents = lines[1]
+                .substringAfter(":")
+                .trim()
+                .split(",")
+                .map { it.trim() }
+
+            val layout = lines.subList(2, lines.size).joinToString("\n")
+            return UiPage(name = pageName, layout = layout, content = content, components = usedComponents)
         }
     }
 }
