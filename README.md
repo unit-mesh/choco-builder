@@ -29,9 +29,19 @@ a user query is processed by the following steps:
 
 ![Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
 
-### Examples 2: Testcases
+### Examples 2: Code Interpreter
 
-TODOs:
+示例 1：
+
+生成一个柱状图：
+
+|       | Test1 | Test2 | Test3 |
+|-------|-------|-------|-------|
+| Data1 | 1     | 2     | 3.33  |
+| Data2 | 3     | 2     | 1     |
+| Data3 | 6.7   | 4     | 2     |
+
+示例 2：编写一个 hello, world 的 mock API
 
 ## Dev
 
@@ -75,9 +85,7 @@ To spike:
 - 一句话生成后端 API (Ktor, Spring, Kotless）
     1. 确认需求
     2. 输入和输出
-    3. 确认数据库表
-        - [ ] 搜索历史数据库表
-    4. 确认生成的 API
+    3. 确认生成的 API
 - 一句话生成 SQL 图表
     1. 识别问题领域
     2. 确认与澄清问题
