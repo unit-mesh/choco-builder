@@ -24,7 +24,7 @@ a user query is processed by the following steps:
 
 ### Frontend Screenshot
 
-[Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
+![Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
 
 ## Dev
 
