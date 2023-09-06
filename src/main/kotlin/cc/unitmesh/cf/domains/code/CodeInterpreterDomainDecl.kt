@@ -10,6 +10,6 @@ class CodeInterpreterDomainDecl : DomainDeclaration {
     override val description: String get() = "生成和执行 Kotlin 代码，如生成 API、绘图等。"
 
     override fun workflow(question: String): Workflow {
-        return CodeInterpreter()
+        return CodeInterpreterWorkflow()
     }
 }
