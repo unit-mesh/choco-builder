@@ -1,0 +1,10 @@
+{
+  "resultValue": "Plot(data={月份=[一月, 二月, 三月, 四月, 五月, 六月], 支出=[201.2, 222, 234.3, 120.2, 90, 94.4]}, mapping=org.jetbrains.letsPlot.intern.Options@74bcd028, features=[org.jetbrains.letsPlot.geom.geomBar@5660be34, org.jetbrains.letsPlot.geom.geomText@6ae68dc2, org.jetbrains.letsPlot.intern.OptionsMap@5a04de30])",
+  "className": "org.jetbrains.letsPlot.intern.Plot",
+  "displayValue": "{\"data\":{\"text/plain\":\"Plot(data={月份=[一月, 二月, 三月, 四月, 五月, 六月], 支出=[201.2, 222, 234.3, 120.2, 90, 94.4]}, mapping=org.jetbrains.letsPlot.intern.Options@74bcd028, features=[org.jetbrains.letsPlot.geom.geomBar@5660be34, org.jetbrains.letsPlot.geom.geomText@6ae68dc2, org.jetbrains.letsPlot.intern.OptionsMap@5a04de30])\"},\"metadata\":{}}",
+  "msgType": "html",
+  "content": {
+    "type": "cc.unitmesh.code.messaging.HtmlContent",
+    "html": "<html lang=\"en\">\n   <head>\n       <script type=\"text/javascript\" data-lets-plot-script=\"library\" src=\"https://cdn.jsdelivr.net/gh/JetBrains/lets-plot@v4.0.0/js-package/distr/lets-plot.min.js\"></script>\n   </head>\n   <body>\n          <div id=\"4Bjduk\"></div>\n   <script type=\"text/javascript\" data-lets-plot-script=\"plot\">\n       var plotSpec={\n\"ggtitle\":{\n\"text\":\"2023 年上半年电费\"\n},\n\"mapping\":{\n\"x\":\"月份\",\n\"y\":\"支出\"\n},\n\"data\":{\n\"支出\":[201.2,222.0,234.3,120.2,90.0,94.4],\n\"月份\":[\"一月\",\"二月\",\"三月\",\"四月\",\"五月\",\"六月\"]\n},\n\"kind\":\"plot\",\n\"scales\":[],\n\"layers\":[{\n\"mapping\":{\n},\n\"stat\":\"identity\",\n\"position\":\"stack\",\n\"geom\":\"bar\",\n\"data\":{\n}\n},{\n\"mapping\":{\n\"label\":\"支出\"\n},\n\"stat\":\"identity\",\n\"label_format\":\"${.2f}\",\n\"position\":\"identity\",\n\"geom\":\"text\",\n\"data\":{\n}\n}]\n};\n       var plotContainer = document.getElementById(\"4Bjduk\");\n       LetsPlot.buildPlotFromProcessedSpecs(plotSpec, -1, -1, plotContainer);\n   </script>\n   </body>\n</html>"
+  }
+}

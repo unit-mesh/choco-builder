@@ -41,10 +41,10 @@ class KotlinInterpreter {
             )
 
             return Message(
-                id,
-                resultValue.toString(),
-                className,
-                result.displayValue.toJson().toString(),
+                id = id,
+                resultValue = resultValue.toString(),
+                className = className,
+                displayValue = result.displayValue.toJson().toString(),
                 msgType = MessageType.HTML,
                 content = HtmlContent(content)
             )
