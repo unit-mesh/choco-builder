@@ -1,4 +1,4 @@
-export type Message = {
+export type InterpreterMessage = {
     id: number
     resultValue: string
     displayValue: string

@@ -10,6 +10,7 @@ import { coldarkDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { IconCheck, IconCopy, IconDownload } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
+import {InterpreterMessage} from "@/components/interpreter/message";
 
 interface Props {
   language: string
@@ -57,6 +58,23 @@ export const generateRandomString = (length: number, lowercase = false) => {
 }
 
 const CodeBlock: FC<Props> = memo(({ language, value }) => {
+  if (language == 'interpreter') {
+    // if value is string , convert to json
+    if (typeof value == 'string') {
+      value = JSON.parse(value)
+    }
+
+    let msg = value as unknown as InterpreterMessage
+    if (msg.msgType == 'html') {
+      return (
+        <div className="relative w-full font-sans codeblock bg-zinc-950">
+          <div dangerouslySetInnerHTML={{ __html: msg.content.html!! }} />
+        </div>
+      )
+    }
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 })
 
   const downloadAsFile = () => {

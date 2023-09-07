@@ -45,7 +45,7 @@ class CodeSolutionExecutor(
 
         return object : Answer {
             override var executor: String = ""
-            override var values: Any = "$completion\n\n```interpret\n$evalResult\n```\n"
+            override var values: Any = "$completion\n\n```interpreter\n$evalResult\n```\n"
         }
     }
 
