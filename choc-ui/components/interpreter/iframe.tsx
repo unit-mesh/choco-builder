@@ -2,8 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import Frame from "react-frame-component";
 
 export const Iframe = ({ content } : { content: string }) => {
-    const [height, setHeight] = useState<number>(500);
-    // @ts-ignore
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
     const handleResize = useCallback(() => {
@@ -17,10 +15,10 @@ export const Iframe = ({ content } : { content: string }) => {
                 iframeDocument.documentElement.style.width = "600px";
                 body.style.width = "600px";
             }
-            const newHeight = body?.scrollHeight || 0;
-            if (newHeight !== 0) {
-                setHeight(newHeight);
-            }
+            // const newHeight = body?.scrollHeight || 0;
+            // if (newHeight !== 0) {
+            //     setHeight(newHeight);
+            // }
         }
     }, []);
 
@@ -32,16 +30,13 @@ export const Iframe = ({ content } : { content: string }) => {
         <Frame
             ref={iframeRef}
             style={{
-                height: `${height}px`,
+                width: `620px`,
+                height: `420px`,
+                margin: `0 auto`,
             }}
-            initialContent={content}
+            initialContent={content + `<style>html, body, body > div { height: 400px; width: 600px }</style>`}
             onLoad={handleResize}
         >
-            <div id={'placeholder'} style={{
-                height: `${height}px`,
-                width: `${height}px`,
-            }}></div>
-            <div />
         </Frame>
     );
 };

@@ -8,6 +8,7 @@ import cc.unitmesh.code.interpreter.compiler.KotlinReplWrapper
 import cc.unitmesh.code.messaging.HtmlContent
 import org.jetbrains.kotlinx.jupyter.api.toJson
 import org.jetbrains.kotlinx.jupyter.repl.EvalResultEx
+import org.jetbrains.letsPlot.commons.geometry.DoubleVector
 import org.jetbrains.letsPlot.core.util.PlotHtmlExport
 import org.jetbrains.letsPlot.core.util.PlotHtmlHelper
 import org.jetbrains.letsPlot.export.VersionChecker
@@ -37,7 +38,8 @@ class KotlinInterpreter {
 
         if (resultValue is Plot) {
             val content = PlotHtmlExport.buildHtmlFromRawSpecs(resultValue.toSpec(),
-                PlotHtmlHelper.scriptUrl(VersionChecker.letsPlotJsVersion)
+                PlotHtmlHelper.scriptUrl(VersionChecker.letsPlotJsVersion),
+                plotSize = DoubleVector(600.0, 400.0)
             )
 
             return Message(
