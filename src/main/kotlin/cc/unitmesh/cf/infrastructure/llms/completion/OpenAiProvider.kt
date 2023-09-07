@@ -81,6 +81,9 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
 
         var result = ""
         openai.streamChatCompletion(request)
+            .doOnError {
+                log.error("Completion failed: {}", it.message, it);
+            }
             .blockingForEach { response ->
                 val completion = response.choices[0].message
                 if (completion != null && completion.content != null) {
