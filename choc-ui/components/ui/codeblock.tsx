@@ -3,7 +3,7 @@
 
 'use client'
 
-import {createRef, FC, memo, RefObject, useCallback, useEffect, useRef, useState} from 'react'
+import { FC, memo } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { coldarkDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
@@ -11,8 +11,7 @@ import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { IconCheck, IconCopy, IconDownload } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { InterpreterMessage } from '@/components/interpreter/message'
-import Frame from 'react-frame-component';
-import {Iframe} from "@/components/interpreter/iframe";
+import { Iframe } from '@/components/interpreter/iframe'
 
 interface Props {
   language: string
