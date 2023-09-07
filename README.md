@@ -31,7 +31,9 @@ a user query is processed by the following steps:
 
 ### Examples 2: Code Interpreter
 
-示例 1：编写乘法表
+- 步骤 1：SolutionExecutor
+
+#### 示例 1：编写乘法表
 
 输出示例：
 
@@ -47,7 +49,7 @@ a user query is processed by the following steps:
 9	18	27	36	45	54	63	72	81	
 ```
 
-示例 2：根据需求生成图表 （TODO）
+#### 示例 2：根据需求生成图表 （TODO）
 
 生成一个 2023 年上半年电费图，信息如下：###1~6 月：201.2,222,234.3,120.2,90,90.4###
 
