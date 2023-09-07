@@ -5,6 +5,7 @@ import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
 import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
+import cc.unitmesh.cf.domains.testcase.flow.TestcaseProblemAnalyzer
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
@@ -32,7 +33,30 @@ class TestcaseWorkflow : Workflow() {
     )
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
-        TODO("Not yet implemented")
+        val stage = prompt.stage
+        val result = when (stage) {
+            StageContext.Stage.Analyze -> {
+                val analyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver)
+                val output = analyzer.analyze(
+                    domain = "testcase",
+                    question = chatWebContext.messages.last().content
+                )
+
+                WorkflowResult(
+                    currentStage = StageContext.Stage.Analyze,
+                    nextStage = StageContext.Stage.Analyze,
+                    responseMsg = output.content,
+                    resultType = String::class.java.name,
+                    result = output.toString()
+                )
+            }
+
+            StageContext.Stage.Design -> TODO()
+            StageContext.Stage.Review -> TODO()
+            else -> TODO()
+        }
+
+        return result
     }
 
     companion object {
