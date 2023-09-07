@@ -39,7 +39,7 @@ a user query is processed by the following steps:
 
 示例 2：编写一个 hello, world 的 mock API
 
-示例 3：
+示例 3：根据需求生成图表 （TODO）
 
 生成一个 2023 年上半年电费：
 

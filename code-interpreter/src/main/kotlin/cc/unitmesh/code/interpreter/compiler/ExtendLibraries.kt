@@ -83,6 +83,7 @@ val letPlotDef = SimpleLibraryDefinition(
 //        "io.github.microutils:kotlin-logging-jvm:2.0.5"
     )
 )
+
 fun extendLibraries(): LibraryResolver {
     val kotless = "kotless" to Json.encodeToString(KotlessLibDef)
     val ktor = "ktor" to Json.encodeToString(ktorLibDef)
