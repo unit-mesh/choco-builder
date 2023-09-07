@@ -40,31 +40,43 @@ class TestcaseWorkflow : Workflow() {
             updatableExamples = listOf(
                 UpdatableExample(
                     question = "用户登录功能",
-                    answer = """测试目标：
+                    answer = """
+                        |请确认以下的测试目标是否符合您的要求。如果符合，请回复 "YES"，如果不符合，请提出你的要求。
+                        |```testcases
+                        |测试目标：
                         |- 验证用户可以使用有效的用户名和密码成功登录到系统。
                         |- 验证用户在使用无效的用户名或密码时无法登录。
                         |- 验证系统是否正确处理特殊字符的用户名和密码。
+                        |```
                     """.trimMargin(),
                     userResponse = "提供的边界条件太少了，能不能再添加一些。",
-                    finalOutput = """测试目标：
+                    finalOutput = """
+                        |请确认以下的测试目标是否符合您的要求。如果符合，请回复 "YES"，如果不符合，请提出你的要求。
+                        |```testcases
+                        |测试目标：
                         |- 验证用户可以使用有效的用户名和密码成功登录到系统。
                         |- 验证用户在使用无效的用户名或密码时无法登录。
                         |- 验证系统是否正确处理特殊字符的用户名和密码。
                         |- 验证系统对密码长度的限制。
                         |- 验证系统是否记录登录失败的尝试次数，并在一定次数后锁定账户。
+                        |```
                     """.trimMargin()
                 ),
                 UpdatableExample(
                     question = "商品管理",
                     answer = """您想要编写的测试用例功能场景太大，建议拆分为多个场景，再往下进行：商品上架、商品编辑、商品删除、商品检索、商品库存管理、商品排序等。""".trimMargin(),
                     userResponse = "商品管理-商品上架",
-                    finalOutput = """测试目标：
+                    finalOutput = """
+                        |请确认以下的测试目标是否符合您的要求。如果符合，请回复 "YES"，如果不符合，请提出你的要求。
+                        |```testcases
+                        |测试目标：
                         | - 验证管理员可以成功将商品上架到系统，并能显示已上架的商品。
                         | - 验证系统能正确处理商品的上架日期和状态。
                         | - 验证系统能够正确处理商品上架的价格和库存信息。
                         | - 验证系统能够正确处理上架商品的图片上传和显示。
                         | - 验证系统能够正确处理上架商品的分类和标签。
                         | - 验证系统能够正确计算和显示上架商品的销售统计信息。
+                        |``` 
                     """.trimMargin()
                 )
             ),
@@ -87,7 +99,7 @@ class TestcaseWorkflow : Workflow() {
                 |markdown 表格格式如下：测试要点,案例名称,案例描述,测试数据,测试步骤,预期结果,案例,属性,案例,等级,执行,方式,执行结果
                 | 
             """.trimMargin(),
-            temperatures = listOf(TemperatureMode.Creative, TemperatureMode.Default),
+            temperatures = listOf(TemperatureMode.Default),
         )
         val REVIEW: StageContext = StageContext(
             id = "Testcase Review",
@@ -112,7 +124,7 @@ class TestcaseWorkflow : Workflow() {
                 |现在，你需要根据评审结果，生成更合理的测试用例。
                 |
             """.trimMargin(),
-            temperatures = listOf(TemperatureMode.Creative, TemperatureMode.Default),
+            temperatures = listOf(TemperatureMode.Default),
         )
     }
 }
