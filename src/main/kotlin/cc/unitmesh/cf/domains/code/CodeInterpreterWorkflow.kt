@@ -53,13 +53,31 @@ class CodeInterpreterWorkflow : Workflow() {
                 """.trimMargin(),
             examples = listOf(
                 QAExample(
-                    question = "编写一个 Hello, world! 程序",
+                    question = "\n" +
+                            "使用图表展示 2023 年上半年电费信息：\n" +
+                            "\n" +
+                            "| 月份 | 支出    |\n" +
+                            "|----|-------|\n" +
+                            "| 一月 | 201.2 |\n" +
+                            "| 二月 | 222   |\n" +
+                            "| 三月 | 234.3 |\n" +
+                            "| 四月 | 120.2 |\n" +
+                            "| 五月 | 90    |\n" +
+                            "| 六月 | 94.4  |",
                     answer = """```kotlin
-                        |%use kotless
-                        |@Get("/")
-                        |fun main() = "Hello world!"
+                        |%use lets-plot
+                        |import kotlin.math.PI
+                        |import kotlin.random.Random
                         |
-                        |main()
+                        |val incomeData = mapOf(
+                        |   "x" to listOf("一月", "二月", "三月", "四月", "五月", "六月"),
+                        |   "y" to listOf(201.2, 222, 234.3, 120.2, 90, 94.4)
+                        |)
+                        |
+                        |letsPlot(incomeData) { x = "x"; y = "y" } +
+                        |   geomBar(stat = Stat.identity) +
+                        |   geomText(labelFormat = "\${'$'}{.2f}") { label = "y"; } +
+                        |   ggtitle("2023 年上半年电费")
                         |```
                     """.trimMargin()
                 ),

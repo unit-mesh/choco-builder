@@ -15,8 +15,9 @@ import kotlin.reflect.KClass
 enum class MessageType(val contentClass: KClass<out MessageContent>) {
     NONE(NoneContent::class),
     ERROR(ErrorContent::class),
-    RUNNING(RunningContent::class),
-    UNIT_SERVER(UnitServerContent::class);
+    HTML(HtmlContent::class),
+    RUNNING(RunningContent::class)
+    ;
 
     val type: String get() = name.lowercase()
 }
@@ -34,7 +35,7 @@ class NoneContent : MessageReplyContent(DocStatus.ABORT)
 class ErrorContent(val exception: String = "", val message: String = "") : MessageContent()
 
 @Serializable
-class UnitServerContent(val url: String = "") : MessageContent()
+class HtmlContent(val html: String) : MessageContent()
 
 @Serializable
 class RunningContent() : MessageContent()

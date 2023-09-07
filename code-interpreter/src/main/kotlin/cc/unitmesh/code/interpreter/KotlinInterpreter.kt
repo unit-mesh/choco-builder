@@ -29,6 +29,8 @@ class KotlinInterpreter {
         val resultValue = result.rawValue
         val className: String = resultValue?.javaClass?.name.orEmpty()
 
+        println(resultValue)
+
         return Message(
             id,
             resultValue.toString(),

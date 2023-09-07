@@ -34,7 +34,7 @@ class CodeSolutionExecutor(
         var evalResult = ""
 
         val code = MarkdownCode.parse(completion)
-        if (code.language == "kotlin") {
+        if (code.language.lowercase() == "kotlin") {
             val result = codeInterpreter.interpret(CodeInput(content = code.text));
             log.info("Execute result: {}", result)
             evalResult = result.toString()
