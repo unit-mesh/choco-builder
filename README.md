@@ -31,17 +31,43 @@ a user query is processed by the following steps:
 
 ### Examples 2: Code Interpreter
 
-示例 1：
+示例 1：编写乘法表
 
-生成一个柱状图：
+```kotlin
 
-|       | Test1 | Test2 | Test3 |
-|-------|-------|-------|-------|
-| Data1 | 1     | 2     | 3.33  |
-| Data2 | 3     | 2     | 1     |
-| Data3 | 6.7   | 4     | 2     |
+```
 
 示例 2：编写一个 hello, world 的 mock API
+
+示例 3：
+
+生成一个 2023 年上半年电费：
+
+| 月份 | 支出    |
+|----|-------|
+| 一月 | 201.2 |
+| 二月 | 222   |
+| 三月 | 234.3 |
+| 四月 | 120.2 |
+| 五月 | 90    |
+| 六月 | 94.4  |
+
+```kotlin
+%use lets -plot
+
+import kotlin . math . PI
+        import kotlin . random . Random
+
+
+val incomeData = mapOf(
+    "x" to listOf("一月", "二月", "三月", "四月", "五月", "六月"),
+    "y" to listOf(201.2, 222, 234.3, 120.2, 90, 94.4)
+)
+letsPlot(incomeData) { x = "x"; y = "y" } +
+        geomBar(stat = Stat.identity) +
+        geomText(labelFormat = "\${.2f}") { label = "y"; } +
+        ggtitle("2023 年上半年电费")
+```
 
 ## Dev
 
