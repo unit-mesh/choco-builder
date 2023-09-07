@@ -61,9 +61,32 @@ val ktorLibDef = SimpleLibraryDefinition(
     ).map(::KernelRepository)
 )
 
+val letPlotDef = SimpleLibraryDefinition(
+    imports = listOf(
+        "org.jetbrains.letsPlot.*",
+        "org.jetbrains.letsPlot.geom.*",
+        "org.jetbrains.letsPlot.stat.*",
+        "org.jetbrains.letsPlot.label.*",
+        "org.jetbrains.letsPlot.scale.*",
+        "org.jetbrains.letsPlot.facet.*",
+        "org.jetbrains.letsPlot.sampling.*",
+        "org.jetbrains.letsPlot.export.*",
+        "org.jetbrains.letsPlot.bistro.corr.CorrPlot",
+        "org.jetbrains.letsPlot.tooltips.layerTooltips",
+        "org.jetbrains.letsPlot.tooltips.tooltipsNone",
+        "org.jetbrains.letsPlot.intern.toSpec"
+    ),
+    dependencies = listOf(
+        "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.2",
+        "org.jetbrains.lets-plot:lets-plot-common:4.0.0",
+        "org.jetbrains.lets-plot:lets-plot-image-export:4.0.0",
+//        "io.github.microutils:kotlin-logging-jvm:2.0.5"
+    )
+)
 fun extendLibraries(): LibraryResolver {
     val kotless = "kotless" to Json.encodeToString(KotlessLibDef)
     val ktor = "ktor" to Json.encodeToString(ktorLibDef)
+    val letsPlot = "lets-plot" to Json.encodeToString(letPlotDef)
 
-    return listOf(kotless, ktor).toLibraries()
+    return listOf(kotless, ktor, letsPlot).toLibraries()
 }

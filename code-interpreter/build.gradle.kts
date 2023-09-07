@@ -24,7 +24,7 @@ dependencies {
     implementation(libs.kotless.ktor.lang)
     implementation(libs.kotless.ktor.lang.local)
 
-    implementation("org.jetbrains.lets-plot:lets-plot-kotlin-jvm:4.4.2")
+    implementation(libs.bundles.letsPlot)
 
     // tips: don't add follow deps to project will cause issues
     compileOnly("org.jetbrains.kotlin:kotlin-scripting-jvm")

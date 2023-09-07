@@ -120,6 +120,11 @@ kotless-spring-lang-parser = { group = "io.kotless", name = "spring-lang-parser"
 kotless-ktor-lang = { group = "io.kotless", name = "ktor-lang", version.ref = "kotless" }
 kotless-ktor-lang-local = { group = "io.kotless", name = "ktor-lang-local", version.ref = "kotless" }
 
+lets-plot-jvm = "org.jetbrains.lets-plot:lets-plot-kotlin-jvm:4.4.2"
+lets-plot-kernel = "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.2"
+lets-plot-image-export = "org.jetbrains.lets-plot:lets-plot-image-export:4.0.0"
+lets-plot-common = "org.jetbrains.lets-plot:lets-plot-common:4.0.0"
+
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -133,3 +138,4 @@ jackson = ["jackson-module-jsonSchema", "jackson-module-kotlin", "jackson-datafo
 # llm bundle
 openai = ["openai-gpt3", "retrofit2-converter-jackson"]
 markdown = ["commonmark-core", "commonmark-gfm-tables", "commonmark-heading-anchor"]
+letsPlot = ["lets-plot-jvm", "lets-plot-kernel", "lets-plot-image-export", "lets-plot-common"]

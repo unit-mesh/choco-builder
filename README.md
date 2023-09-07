@@ -52,11 +52,11 @@ a user query is processed by the following steps:
 | 五月 | 90    |
 | 六月 | 94.4  |
 
-```kotlin
-%use lets -plot
+```kotlin-scripting
+%use lets-plot
 
-import kotlin . math . PI
-        import kotlin . random . Random
+import kotlin.math.PI
+import kotlin.random.Random
 
 
 val incomeData = mapOf(
