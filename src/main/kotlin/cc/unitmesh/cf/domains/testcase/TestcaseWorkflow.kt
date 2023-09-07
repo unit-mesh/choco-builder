@@ -78,7 +78,7 @@ class TestcaseWorkflow : Workflow() {
                 val designer = TestcaseSolutionDesigner(llmProvider, variableResolver)
                 val output = designer.design(
                     domain = "testcase",
-                    question = lastMsg,
+                    question = messages.first().content,
                     histories = listOf(messages.last().content)
                 )
 
@@ -166,10 +166,9 @@ class TestcaseWorkflow : Workflow() {
             stage = StageContext.Stage.Design,
             systemPrompt = """你是一个资深的质量工程师（Quality assurance）教练，职责是根据多个不同 QA 的测试用例，生成更合理的测试用例。
                 |
-                |测试用例 A
-                |
+                |测试用例集：
                 |```testcases
-                |${'$'}{creative_testcase}
+                |${'$'}{testcases}
                 |```
                 |
                 |最后，你需要将这些测试用例，整理成一个测试计划，使用 markdown 表格输出。

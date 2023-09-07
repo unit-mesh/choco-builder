@@ -20,7 +20,6 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
-  console.log("refresh");
   const [domain, setDomain] = useState<string | null>(domains[0].value)
   const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
   const [promptStage, setPromptStage] = useState<StageContext | null>(
@@ -29,6 +28,13 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   const [stage, setStage] = useState<Stage>(
     promptStage?.stage ?? Stage.Classify
   )
+
+  useEffect(() => {
+    setStage(promptStage?.stage ?? Stage.Classify)
+  }, [domain])
+
+  console.log('domain: ' + domain)
+  console.log('stage: ' + stage)
 
   useEffect(() => {
     fetch(`http://localhost:18080/api/workflows/${domain}`)
@@ -79,7 +85,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
-          <EmptyScreen setDomain={updateDomain} setInput={setInput}/>
+          <EmptyScreen setDomain={updateDomain} setInput={setInput} />
         )}
       </div>
       <ChatPanel

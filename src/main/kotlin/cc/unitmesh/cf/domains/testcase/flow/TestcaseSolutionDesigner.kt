@@ -7,6 +7,7 @@ import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
 
 class TestcaseSolutionDesigner(
     private val completion: LlmProvider,
@@ -16,8 +17,19 @@ class TestcaseSolutionDesigner(
         variable.updateQuestion(question)
         variable.updateHistories(histories)
 
+        // parse code from histories
+        var testcases = ""
+        histories.filter { it.isNotBlank() }.forEach {
+            val parse = MarkdownCode.parse(it)
+            if (parse.language == "testcases") {
+                testcases = parse.text
+            }
+        }
+        variable.put("testcases", testcases)
+        val prompt = TestcaseWorkflow.DESIGN.format()
+
         val messages = listOf(
-            LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(TestcaseWorkflow.DESIGN.format())),
+            LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(prompt)),
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, question),
         ).filter { it.content.isNotBlank() }
 
