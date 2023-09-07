@@ -9,9 +9,9 @@ import cc.unitmesh.cf.presentation.domain.ChatWebContext
 
 class TestcaseWorkflow : Workflow() {
     override val prompts: LinkedHashMap<StageContext.Stage, StageContext> = linkedMapOf(
-        CLARIFY.stage to CLARIFY,
         ANALYZE.stage to ANALYZE,
         DESIGN.stage to DESIGN,
+        REVIEW.stage to REVIEW
     )
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
@@ -20,9 +20,9 @@ class TestcaseWorkflow : Workflow() {
 
     companion object {
         private val log = org.slf4j.LoggerFactory.getLogger(TestcaseWorkflow::class.java)
-        val CLARIFY: StageContext = StageContext(
+        val ANALYZE: StageContext = StageContext(
             id = "Testcase Analyse",
-            stage = StageContext.Stage.Clarify,
+            stage = StageContext.Stage.Analyze,
             systemPrompt = """你是一个世界级的质量工程师（Quality assurance），职责是帮助用户识别测试要点，并定义测试目标。
                 |要求如下：
                 |- 当用户提供的信息不足，你必须提出问题，直到你能够识别测试要点，并定义测试目标。
@@ -70,52 +70,47 @@ class TestcaseWorkflow : Workflow() {
             ),
             temperatures = listOf(TemperatureMode.Creative, TemperatureMode.Default),
         )
-
-        val ANALYZE: StageContext = StageContext(
-            id = "Testcase Analyse",
-            stage = StageContext.Stage.Analyze,
-            systemPrompt = """
-                | 
-                | 请使用 1000 个以内的文本，根据下面的模板，生成测试用例：
-                |
-            """.trimMargin(),
-            temperatures = listOf(TemperatureMode.Creative, TemperatureMode.Default),
-        )
         val DESIGN: StageContext = StageContext(
             id = "Testcase Design",
             stage = StageContext.Stage.Design,
-            systemPrompt = """
-                | 
-                | 请使用 1000 个以内的文本，根据下面的模板，生成测试用例：
+            systemPrompt = """你是一个资深的质量工程师（Quality assurance）教练，职责是根据多个不同 QA 的测试用例，生成更合理的测试用例。
+                |用户 A:
+                |```testcases
+                |${'$'}{creative_testcase}
+                |```
+                |用户 B：
+                |```testcases
+                |${'$'}{default_testcase}
+                |```
                 |
+                |最后，你需要将这些测试用例，整理成一个测试计划，使用 markdown 表格输出。
+                |markdown 表格格式如下：测试要点,案例名称,案例描述,测试数据,测试步骤,预期结果,案例,属性,案例,等级,执行,方式,执行结果
+                | 
             """.trimMargin(),
             temperatures = listOf(TemperatureMode.Creative, TemperatureMode.Default),
         )
         val REVIEW: StageContext = StageContext(
             id = "Testcase Review",
             stage = StageContext.Stage.Review,
-            systemPrompt = """你是一个资深的质量工程师（Quality assurance），职责是帮助用户评审测试用例。
+            systemPrompt = """你是一个资深的质量工程师（Quality assurance），职责是帮助用户评审测试用例，并根据评审结果，生成更合理的测试用例。
                 | 
                 |请根据如下的原则，评审测试用例：
+                |
                 |###
-                |基于需求：
-                |场景化：
-                |描述精准：
-                |原⼦化：
-                |可判定：
-                |可回归：
-                |可正交：
-                |可独⽴：
+                |基于需求: 从需求出发，设计能有效验证需求的用例；明确不在需求范围内的功能，不设计用例；在需求范围内的功能，不过度设计。
+                |场景化：真实用户的使用场景全部覆盖；围绕场景进行更多的探索；第一人称主观视角；按照使用的自然顺序设计用例。
+                |描述精准：语⾔准确，没有歧义；描述精炼，留必要信息，去掉⽆关信息；避免⼤段描述，信息分层；描述⻆度关注给⽤户带来的价值，⽽⾮操作步骤。
+                |原⼦化：只针对⼀个验证点进⾏设计；如发现验证点多余⼀个，可拆分；⽤例的颗粒度要适宜。
+                |可判定：同⼀条件下，不同⼈回归结果应⼀致；在不同时间内，回归结果应⼀致；使⽤满⾜条件的任何数据，回归结果应⼀致。
+                |可回归：多个⽤例之间应彼此正交；不重复验证同⼀测试点。
+                |可正交：判定准则应明确可判，避免模糊；除⾮业务规则变化，否则判定准则不变；同⼀条件下，多次执⾏结果判定应⼀致。
+                |可独⽴：测试用例执行结果不影响其他测试案例的执行；测试用例执行，不依赖其他测试用例。
                 |###
-                |其它要求如下：
-                |###
-                |- 是否⼀个功能正常流程，编写⼀个测试⽤例？
-                |- 是否⼀个功能中多个异常流程，分开编写多个测试⽤例？
-                |- 同⼀功能不同⼊⼝，可合并编写⼀个测试⽤例？
-                |- 同⼀功能不同数据准备，分开编写多个测试⽤例？
-                |- ⽤例是否包含分层设计？
-                |- 同时考虑功能需求和⽀撑性需求
-                |###
+                |
+                |${'$'}{testcases}
+                |
+                |现在，你需要根据评审结果，生成更合理的测试用例。
+                |
             """.trimMargin(),
             temperatures = listOf(TemperatureMode.Creative, TemperatureMode.Default),
         )

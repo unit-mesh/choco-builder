@@ -3,9 +3,8 @@ package cc.unitmesh.cf.infrastructure.llms.completion
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 
 enum class TemperatureMode(val value: Double) {
-    Creative(0.8),
-    Balanced(0.5),
-    Conservative(0.2),
+    Creative(0.7),
+    Balanced(0.3),
     Default(0.0),
 }
 
