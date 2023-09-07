@@ -7,15 +7,19 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { domains } from '@/components/workflow/domains'
+import { Button } from '@/components/ui/button'
+import { IconArrowRight } from '@/components/ui/icons'
 
 type EmptyScreenType = {
   setDomain: (value: string | null) => void
+  setInput: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function EmptyScreen({ setDomain }: EmptyScreenType) {
+export function EmptyScreen({ setDomain, setInput }: EmptyScreenType) {
   const [value, setValue] = useState(domains[0].value)
+  const [examples, setExamples] = useState(domains[0].examples)
 
   return (
     <div className="mx-auto max-w-2xl px-4">
@@ -38,6 +42,7 @@ export function EmptyScreen({ setDomain }: EmptyScreenType) {
             onValueChange={value => {
               setValue(value)
               setDomain(value)
+              setExamples(domains.find(d => d.value === value)?.examples)
             }}
           >
             <SelectTrigger>
@@ -60,6 +65,21 @@ export function EmptyScreen({ setDomain }: EmptyScreenType) {
             </SelectContent>
           </Select>
         </div>
+        <p className="leading-normal text-muted-foreground">
+          You can start a conversation here or try the following examples:
+        </p>
+        {examples!! &&
+          examples.map((message, index) => (
+            <Button
+              key={index}
+              variant="link"
+              className="h-auto p-0 text-base"
+              onClick={() => setInput(message.content)}
+            >
+              <IconArrowRight className="mr-2 text-muted-foreground" />
+              {message.title}
+            </Button>
+          ))}
       </div>
     </div>
   )
