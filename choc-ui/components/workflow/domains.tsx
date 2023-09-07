@@ -39,7 +39,7 @@ export const domains: DomainFormItem[] = [
     ]
   },
   {
-    label: 'TestCase (Todo)',
+    label: 'TestCase（测试用例）',
     value: 'testcase'
   },
   {

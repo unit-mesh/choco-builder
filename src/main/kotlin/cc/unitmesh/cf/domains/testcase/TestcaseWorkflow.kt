@@ -1,11 +1,13 @@
 package cc.unitmesh.cf.domains.testcase
 
+import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.prompt.UpdatableExample
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
 import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseProblemAnalyzer
+import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionDesigner
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
@@ -21,6 +23,8 @@ class TestcaseWorkflow : Workflow() {
     private lateinit var llmProvider: LlmProvider
 
     /**
+     * TODO: add multiple temperatures support
+     *
      * In testcase workflow, we have two modes of temperature, but only one mode is active at a time. So we need to
      * cache the creative for the next stage. Once the next stage is executed, we need to clear the cache.
      */
@@ -51,7 +55,22 @@ class TestcaseWorkflow : Workflow() {
                 )
             }
 
-            StageContext.Stage.Design -> TODO()
+            StageContext.Stage.Design -> {
+                val designer = TestcaseSolutionDesigner(llmProvider, variableResolver)
+                val output = designer.design(
+                    domain = "testcase",
+                    question = chatWebContext.messages.last().content,
+                    histories = chatWebContext.messages.map { it.content }
+                )
+
+                WorkflowResult(
+                    currentStage = StageContext.Stage.Design,
+                    nextStage = StageContext.Stage.Design,
+                    responseMsg = output.content,
+                    resultType = String::class.java.name,
+                    result = output.toString()
+                )
+            }
             StageContext.Stage.Review -> TODO()
             else -> TODO()
         }

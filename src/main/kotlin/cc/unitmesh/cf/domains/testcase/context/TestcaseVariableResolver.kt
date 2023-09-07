@@ -25,4 +25,8 @@ class TestcaseVariableResolver : VariableResolver<TestcaseVariables> {
         variables = variables!!.copy(question = question)
     }
 
+    fun updateHistories(histories: List<String>) {
+        variables = variables!!.copy(histories = histories)
+    }
+
 }
