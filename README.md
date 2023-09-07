@@ -109,10 +109,11 @@ To spike:
     1. Problem Analyser: 确认需求
         - [ ] 匹配现有需求
     2. Problem Clarifier: 确认输入和输出
-        - [ ] 输出 ASCII DSL 作为输入 （ [Design](https://github.com/phodal/design) ）
-        - [ ] 将历史页面转换为 ASCII DSL
+        - [x] 输出 ASCII DSL 作为输入 （ [Design](https://github.com/phodal/design) ）
+        - [x] 将历史页面转换为 ASCII DSL
     3. Solution Design: 设计布局
         - [ ] 搜索历史组件布局
+        - [x] 匹配组件信息
     4. Solution Execute: 生成页面 (React, React Runtime)
         - [ ] Code Interpreter by [Unit Runtime](https://github.com/unit-mesh/unit-runtime)
 - 一句话生成后端 API (Ktor, Spring, Kotless）
