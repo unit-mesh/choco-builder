@@ -2,13 +2,6 @@ plugins {
     alias(libs.plugins.jvm)
     alias(libs.plugins.serialization)
     id("org.jetbrains.kotlin.jupyter.api") version "0.12.0-56"
-
-    id("io.kotless") version "0.2.0" apply true
-}
-
-repositories {
-    mavenCentral()
-    maven(url = uri("https://packages.jetbrains.team/maven/p/ktls/maven"))
 }
 
 dependencies {
