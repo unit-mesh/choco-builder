@@ -10,6 +10,8 @@ import cc.unitmesh.cf.domains.code.CodeInterpreter
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class CodeSolutionExecutor(
     private val completion: LlmProvider,
@@ -36,13 +38,14 @@ class CodeSolutionExecutor(
         val code = MarkdownCode.parse(completion)
         if (code.language.lowercase() == "kotlin") {
             val result = codeInterpreter.interpret(CodeInput(content = code.text));
+
             log.info("Execute result: {}", result)
-            evalResult = result.toString()
+            evalResult = Json.encodeToString(result)
         }
 
         return object : Answer {
             override var executor: String = ""
-            override var values: Any = "$completion\n\nevalResult: $evalResult"
+            override var values: Any = "$completion\n\n```result\n$evalResult\n```\n"
         }
     }
 

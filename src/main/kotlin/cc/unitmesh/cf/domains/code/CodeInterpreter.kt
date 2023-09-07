@@ -5,7 +5,7 @@ import cc.unitmesh.cf.core.dsl.Interpreter
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.code.interpreter.KotlinInterpreter
 import cc.unitmesh.code.interpreter.api.InterpreterRequest
-import cc.unitmesh.code.interpreter.compiler.KotlinReplWrapper
+import cc.unitmesh.code.messaging.Message
 import org.springframework.stereotype.Component
 
 @Component
@@ -15,7 +15,7 @@ class CodeInterpreter : Interpreter {
         return dsl.domain == SupportedDomains.CodeInterpreter.value
     }
 
-    override fun interpret(dsl: Dsl): Any {
+    override fun interpret(dsl: Dsl): Message {
         return repl.eval(InterpreterRequest(code = dsl.content))
     }
 }
