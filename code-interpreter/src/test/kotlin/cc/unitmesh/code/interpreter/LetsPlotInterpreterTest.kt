@@ -1,12 +1,14 @@
 package cc.unitmesh.code.interpreter
 
 import cc.unitmesh.code.interpreter.compiler.KotlinReplWrapper
-import org.jetbrains.kotlinx.jupyter.api.HTML
 import org.jetbrains.letsPlot.LetsPlot
 import org.jetbrains.letsPlot.Stat
-import org.jetbrains.letsPlot.export.ggsave
+import org.jetbrains.letsPlot.core.util.PlotHtmlExport
+import org.jetbrains.letsPlot.core.util.PlotHtmlHelper.scriptUrl
+import org.jetbrains.letsPlot.export.VersionChecker
 import org.jetbrains.letsPlot.geom.geomBar
 import org.jetbrains.letsPlot.geom.geomText
+import org.jetbrains.letsPlot.intern.toSpec
 import org.jetbrains.letsPlot.label.ggtitle
 import org.jetbrains.letsPlot.letsPlot
 import org.junit.jupiter.api.BeforeEach
@@ -31,12 +33,17 @@ class LetsPlotInterpreterTest {
                 geomText(labelFormat = "\${.2f}") { label = "y"; } +
                 ggtitle("2023 年上半年电费")
 
+        // save to image
+//        ggsave(plot, "test.png")
+
         // the html render
         val frontendContext = LetsPlot.setupNotebook("3.2.0", null) {}
         val html = frontendContext.getHtml(plot)
         println(html)
 
-//        ggsave(plot, "test.png")
+
+        val content = PlotHtmlExport.buildHtmlFromRawSpecs(plot.toSpec(), scriptUrl(VersionChecker.letsPlotJsVersion))
+        println(content)
     }
 
     @Test
