@@ -328,7 +328,7 @@ const getStreamedResponse = async (
           responseMessage['content'] = content
           responseMessage['object'] = parsed
         } catch (e) {
-            responseMessage['content'] = streamedResponse
+          responseMessage['content'] = streamedResponse
         }
       }
 
