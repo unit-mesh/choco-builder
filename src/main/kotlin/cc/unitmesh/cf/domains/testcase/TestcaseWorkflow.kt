@@ -4,10 +4,27 @@ import cc.unitmesh.cf.core.prompt.UpdatableExample
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
 import cc.unitmesh.cf.core.workflow.WorkflowResult
+import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
+import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
+@Component
 class TestcaseWorkflow : Workflow() {
+    @Autowired
+    private lateinit var variableResolver: TestcaseVariableResolver
+
+    @Autowired
+    private lateinit var llmProvider: LlmProvider
+
+    /**
+     * In testcase workflow, we have two modes of temperature, but only one mode is active at a time. So we need to
+     * cache the creative for the next stage. Once the next stage is executed, we need to clear the cache.
+     */
+    private var cachedCreative: MutableMap<String, String> = mutableMapOf()
+
     override val prompts: LinkedHashMap<StageContext.Stage, StageContext> = linkedMapOf(
         ANALYZE.stage to ANALYZE,
         DESIGN.stage to DESIGN,
