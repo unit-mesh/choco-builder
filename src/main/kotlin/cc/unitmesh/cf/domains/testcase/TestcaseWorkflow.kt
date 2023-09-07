@@ -8,6 +8,7 @@ import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseProblemAnalyzer
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionDesigner
+import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionReviewer
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
@@ -41,7 +42,8 @@ class TestcaseWorkflow : Workflow() {
         var messages = chatWebContext.messages
         var lastMsg = messages.last().content
 
-        if (lastMsg.lowercase() == "yes") {
+        val lowercase = lastMsg.lowercase()
+        if (lowercase == "yes" || lowercase == "y" || lowercase == "ok" || lowercase == "好" || lowercase == "可以") {
             when (stage) {
                 StageContext.Stage.Analyze -> {
                     stage = StageContext.Stage.Design
@@ -90,7 +92,20 @@ class TestcaseWorkflow : Workflow() {
                     result = output.toString()
                 )
             }
-            StageContext.Stage.Review -> TODO()
+            StageContext.Stage.Review -> {
+                val review = TestcaseSolutionReviewer(llmProvider, variableResolver).review(
+                    question = messages.first().content,
+                    histories = messages.map { it.content }
+                )
+
+                WorkflowResult(
+                    currentStage = StageContext.Stage.Review,
+                    nextStage = StageContext.Stage.Review,
+                    responseMsg = review.content,
+                    resultType = String::class.java.name,
+                    result = review.toString()
+                )
+            }
             else -> TODO()
         }
 

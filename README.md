@@ -18,7 +18,8 @@ a user query is processed by the following steps:
 1. [ProblemClarifier.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemClarifier.kt)
 2. [ProblemAnalyzer.kt](src/main/kotlin/cc/unitmesh/cf/core/process/ProblemAnalyzer.kt)
 3. [SolutionDesigner.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionDesigner.kt)
-4. [SolutionExecutor.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionExecutor.kt)
+4. [SolutionReviewer.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionReviewer.kt)
+5. [SolutionExecutor.kt](src/main/kotlin/cc/unitmesh/cf/core/process/SolutionExecutor.kt)
 
 ### Examples 1: Frontend Screenshot
 
@@ -75,6 +76,16 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 最终输出：
 
 ![Frontend](https://unitmesh.cc/cf/chocolate-factory-demo-2.png)
+
+### Example 3: Testcase Generator
+
+- 步骤 1：ProblemAnalyzer 分析用户的需求，确认是否是一个测试用例生成的需求
+- 步骤 2：SolutionDesigner 设计测试用例生成的方案
+- 步骤 3：SolutionReviewer 确认方案是否符合用户的需求
+
+最终输出：
+
+![Testcases](https://unitmesh.cc/cf/chocolate-factory-demo-3.png)
 
 ## Dev
 
