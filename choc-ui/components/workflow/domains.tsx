@@ -20,7 +20,7 @@ export const domains: DomainFormItem[] = [
     ]
   },
   {
-    label: 'OpenAPI',
+    label: 'OpenAPI (Todo)',
     value: 'openapi'
   },
   {
@@ -34,21 +34,20 @@ export const domains: DomainFormItem[] = [
       },
       {
         title: '编写和执行代码',
-        content:
-          '编写乘法表'
+        content: '编写乘法表'
       }
     ]
   },
   {
-    label: 'TestCase',
+    label: 'TestCase (Todo)',
     value: 'testcase'
   },
   {
-    label: 'SQL',
+    label: 'SQL (Todo)',
     value: 'sql'
   },
   {
-    label: 'Custom',
+    label: 'Custom (Todo)',
     value: 'custom'
   }
 ]

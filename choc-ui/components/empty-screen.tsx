@@ -65,21 +65,26 @@ export function EmptyScreen({ setDomain, setInput }: EmptyScreenType) {
             </SelectContent>
           </Select>
         </div>
-        <p className="leading-normal text-muted-foreground">
-          You can start a conversation here or try the following examples:
-        </p>
-        {examples!! &&
-          examples.map((message, index) => (
-            <Button
-              key={index}
-              variant="link"
-              className="h-auto p-0 text-base"
-              onClick={() => setInput(message.content)}
-            >
-              <IconArrowRight className="mr-2 text-muted-foreground" />
-              {message.title}
-            </Button>
-          ))}
+        {examples!! && (
+          <>
+            <p className="leading-normal text-muted-foreground">
+              You can start a conversation here or try the following examples:
+            </p>
+            <div className="mt-4 flex flex-col items-start space-y-2">
+              {examples.map((message, index) => (
+                <Button
+                  key={index}
+                  variant="link"
+                  className="h-auto p-0 text-base"
+                  onClick={() => setInput(message.content)}
+                >
+                  <IconArrowRight className="mr-2 text-muted-foreground" />
+                  {message.title}
+                </Button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
