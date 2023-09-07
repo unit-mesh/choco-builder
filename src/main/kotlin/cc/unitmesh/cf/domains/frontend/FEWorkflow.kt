@@ -50,7 +50,6 @@ class FEWorkflow() : Workflow() {
         }
 
         when (stage) {
-            StageContext.Stage.Classify -> throw IllegalStateException("Frontend workflow should not be used for classify")
             StageContext.Stage.Clarify -> {
                 val clarify = FEProblemClarifier(contextBuilder, llmProvider, variableResolver)
                     .clarify(
@@ -83,7 +82,6 @@ class FEWorkflow() : Workflow() {
                 )
             }
 
-            StageContext.Stage.Analyze -> TODO()
             StageContext.Stage.Design -> {
                 val design = FESolutionDesigner(contextBuilder, llmProvider, variableResolver).design(
                     domain = "frontend",
@@ -117,9 +115,9 @@ class FEWorkflow() : Workflow() {
                     result = answer.toString()
                 )
             }
-
-            StageContext.Stage.Custom -> TODO()
-            StageContext.Stage.Done -> TODO()
+            else -> {
+                throw IllegalStateException("stage not supported")
+            }
         }
     }
 

@@ -18,7 +18,7 @@ data class StageContext(
      */
     val systemPrompt: String,
     /**
-     * for example: "Q:", or `"输入："`
+     * for example, "Q:", or `"输入："`
      */
     val questionPrefix: String = "",
     val exampleType: ExampleType = ExampleType.NONE,
@@ -28,8 +28,10 @@ data class StageContext(
      * when FINISH, isDone is true
      */
     val isDone: Boolean = false,
-
-    val temperature: TemperatureMode = TemperatureMode.Default,
+    /**
+     * support for multi-temperature, like "Creative" and "Balanced"
+     */
+    val temperatures: List<TemperatureMode> = listOf(TemperatureMode.Default),
 ) : StringTemplate {
     /**
      * 范例类型
@@ -56,6 +58,9 @@ data class StageContext(
 
         // 设计
         Design("Design"),
+
+        // 评审
+        Review("Review"),
 
         // 执行
         Execute("Execute"),
