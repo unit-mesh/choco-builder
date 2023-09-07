@@ -33,9 +33,6 @@ class LetsPlotInterpreterTest {
                 geomText(labelFormat = "\${.2f}") { label = "y"; } +
                 ggtitle("2023 年上半年电费")
 
-        // save to image
-//        ggsave(plot, "test.png")
-
         // the html render
         val frontendContext = LetsPlot.setupNotebook("3.2.0", null) {}
         val html = frontendContext.getHtml(plot)
