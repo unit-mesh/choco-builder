@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.core.workflow
 
 import cc.unitmesh.cf.core.prompt.QAExample
-import cc.unitmesh.cf.core.prompt.QAUpdateExample
+import cc.unitmesh.cf.core.prompt.UpdatableExample
 import cc.unitmesh.cf.core.prompt.StringTemplate
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.infrastructure.utils.uuid
@@ -23,7 +23,7 @@ data class StageContext(
     val questionPrefix: String = "",
     val exampleType: ExampleType = ExampleType.NONE,
     val examples: List<QAExample> = listOf(),
-    val updateExamples: List<QAUpdateExample> = listOf(),
+    val updatableExamples: List<UpdatableExample> = listOf(),
     /**
      * when FINISH, isDone is true
      */
@@ -76,12 +76,10 @@ data class StageContext(
             "Q:${it.question}\nA:\n${it.answer}\n"
         }
 
-        output += updateExamples.joinToString("\n") {
-            val base = "question:${it.question}\nanswer:${it.answer}\n"
-            base + if (it.nextAction.isNotEmpty()) {
-                "action:${it.nextAction}\nfinalOutput:${it.finalOutput}\n"
-            } else {
-                ""
+        output += updatableExamples.joinToString("\n") {
+            var base = "question:${it.question}\nanswer:\n${it.answer}\n"
+            if (it.userResponse.isNotEmpty()) {
+                base += "userResponse:${it.userResponse}\nfinalOutput:${it.finalOutput}\n"
             }
 
             base

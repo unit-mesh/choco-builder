@@ -16,7 +16,6 @@ import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 import cc.unitmesh.cf.presentation.controller.Message
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
-import com.azure.ai.openai.models.ChatRole
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.annotation.Autowired
@@ -187,8 +186,8 @@ class FEWorkflow() : Workflow() {
             |- 以 Component 结尾，表示是一个新的页面组件，如 NavComponent, BlogListComponent 等
             |
         """.trimMargin(),
-            updateExamples = listOf(
-                QAUpdateExample(
+            updatableExamples = listOf(
+                UpdatableExample(
                     question = "生成一个导航栏组件的 mockup",
                     answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
@@ -199,7 +198,7 @@ class FEWorkflow() : Workflow() {
             |--------------------------------------
             |```
                 """.trimMargin(),
-                    nextAction = "这里的 login 应该是 button，而不是 a",
+                    userResponse = "这里的 login 应该是 button，而不是 a",
                     finalOutput = """
             |```design
             |componentName: NavComponent
@@ -210,7 +209,7 @@ class FEWorkflow() : Workflow() {
             |```
                 """.trimMargin()
                 ),
-                QAUpdateExample(
+                UpdatableExample(
                     question = "生成一个包含图片的博客列表面 mockup",
                     answer = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
@@ -227,7 +226,7 @@ class FEWorkflow() : Workflow() {
             |------------------------------------------------------
             |```
                 """.trimMargin(),
-                    nextAction = "YES",
+                    userResponse = "YES",
                 )
             )
         )
