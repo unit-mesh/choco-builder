@@ -2,6 +2,7 @@ package cc.unitmesh.code.interpreter
 
 import cc.unitmesh.code.interpreter.compiler.KotlinReplWrapper
 import org.jetbrains.kotlinx.jupyter.api.HTML
+import org.jetbrains.letsPlot.LetsPlot
 import org.jetbrains.letsPlot.Stat
 import org.jetbrains.letsPlot.export.ggsave
 import org.jetbrains.letsPlot.geom.geomBar
@@ -30,6 +31,10 @@ class LetsPlotInterpreterTest {
                 geomText(labelFormat = "\${.2f}") { label = "y"; } +
                 ggtitle("2023 年上半年电费")
 
+        // the html render
+        val frontendContext = LetsPlot.setupNotebook("3.2.0", null) {}
+        val html = frontendContext.getHtml(plot)
+        println(html)
 
 //        ggsave(plot, "test.png")
     }
