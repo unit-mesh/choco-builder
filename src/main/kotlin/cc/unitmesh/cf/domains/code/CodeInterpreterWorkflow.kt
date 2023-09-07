@@ -48,6 +48,7 @@ class CodeInterpreterWorkflow : Workflow() {
                 |You are capable of **any** task.
                 |当用户要求编写 API、Http 服务时，必须使用 Kotless 或者  Ktor 框架.
                 |当用户要求绘图时，必须使用 Let's Plot 的 Kotlin 版本.
+                |你要尽可能优化函数的输出方式，以便于将函数的输出将会被发送给用户.
                 | 
                 """.trimMargin(),
             examples = listOf(
@@ -65,14 +66,17 @@ class CodeInterpreterWorkflow : Workflow() {
                 QAExample(
                     question = "编写一个 9x9 乘法表",
                     answer = """```kotlin
-                        |fun printMultiplicationTable() {
+                        |fun printMultiplicationTable(): String {
+                        |   val sb = StringBuilder()
                         |   for (i in 1..9) {
                         |       for (j in 1..9) {
-                        |           print("${'$'}{i * j}\t")
+                        |           sb.append("${'$'}{i * j}\t")
                         |       }
-                        |       println()
+                        |       sb.append("\n")
                         |   }
+                        |   return sb.toString()
                         |}
+                        |
                         |printMultiplicationTable()
                         |```
                     """.trimMargin()
