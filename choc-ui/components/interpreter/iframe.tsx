@@ -15,10 +15,6 @@ export const Iframe = ({ content } : { content: string }) => {
                 iframeDocument.documentElement.style.width = "600px";
                 body.style.width = "600px";
             }
-            // const newHeight = body?.scrollHeight || 0;
-            // if (newHeight !== 0) {
-            //     setHeight(newHeight);
-            // }
         }
     }, []);
 
