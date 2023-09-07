@@ -21,13 +21,19 @@ class TestcaseProblemAnalyzer(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, question),
         ).filter { it.content.isNotBlank() }
 
+        log.info("messages: {}", messages)
         val completion = completion.simpleCompletion(messages)
         // TODO: add multiple temperatures support
+        log.info("completion: {}", completion)
 
         return object : Dsl {
             override var domain: String = TestcaseDomainDecl.DOMAIN
             override val content: String = completion
             override var interpreters: List<DslInterpreter> = listOf()
         }
+    }
+
+    companion object {
+        private val log = org.slf4j.LoggerFactory.getLogger(TestcaseProblemAnalyzer::class.java)
     }
 }

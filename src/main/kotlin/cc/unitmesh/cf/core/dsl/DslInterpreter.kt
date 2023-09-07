@@ -1,12 +1,12 @@
 package cc.unitmesh.cf.core.dsl
 
-import cc.unitmesh.cf.infrastructure.utils.uuid
+import cc.unitmesh.cf.infrastructure.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonIgnore
 import kotlinx.serialization.Serializable
 
 @Serializable
 class DslInterpreter(
-    override val id: String = uuid(),
+    override val id: String = IdUtil.uuid(),
     override val name: String,
     val description: String,
 ): EmbeddingElement {

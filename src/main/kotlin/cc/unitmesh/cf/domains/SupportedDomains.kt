@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 enum class SupportedDomains(@JsonValue val value: String) {
     Frontend("frontend"),
     CodeInterpreter("code-interpreter"),
-    Ktor("ktor"),
+    Testcase("testcase"),
     SQL("sql"),
     Custom("custom"),
     ;

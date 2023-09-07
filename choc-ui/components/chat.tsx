@@ -20,6 +20,7 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
+  console.log("refresh");
   const [domain, setDomain] = useState<string | null>(domains[0].value)
   const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
   const [promptStage, setPromptStage] = useState<StageContext | null>(

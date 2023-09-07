@@ -37,13 +37,32 @@ class TestcaseWorkflow : Workflow() {
     )
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
-        val stage = prompt.stage
+        var stage = prompt.stage
+        var messages = chatWebContext.messages
+        var lastMsg = messages.last().content
+
+        if (lastMsg.lowercase() == "yes") {
+            when (stage) {
+                StageContext.Stage.Analyze -> {
+                    stage = StageContext.Stage.Design
+                    messages = messages.dropLast(1)
+                    lastMsg = messages.last().content
+                }
+                StageContext.Stage.Design -> {
+                    stage = StageContext.Stage.Review
+                    messages = messages.dropLast(1)
+                    lastMsg = messages.last().content
+                }
+                else -> {}
+            }
+        }
+
         val result = when (stage) {
             StageContext.Stage.Analyze -> {
                 val analyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver)
                 val output = analyzer.analyze(
                     domain = "testcase",
-                    question = chatWebContext.messages.last().content
+                    question = lastMsg
                 )
 
                 WorkflowResult(
@@ -59,8 +78,8 @@ class TestcaseWorkflow : Workflow() {
                 val designer = TestcaseSolutionDesigner(llmProvider, variableResolver)
                 val output = designer.design(
                     domain = "testcase",
-                    question = chatWebContext.messages.last().content,
-                    histories = chatWebContext.messages.map { it.content }
+                    question = lastMsg,
+                    histories = listOf(messages.last().content)
                 )
 
                 WorkflowResult(
@@ -146,13 +165,11 @@ class TestcaseWorkflow : Workflow() {
             id = "Testcase Design",
             stage = StageContext.Stage.Design,
             systemPrompt = """你是一个资深的质量工程师（Quality assurance）教练，职责是根据多个不同 QA 的测试用例，生成更合理的测试用例。
-                |用户 A:
+                |
+                |测试用例 A
+                |
                 |```testcases
                 |${'$'}{creative_testcase}
-                |```
-                |用户 B：
-                |```testcases
-                |${'$'}{default_testcase}
                 |```
                 |
                 |最后，你需要将这些测试用例，整理成一个测试计划，使用 markdown 表格输出。

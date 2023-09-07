@@ -5,14 +5,14 @@ import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.IndexElement
 import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
-import cc.unitmesh.cf.infrastructure.utils.uuid
+import cc.unitmesh.cf.infrastructure.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
 
 @SubDomain(name = "页面", description = "某个页面的 DSL 描述")
 @Serializable
 data class UiPage(
-    override val id: String = uuid(),
+    override val id: String = IdUtil.uuid(),
 
     @get:JsonGetter("名称")
     override val name: String,

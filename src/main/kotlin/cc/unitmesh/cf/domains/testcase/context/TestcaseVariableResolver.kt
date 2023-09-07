@@ -8,7 +8,10 @@ import java.io.StringWriter
 
 @Component
 class TestcaseVariableResolver : VariableResolver<TestcaseVariables> {
-    override var variables: TestcaseVariables? = null
+    override var variables: TestcaseVariables? = TestcaseVariables(
+        question = "",
+        histories = listOf(),
+    )
     override val velocityContext = VelocityContext()
 
     override fun resolve(question: String) {

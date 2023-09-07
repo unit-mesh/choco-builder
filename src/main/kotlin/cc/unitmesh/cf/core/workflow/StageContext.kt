@@ -4,14 +4,14 @@ import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.prompt.UpdatableExample
 import cc.unitmesh.cf.core.prompt.StringTemplate
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
-import cc.unitmesh.cf.infrastructure.utils.uuid
+import cc.unitmesh.cf.infrastructure.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonValue
 import jakarta.persistence.Id
 import kotlinx.serialization.Serializable
 
 data class StageContext(
     @Id
-    val id: String = uuid(),
+    val id: String = IdUtil.uuid(),
     val stage: Stage,
     /**
      * 对于一个不支持 system prompt 的 LLM，需要把 prompt 与用户的输入结合到一起。

@@ -5,6 +5,7 @@ import cc.unitmesh.cf.core.workflow.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
+import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
 import kotlinx.serialization.Serializable
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 class ChatController(
     val feFlow: FEWorkflow,
     val codeFlow: CodeInterpreterWorkflow,
+    val testcaseFlow: TestcaseWorkflow,
 ) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest): SseEmitter {
@@ -27,16 +29,11 @@ class ChatController(
 
         // 1. search by domains
         val workflow = when (chat.domain) {
-            SupportedDomains.Frontend -> {
-                feFlow
-            }
-
-            SupportedDomains.Ktor -> TODO()
+            SupportedDomains.Frontend -> feFlow
+            SupportedDomains.CodeInterpreter -> codeFlow
+            SupportedDomains.Testcase -> testcaseFlow
             SupportedDomains.SQL -> TODO()
             SupportedDomains.Custom -> TODO()
-            SupportedDomains.CodeInterpreter -> {
-                codeFlow
-            }
         }
 
         // 2. searches by stage

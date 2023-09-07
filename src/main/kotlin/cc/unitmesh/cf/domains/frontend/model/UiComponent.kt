@@ -4,13 +4,13 @@ import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.IndexElement
 import cc.unitmesh.cf.core.prompt.QAExample
-import cc.unitmesh.cf.infrastructure.utils.uuid
+import cc.unitmesh.cf.infrastructure.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UiComponent(
-    override val id: String = uuid(),
+    override val id: String = IdUtil.uuid(),
 
     @get:JsonGetter("名称")
     override val name: String,

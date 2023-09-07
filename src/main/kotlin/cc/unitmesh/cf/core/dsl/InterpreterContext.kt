@@ -1,13 +1,13 @@
 package cc.unitmesh.cf.core.dsl
 
-import cc.unitmesh.cf.infrastructure.utils.uuid
+import cc.unitmesh.cf.infrastructure.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonGetter
 import jakarta.persistence.Id
 import org.hibernate.annotations.Comment
 
 abstract class InterpreterContext(
     @Id
-    override val id: String = uuid(),
+    override val id: String = IdUtil.uuid(),
 
     @Comment("名称")
     @get:JsonGetter("名称")
