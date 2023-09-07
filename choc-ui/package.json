@@ -36,6 +36,7 @@
     "openai-edge": "^0.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-frame-component": "^5.2.6",
     "react-hot-toast": "^2.4.1",
     "react-intersection-observer": "^9.4.4",
     "react-markdown": "^8.0.7",

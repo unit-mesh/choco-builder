@@ -3,14 +3,16 @@
 
 'use client'
 
-import { FC, memo } from 'react'
+import {createRef, FC, memo, RefObject, useCallback, useEffect, useRef, useState} from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { coldarkDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { IconCheck, IconCopy, IconDownload } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
-import {InterpreterMessage} from "@/components/interpreter/message";
+import { InterpreterMessage } from '@/components/interpreter/message'
+import Frame from 'react-frame-component';
+import {Iframe} from "@/components/interpreter/iframe";
 
 interface Props {
   language: string
@@ -66,11 +68,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
 
     let msg = value as unknown as InterpreterMessage
     if (msg.msgType == 'html') {
-      return (
-        <div className="relative w-full font-sans codeblock bg-zinc-950">
-          <div dangerouslySetInnerHTML={{ __html: msg.content.html!! }} />
-        </div>
-      )
+      return <Iframe content={msg.content.html!!} />
     }
   }
 
