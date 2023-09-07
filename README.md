@@ -33,25 +33,25 @@ a user query is processed by the following steps:
 
 示例 1：编写乘法表
 
-```kotlin
+输出示例：
 
+```kotlin
+1	2	3	4	5	6	7	8	9	
+2	4	6	8	10	12	14	16	18	
+3	6	9	12	15	18	21	24	27	
+4	8	12	16	20	24	28	32	36	
+5	10	15	20	25	30	35	40	45	
+6	12	18	24	30	36	42	48	54	
+7	14	21	28	35	42	49	56	63	
+8	16	24	32	40	48	56	64	72	
+9	18	27	36	45	54	63	72	81	
 ```
 
-示例 2：编写一个 hello, world 的 mock API
-
-示例 3：根据需求生成图表 （TODO）
+示例 2：根据需求生成图表 （TODO）
 
 生成一个 2023 年上半年电费图，信息如下：###1~6 月：201.2,222,234.3,120.2,90,90.4###
 
-
-| 月份 | 支出    |
-|----|-------|
-| 一月 | 201.2 |
-| 二月 | 222   |
-| 三月 | 234.3 |
-| 四月 | 120.2 |
-| 五月 | 90    |
-| 六月 | 94.4  |
+过程代码：
 
 ```kotlin-scripting
 %use lets-plot
@@ -69,6 +69,10 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
         geomText(labelFormat = "\${.2f}") { label = "y"; } +
         ggtitle("2023 年上半年电费")
 ```
+
+最终输出：
+
+![Frontend](https://unitmesh.cc/cf/chocolate-factory-demo-2.png)
 
 ## Dev
 

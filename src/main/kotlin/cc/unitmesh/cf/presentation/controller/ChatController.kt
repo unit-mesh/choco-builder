@@ -84,4 +84,3 @@ data class ChatRequest(
     val domain: SupportedDomains,
     val previewToken: String?,
 )
-
