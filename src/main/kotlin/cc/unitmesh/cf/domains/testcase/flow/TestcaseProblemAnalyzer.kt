@@ -7,11 +7,13 @@ import cc.unitmesh.cf.domains.testcase.TestcaseDomainDecl
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 
 class TestcaseProblemAnalyzer(
     private val completion: LlmProvider,
     private val variable: TestcaseVariableResolver,
+    private val temperatureMode: TemperatureMode,
 ) : ProblemAnalyzer {
     override fun analyze(domain: String, question: String): Dsl {
         variable.updateQuestion(question)
@@ -21,14 +23,20 @@ class TestcaseProblemAnalyzer(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, question),
         ).filter { it.content.isNotBlank() }
 
+        log.info("temperatureMode: {}", temperatureMode);
         log.info("messages: {}", messages)
-        val completion = completion.simpleCompletion(messages)
+
+        val oldTemperatureMode = temperatureMode
+        completion.setTemperatureMode(temperatureMode)
+        val output = completion.simpleCompletion(messages)
+        completion.setTemperatureMode(oldTemperatureMode)
+
         // TODO: add multiple temperatures support
-        log.info("completion: {}", completion)
+        log.info("completion: {}", output)
 
         return object : Dsl {
             override var domain: String = TestcaseDomainDecl.DOMAIN
-            override val content: String = completion
+            override val content: String = output
             override var interpreters: List<DslInterpreter> = listOf()
         }
     }

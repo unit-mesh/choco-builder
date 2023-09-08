@@ -1,6 +1,5 @@
 package cc.unitmesh.cf.domains.testcase
 
-import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.prompt.UpdatableExample
 import cc.unitmesh.cf.core.workflow.StageContext
 import cc.unitmesh.cf.core.workflow.Workflow
@@ -43,29 +42,45 @@ class TestcaseWorkflow : Workflow() {
         var lastMsg = messages.last().content
 
         val lowercase = lastMsg.lowercase()
-        if (lowercase == "yes" || lowercase == "y" || lowercase == "ok" || lowercase == "好" || lowercase == "可以") {
+
+        val isGotoNextStage =
+            lowercase == "yes" || lowercase == "y" || lowercase == "ok" || lowercase == "好" || lowercase == "可以"
+        if (isGotoNextStage) {
             when (stage) {
                 StageContext.Stage.Analyze -> {
                     stage = StageContext.Stage.Design
                     messages = messages.dropLast(1)
                     lastMsg = messages.last().content
                 }
+
                 StageContext.Stage.Design -> {
                     stage = StageContext.Stage.Review
                     messages = messages.dropLast(1)
                     lastMsg = messages.last().content
                 }
+
                 else -> {}
             }
         }
 
         val result = when (stage) {
             StageContext.Stage.Analyze -> {
-                val analyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver)
+                val analyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver, TemperatureMode.Creative)
                 val output = analyzer.analyze(
                     domain = "testcase",
                     question = lastMsg
                 )
+
+                // start to cache creative
+//                Thread(Runnable {
+//                    val creativeAnalyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver, TemperatureMode.Creative)
+//                    val output = creativeAnalyzer.analyze(
+//                        domain = "testcase",
+//                        question = lastMsg
+//                    )
+//
+//                    cachedCreative[lastMsg] = output.content
+//                }).start()
 
                 WorkflowResult(
                     currentStage = StageContext.Stage.Analyze,
@@ -92,6 +107,7 @@ class TestcaseWorkflow : Workflow() {
                     result = output.toString()
                 )
             }
+
             StageContext.Stage.Review -> {
                 val review = TestcaseSolutionReviewer(llmProvider, variableResolver).review(
                     question = messages.first().content,
@@ -106,6 +122,7 @@ class TestcaseWorkflow : Workflow() {
                     result = review.toString()
                 )
             }
+
             else -> TODO()
         }
 

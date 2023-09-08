@@ -83,6 +83,8 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 - 步骤 2：SolutionDesigner 设计测试用例生成的方案
 - 步骤 3：SolutionReviewer 确认方案是否符合用户的需求
 
+示例输入：用户发表文章
+
 最终输出：
 
 ![Testcases](https://unitmesh.cc/cf/chocolate-factory-demo-3.png)
