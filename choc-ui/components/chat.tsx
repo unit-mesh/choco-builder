@@ -37,13 +37,15 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   console.log('stage: ' + stage)
 
   useEffect(() => {
-    fetch(process.env.API_SERVER_URL + `/api/workflows/${domain}`)
+    fetch(process.env.NEXT_PUBLIC_API_SERVER_URL + `/api/workflows/${domain}`)
       .then(res => res.json())
       .then(data => {
         setWorkflow(data)
         let stage: StageContext = data?.length ? data[0] : null
-        setPromptStage(stage)
-        setStage(stage.stage ?? Stage.Classify)
+        if (stage) {
+          setPromptStage(stage)
+          setStage(stage.stage ?? Stage.Classify)
+        }
       })
   }, [domain])
 
@@ -53,7 +55,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
-      api: process.env.API_SERVER_URL + '//api/chat',
+      api: process.env.NEXT_PUBLIC_API_SERVER_URL + '/api/chat',
       initialMessages,
       id,
       headers: {
