@@ -40,7 +40,13 @@ export const domains: DomainFormItem[] = [
   },
   {
     label: 'TestCase（测试用例）',
-    value: 'testcase'
+    value: 'testcase',
+    examples: [
+      {
+        title: '生成测试用例',
+        content: '在京西商城中，实现商品管理的上架商品功能'
+      }
+    ]
   },
   {
     label: 'SQL (Todo)',
