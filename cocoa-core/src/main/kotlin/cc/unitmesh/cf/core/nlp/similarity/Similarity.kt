@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.infrastructure.similarity
+package cc.unitmesh.cf.core.nlp.similarity
 
 import cc.unitmesh.cf.core.llms.EmbeddingElement
 import cc.unitmesh.cf.core.llms.Embedding

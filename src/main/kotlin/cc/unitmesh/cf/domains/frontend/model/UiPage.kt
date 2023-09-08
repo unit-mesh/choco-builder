@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.SubDomain
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.IndexElement
-import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
+import cc.unitmesh.cf.core.parser.MarkdownCode
 import cc.unitmesh.cf.core.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable

@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.domains
 
-import cc.unitmesh.cf.infrastructure.cache.CachedEmbedding
+import cc.unitmesh.cf.infrastructure.cache.CachedEmbeddingService
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class DomainClassifyTest {
 
     @MockK
-    lateinit var cachedEmbedding: CachedEmbedding
+    lateinit var cachedEmbedding: CachedEmbeddingService
 
     @BeforeEach
     fun setUp() = MockKAnnotations.init(this, relaxUnitFun = true) // turn relaxUnitFun on for all mocks

@@ -1,5 +1,6 @@
-package cc.unitmesh.cf.infrastructure.similarity;
+package cc.unitmesh.cf.infrastructure.similarity
 
+import cc.unitmesh.cf.core.nlp.similarity.JaccardSimilarity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

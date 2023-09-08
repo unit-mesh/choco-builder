@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.infrastructure.parser
+package cc.unitmesh.cf.core.parser
 
 class MarkdownCode(val language: String, val text: String) {
     companion object {
