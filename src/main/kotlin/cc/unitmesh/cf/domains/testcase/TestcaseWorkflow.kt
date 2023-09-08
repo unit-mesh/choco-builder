@@ -10,6 +10,7 @@ import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionDesigner
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionReviewer
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
+import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -49,12 +50,14 @@ class TestcaseWorkflow : Workflow() {
             when (stage) {
                 StageContext.Stage.Analyze -> {
                     stage = StageContext.Stage.Design
+                    // we need to drop the yes from messages
                     messages = messages.dropLast(1)
                     lastMsg = messages.last().content
                 }
 
                 StageContext.Stage.Design -> {
                     stage = StageContext.Stage.Review
+                    // we need to drop the yes from messages
                     messages = messages.dropLast(1)
                     lastMsg = messages.last().content
                 }
@@ -62,6 +65,8 @@ class TestcaseWorkflow : Workflow() {
                 else -> {}
             }
         }
+
+        val originQuestion = messages.first { it.role == LlmMsg.ChatRole.User.value }.content
 
         val result = when (stage) {
             StageContext.Stage.Analyze -> {
@@ -94,11 +99,19 @@ class TestcaseWorkflow : Workflow() {
             }
 
             StageContext.Stage.Design -> {
-                val designer = TestcaseSolutionDesigner(llmProvider, variableResolver)
+                val designer = TestcaseSolutionDesigner(llmProvider, variableResolver,)
+                // TODO: update the logic for question pass
+                val question = originQuestion
+
+                if(cachedCreative[question] != null) {
+                    designer.putCreativeCase(cachedCreative[question]!!)
+                }
+
                 val output = designer.design(
                     domain = "testcase",
-                    question = messages.first().content,
-                    histories = listOf(messages.last().content)
+                    question = question,
+                    // TODO: handle for long message, more than 4k
+                    histories = messages.map { it.content }
                 )
 
                 WorkflowResult(
@@ -112,7 +125,7 @@ class TestcaseWorkflow : Workflow() {
 
             StageContext.Stage.Review -> {
                 val review = TestcaseSolutionReviewer(llmProvider, variableResolver).review(
-                    question = messages.first().content,
+                    question = originQuestion,
                     histories = messages.map { it.content }
                 )
 
@@ -200,10 +213,12 @@ class TestcaseWorkflow : Workflow() {
             stage = StageContext.Stage.Design,
             systemPrompt = """你是一个资深的质量工程师（Quality assurance）教练，职责是根据多个不同 QA 的测试用例，生成更合理的测试用例。
                 |
-                |测试用例集：
+                |QA 1 写的测试用例集：
                 |```testcases
                 |${'$'}{testcases}
                 |```
+                |
+                |${'$'}{creative_cases}
                 |
                 |最后，你需要将这些测试用例，整理成一个测试计划，使用 markdown 表格输出。
                 |markdown 表格格式如下：测试要点,案例名称,案例描述,测试数据,测试步骤,预期结果,案例,属性,案例,等级,执行,方式,执行结果

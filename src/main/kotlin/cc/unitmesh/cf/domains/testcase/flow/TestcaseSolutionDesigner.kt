@@ -13,6 +13,8 @@ class TestcaseSolutionDesigner(
     private val completion: LlmProvider,
     private val variable: TestcaseVariableResolver,
 ) : SolutionDesigner {
+    private var creativeCase: String = ""
+
     override fun design(domain: String, question: String, histories: List<String>): Dsl {
         variable.updateQuestion(question)
         variable.updateHistories(histories)
@@ -26,6 +28,8 @@ class TestcaseSolutionDesigner(
             }
         }
         variable.put("testcases", testcases)
+        variable.put("creative_cases", creativeCase)
+
         val prompt = TestcaseWorkflow.DESIGN.format()
 
         val messages = listOf(
@@ -42,6 +46,14 @@ class TestcaseSolutionDesigner(
             override val content: String = completion
             override var interpreters: List<DslInterpreter> = listOf()
         }
+    }
+
+    fun putCreativeCase(creativeCase: String) {
+        this.creativeCase = """QA 2 写的测试用例集
+            |```testcases
+            |$creativeCase
+            |```
+        """.trimMargin()
     }
 
     companion object {
