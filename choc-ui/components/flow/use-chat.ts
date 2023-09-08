@@ -318,7 +318,14 @@ const getStreamedResponse = async (
         responseMessage['function_call'] = streamedResponse
       } else {
         try {
-          let parsed = JSON.parse(streamedResponse)
+          let parsed
+          try {
+            parsed = JSON.parse(streamedResponse)
+          } catch (e) {
+            // If the response is not valid JSON, we assume it is a string.
+            // This is the case for the `text` field of the response.
+            parsed = { messages: [{ content: streamedResponse }] }
+          }
           let content = parsed['messages'][0]['content']
           console.log(content)
           if (typeof content === 'object') {
