@@ -1,0 +1,15 @@
+services:
+  backend: 
+    build: .
+    ports:
+      - "18080:18080"
+    environment:
+      - OPENAI_API_KEY=""
+      - OPENAI_HOST="https://api.openai.com/"
+  frontend:
+    build:
+      context: ./choc-ui
+      args:
+        - NEXT_PUBLIC_API_SERVER_URL=http://localhost:18080
+    ports:
+      - "3000:3000"

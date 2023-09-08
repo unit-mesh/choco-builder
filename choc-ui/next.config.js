@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  output: "export",
+  output: "standalone",
   reactStrictMode: true,
   experimental: {
     // serverActions: true,
