@@ -1,6 +1,4 @@
-package cc.unitmesh.cf.infrastructure.llms.completion
-
-import cc.unitmesh.cf.core.llms.LlmMsg
+package cc.unitmesh.cf.core.llms
 
 enum class TemperatureMode(val value: Double) {
     Creative(0.7),

@@ -1,6 +1,6 @@
 package prompt
 
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.MockLlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.OpenAiProvider
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration

@@ -1,17 +1,17 @@
 package cc.unitmesh.cf.domains.testcase
 
 import cc.unitmesh.cf.core.prompt.UpdatableExample
-import cc.unitmesh.cf.core.workflow.StageContext
-import cc.unitmesh.cf.core.workflow.Workflow
-import cc.unitmesh.cf.core.workflow.WorkflowResult
+import cc.unitmesh.cf.core.flow.model.StageContext
+import cc.unitmesh.cf.core.flow.Workflow
+import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseProblemAnalyzer
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionDesigner
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionReviewer
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
-import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
+import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.cf.core.llms.TemperatureMode
 import cc.unitmesh.cf.core.llms.LlmMsg
-import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

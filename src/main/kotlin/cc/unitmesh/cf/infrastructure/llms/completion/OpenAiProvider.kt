@@ -2,6 +2,7 @@ package cc.unitmesh.cf.infrastructure.llms.completion
 
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import cc.unitmesh.cf.core.llms.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmProvider
 import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest

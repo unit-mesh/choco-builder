@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.core.prompt
 
-import cc.unitmesh.cf.core.base.FlowActionFlag
+import cc.unitmesh.cf.core.flow.model.FlowActionFlag
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

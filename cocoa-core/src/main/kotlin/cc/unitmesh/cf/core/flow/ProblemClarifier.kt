@@ -1,6 +1,6 @@
-package cc.unitmesh.cf.core.process
+package cc.unitmesh.cf.core.flow
 
-import cc.unitmesh.cf.core.base.FlowActionFlag
+import cc.unitmesh.cf.core.flow.model.FlowActionFlag
 
 
 typealias ClarifyResult = Pair<FlowActionFlag, String>;

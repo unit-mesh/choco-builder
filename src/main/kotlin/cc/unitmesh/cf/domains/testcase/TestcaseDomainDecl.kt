@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.domains.testcase
 
-import cc.unitmesh.cf.core.process.DomainDeclaration
-import cc.unitmesh.cf.core.workflow.Workflow
+import cc.unitmesh.cf.core.flow.DomainDeclaration
+import cc.unitmesh.cf.core.flow.Workflow
 import org.springframework.stereotype.Component
 
 @Component

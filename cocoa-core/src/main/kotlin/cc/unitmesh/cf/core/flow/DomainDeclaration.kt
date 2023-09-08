@@ -1,6 +1,4 @@
-package cc.unitmesh.cf.core.process
-
-import cc.unitmesh.cf.core.workflow.Workflow
+package cc.unitmesh.cf.core.flow
 
 interface DomainDeclaration {
     /**

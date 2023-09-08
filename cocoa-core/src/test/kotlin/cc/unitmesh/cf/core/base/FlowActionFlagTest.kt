@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.core.base;
 
+import cc.unitmesh.cf.core.flow.model.FlowActionFlag
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test

@@ -1,9 +1,9 @@
-package cc.unitmesh.cf.core.workflow
+package cc.unitmesh.cf.core.flow.model
 
 import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.prompt.UpdatableExample
 import cc.unitmesh.cf.core.prompt.StringTemplate
-import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
+import cc.unitmesh.cf.core.llms.TemperatureMode
 import cc.unitmesh.cf.core.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonValue
 import jakarta.persistence.Id

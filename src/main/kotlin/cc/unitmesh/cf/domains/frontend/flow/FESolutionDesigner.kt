@@ -1,11 +1,11 @@
 package cc.unitmesh.cf.domains.frontend.flow
 
-import cc.unitmesh.cf.core.process.SolutionDesigner
+import cc.unitmesh.cf.core.flow.SolutionDesigner
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
 import cc.unitmesh.cf.domains.frontend.model.UiPage
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 
 class FESolutionDesigner(

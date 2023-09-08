@@ -1,12 +1,13 @@
 package cc.unitmesh.cf.presentation.controller
 
-import cc.unitmesh.cf.core.workflow.StageContext
-import cc.unitmesh.cf.core.workflow.WorkflowResult
+import cc.unitmesh.cf.core.flow.model.StageContext
+import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
-import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import cc.unitmesh.cf.core.flow.model.ChatWebContext
+import cc.unitmesh.cf.core.flow.model.Message
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
 import kotlinx.serialization.Serializable
 import org.joda.time.DateTime
@@ -41,7 +42,7 @@ class ChatController(
             ?: throw RuntimeException("prompt not found!")
 
         // 3. execute stage with prompt
-        val chatWebContext = ChatWebContext.fromRequest(chat)
+        val chatWebContext = chat.toContext()
         val result = workflow.execute(prompt, chatWebContext)
 
         // 4. return response
@@ -71,13 +72,18 @@ data class MessageResponse(
     }
 }
 
-@Serializable
-data class Message(val role: String, val content: String)
-
 data class ChatRequest(
     val messages: List<Message>,
     val id: String,
     val stage: StageContext.Stage,
     val domain: SupportedDomains,
     val previewToken: String?,
-)
+) {
+    fun toContext(): ChatWebContext {
+        return ChatWebContext(
+            messages = this.messages,
+            id = this.id,
+            stage = this.stage,
+        )
+    }
+}

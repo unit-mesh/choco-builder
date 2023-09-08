@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.core.base
+package cc.unitmesh.cf.core.flow.model
 
 interface Answer {
     var executor: String

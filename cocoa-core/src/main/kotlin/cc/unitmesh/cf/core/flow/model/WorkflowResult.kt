@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.core.workflow
+package cc.unitmesh.cf.core.flow.model
 
 import kotlinx.serialization.Serializable
 

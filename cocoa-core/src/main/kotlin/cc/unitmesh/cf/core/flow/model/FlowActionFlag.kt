@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.core.base
+package cc.unitmesh.cf.core.flow.model
 
 private val ASK_REGEX = Regex("(询问|ask)[：:]\\s?(.*)")
 private val ACTION_REGEX = Regex("(行动|action)[：:]\\s?(.*)")

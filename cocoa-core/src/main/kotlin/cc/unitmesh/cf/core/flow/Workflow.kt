@@ -1,10 +1,8 @@
-package cc.unitmesh.cf.core.workflow
+package cc.unitmesh.cf.core.flow
 
-import cc.unitmesh.cf.core.process.AnalyzeResult
-import cc.unitmesh.cf.core.process.ClarifyResult
-import cc.unitmesh.cf.core.process.DesignResult
-import cc.unitmesh.cf.core.process.ExecuteResult
-import cc.unitmesh.cf.presentation.domain.ChatWebContext
+import cc.unitmesh.cf.core.flow.model.ChatWebContext
+import cc.unitmesh.cf.core.flow.model.StageContext
+import cc.unitmesh.cf.core.flow.model.WorkflowResult
 
 abstract class Workflow {
     val chatWebContext: ChatWebContext? = null

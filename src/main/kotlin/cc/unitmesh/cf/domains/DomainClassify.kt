@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.domains
 
-import cc.unitmesh.cf.core.process.DomainDeclaration
+import cc.unitmesh.cf.core.flow.DomainDeclaration
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbeddingService
 import org.reflections.Reflections
 import org.springframework.stereotype.Component

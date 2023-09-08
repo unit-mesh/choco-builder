@@ -1,11 +1,11 @@
 package cc.unitmesh.cf.domains.frontend.flow
 
-import cc.unitmesh.cf.core.base.FlowActionFlag
-import cc.unitmesh.cf.core.process.ProblemClarifier
+import cc.unitmesh.cf.core.flow.model.FlowActionFlag
+import cc.unitmesh.cf.core.flow.ProblemClarifier
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 
 class FEProblemClarifier(

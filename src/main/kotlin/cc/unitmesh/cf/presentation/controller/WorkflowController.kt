@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.presentation.controller
 
-import cc.unitmesh.cf.core.process.DomainDeclaration
-import cc.unitmesh.cf.core.workflow.StageContext
+import cc.unitmesh.cf.core.flow.DomainDeclaration
+import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

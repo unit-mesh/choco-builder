@@ -1,14 +1,14 @@
 package cc.unitmesh.cf.domains.code.flow
 
-import cc.unitmesh.cf.core.base.Answer
+import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.Interpreter
-import cc.unitmesh.cf.core.process.SolutionExecutor
+import cc.unitmesh.cf.core.flow.SolutionExecutor
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreter
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.parser.MarkdownCode
 import kotlinx.serialization.encodeToString

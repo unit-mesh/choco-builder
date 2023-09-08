@@ -2,11 +2,11 @@ package cc.unitmesh.cf.domains.testcase.flow
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
-import cc.unitmesh.cf.core.process.SolutionReviewer
+import cc.unitmesh.cf.core.flow.SolutionReviewer
 import cc.unitmesh.cf.domains.testcase.TestcaseDomainDecl
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
-import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
+import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 
 class TestcaseSolutionReviewer(
