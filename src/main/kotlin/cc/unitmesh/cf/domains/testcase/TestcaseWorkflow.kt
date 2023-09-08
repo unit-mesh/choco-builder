@@ -65,22 +65,24 @@ class TestcaseWorkflow : Workflow() {
 
         val result = when (stage) {
             StageContext.Stage.Analyze -> {
-                val analyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver, TemperatureMode.Creative)
+                val analyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver, TemperatureMode.Default)
+                // start creative temperature
+                Thread(Runnable {
+                    val creativeAnalyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver, TemperatureMode.Creative)
+                    val creativeResult = creativeAnalyzer.analyze(
+                        domain = "testcase",
+                        question = lastMsg
+                    )
+
+                    cachedCreative[lastMsg] = creativeResult.content
+                }).start()
+
+
+                // start default temperature
                 val output = analyzer.analyze(
                     domain = "testcase",
                     question = lastMsg
                 )
-
-                // start to cache creative
-//                Thread(Runnable {
-//                    val creativeAnalyzer = TestcaseProblemAnalyzer(llmProvider, variableResolver, TemperatureMode.Creative)
-//                    val output = creativeAnalyzer.analyze(
-//                        domain = "testcase",
-//                        question = lastMsg
-//                    )
-//
-//                    cachedCreative[lastMsg] = output.content
-//                }).start()
 
                 WorkflowResult(
                     currentStage = StageContext.Stage.Analyze,
