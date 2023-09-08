@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class FEDslContextBuilder(
-    similarity: JaccardSimilarity,
     cachedEmbedding: CachedEmbedding,
-) : DslContextBuilder(similarity, cachedEmbedding) {
+) : DslContextBuilder(JaccardSimilarity(), cachedEmbedding) {
     override fun buildFor(domain: InterpreterContext, question: String, chatHistories: String): DslContext {
         return FrontendDslContext(
             similarLayouts = listOf(),

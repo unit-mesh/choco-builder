@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.core.dsl
 
-interface IndexElement {
+public interface IndexElement {
     val id: String
     val name: String
 }

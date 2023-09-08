@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.similarity
 
-import cc.unitmesh.cf.core.dsl.EmbeddingElement
+import cc.unitmesh.cf.core.llms.EmbeddingElement
 import cc.unitmesh.cf.core.llms.Embedding
 
 interface Similarity {

@@ -1,10 +1,8 @@
 package cc.unitmesh.cf.infrastructure.similarity
 
-import cc.unitmesh.cf.core.dsl.EmbeddingElement
+import cc.unitmesh.cf.core.llms.EmbeddingElement
 import kotlin.math.sqrt
-import org.springframework.stereotype.Component
 
-@Component
 class CosineSimilarity : Similarity {
     internal fun cosineDistance(a: List<Double>, b: List<Double>): Double {
         require(a.size == b.size) { "Vectors must be of equal length" }
