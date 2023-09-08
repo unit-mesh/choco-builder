@@ -1,9 +1,8 @@
 package cc.unitmesh.code.interpreter.compiler
 
-import org.jetbrains.kotlinx.jupyter.EvalRequestData
-import org.jetbrains.kotlinx.jupyter.ReplForJupyter
+import org.jetbrains.kotlinx.jupyter.*
 import org.jetbrains.kotlinx.jupyter.api.Code
-import org.jetbrains.kotlinx.jupyter.defaultRepositoriesCoordinates
+import org.jetbrains.kotlinx.jupyter.api.KotlinKernelVersion
 import org.jetbrains.kotlinx.jupyter.libraries.EmptyResolutionInfoProvider
 import org.jetbrains.kotlinx.jupyter.messaging.NoOpDisplayHandler
 import org.jetbrains.kotlinx.jupyter.repl.creating.createRepl
@@ -34,6 +33,14 @@ class KotlinReplWrapper {
             EmptyResolutionInfoProvider,
             embeddedClasspath,
             mavenRepositories = defaultRepositoriesCoordinates,
+            runtimeProperties = RuntimeKernelProperties(
+                map = mapOf(
+                    "version" to "0.11.0.385",
+                    "currentBranch" to "master",
+                    "currentSha" to "295bf977765b3a61b118edc4e6ac41d1d4fbb1f3"
+                )
+
+            ),
             libraryResolver = extendLibraries(),
             displayHandler = NoOpDisplayHandler,
             isEmbedded = true

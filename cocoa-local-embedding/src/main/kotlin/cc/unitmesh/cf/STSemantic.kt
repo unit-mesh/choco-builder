@@ -10,6 +10,7 @@ import ai.onnxruntime.OrtUtil
  * Sentence Transformers Semantic
  */
 class STSemantic(val tokenizer: HuggingFaceTokenizer, val session: OrtSession, val env: OrtEnvironment) {
+
     fun embed(input: String): DoubleArray {
         val tokenized = tokenizer.encode(input, true)
 
