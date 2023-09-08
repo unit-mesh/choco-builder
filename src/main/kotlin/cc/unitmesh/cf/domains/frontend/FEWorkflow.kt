@@ -13,7 +13,7 @@ import cc.unitmesh.cf.domains.frontend.flow.FESolutionDesigner
 import cc.unitmesh.cf.domains.frontend.flow.FESolutionExecutor
 import cc.unitmesh.cf.domains.frontend.model.UiPage
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.presentation.controller.Message
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import kotlinx.serialization.encodeToString

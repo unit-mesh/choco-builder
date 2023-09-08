@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.infrastructure.llms.model
+package cc.unitmesh.cf.core.llms
 
 class LlmMsg {
     data class ChatMessage(

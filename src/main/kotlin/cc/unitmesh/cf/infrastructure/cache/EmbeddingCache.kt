@@ -1,9 +1,9 @@
 package cc.unitmesh.cf.infrastructure.cache
 
 import cc.unitmesh.cf.infrastructure.cache.utils.EmbeddingConverter
-import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
-import cc.unitmesh.cf.infrastructure.utils.Constants
-import cc.unitmesh.cf.infrastructure.utils.IdUtil
+import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.cf.core.utils.Constants
+import cc.unitmesh.cf.core.utils.IdUtil
 
 import jakarta.persistence.Column
 import jakarta.persistence.Convert

@@ -1,15 +1,11 @@
 package cc.unitmesh.cf.infrastructure.llms.completion
 
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit

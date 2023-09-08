@@ -7,7 +7,7 @@ import cc.unitmesh.cf.domains.testcase.TestcaseDomainDecl
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import cc.unitmesh.cf.domains.testcase.context.TestcaseVariableResolver
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 
 class TestcaseSolutionReviewer(
     private val completion: LlmProvider,

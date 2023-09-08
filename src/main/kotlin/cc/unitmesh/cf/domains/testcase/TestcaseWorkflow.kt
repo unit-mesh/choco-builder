@@ -10,7 +10,7 @@ import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionDesigner
 import cc.unitmesh.cf.domains.testcase.flow.TestcaseSolutionReviewer
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.completion.TemperatureMode
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.presentation.domain.ChatWebContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

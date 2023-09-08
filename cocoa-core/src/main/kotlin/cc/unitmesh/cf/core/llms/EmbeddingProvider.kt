@@ -1,7 +1,4 @@
-package cc.unitmesh.cf.infrastructure.llms.embedding
-
-// I don't know why, but sometimes the following import is not added automatically.
-public typealias Embedding = List<Double>
+package cc.unitmesh.cf.core.llms
 
 interface EmbeddingProvider {
     fun createEmbeddings(texts: List<String>): List<Embedding>

@@ -9,7 +9,7 @@ import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreter
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

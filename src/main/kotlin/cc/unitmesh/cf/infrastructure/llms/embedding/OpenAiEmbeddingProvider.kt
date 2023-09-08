@@ -1,5 +1,7 @@
 package cc.unitmesh.cf.infrastructure.llms.embedding
 
+import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.cf.core.llms.EmbeddingProvider
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import com.theokanning.openai.embedding.EmbeddingRequest
 import com.theokanning.openai.service.OpenAiService

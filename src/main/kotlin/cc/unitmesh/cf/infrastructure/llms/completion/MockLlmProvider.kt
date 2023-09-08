@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.llms.completion
 
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 
 class MockLlmProvider : LlmProvider {
     override var temperature: Double = 0.0

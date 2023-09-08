@@ -2,6 +2,8 @@ package cc.unitmesh.cf.infrastructure.llms.embedding
 
 import org.springframework.stereotype.Component
 import cc.unitmesh.cf.STSemantic
+import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.cf.core.llms.EmbeddingProvider
 
 @Component
 class SentenceTransformersEmbedding : EmbeddingProvider {

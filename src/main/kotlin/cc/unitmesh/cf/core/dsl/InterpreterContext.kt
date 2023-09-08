@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.core.dsl
 
-import cc.unitmesh.cf.infrastructure.utils.IdUtil
+import cc.unitmesh.cf.core.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonGetter
 import jakarta.persistence.Id
 import org.hibernate.annotations.Comment

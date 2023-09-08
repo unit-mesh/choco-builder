@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.infrastructure.cache
 
-import cc.unitmesh.cf.infrastructure.llms.embedding.Embedding
-import cc.unitmesh.cf.infrastructure.llms.embedding.EmbeddingProvider
+import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.cf.core.llms.EmbeddingProvider
 import cc.unitmesh.cf.infrastructure.repository.EmbeddingCacheRepository
 import org.springframework.stereotype.Component
 

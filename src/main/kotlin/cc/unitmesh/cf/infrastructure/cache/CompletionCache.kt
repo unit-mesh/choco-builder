@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.infrastructure.cache
 
-import cc.unitmesh.cf.infrastructure.utils.Constants
-import cc.unitmesh.cf.infrastructure.utils.IdUtil
+import cc.unitmesh.cf.core.utils.Constants
+import cc.unitmesh.cf.core.utils.IdUtil
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

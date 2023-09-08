@@ -1,7 +1,7 @@
 package cc.unitmesh.cf.infrastructure.llms.completion
 
 import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
-import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
+import cc.unitmesh.cf.core.llms.LlmMsg
 import org.junit.jupiter.api.Disabled
 
 class OpenAiProviderTest {
