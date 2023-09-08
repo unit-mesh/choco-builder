@@ -5,13 +5,15 @@ import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.Interpreter
 import cc.unitmesh.cf.core.process.SolutionExecutor
-import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
+import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreter
+import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.infrastructure.llms.completion.LlmProvider
 import cc.unitmesh.cf.infrastructure.llms.model.LlmMsg
 import cc.unitmesh.cf.infrastructure.parser.MarkdownCode
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.slf4j.Logger
 
 class CodeSolutionExecutor(
     private val completion: LlmProvider,
@@ -20,7 +22,7 @@ class CodeSolutionExecutor(
     override val interpreters: List<Interpreter> = listOf()
 
     companion object {
-        val log = org.slf4j.LoggerFactory.getLogger(CodeSolutionExecutor::class.java)
+        val log: Logger = org.slf4j.LoggerFactory.getLogger(CodeSolutionExecutor::class.java)
     }
 
     override fun execute(solution: CodeInput): Answer {
@@ -53,7 +55,7 @@ class CodeSolutionExecutor(
 
 class CodeInput(
     override val content: String = "",
-    override var domain: String = "code-interpreter",
+    override var domain: String = SupportedDomains.CodeInterpreter.value,
 ) : Dsl {
     override var interpreters: List<DslInterpreter> = listOf()
 }
