@@ -7,13 +7,8 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class DomainClassify(private val cachedEmbedding: CachedEmbeddingService, ) {
+class DomainClassify(private val cachedEmbedding: CachedEmbeddingService) {
     val cachedDomains: MutableMap<String, DomainDeclaration> = mutableMapOf()
-
-//    fun semanticSearch(question: String): DomainDeclaration {
-//        val question: Embedding = cachedEmbedding.createEmbedding(question)
-//        return DomainDeclarationPlaceholder()
-//    }
 
     private val packageName = DomainClassify::class.java.`package`.name
 
