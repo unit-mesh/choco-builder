@@ -80,6 +80,7 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 ### Example 3: Testcase Generator
 
 - 步骤 1：ProblemAnalyzer 分析用户的需求，确认是否是一个测试用例生成的需求
+    - [x] 多 Temperature 模式：TemperatureMode.Default, TemperatureMode.Creative
 - 步骤 2：SolutionDesigner 设计测试用例生成的方案
 - 步骤 3：SolutionReviewer 确认方案是否符合用户的需求
 
@@ -115,6 +116,7 @@ To spike:
     - [x] text 2 UI
     - [x] text 2 Usecases 
     - [x] text 2 Code
+    - [ ] text 2 Bug fixes
     - [ ] text 2 API
     - [ ] text 2 SQL
 
