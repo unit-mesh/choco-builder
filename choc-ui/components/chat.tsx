@@ -37,7 +37,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   console.log('stage: ' + stage)
 
   useEffect(() => {
-    fetch(`http://localhost:18080/api/workflows/${domain}`)
+    fetch(process.env.API_SERVER_URL + `/api/workflows/${domain}`)
       .then(res => res.json())
       .then(data => {
         setWorkflow(data)
@@ -53,7 +53,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
-      api: 'http://localhost:18080/api/chat',
+      api: process.env.API_SERVER_URL + '//api/chat',
       initialMessages,
       id,
       headers: {
