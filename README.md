@@ -7,6 +7,13 @@
 
 Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
 
+or:
+
+```
+git clone https://github.com/unit-mesh/chocolate-factory
+docker-compose up
+```
+
 ## Key concepts
 
 the core concepts of Chocolate Factory are:

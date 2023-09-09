@@ -1,15 +1,41 @@
+version: '3.8'
 services:
-  backend: 
-    build: .
+  backend:
+    image: "unitmesh/chocolate-factory:latest"
     ports:
       - "18080:18080"
     environment:
       - OPENAI_API_KEY=""
       - OPENAI_HOST="https://api.openai.com/"
+    networks:
+      - dependence_network
+
   frontend:
-    build:
-      context: ./choc-ui
-      args:
-        - NEXT_PUBLIC_API_SERVER_URL=http://localhost:18080
+    image: "unitmesh/chocolate-factory-frontend:latest"
+    depends_on:
+      - backend
     ports:
       - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_SERVER_URL="http://localhost:18080"
+    networks:
+      - dependence_network
+
+networks:
+  dependence_network:
+
+#services:
+#  backend:
+#    build: .
+#    ports:
+#      - "18080:18080"
+#    environment:
+#      - OPENAI_API_KEY=""
+#      - OPENAI_HOST="https://api.openai.com/"
+#  frontend:
+#    build:
+#      context: ./choc-ui
+#      args:
+#        - NEXT_PUBLIC_API_SERVER_URL=http://localhost:18080
+#    ports:
+#      - "3000:3000"
