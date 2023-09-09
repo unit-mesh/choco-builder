@@ -9,8 +9,9 @@ Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (T
 
 or:
 
-```
-git clone https://github.com/unit-mesh/chocolate-factory
+```bash
+wget https://raw.githubusercontent.com/unit-mesh/chocolate-factory/master/docker-compose.yml -O docker-compose.yml
+# modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
 docker-compose up
 ```
 
