@@ -16,8 +16,6 @@ services:
       - backend
     ports:
       - "3000:3000"
-#    environment:
-#      - NEXT_PUBLIC_API_SERVER_URL="http://backend:18080"
 
   nginx:
     build: ./nginx

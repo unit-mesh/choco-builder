@@ -6,8 +6,10 @@ import org.jetbrains.letsPlot.Stat
 import org.jetbrains.letsPlot.core.util.PlotHtmlExport
 import org.jetbrains.letsPlot.core.util.PlotHtmlHelper.scriptUrl
 import org.jetbrains.letsPlot.export.VersionChecker
+import org.jetbrains.letsPlot.export.ggsave
 import org.jetbrains.letsPlot.geom.geomBar
 import org.jetbrains.letsPlot.geom.geomText
+import org.jetbrains.letsPlot.intern.Plot
 import org.jetbrains.letsPlot.intern.toSpec
 import org.jetbrains.letsPlot.label.ggtitle
 import org.jetbrains.letsPlot.letsPlot
@@ -38,7 +40,6 @@ class LetsPlotInterpreterTest {
         val html = frontendContext.getHtml(plot)
         println(html)
 
-
         val content = PlotHtmlExport.buildHtmlFromRawSpecs(plot.toSpec(), scriptUrl(VersionChecker.letsPlotJsVersion))
         println(content)
     }
@@ -63,4 +64,24 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
         val res = compiler.eval(code)
     }
 
+    @Test
+    internal fun simple_eval2() {
+        val code = """%use lets-plot
+import kotlin.math.PI
+import kotlin.random.Random
+
+val electricityData = mapOf(
+   "Month" to listOf("一月", "二月", "三月", "四月", "五月", "六月"),
+   "Expenditure" to listOf(201.2, 222, 234.3, 120.2, 90, 90.4)
+)
+
+letsPlot(electricityData) { x = "Month"; y = "Expenditure" } +
+   geomLine() +
+   geomPoint() +
+   ggtitle("2023 年上半年电费趋势")
+"""
+        val res = compiler.eval(code)
+        val plot: Plot = res.rawValue as Plot
+        ggsave(plot, "plot.png")
+    }
 }
