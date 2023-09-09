@@ -1,17 +1,26 @@
 package cc.unitmesh.cf.domains.frontend.context
 
 import cc.unitmesh.cf.core.context.variable.VariableResolver
-import cc.unitmesh.cf.domains.frontend.model.UiComponent
 import cc.unitmesh.cf.domains.frontend.model.LayoutStyle
+import cc.unitmesh.cf.domains.frontend.model.UiComponent
 import kotlinx.serialization.json.Json
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.Velocity
 import org.springframework.stereotype.Component
+import java.io.File
+import java.io.IOException
 import java.io.StringWriter
+import java.net.URISyntaxException
+import java.net.URL
 import java.nio.file.Files.walk
+import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.*
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
 import kotlin.io.path.extension
 import kotlin.io.path.isRegularFile
+
 
 @Component
 class FEVariableResolver : VariableResolver<FEVariables> {
@@ -39,12 +48,8 @@ class FEVariableResolver : VariableResolver<FEVariables> {
 
     override fun resolve(question: String) {
         // walk through the dir and load all components
-        val resourceUrl = this.javaClass.getResource("/frontend/components")!!
-        val dir = Paths.get(resourceUrl.toURI())
-
-        val components: List<UiComponent> = walk(dir)
-            .filter { it.isRegularFile() && it.extension == "json" }
-            .map { it.toFile().readText() }
+        val componentJsons = getFolderJson("/frontend/components")
+        val components: List<UiComponent> = componentJsons
             .map { Json.decodeFromString<UiComponent>(it) }
             .toList()
 
@@ -52,12 +57,9 @@ class FEVariableResolver : VariableResolver<FEVariables> {
         componentList.addAll(components)
 
         // walk through the dir and load all layouts
-        val layoutUrl = this.javaClass.getResource("/frontend/layout")!!
-        val layoutDir = Paths.get(layoutUrl.toURI())
+        val layoutJson = getFolderJson("/frontend/layout")
 
-        val layouts: List<LayoutStyle> = walk(layoutDir)
-            .filter { it.isRegularFile() && it.extension == "json" }
-            .map { it.toFile().readText() }
+        val layouts: List<LayoutStyle> =layoutJson
             .map { Json.decodeFromString<List<LayoutStyle>>(it) }
             .toList()
             .flatten()
@@ -70,6 +72,40 @@ class FEVariableResolver : VariableResolver<FEVariables> {
                 it.name + "(" + it.tagName + ")"
             }
         )
+    }
+
+    private fun getFolderJson(path: String): List<String> {
+        val results = mutableListOf<String>()
+
+        val jarFile = File(javaClass.getProtectionDomain().codeSource.location.path)
+        if (jarFile.isFile()) {
+            val jar = JarFile(jarFile)
+            val entries: Enumeration<JarEntry> = jar.entries()
+            while (entries.hasMoreElements()) {
+                val name: String = entries.nextElement().name
+                if (name.startsWith(path)) {
+                    val file = jarFile.inputStream().bufferedReader().use { it.readText() }
+                    results.add(file)
+                }
+            }
+            jar.close()
+        } else { // Run with IDE
+            val url: URL? = FEVariables::class.java.getResource(path)
+            if (url != null) {
+                try {
+                    val apps = File(url.toURI())
+                    for (app in apps.listFiles()!!) {
+                        if (app.isFile) {
+                            results.add(app.readText())
+                        }
+                    }
+                } catch (ex: URISyntaxException) {
+                    // never happens
+                }
+            }
+        }
+
+        return results
     }
 
     fun updateQuestion(question: String) {
