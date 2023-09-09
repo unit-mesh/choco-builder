@@ -6,8 +6,8 @@ services:
     ports:
       - "18080:18080"
     environment:
-      - OPENAI_API_KEY=""
-      - OPENAI_API_HOST="https://api.openai.com/"
+      - OPENAI_API_KEY=xxxx
+      - OPENAI_API_HOST=https://api.openai.com/
 
   frontend:
     image: "unitmesh/chocolate-factory-frontend:latest"
