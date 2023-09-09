@@ -2,6 +2,9 @@
 
 > Chocolate Factory 是一款开源的 LLM 应用引擎/LLM 应用框架，旨在帮助您打造 LLM 生成助手。
 
+[![CI](https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg)](https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml)
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest)
+
 Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
 
 ## Key concepts
