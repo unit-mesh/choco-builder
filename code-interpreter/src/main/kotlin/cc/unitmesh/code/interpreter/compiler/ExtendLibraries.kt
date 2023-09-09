@@ -111,10 +111,12 @@ val letPlotDef = SimpleLibraryDefinition(
         "org.jetbrains.letsPlot.bistro.residual.*",
         "org.jetbrains.letsPlot.intern.toSpec"
     ),
+
     dependencies = listOf(
-        "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.1",
-        "org.jetbrains.lets-plot:lets-plot-common:3.2.0",
-        "org.jetbrains.lets-plot:lets-plot-image-export:3.2.0",
+        // should keep same version to gradle/libs.versions.toml
+        "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.2",
+        "org.jetbrains.lets-plot:lets-plot-common:4.0.0",
+        "org.jetbrains.lets-plot:lets-plot-image-export:4.0.0",
     )
 )
 

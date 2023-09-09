@@ -6,6 +6,7 @@ import cc.unitmesh.code.messaging.Message
 import cc.unitmesh.code.messaging.MessageType
 import cc.unitmesh.code.interpreter.compiler.KotlinReplWrapper
 import cc.unitmesh.code.messaging.HtmlContent
+import jupyter.kotlin.ScriptTemplateWithDisplayHelpers
 import org.jetbrains.kotlinx.jupyter.api.toJson
 import org.jetbrains.kotlinx.jupyter.repl.EvalResultEx
 import org.jetbrains.letsPlot.commons.geometry.DoubleVector

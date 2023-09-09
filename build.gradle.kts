@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+import org.springframework.boot.gradle.tasks.bundling.BootWar
 
 plugins {
     alias(libs.plugins.jvm)
@@ -24,6 +26,18 @@ kotlin {
 
 repositories {
     mavenCentral()
+}
+
+// allow script to unpack
+// when spring boot start, those packages will unpack to some dir, so we can call it REPL.
+tasks.withType<BootJar> {
+    requiresUnpack("**/kotlin-compiler-*.jar")
+    requiresUnpack("**/kotlin-script-*.jar")
+    requiresUnpack("**/kotlin-scripting-*.jar")
+    requiresUnpack("**/kotlin-jupyter-*.jar")
+    requiresUnpack("**/lets-plot-*.jar")
+    requiresUnpack("**/dataframe-*.jar")
+    requiresUnpack("**/kotlinx-*.jar")
 }
 
 allprojects {

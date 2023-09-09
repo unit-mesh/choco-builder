@@ -93,6 +93,7 @@ class FEVariableResolver : VariableResolver<FEVariables> {
             val url: URL? = FEVariables::class.java.getResource(path)
             if (url != null) {
                 try {
+                    // TODO: fix this error
                     val apps = File(url.toURI())
                     for (app in apps.listFiles()!!) {
                         if (app.isFile) {

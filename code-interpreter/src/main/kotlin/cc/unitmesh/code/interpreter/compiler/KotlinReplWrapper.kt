@@ -8,6 +8,7 @@ import org.jetbrains.kotlinx.jupyter.messaging.NoOpDisplayHandler
 import org.jetbrains.kotlinx.jupyter.repl.creating.createRepl
 import org.slf4j.LoggerFactory
 import java.io.File
+import kotlin.script.experimental.jvm.util.KotlinJars
 
 class KotlinReplWrapper {
     private val logger = LoggerFactory.getLogger(this.javaClass)
@@ -20,6 +21,18 @@ class KotlinReplWrapper {
     private fun makeEmbeddedRepl(): ReplForJupyter {
         val property = System.getProperty("java.class.path")
         var embeddedClasspath: MutableList<File> = property.split(File.pathSeparator).map(::File).toMutableList()
+
+        val isInRuntime = embeddedClasspath.size == 1
+        if (isInRuntime) {
+            System.setProperty("kotlin.script.classpath", property)
+
+            val compiler = KotlinJars.compilerClasspath
+            if (compiler.isNotEmpty()) {
+                val tempdir = compiler[0].parent
+                embeddedClasspath =
+                    File(tempdir).walk(FileWalkDirection.BOTTOM_UP).sortedBy { it.isDirectory }.toMutableList()
+            }
+        }
 
         embeddedClasspath = embeddedClasspath.distinctBy { it.name }
             .filter {

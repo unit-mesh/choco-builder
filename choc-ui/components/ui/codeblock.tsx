@@ -69,7 +69,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
     if (msg.msgType == 'html') {
       return <Iframe content={msg.content.html!!} />
     } else {
-      return <CodeBlock language={'json'} value={JSON.stringify(msg)} />
+      return <CodeBlock language={'markdown'} value={JSON.stringify(msg.resultValue)} />
     }
   }
 
