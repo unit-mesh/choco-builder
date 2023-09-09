@@ -7,6 +7,8 @@
 
 Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
 
+Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.com/video/BV1T14y1C7p2)
+
 or:
 
 ```bash
