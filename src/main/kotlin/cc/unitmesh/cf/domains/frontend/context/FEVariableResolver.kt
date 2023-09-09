@@ -27,6 +27,7 @@ class FEVariableResolver : VariableResolver<FEVariables> {
     companion object {
         private val log = org.slf4j.LoggerFactory.getLogger(FEVariableResolver::class.java)
     }
+
     override var variables: FEVariables? = FEVariables(
         question = "",
         histories = listOf(),
@@ -47,23 +48,23 @@ class FEVariableResolver : VariableResolver<FEVariables> {
     }
 
     override fun resolve(question: String) {
-        // walk through the dir and load all components
-        val componentJsons = getFolderJson("/frontend/components")
-        val components: List<UiComponent> = componentJsons
-            .map { Json.decodeFromString<UiComponent>(it) }
-            .toList()
+        val componentJsons = this.javaClass
+            .getResourceAsStream("/frontend/components/element-ui.json")!!
+            .bufferedReader()
+            .use { it.readText() }
+
+        val components: List<UiComponent> = Json.decodeFromString(componentJsons)
 
         componentList.clear()
         componentList.addAll(components)
 
         // walk through the dir and load all layouts
-        val layoutJson = getFolderJson("/frontend/layout")
+        val layoutJson = this.javaClass
+            .getResourceAsStream("/frontend/layouts/layout-style.json")!!
+            .bufferedReader()
+            .use { it.readText() }
 
-        val layouts: List<LayoutStyle> =layoutJson
-            .map { Json.decodeFromString<List<LayoutStyle>>(it) }
-            .toList()
-            .flatten()
-
+        val layouts: List<LayoutStyle> = Json.decodeFromString<List<LayoutStyle>>(layoutJson)
         variables = FEVariables(
             question = question,
             histories = listOf(),
@@ -72,41 +73,6 @@ class FEVariableResolver : VariableResolver<FEVariables> {
                 it.name + "(" + it.tagName + ")"
             }
         )
-    }
-
-    private fun getFolderJson(path: String): List<String> {
-        val results = mutableListOf<String>()
-
-        val jarFile = File(javaClass.getProtectionDomain().codeSource.location.path)
-        if (jarFile.isFile()) {
-            val jar = JarFile(jarFile)
-            val entries: Enumeration<JarEntry> = jar.entries()
-            while (entries.hasMoreElements()) {
-                val name: String = entries.nextElement().name
-                if (name.startsWith(path)) {
-                    val file = jarFile.inputStream().bufferedReader().use { it.readText() }
-                    results.add(file)
-                }
-            }
-            jar.close()
-        } else { // Run with IDE
-            val url: URL? = FEVariables::class.java.getResource(path)
-            if (url != null) {
-                try {
-                    // TODO: fix this error
-                    val apps = File(url.toURI())
-                    for (app in apps.listFiles()!!) {
-                        if (app.isFile) {
-                            results.add(app.readText())
-                        }
-                    }
-                } catch (ex: URISyntaxException) {
-                    // never happens
-                }
-            }
-        }
-
-        return results
     }
 
     fun updateQuestion(question: String) {
