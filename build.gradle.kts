@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
-import org.springframework.boot.gradle.tasks.bundling.BootWar
 
 plugins {
     alias(libs.plugins.jvm)
@@ -45,7 +44,7 @@ allprojects {
     apply(plugin = "jacoco")
 
     group = "cc.unitmesh"
-    version = "0.0.8"
+    version = "0.0.9"
 
     repositories {
         mavenCentral()
