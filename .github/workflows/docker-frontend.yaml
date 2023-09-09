@@ -1,4 +1,4 @@
-name: Docker CD
+name: Docker CD frontend
 
 on:
   push:
@@ -35,12 +35,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: unitmesh/chocolate-factory
+          images: unitmesh/chocolate-factory-frontend
 
       - name: Build and push Backend Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: choc-ui
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
