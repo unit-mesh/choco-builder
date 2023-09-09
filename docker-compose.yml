@@ -2,24 +2,29 @@ version: '3.8'
 services:
   backend:
     image: "unitmesh/chocolate-factory:latest"
+    container_name: backend
     ports:
       - "18080:18080"
     environment:
       - OPENAI_API_KEY=""
       - OPENAI_API_HOST="https://api.openai.com/"
-    networks:
-      - dependence_network
 
   frontend:
     image: "unitmesh/chocolate-factory-frontend:latest"
+    container_name: frontend
     depends_on:
       - backend
     ports:
       - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_SERVER_URL="http://localhost:18080"
-    networks:
-      - dependence_network
+#    environment:
+#      - NEXT_PUBLIC_API_SERVER_URL="http://backend:18080"
 
-networks:
-  dependence_network:
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    depends_on:
+      - frontend
+      - backend
+    ports:
+      - "8080:80"
+    restart: always
