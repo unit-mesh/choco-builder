@@ -15,7 +15,16 @@ import kotlin.io.path.isRegularFile
 
 @Component
 class FEVariableResolver : VariableResolver<FEVariables> {
-    override var variables: FEVariables? = null
+    companion object {
+        private val log = org.slf4j.LoggerFactory.getLogger(FEVariableResolver::class.java)
+    }
+    override var variables: FEVariables? = FEVariables(
+        question = "",
+        histories = listOf(),
+        layouts = "",
+        components = "",
+    )
+
     override val velocityContext = VelocityContext()
 
     val componentList: MutableList<UiComponent> = mutableListOf()
@@ -24,7 +33,7 @@ class FEVariableResolver : VariableResolver<FEVariables> {
         try {
             this.resolve()
         } catch (e: Exception) {
-            e.printStackTrace()
+            log.error("Failed to resolve variables", e)
         }
     }
 
@@ -83,6 +92,6 @@ class FEVariableResolver : VariableResolver<FEVariables> {
     }
 
     fun getComponents(): MutableList<UiComponent> {
-       return componentList
+        return componentList
     }
 }
