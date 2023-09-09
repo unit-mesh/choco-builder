@@ -13,9 +13,9 @@ export const domains: DomainFormItem[] = [
     value: 'frontend',
     examples: [
       {
-        title: '生成聊天页',
+        title: '商品订单详细',
         content:
-          '编写一个聊天页，布局方式：响应式，其中左边是一个聊天列表页，中间是聊天区（使用卡片），聊天区的下方是输入区。'
+          '编写一个商品订单详细，布局方式：响应式，其中左边是一个商品过滤条件，右边则通过分页方式展示各种商品'
       }
     ]
   },
