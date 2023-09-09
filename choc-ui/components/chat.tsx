@@ -37,7 +37,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   console.log('stage: ' + stage)
 
   useEffect(() => {
-    fetch(process.env.NEXT_PUBLIC_API_SERVER_URL + `/api/workflows/${domain}`)
+    fetch(`/api/workflows/${domain}`)
       .then(res => res.json())
       .then(data => {
         setWorkflow(data)
@@ -55,7 +55,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
-      api: process.env.NEXT_PUBLIC_API_SERVER_URL + '/api/chat',
+      api: '/api/chat',
       initialMessages,
       id,
       headers: {
