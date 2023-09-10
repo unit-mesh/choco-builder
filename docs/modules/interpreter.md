@@ -3,6 +3,7 @@ layout: default
 title: Code Interpreter 
 parent: Modules
 nav_order: 1
+permalink: /docs/code-interpreter
 ---
 
 # Code Interpreter

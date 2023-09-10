@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Design DSL
-parent: Modules
-nav_order: 3
+parent: DSL
+nav_order: 1
+permalink: /dsl/design
 ---
 
 # Design DSL

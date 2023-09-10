@@ -3,6 +3,7 @@ layout: default
 title: Local Embedding
 parent: Modules
 nav_order: 2
+permalink: /docs/local-embedding
 ---
 
 Local Embedding 模块是一个本地矢量化模块，用于将文本句子嵌入到一个高维向量空间中，以便进行各种文本相关任务，如文本相似度计算、
