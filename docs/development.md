@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Chocolate Factory
+title: Home
 nav_order: 1
 permalink: /
 ---
@@ -12,7 +12,7 @@ permalink: /
 
 Chocolate Factory 是基于领域驱动设计思想的，如下图所示：
 
-![Chocolate Factory Concepts](chocolate-factory.svg)
+![Chocolate Factory Concepts](images/chocolate-factory.svg)
 
 > 软件系统的构建实则是对问题空间的求解，以此获得构建解空间的设计方案。 —— 《解构领域驱动设计》
 

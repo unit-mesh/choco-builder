@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Todo
+title: Roadmap
 nav_order: 99
-permalink: /todo
+permalink: /roadmap
 ---
 
 ## Todo

@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Create Workflow
-nav_order: 2
+title: Workflow
+nav_order: 3
 permalink: /workflow
 ---
 

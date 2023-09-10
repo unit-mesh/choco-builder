@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Modules
-nav_order: 4
+title: Domain Specific Language
+nav_order: 5
 has_children: true
 permalink: /dsl
 ---

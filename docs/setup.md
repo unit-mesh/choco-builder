@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Development Setup
-nav_order: 3
-description: "环境搭建 | Chocolate Factory"
+nav_order: 2
 permalink: /setup
 ---
 
