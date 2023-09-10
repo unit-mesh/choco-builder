@@ -5,10 +5,25 @@ nav_order: 1
 permalink: /
 ---
 
+<p align="center">
+  <a href="https://framework.unitmesh.cc/"><img src="docs/logo.svg" alt="Logo" height=170></a>
+</p>
+<h1 align="center">Chocolate Factory</h1>
+
+<p align="center">
+<img src="https://img.shields.io/github/stars/unit-mesh/chocolate-factory" alt="stars">
+<a href="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml"><img src="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
+<a href="https://hub.docker.com/r/unitmesh"><img src="https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest" alt="Docker Image Version (latest semver)" /></a>
+</p>
+
+[Read the docs →](https://framework.unitmesh.cc/)
+
+## What is Chocolate Factory?
+
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
-## 设计理念：领域驱动的问题求解
+### 设计理念：领域驱动的问题求解
 
 Chocolate Factory 是基于领域驱动设计思想的，如下图所示：
 
@@ -24,7 +39,7 @@ Space）是两个关键的概念，用于帮助开发团队理解和建模复杂
 
 DDD 强调问题空间和解空间之间的分离，这意味着在开始开发之前，团队应该首先深入了解问题空间，与领域专家合作，确保对领域的理解是准确的。然后，他们可以将这个理解映射到解空间，设计和实现相应的软件系统。
 
-## Stage 设计
+### Stage 设计
 
 根据上面的思想，我们设计了五个 Stage：
 
@@ -36,7 +51,7 @@ DDD 强调问题空间和解空间之间的分离，这意味着在开始开发�
 
 在不同的领域里，会根据场景不同，而有所取舍。
 
-## Dev
+## Development
 
 ### 技术栈
 
