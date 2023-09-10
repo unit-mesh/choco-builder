@@ -15,8 +15,8 @@ data class DConfig(
 
 data class DComponent(
     val name: String,
-    val childComponents: List<DComponent>,
-    val configs: Map<String, String>,
+    val childComponents: List<DComponent> = listOf(),
+    var configs: Map<String, String> = mapOf(),
 )
 
 data class DSee(
@@ -39,29 +39,29 @@ data class DReact(
 )
 
 data class DInteraction(
-    val see: DSee,
-    val `do`: DDo,
+    var see: DSee,
+    var `do`: DDo,
     val react: List<DReact>,
 )
 
 data class DFlow(
-    val interactions: List<DInteraction>,
+    var interactions: List<DInteraction>,
     val flowName: String,
 )
 
 data class DLayout(
     val layoutName: String,
-    val layoutRows: List<DLayoutRow>,
+    var layoutRows: List<DLayoutRow>,
 )
 
 data class DLayoutRow(
-    val layoutCells: List<DLayoutCell>,
+    var layoutCells: List<DLayoutCell>,
 )
 
 data class DLayoutCell(
-    val componentName: String,
-    val layoutInformation: String,
-    val normalInformation: String,
+    var componentName: String,
+    var layoutInformation: String,
+    var normalInformation: String,
 )
 
 data class DProperty(
@@ -70,8 +70,8 @@ data class DProperty(
 )
 
 data class LibraryPreset(
-    val key: String,
-    val value: String,
+    var key: String,
+    var value: String,
     val presetCalls: List<PresetCall>,
     val subProperties: List<DProperty>,
 )
@@ -82,6 +82,6 @@ data class PresetCall(
 )
 
 data class DLibrary(
-    val libraryName: String,
+    var libraryName: String,
     val libraryPresets: List<LibraryPreset>,
 )
