@@ -5,7 +5,7 @@ nav_order: 99
 permalink: /roadmap
 ---
 
-## Todo
+## Frameworks Usecases
 
 使用场景，基于知识库的：
 
@@ -36,3 +36,12 @@ permalink: /roadmap
     2. 基于测试原则生成初步测试用例
     3. 基于规则检查测试用例，是否需要基于
     4. 生成结果（测试数据集）
+
+## Framework infrastructures
+
+- [x] Kotlin REPL runtime
+  - [x] Kotlin Jupyter
+  - [x] Lets Plot
+- [x] Onnx Runtime
+- [x] Sentence Transformers bundles
+- [ ] multiple LLMs support

@@ -1,12 +1,13 @@
 ---
 layout: default
 title: Home
+description: " Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端 API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。 "
 nav_order: 1
 permalink: /
 ---
 
 <p align="center">
-  <a href="https://framework.unitmesh.cc/"><img src="docs/logo.svg" alt="Logo" height=170></a>
+  <a href="https://framework.unitmesh.cc/"><img src="logo.svg" alt="Logo" height=170></a>
 </p>
 <h1 align="center">Chocolate Factory</h1>
 
@@ -15,8 +16,6 @@ permalink: /
 <a href="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml"><img src="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
 <a href="https://hub.docker.com/r/unitmesh"><img src="https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest" alt="Docker Image Version (latest semver)" /></a>
 </p>
-
-[Read the docs →](https://framework.unitmesh.cc/)
 
 ## What is Chocolate Factory?
 
