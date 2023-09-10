@@ -1,3 +1,9 @@
+---
+layout: default
+title: text2UI Prompt 设计：Design 阶段 
+parent: Prompt 设计
+nav_order: 2
+---
 
 你是一个专业的前端技术咨询师（Advisor），请以如下的 ASCII 描述用户所需要的页面。
 

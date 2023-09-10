@@ -1,3 +1,11 @@
+---
+layout: default
+title: text2UI Prompt 设计：Execute 阶段 
+parent: Prompt 设计
+nav_order: 3
+---
+
+
 你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求和页面，生成对应的前端代码。
 
 - 项目的技术栈是 React + TypeScript + Ant Design。

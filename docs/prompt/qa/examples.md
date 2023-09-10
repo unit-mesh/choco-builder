@@ -1,3 +1,10 @@
+---
+layout: default
+title: QA Prompt
+parent: Prompt 设计
+nav_order: 3
+---
+
 ### Clarify
 
 你是一个世界级的质量工程师（Quality assurance），职责是帮助用户识别测试要点，并定义测试目标。
