@@ -1,19 +1,29 @@
-# Chocolate Factory
+<p align="center">
+  <a href="https://framework.unitmesh.cc/"><img src="docs/logo.svg" alt="Logo" height=170></a>
+</p>
+<h1 align="center">Chocolate Factory</h1>
+
+<p align="center">
+<img src="https://img.shields.io/github/stars/unit-mesh/chocolate-factory" alt="stars">
+<a href="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml"><img src="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
+<a href="https://hub.docker.com/r/unitmesh"><img src="https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest" alt="Docker Image Version (latest semver)" /></a>
+</p>
+
+[Read the docs →](https://framework.unitmesh.cc/)
+
+## What is Chocolate Factory?
 
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
-[![CI](https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg)](https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml)
-![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest)
-
-The key core concepts of Chocolate Factory are:
+The key concepts of Chocolate Factory are:
 
 ![Chocolate Factory Concepts](docs/images/chocolate-factory.svg)
 
 (PS: Origin made by Michael Plöd
 at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
 
-a user query is processed by the following steps:
+A user query is processed by the following steps:
 
 1. [ProblemClarifier.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemClarifier.kt)
 2. [ProblemAnalyzer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemAnalyzer.kt)
@@ -27,15 +37,11 @@ See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see i
 
 ## Examples
 
-Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
+- Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
+- Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.com/video/BV1T14y1C7p2)
+- Gif Demo: ![Chocolate Factory Demo](https://unitmesh.cc/cf/testcase-demo.gif)
 
-Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.com/video/BV1T14y1C7p2)
-
-Gif Demo:
-
-![Chocolate Factory Demo](https://unitmesh.cc/cf/testcase-demo.gif)
-
-### Examples 1: Frontend Screenshot
+### Example 1: Frontend Screenshot
 
 - 步骤 1：ProblemClarifier：使用响应式布局，编写一个聊天页面
     - 步骤 1.1：ProblemClarifier：左边是一个导航，中间是聊天区，聊天区的下方是一个输入按钮。

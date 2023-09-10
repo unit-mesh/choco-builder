@@ -1,7 +1,7 @@
 ---
 layout: default
-title: text2UI Prompt 设计：Clarify 阶段 
-parent: Prompt 设计
+title: UI 设计：Clarify 阶段 
+parent: Prompt logs
 nav_order: 1
 ---
 

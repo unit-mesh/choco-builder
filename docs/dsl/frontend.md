@@ -1,43 +1,30 @@
 ---
 layout: default
 title: Design DSL
-parent: DSL
+parent: Domain Specific Language
 nav_order: 1
 permalink: /dsl/design
 ---
 
-# Design DSL
-
 based on: [https://github.com/phodal/design](https://github.com/phodal/design)
+
+tech stacks: Antlr4
 
 refs:
 
-- Apple [Understanding Auto Layout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
+- Apple's [Understanding Auto Layout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
 - [AutoLayout.js](https://github.com/IjzerenHein/autolayout.js)
+- [Sketch-n-Sketch](https://github.com/ravichugh/sketch-n-sketch)
 
+## DSLs
 
-## Examples
+Elements
 
 ```design
-Layout Navigation {
---------------------------------------
-| "home" |"detail" | Button("Login") |
---------------------------------------
-}
-
-flow login {
-    SEE HomePage
-    DO [Click] "Login".Button
-        REACT Success: SHOW "Login Success".Toast with ANIMATE(bounce)
-        REACT Failure: SHOW "Login Failure".Dialog
-
-    SEE "Login Failure".Dialog
-    DO [Click] "ForgotPassword".Button
-        REACT: GOTO ForgotPasswordPage
-
-    SEE ForgotPasswordPage
-    DO [Click] "RESET PASSWORD".Button
-        REACT: SHOW "Please Check Email".Message
+page HomePage {
+    LayoutGrid: 12x
+    LayoutId: HomePage
+    Router: "/home"
 }
 
 component Navigation {
@@ -56,7 +43,40 @@ component BlogList {
     BlogDetail, Space8
     BlogDetail, Space8
 }
+```
 
+Layout Examples:
+
+```design
+Layout Navigation {
+--------------------------------------
+| "home" |"detail" | Button("Login") |
+--------------------------------------
+}
+```
+
+Task Flows / User Flows Example
+
+```design
+flow login {
+    SEE HomePage
+    DO [Click] "Login".Button
+        REACT Success: SHOW "Login Success".Toast with ANIMATE(bounce)
+        REACT Failure: SHOW "Login Failure".Dialog
+
+    SEE "Login Failure".Dialog
+    DO [Click] "ForgotPassword".Button
+        REACT: GOTO ForgotPasswordPage
+
+    SEE ForgotPasswordPage
+    DO [Click] "RESET PASSWORD".Button
+        REACT: SHOW "Please Check Email".Message
+}
+```
+
+Library Defines Examples
+
+```design
 library FontSize {
     H1 = 18px
     H2 = 16px

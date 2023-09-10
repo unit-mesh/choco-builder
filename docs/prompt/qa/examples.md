@@ -1,8 +1,8 @@
 ---
 layout: default
-title: text2Testcase Prompt
-parent: Prompt 设计
-nav_order: 4
+title: Testcase Prompt
+parent: Prompt logs
+nav_order: 11
 ---
 
 ### Clarify

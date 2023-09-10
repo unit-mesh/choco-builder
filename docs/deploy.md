@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 部署
+title: Deploy
 nav_order: 97
 permalink: /deploy
 ---

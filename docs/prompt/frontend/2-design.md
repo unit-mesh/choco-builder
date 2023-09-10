@@ -1,7 +1,7 @@
 ---
 layout: default
-title: text2UI Prompt 设计：Design 阶段 
-parent: Prompt 设计
+title: UI 设计：Design 阶段
+parent: Prompt logs
 nav_order: 2
 ---
 
@@ -30,7 +30,6 @@ output:
 | a("home") | p("博客") | p("Login")  |
 --------------------------------------                     
 ```
-
 
 input:生成一个包含图片的博客列表面 mockup
 output:

@@ -1,7 +1,7 @@
 ---
 layout: default
-title: text2UI Prompt 设计：Execute 阶段 
-parent: Prompt 设计
+title: UI 设计：Execute 阶段
+parent: Prompt logs
 nav_order: 3
 ---
 
@@ -10,9 +10,9 @@ nav_order: 3
 
 - 项目的技术栈是 React + TypeScript + Ant Design。
 
-###
+```
 请根据用户提供的问题，生成前端代码。
-###
+```
 
 用户提供的问题：
 {question}
@@ -21,6 +21,3 @@ nav_order: 3
 {layout}
 Q:
 A:
-```design
-
-```

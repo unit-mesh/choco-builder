@@ -8,7 +8,7 @@ permalink: /
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
-## 关键概念：领域驱动的问题求解
+## 设计理念：领域驱动的问题求解
 
 Chocolate Factory 是基于领域驱动设计思想的，如下图所示：
 
@@ -38,19 +38,16 @@ DDD 强调问题空间和解空间之间的分离，这意味着在开始开发�
 
 ## Dev
 
+### 技术栈
+
 Tech Stack:
 
 - [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
 - [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
-
-To spike:
-
 - [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
 - [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
-- [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
-  ML models (written via ONNX) in Kotlin.
 
-## 项目结构
+### 项目结构
 
 - cocoa-core, 核心模块，包含了核心的流程控制、领域模型、领域流程等
 - cocoa-local-embedding，本地向量化模块，包含了本地向量化的实现，如 Sentence-Transformers 等。
