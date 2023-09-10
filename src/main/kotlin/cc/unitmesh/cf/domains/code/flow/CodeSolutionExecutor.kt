@@ -41,8 +41,8 @@ class CodeSolutionExecutor(
         if (code.language.lowercase() == "kotlin") {
             val result = codeInterpreter.interpret(CodeInput(content = code.text));
 
-            log.info("Execute result: {}", result)
             evalResult = Json.encodeToString(result)
+            log.info("Execute result: {}", evalResult)
         }
 
         return object : Answer {
