@@ -8,27 +8,27 @@
             <rect id="Rectangle" fill="#181818" x="0" y="0" width="907" height="272"></rect>
             <path d="M393.5,16 C415.370195,16 435.868193,21.8750719 453.501848,32.1330687 C417.918902,52.8300639 394,91.3717525 394,135.5 C394,179.628248 417.918902,218.169936 453.499155,238.867515 C435.868193,249.124928 415.370195,255 393.5,255 C327.501972,255 274,201.498028 274,135.5 C274,69.5019724 327.501972,16 393.5,16 Z" id="Combined-Shape" fill="#0BC792"></path>
             <path d="M514.000115,16 C579.998143,16 633.500115,69.5019724 633.500115,135.5 C633.500115,201.498028 579.998143,255 514.000115,255 C492.130278,255 471.632593,249.12512 453.999133,238.867435 C489.580886,218.170463 513.500115,179.628549 513.500115,135.5 C513.500115,91.371451 489.580886,52.8295372 454.000231,32.1320607 C471.632593,21.8748796 492.130278,16 514.000115,16 Z" id="Combined-Shape" fill="#FFFFFF"></path>
-            <text id="Bounded-Context" font-family="Comfortaa-Bold, Comfortaa" font-size="18" font-weight="bold" line-spacing="32" fill="#0BCA92">
-                <tspan x="528.399" y="120">Bounded</tspan>
-                <tspan x="534.474" y="152">Context</tspan>
+            <text id="Bounded-Context" font-family="Comfortaa-Bold, Comfortaa" font-size="18" font-weight="bold" fill="#0BCA92">
+                <tspan x="528" y="120">Bounded</tspan>
+                <tspan x="534" y="152">Context</tspan>
             </text>
-            <text id="Domain-Subdomain" font-family="Comfortaa-Bold, Comfortaa" font-size="18" font-weight="bold" line-spacing="32" fill="#FFFFFF">
-                <tspan x="300.005" y="120">Domain</tspan>
-                <tspan x="282.068" y="152">Subdomain</tspan>
+            <text id="Domain-Subdomain" font-family="Comfortaa-Bold, Comfortaa" font-size="18" font-weight="bold" fill="#FFFFFF">
+                <tspan x="300" y="120">Domain</tspan>
+                <tspan x="282" y="152">Subdomain</tspan>
             </text>
-            <text id="问题域-(Problem-Space)" font-family="PingFangSC-Semibold, PingFang SC" font-size="32" font-weight="500" fill="#0BCA92">
-                <tspan x="81" y="135">问题域</tspan>
-                <tspan x="58.008" y="180" font-size="18">(Problem Space)</tspan>
+            <text id="problem-space" font-family="PingFangSC-Semibold, PingFang SC" font-size="32" font-weight="500" fill="#0BCA92">
+                <tspan x="68" y="128">问题空间</tspan>
+                <tspan x="58" y="180" font-size="18">(Problem Space)</tspan>
             </text>
-            <text id="解决方案域-(Solution-Spac" font-family="PingFangSC-Semibold, PingFang SC" font-size="32" font-weight="500" fill="#0BCA92">
-                <tspan x="707" y="122">解决方案域</tspan>
-                <tspan x="716.287" y="167" font-size="18">(Solution Space)</tspan>
+            <text id="solution-space" font-family="PingFangSC-Semibold, PingFang SC" font-size="32" font-weight="500" fill="#0BCA92">
+                <tspan x="697" y="128">解决方案空间</tspan>
+                <tspan x="716" y="180" font-size="18">(Solution Space)</tspan>
             </text>
             <text id="“what-user-want-to-s" font-family="PingFangSC-Semibold, PingFang SC" font-size="18" font-weight="500" fill="#0BCA92">
-                <tspan x="16.082" y="207">“what user want to solve”</tspan>
+                <tspan x="16" y="207">"what user want to solve."</tspan>
             </text>
             <text id="“how-we-and-AI-solve" font-family="PingFangSC-Semibold, PingFang SC" font-size="18" font-weight="500" fill="#0BCA92">
-                <tspan x="670.761" y="201">“how we and AI solve it”</tspan>
+                <tspan x="670" y="207">"how we and AI solve it."</tspan>
             </text>
         </g>
     </g>
