@@ -6,6 +6,23 @@
 [![CI](https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg)](https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml)
 ![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest)
 
+The key core concepts of Chocolate Factory are:
+
+![Chocolate Factory Concepts](docs/chocolate-factory.svg)
+
+(PS: Origin made by Michael Plöd
+at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
+
+a user query is processed by the following steps:
+
+1. [ProblemClarifier.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemClarifier.kt)
+2. [ProblemAnalyzer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemAnalyzer.kt)
+3. [SolutionDesigner.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionDesigner.kt)
+4. [SolutionReviewer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionReviewer.kt)
+5. [SolutionExecutor.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionExecutor.kt)
+
+## Examples
+
 Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
 
 Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.com/video/BV1T14y1C7p2)
@@ -21,23 +38,6 @@ wget https://raw.githubusercontent.com/unit-mesh/chocolate-factory/master/docker
 # modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
 docker-compose up
 ```
-
-## Key concepts
-
-the core concepts of Chocolate Factory are:
-
-![Chocolate Factory Concepts](docs/chocolate-factory.svg)
-
-(PS: Origin made by Michael Plöd
-at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
-
-a user query is processed by the following steps:
-
-1. [ProblemClarifier.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemClarifier.kt)
-2. [ProblemAnalyzer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemAnalyzer.kt)
-3. [SolutionDesigner.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionDesigner.kt)
-4. [SolutionReviewer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionReviewer.kt)
-5. [SolutionExecutor.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionExecutor.kt)
 
 ### Examples 1: Frontend Screenshot
 
