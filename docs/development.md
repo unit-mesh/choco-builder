@@ -36,3 +36,24 @@ DDD 强调问题空间和解空间之间的分离，这意味着在开始开发�
 
 在不同的领域里，会根据场景不同，而有所取舍。
 
+## Dev
+
+Tech Stack:
+
+- [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
+- [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
+
+To spike:
+
+- [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
+- [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
+- [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
+  ML models (written via ONNX) in Kotlin.
+
+## 项目结构
+
+- cocoa-core, 核心模块，包含了核心的流程控制、领域模型、领域流程等
+- cocoa-local-embedding，本地向量化模块，包含了本地向量化的实现，如 Sentence-Transformers 等。
+- code-interpreter，代码解释器，包含了代码解释器的实现，如 Kotlin Jupyter 等。
+- dsl
+    - design，Design DSL 的解析器 

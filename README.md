@@ -21,6 +21,10 @@ a user query is processed by the following steps:
 4. [SolutionReviewer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionReviewer.kt)
 5. [SolutionExecutor.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionExecutor.kt)
 
+## Development
+
+See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see in [documents](./docs)
+
 ## Examples
 
 Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
@@ -107,20 +111,6 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 最终输出：
 
 ![Testcases](https://unitmesh.cc/cf/chocolate-factory-demo-3.png)
-
-## Dev
-
-Tech Stack:
-
-- [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
-- [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
-
-To spike:
-
-- [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
-- [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
-- [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
-  ML models (written via ONNX) in Kotlin.
 
 ## License
 
