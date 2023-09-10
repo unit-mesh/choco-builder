@@ -8,6 +8,8 @@ include(":cocoa-core")
 include(":code-interpreter")
 include(":cocoa-local-embedding")
 
+include(":dsl:design")
+
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
