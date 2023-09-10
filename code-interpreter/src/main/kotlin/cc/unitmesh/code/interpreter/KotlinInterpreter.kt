@@ -37,27 +37,30 @@ class KotlinInterpreter {
         val resultValue = result.rawValue
         val className: String = resultValue?.javaClass?.name.orEmpty()
 
-        if (resultValue is Plot) {
-            val content = PlotHtmlExport.buildHtmlFromRawSpecs(resultValue.toSpec(),
-                PlotHtmlHelper.scriptUrl(VersionChecker.letsPlotJsVersion),
-                plotSize = DoubleVector(600.0, 400.0)
-            )
+        when (resultValue) {
+            // for Lets Plot
+            is Plot -> {
+                val content = PlotHtmlExport.buildHtmlFromRawSpecs(resultValue.toSpec(),
+                    PlotHtmlHelper.scriptUrl(VersionChecker.letsPlotJsVersion),
+                    plotSize = DoubleVector(600.0, 400.0)
+                )
 
-            return Message(
-                id = id,
-                resultValue = resultValue.toString(),
-                className = className,
-                displayValue = result.displayValue.toJson().toString(),
-                msgType = MessageType.HTML,
-                content = HtmlContent(content)
+                return Message(
+                    id = id,
+                    resultValue = resultValue.toString(),
+                    className = className,
+                    displayValue = result.displayValue.toJson().toString(),
+                    msgType = MessageType.HTML,
+                    content = HtmlContent(content)
+                )
+            }
+
+            else -> return Message(
+                id,
+                resultValue.toString(),
+                className,
+                result.displayValue.toJson().toString()
             )
         }
-
-        return Message(
-            id,
-            resultValue.toString(),
-            className,
-            result.displayValue.toJson().toString()
-        )
     }
 }
