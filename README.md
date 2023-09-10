@@ -139,7 +139,8 @@ To spike:
 
 ```bash
 export OPENAI_API_KEY=
-export OPENAI_HOST=
+# 当你使用的是非官方的 OpenAI 代理时，需要设置 OPENAI_API_HOST
+export OPENAI_API_HOST=
 ```
 
 ## License
