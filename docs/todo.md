@@ -2,6 +2,7 @@
 layout: default
 title: Todo
 nav_order: 99
+permalink: /todo
 ---
 
 ## Todo

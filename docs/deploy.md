@@ -2,7 +2,7 @@
 layout: default
 title: 部署
 nav_order: 4
-permalink: /
+permalink: /deploy
 ---
 
 # 部署

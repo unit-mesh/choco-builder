@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Chocolate Factory 介绍
+title: Chocolate Factory
 nav_order: 1
 permalink: /
 ---

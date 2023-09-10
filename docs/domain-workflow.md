@@ -1,8 +1,8 @@
 ---
 layout: default
-title: 创建 Domain 的 Workflow
-nav_order: 3
-permalink: /
+title: Create Workflow
+nav_order: 2
+permalink: /workflow
 ---
 
 创建新 domain
