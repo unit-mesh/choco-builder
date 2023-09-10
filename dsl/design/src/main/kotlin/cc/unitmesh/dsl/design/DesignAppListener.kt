@@ -23,31 +23,27 @@ class DesignAppListener() : DesignBaseListener() {
 
         val declarationContexts = ctx.interactionDeclaration()
 
-        val interactions = buildInteractions(declarationContexts, emptyList())
+        val interactions = buildInteractions(declarationContexts)
 
-        flow.interactions = interactions
+        flow.interactions += interactions
         flows.add(flow)
     }
 
-    fun buildInteractions(
-        declarationContexts: List<DesignParser.InteractionDeclarationContext>,
-        interactions: List<DInteraction>,
-    ): List<DInteraction> {
+    private fun buildInteractions(declarationContexts: List<DesignParser.InteractionDeclarationContext>): List<DInteraction> {
+        val interactions: MutableList<DInteraction> = mutableListOf()
         var interaction = createInteraction()
 
-        for (context in declarationContexts) {
-            val childTypes = context.getChild(0).javaClass.name
-
-            when (childTypes) {
-                "cc.unitmesh.dsl.DesignParser\$SeeDeclarationContext" -> {
-                    val seeCtx = context.getChild(0) as DesignParser.SeeDeclarationContext
+        declarationContexts.forEach { context ->
+            when (val child = context.getChild(0)) {
+                is DesignParser.SeeDeclarationContext -> {
                     var componentName = ""
                     var componentData = ""
-                    if (seeCtx.IDENTIFIER() != null) {
-                        componentName = seeCtx.IDENTIFIER().text
+
+                    if (child.IDENTIFIER() != null) {
+                        componentName = child.IDENTIFIER().text
                     } else {
-                        componentName = seeCtx.componentName().text
-                        componentData = removeQuote(seeCtx.STRING_LITERAL().text)
+                        componentName = child.componentName().text
+                        componentData = removeQuote(child.STRING_LITERAL().text)
                     }
                     val seeModel = DSee(
                         componentName = componentName,
@@ -55,48 +51,47 @@ class DesignAppListener() : DesignBaseListener() {
                     )
 
                     if (interaction.see.componentName != "") {
-                        interactions + interaction
+                        interactions += interaction
                     }
                     interaction = createInteraction()
                     interaction.see = seeModel
                 }
 
-                "cc.unitmesh.dsl.DesignParser\$DoDeclarationContext" -> {
-                    val doCtx = context.getChild(0) as DesignParser.DoDeclarationContext
+                is DesignParser.DoDeclarationContext -> {
                     val doModel = DDo(
-                        componentName = doCtx.componentName().text,
-                        data = doCtx.STRING_LITERAL().text,
-                        uiEvent = doCtx.actionName().text,
+                        componentName = child.componentName().text,
+                        data = child.STRING_LITERAL().text,
+                        uiEvent = child.actionName().text,
                     )
                     interaction.`do` = doModel
                 }
 
-                "cc.unitmesh.dsl.DesignParser\$ReactDeclarationContext" -> {
-                    val reactCtx = context.getChild(0) as DesignParser.ReactDeclarationContext
+                is DesignParser.ReactDeclarationContext -> {
                     var sceneName = ""
-                    if (reactCtx.sceneName() != null) {
-                        sceneName = reactCtx.sceneName().text
+                    if (child.sceneName() != null) {
+                        sceneName = child.sceneName().text
                     }
                     var animateName = ""
-                    if (reactCtx.animateDeclaration() != null) {
-                        animateName = reactCtx.animateDeclaration().animateName().text
+                    if (child.animateDeclaration() != null) {
+                        animateName = child.animateDeclaration().animateName().text
                     }
 
-                    val (actionName, reactComponentName, reactComponentData) = buildAction(reactCtx)
+                    val (actionName, reactComponentName, reactComponentData) = buildAction(child)
 
                     val reactModel = DReact(
                         sceneName = sceneName,
                         reactAction = actionName,
                         reactComponentName = reactComponentName,
-                        reactComponentData = reactComponentData,
+                        reactComponentData = removeQuote(reactComponentData),
                         animateName = animateName,
                     )
-                    interaction.react + reactModel
+
+                    interaction.react += reactModel
                 }
             }
         }
 
-        interactions + interaction
+        interactions += interaction
         return interactions
     }
 
@@ -104,8 +99,7 @@ class DesignAppListener() : DesignBaseListener() {
         var actionName = ""
         var reactComponentName = ""
         var reactComponentData = ""
-        val firstChild = reactCtx.reactAction().getChild(0)
-        when (firstChild) {
+        when (val firstChild = reactCtx.reactAction().getChild(0)) {
             is DesignParser.ShowActionContext -> {
                 reactComponentData = firstChild.STRING_LITERAL().text
                 reactComponentName = firstChild.componentName().text
@@ -123,34 +117,28 @@ class DesignAppListener() : DesignBaseListener() {
 
     override fun enterComponentDeclaration(ctx: DesignParser.ComponentDeclarationContext?) {
         val componentName = ctx!!.IDENTIFIER().text
-        val component = components[componentName]
-        if (component?.name == "") {
-            components[componentName] = DComponent(componentName)
-        }
+        val component = DComponent(componentName)
+        components.computeIfAbsent(componentName) { component }
+
         val componentConfigs: MutableMap<String, String> = mutableMapOf()
-        val declarations = ctx.componentBodyDeclaration()
-        for (declaration in declarations) {
-            val childTypes = declaration.getChild(0).javaClass.name
+        ctx.componentBodyDeclaration().forEach { declaration ->
+            declaration.children.forEach {
+                when (it) {
+                    is DesignParser.ComponentNameContext -> {
+                        val childComponent = DComponent(it.text)
+                        component.childComponents += childComponent
+                    }
 
-            when (childTypes) {
-                "cc.unitmesh.dsl.DesignParser\$ComponentNameContext" -> {
-                    val childCtx = declaration.getChild(0) as DesignParser.ComponentNameContext
-                    val childComponent = DComponent(childCtx.text)
-                    component!!.childComponents + childComponent
-                }
-
-                "cc.unitmesh.dsl.DesignParser\$ConfigKeyContext" -> {
-                    val configKey = declaration.getChild(0) as DesignParser.ConfigKeyContext
-                    val configValue = declaration.getChild(2) as DesignParser.ConfigValueContext
-
-                    val configValueText = removeQuote(configValue.text)
-
-                    componentConfigs[configKey.text] = configValueText
+                    is DesignParser.ConfigKeyContext -> {
+                        val configValue = declaration.getChild(2) as DesignParser.ConfigValueContext
+                        val configValueText = removeQuote(configValue.text)
+                        componentConfigs[it.text] = configValueText
+                    }
                 }
             }
         }
 
-        component!!.configs = componentConfigs
+        component.configs = componentConfigs
         components[componentName] = component
     }
 
@@ -179,8 +167,7 @@ class DesignAppListener() : DesignBaseListener() {
     }
 
     private fun parseLayoutLine(declaration: DesignParser.ComponentUseDeclarationContext, cell: DLayoutCell) {
-        val firstChild = declaration.getChild(0)
-        when (firstChild) {
+        when (val firstChild = declaration.getChild(0)) {
             is DesignParser.ComponentNameContext -> {
                 val componentName = firstChild.IDENTIFIER().text
                 var layoutValue = ""
@@ -204,27 +191,20 @@ class DesignAppListener() : DesignBaseListener() {
         library.libraryName = ctx!!.libraryName().text
 
         for (express in ctx.libraryExpress()) {
-            val preset = LibraryPreset(
-                key = "",
-                value = "",
-                presetCalls = emptyList(),
-                subProperties = emptyList(),
-            )
+            val preset = LibraryPreset(key = "", value = "")
+
             preset.key = express.presetKey().text
-            val pairCtx = express.getChild(2)
-            when (pairCtx) {
+            when (val pairCtx = express.getChild(2)) {
                 is DesignParser.PresetValueContext -> {
                     preset.value = pairCtx.text
                 }
 
                 is DesignParser.PresetArrayContext -> {
-                    for (call in pairCtx.presetCall()) {
-                        val presetCall = PresetCall(
+                    pairCtx.presetCall().forEach { call ->
+                        preset.presetCalls += PresetCall(
                             libraryName = call.libraryName().text,
                             libraryPreset = call.IDENTIFIER().text,
                         )
-
-                        preset.presetCalls + presetCall
                     }
                 }
 
@@ -232,18 +212,17 @@ class DesignAppListener() : DesignBaseListener() {
                     for (keyValue in express.keyValue()) {
                         val key = keyValue.presetKey().text
                         var value = keyValue.presetValue().text
-
                         value = removeQuote(value)
 
-                        preset.subProperties + DProperty(key, value)
+                        preset.subProperties += DProperty(key, value)
                     }
                 }
             }
 
-            library.libraryPresets + preset
+            library.libraryPresets += preset
         }
 
-        libraries + library
+        libraries += library
     }
 
     fun getDesign(): DesignInformation {
@@ -259,7 +238,7 @@ class DesignAppListener() : DesignBaseListener() {
 }
 
 fun removeQuote(value: String): String {
-    return value.replace("\"", "")
+    return value.removeSurrounding("\"")
 }
 
 fun createInteraction(): DInteraction {

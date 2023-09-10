@@ -15,7 +15,7 @@ data class DConfig(
 
 data class DComponent(
     val name: String,
-    val childComponents: List<DComponent> = listOf(),
+    var childComponents: List<DComponent> = listOf(),
     var configs: Map<String, String> = mapOf(),
 )
 
@@ -41,7 +41,7 @@ data class DReact(
 data class DInteraction(
     var see: DSee,
     var `do`: DDo,
-    val react: List<DReact>,
+    var react: List<DReact>,
 )
 
 data class DFlow(
@@ -72,8 +72,8 @@ data class DProperty(
 data class LibraryPreset(
     var key: String,
     var value: String,
-    val presetCalls: List<PresetCall>,
-    val subProperties: List<DProperty>,
+    var presetCalls: List<PresetCall> = listOf(),
+    var subProperties: List<DProperty> = listOf(),
 )
 
 data class PresetCall(
@@ -83,5 +83,5 @@ data class PresetCall(
 
 data class DLibrary(
     var libraryName: String,
-    val libraryPresets: List<LibraryPreset>,
+    var libraryPresets: List<LibraryPreset>,
 )

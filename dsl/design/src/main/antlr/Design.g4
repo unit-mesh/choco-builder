@@ -126,6 +126,7 @@ libraryDeclaration: LIBRARY libraryName LBRACE libraryExpress* RBRACE;
 libraryExpress
     : presetKey '=' (presetValue |presetArray) ';'?
     | presetKey '{' keyValue* '}'
+    | presetKey '[' presetCall (',' presetCall)* ']'
     ;
 
 keyValue: presetKey '=' presetValue;
