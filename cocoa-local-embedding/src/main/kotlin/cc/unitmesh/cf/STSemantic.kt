@@ -6,12 +6,8 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import ai.onnxruntime.OrtUtil
 
-/**
- * Sentence Transformers Semantic
- */
-class STSemantic(val tokenizer: HuggingFaceTokenizer, val session: OrtSession, val env: OrtEnvironment) {
-
-    fun embed(input: String): DoubleArray {
+class STSemantic(val tokenizer: HuggingFaceTokenizer, val session: OrtSession, val env: OrtEnvironment) : Semantic {
+    override fun embed(input: String): DoubleArray {
         val tokenized = tokenizer.encode(input, true)
 
         val inputIds = tokenized.ids

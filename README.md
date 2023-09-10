@@ -8,7 +8,7 @@
 
 The key core concepts of Chocolate Factory are:
 
-![Chocolate Factory Concepts](docs/chocolate-factory.svg)
+![Chocolate Factory Concepts](docs/images/chocolate-factory.svg)
 
 (PS: Origin made by Michael Plöd
 at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
@@ -34,14 +34,6 @@ Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.c
 Gif Demo:
 
 ![Chocolate Factory Demo](https://unitmesh.cc/cf/testcase-demo.gif)
-
-or:
-
-```bash
-wget https://raw.githubusercontent.com/unit-mesh/chocolate-factory/master/docker-compose.yml -O docker-compose.yml
-# modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
-docker-compose up
-```
 
 ### Examples 1: Frontend Screenshot
 

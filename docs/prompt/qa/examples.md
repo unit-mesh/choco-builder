@@ -1,8 +1,8 @@
 ---
 layout: default
-title: QA Prompt
+title: text2Testcase Prompt
 parent: Prompt 设计
-nav_order: 3
+nav_order: 4
 ---
 
 ### Clarify

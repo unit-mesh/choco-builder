@@ -1,3 +1,10 @@
+---
+layout: default
+title: Code Interpreter 
+parent: Modules
+nav_order: 1
+---
+
 # Code Interpreter
 
 Code Interpreter module based on Kotlin Jupyter Kernel: [https://github.com/Kotlin/kotlin-jupyter](https://github.com/Kotlin/kotlin-jupyter)
