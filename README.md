@@ -122,32 +122,6 @@ To spike:
 - [KInference](https://github.com/JetBrains-Research/kinference) is a library that makes it possible to execute complex
   ML models (written via ONNX) in Kotlin.
 
-### Todos
-
-- [ ] Workflow
-    - [x] Pre-defined workflow: Classify, Clarify, Analyze, Design, Execute
-    - [x] Auto workflow
-    - Custom workflow by JSON, Yaml, DSL
-- [ ] extend code Trigger
-    - like ArchGuard code diff for test suggestion
-- [ ] Usecases
-    - [x] text 2 UI
-    - [x] text 2 Usecases
-    - [x] text 2 Code
-    - [ ] text 2 Bug fixes
-    - [ ] text 2 API
-    - [ ] text 2 SQL
-
-### Setup
-
-### Export keys in Local
-
-```bash
-export OPENAI_API_KEY=
-# 当你使用的是非官方的 OpenAI 代理时，需要设置 OPENAI_API_HOST
-export OPENAI_API_HOST=
-```
-
 ## License
 
 This code is distributed under the MPL 2.0 license. See `LICENSE` in this directory.
