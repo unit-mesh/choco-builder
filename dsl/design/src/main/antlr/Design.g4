@@ -124,9 +124,9 @@ STYLE: 'style' | 'STYLE' | 'CSS' | 'css';
 libraryDeclaration: LIBRARY libraryName LBRACE libraryExpress* RBRACE;
 
 libraryExpress
-    : presetKey '=' (presetValue |presetArray) ';'?
-    | presetKey '{' keyValue* '}'
-    | presetKey '[' presetCall (',' presetCall)* ']'
+    : presetKey '=' (presetValue |presetArray) ';'?     #presetKeyValue
+    | presetKey '{' keyValue* '}'                       #presetKeyObject
+    | presetKey '[' presetCall (',' presetCall)* ']'    #presetKeyArray
     ;
 
 keyValue: presetKey '=' presetValue;

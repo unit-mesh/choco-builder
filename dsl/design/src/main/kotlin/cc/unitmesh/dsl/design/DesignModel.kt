@@ -74,6 +74,7 @@ data class LibraryPreset(
     var value: String,
     var presetCalls: List<PresetCall> = listOf(),
     var subProperties: List<DProperty> = listOf(),
+    var inheritProps: List<DProperty> = listOf(),
 )
 
 data class PresetCall(

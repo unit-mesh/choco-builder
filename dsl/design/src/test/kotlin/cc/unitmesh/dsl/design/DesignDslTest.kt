@@ -155,5 +155,9 @@ library Button {
         design.libraries[2].libraryName shouldBe "Button"
         design.libraries[2].libraryPresets.size shouldBe 2
         design.libraries[2].libraryPresets[0].key shouldBe "Default"
+        design.libraries[2].libraryPresets[0].inheritProps.size shouldBe 2
+
+        design.libraries[2].libraryPresets[0].inheritProps[0].key shouldBe "FontSize"
+        design.libraries[2].libraryPresets[0].inheritProps[0].value shouldBe "H2"
     }
 }

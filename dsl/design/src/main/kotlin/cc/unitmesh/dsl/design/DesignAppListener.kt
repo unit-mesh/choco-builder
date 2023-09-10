@@ -15,17 +15,11 @@ class DesignAppListener() : DesignBaseListener() {
     }
 
     override fun enterFlowDeclaration(ctx: DesignParser.FlowDeclarationContext?) {
-        val flowName = ctx!!.IDENTIFIER().text
+        val interactions = buildInteractions(ctx!!.interactionDeclaration())
         val flow = DFlow(
-            interactions = emptyList(),
-            flowName = flowName,
+            interactions = interactions,
+            flowName = ctx!!.IDENTIFIER().text,
         )
-
-        val declarationContexts = ctx.interactionDeclaration()
-
-        val interactions = buildInteractions(declarationContexts)
-
-        flow.interactions += interactions
         flows.add(flow)
     }
 
@@ -45,16 +39,16 @@ class DesignAppListener() : DesignBaseListener() {
                         componentName = child.componentName().text
                         componentData = removeQuote(child.STRING_LITERAL().text)
                     }
-                    val seeModel = DSee(
-                        componentName = componentName,
-                        data = componentData,
-                    )
 
                     if (interaction.see.componentName != "") {
                         interactions += interaction
                     }
+
                     interaction = createInteraction()
-                    interaction.see = seeModel
+                    interaction.see = DSee(
+                        componentName = componentName,
+                        data = componentData,
+                    )
                 }
 
                 is DesignParser.DoDeclarationContext -> {
@@ -99,6 +93,7 @@ class DesignAppListener() : DesignBaseListener() {
         var actionName = ""
         var reactComponentName = ""
         var reactComponentData = ""
+
         when (val firstChild = reactCtx.reactAction().getChild(0)) {
             is DesignParser.ShowActionContext -> {
                 reactComponentData = firstChild.STRING_LITERAL().text
@@ -191,24 +186,18 @@ class DesignAppListener() : DesignBaseListener() {
         library.libraryName = ctx!!.libraryName().text
 
         for (express in ctx.libraryExpress()) {
-            val preset = LibraryPreset(key = "", value = "")
+            when (express) {
+                is DesignParser.PresetKeyValueContext -> {
+                    val preset = LibraryPreset(key = "", value = "")
+                    preset.key = express.presetKey().text
+                    preset.value = express.presetValue().text
 
-            preset.key = express.presetKey().text
-            when (val pairCtx = express.getChild(2)) {
-                is DesignParser.PresetValueContext -> {
-                    preset.value = pairCtx.text
+                    library.libraryPresets += preset
                 }
 
-                is DesignParser.PresetArrayContext -> {
-                    pairCtx.presetCall().forEach { call ->
-                        preset.presetCalls += PresetCall(
-                            libraryName = call.libraryName().text,
-                            libraryPreset = call.IDENTIFIER().text,
-                        )
-                    }
-                }
-
-                is DesignParser.KeyValueContext -> {
+                is DesignParser.PresetKeyObjectContext -> {
+                    val preset = LibraryPreset(key = "", value = "")
+                    preset.key = express.presetKey().text
                     for (keyValue in express.keyValue()) {
                         val key = keyValue.presetKey().text
                         var value = keyValue.presetValue().text
@@ -216,25 +205,35 @@ class DesignAppListener() : DesignBaseListener() {
 
                         preset.subProperties += DProperty(key, value)
                     }
+
+                    library.libraryPresets += preset
+                }
+
+                is DesignParser.PresetKeyArrayContext -> {
+                    val preset = LibraryPreset(key = "", value = "")
+                    preset.key = express.presetKey().text
+                    for (presetCall in express.presetCall()) {
+                        preset.inheritProps += DProperty(
+                            key = presetCall.libraryName().text,
+                            value = presetCall.IDENTIFIER().text,
+                        )
+                    }
+
+                    library.libraryPresets += preset
                 }
             }
-
-            library.libraryPresets += preset
         }
 
         libraries += library
     }
 
-    fun getDesign(): DesignInformation {
-        return DesignInformation(
-            projectConfigs = projectConfigs,
-            flows = flows,
-            components = components,
-            layouts = layouts,
-            libraries = libraries,
-        )
-    }
-
+    fun getDesign(): DesignInformation = DesignInformation(
+        projectConfigs = projectConfigs,
+        flows = flows,
+        components = components,
+        layouts = layouts,
+        libraries = libraries,
+    )
 }
 
 fun removeQuote(value: String): String {
