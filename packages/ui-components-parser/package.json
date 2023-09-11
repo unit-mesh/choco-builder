@@ -11,6 +11,7 @@
   "license": "MPL-2.0",
   "dependencies": {
     "acorn": "^8.10.0",
+    "acorn-jsx": "^5.3.2",
     "gray-matter": "^4.0.3",
     "jsdom": "^22.1.0",
     "marked": "^9.0.0",

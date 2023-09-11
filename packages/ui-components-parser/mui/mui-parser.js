@@ -1,6 +1,10 @@
 // walk dir in /Users/phodal/test/material-ui/docs/data to get files end with `.zh.md` and `.ts.preview`
 const fs = require('fs');
 const path = require('path');
+const acorn = require("acorn");
+const jsx = require("acorn-jsx");
+let jsxParser = acorn.Parser.extend(jsx());
+
 const parseMd = require("./docs-parser");
 
 const needToHandleDir = {}
@@ -85,9 +89,19 @@ const components = result.map(key => {
         }
     });
 
+    if (componentInfo.components.length === 0 && componentInfo.examples.length > 0) {
+        var maybeTagName = componentInfo.title
+        // if title same with example html tag name, then use it; like title is `Accordion`, example is <Accordion /..>
+        componentInfo.examples.forEach(example => {
+            if (example.content.startsWith(`<${maybeTagName}`)) {
+                componentInfo.components = [maybeTagName]
+            }
+        });
+    }
+
     return componentInfo;
 });
 
 // console.log(components);
 // write to file
-fs.writeFileSync('./mui-parser.json', JSON.stringify(components, null, 2));
+fs.writeFileSync('./mui-components.json', JSON.stringify(components, null, 2));

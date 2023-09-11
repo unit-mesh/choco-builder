@@ -25,7 +25,10 @@ function parseMd(path) {
 
     const parsedData = matter(markdownContent);
     const frontmatter = parsedData.data;
-    const components = frontmatter.components || [];
+    let components = [];
+    if (frontmatter.components) {
+        components = frontmatter.components.split(',').map(item => item.trim());
+    }
 
     const tokens = marked.lexer(markdownContent);
     const examples = [];
@@ -48,7 +51,6 @@ function parseMd(path) {
                 console.log(e);
             }
         } else if (token.type === 'heading' && token.depth === 2) {
-            // token.text = ' Component' || 'Component ' || ' Component '
             if (token.text.trim() === 'Component') {
                 isStartComponent = true;
             }
@@ -68,4 +70,3 @@ function parseMd(path) {
 }
 
 module.exports = parseMd;
-// parseMd('/Users/phodal/test/material-ui/docs/data/joy/components/chip/chip-zh.md')
