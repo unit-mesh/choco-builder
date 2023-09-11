@@ -12,6 +12,28 @@ import kotlinx.serialization.Serializable
 data class UiComponent(
     override val id: String = IdUtil.uuid(),
 
+    override val name: String,
+    val title: String,
+    val components: List<String>,
+    val description: String,
+    val examples: List<ComponentExample> = emptyList(),
+) : Dsl, IndexElement {
+    override var domain: String = ""
+    override val content: String get() = ""
+
+    override var interpreters: List<DslInterpreter> = emptyList()
+}
+
+@Serializable
+data class ComponentExample(
+    val name: String,
+    val content: String,
+)
+
+@Serializable
+data class UiComponentStandard(
+    override val id: String = IdUtil.uuid(),
+
     @get:JsonGetter("名称")
     override val name: String,
 
@@ -41,6 +63,7 @@ data class UiComponent(
 
     override var interpreters: List<DslInterpreter> = emptyList()
 }
+
 
 @Serializable
 data class Property(

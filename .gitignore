@@ -37,3 +37,4 @@ out/
 .vscode/
 .env
 src/main/resources/application-dev.yml
+src/main/resources/frontend/components/mui-components.json

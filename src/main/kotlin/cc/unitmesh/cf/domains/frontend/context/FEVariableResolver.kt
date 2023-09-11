@@ -7,19 +7,7 @@ import kotlinx.serialization.json.Json
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.Velocity
 import org.springframework.stereotype.Component
-import java.io.File
-import java.io.IOException
 import java.io.StringWriter
-import java.net.URISyntaxException
-import java.net.URL
-import java.nio.file.Files.walk
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.util.*
-import java.util.jar.JarEntry
-import java.util.jar.JarFile
-import kotlin.io.path.extension
-import kotlin.io.path.isRegularFile
 
 
 @Component
@@ -49,7 +37,7 @@ class FEVariableResolver : VariableResolver<FEVariables> {
 
     override fun resolve(question: String) {
         val componentJsons = this.javaClass
-            .getResourceAsStream("/frontend/components/element-ui.json")!!
+            .getResourceAsStream("/frontend/components/mui-mini.json")!!
             .bufferedReader()
             .use { it.readText() }
 
@@ -70,7 +58,7 @@ class FEVariableResolver : VariableResolver<FEVariables> {
             histories = listOf(),
             layouts = layouts.joinToString(separator = ",") { it.name },
             components = components.joinToString(separator = ",") {
-                it.name + "(" + it.tagName + ")"
+                it.name + "(" + it.components.joinToString(",") + ")"
             }
         )
     }

@@ -30,8 +30,7 @@ class FESolutionExecutor(
         solution.components.filter { it.isNotBlank() }.forEach {
             val component = components.find { c -> c.name.lowercase() == it.lowercase() }
             if (component != null && component.examples.isNotEmpty()) {
-                // componentName: componentExample
-                userComponents += "${component.name}: ${component.tagName}"
+                userComponents += "${component.name}: ${component.components}"
             }
         }
         variable.put("userComponents", userComponents.joinToString(separator = "\n"))

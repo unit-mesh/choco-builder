@@ -1,0 +1,458 @@
+[
+  {
+    "name": "autocomplete",
+    "title": "Autocomplete",
+    "description": "An autocomplete component is a text input enhanced by a panel of suggested options.",
+    "components": [
+      "Autocomplete"
+    ],
+    "examples": [
+      {
+        "name": "UseAutocomplete",
+        "content": "<StyledLabel {...getInputLabelProps()}>Pick a movie</StyledLabel>\n<StyledAutocompleteRoot\n  {...getRootProps()}\n  className={focused ? 'focused' : ''}\n>\n  <StyledInput {...getInputProps()} />\n</StyledAutocompleteRoot>\n{groupedOptions.length > 0 && (\n  <StyledListbox {...getListboxProps()}>\n    {(groupedOptions as typeof top100Films).map((option, index) => (\n      <StyledOption {...getOptionProps({ option, index })}>\n        {option.label}\n      </StyledOption>\n    ))}\n  </StyledListbox>\n)}"
+      },
+      {
+        "name": "UseAutocompletePopper",
+        "content": "<Autocomplete options={top100Films} value={value} onChange={handleChange} />"
+      }
+    ]
+  },
+  {
+    "name": "badge",
+    "title": "Badge",
+    "description": "The Badge component generates a small label that is attached to its child element.",
+    "components": [
+      "Badge"
+    ],
+    "examples": [
+      {
+        "name": "AccessibleBadges",
+        "content": "<StyledBadge badgeContent={100}>\n  <MailIcon />\n</StyledBadge>"
+      },
+      {
+        "name": "BadgeMax",
+        "content": "<StyledBadge badgeContent={99}>\n  <MailIcon />\n</StyledBadge>\n<StyledBadge badgeContent={100}>\n  <MailIcon />\n</StyledBadge>\n<StyledBadge badgeContent={1000} max={999}>\n  <MailIcon />\n</StyledBadge>"
+      },
+      {
+        "name": "ShowZeroBadge",
+        "content": "<StyledBadge badgeContent={0}>\n  <MailIcon />\n</StyledBadge>\n<StyledBadge badgeContent={0} showZero>\n  <MailIcon />\n</StyledBadge>"
+      }
+    ]
+  },
+  {
+    "name": "button",
+    "title": "Button",
+    "description": "Buttons let users take actions and make choices with a single tap.",
+    "components": [
+      "Button"
+    ],
+    "examples": [
+      {
+        "name": "UnstyledButtonCustom",
+        "content": "<SvgButton>Button</SvgButton>"
+      },
+      {
+        "name": "UnstyledButtonsDisabledFocus",
+        "content": "<CustomButton disabled>focusableWhenDisabled = false</CustomButton>\n<CustomButton disabled focusableWhenDisabled>\n  focusableWhenDisabled = true\n</CustomButton>"
+      },
+      {
+        "name": "UnstyledButtonsDisabledFocusCustom",
+        "content": "<CustomButton slots={{ root: 'span' }} disabled>\n  focusableWhenDisabled = false\n</CustomButton>\n<CustomButton slots={{ root: 'span' }} disabled focusableWhenDisabled>\n  focusableWhenDisabled = true\n</CustomButton>"
+      },
+      {
+        "name": "UnstyledButtonsSpan",
+        "content": "<CustomButton slots={{ root: 'span' }}>Button</CustomButton>\n<CustomButton slots={{ root: 'span' }} disabled>\n  Disabled\n</CustomButton>"
+      },
+      {
+        "name": "UnstyledLinkButton",
+        "content": "<CustomButton href={'https://mui.com/'}>Standard link</CustomButton>\n<Link href={'https://mui.com/'}>\n  <CustomButton>Next link</CustomButton>\n</Link>"
+      },
+      {
+        "name": "UseButton",
+        "content": "<CustomButton onClick={() => console.log('click!')}>Button</CustomButton>\n<CustomButton disabled>Disabled</CustomButton>"
+      }
+    ]
+  },
+  {
+    "name": "click-away-listener",
+    "title": "Click-Away Listener",
+    "description": "The Click-Away Listener component detects when a click event happens outside of its child element.",
+    "components": [
+      "ClickAwayListener"
+    ],
+    "examples": [
+      {
+        "name": "ClickAway",
+        "content": "<ClickAwayListener onClickAway={handleClickAway}>\n  <Box sx={{ position: 'relative' }}>\n    <button type=\"button\" onClick={handleClick}>\n      Open menu dropdown\n    </button>\n    {open ? (\n      <Box sx={styles}>\n        Click me, I will stay visible until you click outside.\n      </Box>\n    ) : null}\n  </Box>\n</ClickAwayListener>"
+      },
+      {
+        "name": "LeadingClickAway",
+        "content": "<ClickAwayListener\n  mouseEvent=\"onMouseDown\"\n  touchEvent=\"onTouchStart\"\n  onClickAway={handleClickAway}\n>\n  <Box sx={{ position: 'relative' }}>\n    <button type=\"button\" onClick={handleClick}>\n      Open menu dropdown\n    </button>\n    {open ? (\n      <Box sx={styles}>\n        Click me, I will stay visible until you click outside.\n      </Box>\n    ) : null}\n  </Box>\n</ClickAwayListener>"
+      },
+      {
+        "name": "PortalClickAway",
+        "content": "<ClickAwayListener onClickAway={handleClickAway}>\n  <div>\n    <button type=\"button\" onClick={handleClick}>\n      Open menu dropdown\n    </button>\n    {open ? (\n      <Portal>\n        <Box sx={styles}>\n          Click me, I will stay visible until you click outside.\n        </Box>\n      </Portal>\n    ) : null}\n  </div>\n</ClickAwayListener>"
+      }
+    ]
+  },
+  {
+    "name": "focus-trap",
+    "title": "Focus Trap",
+    "description": "The Focus Trap component prevents the user's focus from escaping its children components.",
+    "components": [
+      "FocusTrap"
+    ],
+    "examples": [
+      {
+        "name": "BasicFocusTrap",
+        "content": "<button type=\"button\" onClick={() => setOpen(true)}>\n  Open\n</button>\n{open && (\n  <FocusTrap open>\n    <Box tabIndex={-1} sx={{ mt: 1, p: 1 }}>\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n      <br />\n      <button type=\"button\" onClick={() => setOpen(false)}>\n        Close\n      </button>\n    </Box>\n  </FocusTrap>\n)}"
+      },
+      {
+        "name": "ContainedToggleTrappedFocus",
+        "content": "<FocusTrap open={open} disableRestoreFocus disableAutoFocus>\n  <Stack alignItems=\"center\" spacing={2}>\n    <button type=\"button\" onClick={() => setOpen(!open)}>\n      {open ? 'Close' : 'Open'}\n    </button>\n    {open && (\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n    )}\n  </Stack>\n</FocusTrap>"
+      },
+      {
+        "name": "DisableEnforceFocus",
+        "content": "<button type=\"button\" onClick={() => setOpen(true)}>\n  Open\n</button>\n{open && (\n  <FocusTrap disableEnforceFocus open>\n    <Box tabIndex={-1} sx={{ mt: 1, p: 1 }}>\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n      <br />\n      <button type=\"button\" onClick={() => setOpen(false)}>\n        Close\n      </button>\n    </Box>\n  </FocusTrap>\n)}"
+      },
+      {
+        "name": "LazyFocusTrap",
+        "content": "<button type=\"button\" onClick={() => setOpen(true)}>\n  Open\n</button>\n{open && (\n  <FocusTrap open disableAutoFocus>\n    <Box tabIndex={-1} sx={{ mt: 1, p: 1 }}>\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n      <br />\n      <button type=\"button\" onClick={() => setOpen(false)}>\n        Close\n      </button>\n    </Box>\n  </FocusTrap>\n)}"
+      }
+    ]
+  },
+  {
+    "name": "form-control",
+    "title": "Form Control",
+    "description": "The Form Control component is a utility that lets you associate a form input with auxiliary components, such as labels, error indicators, or helper text.",
+    "components": [
+      "FormControl"
+    ],
+    "examples": [
+      {
+        "name": "FormControlFunctionChild",
+        "content": "<FormControl defaultValue=\"\" required>\n  {({ filled, focused }: FormControlState) => (\n    <React.Fragment>\n      <StyledInput className={filled ? 'filled' : ''} />\n      {filled && !focused && <OkMark>✔</OkMark>}\n    </React.Fragment>\n  )}\n</FormControl>"
+      },
+      {
+        "name": "UseFormControl",
+        "content": "<FormControl defaultValue=\"\" required>\n  <CustomInput />\n  <ControlStateDisplay />\n</FormControl>"
+      }
+    ]
+  },
+  {
+    "name": "input",
+    "title": "Input",
+    "description": "The Input component provides users with a field to enter and edit text.",
+    "components": [
+      "Input"
+    ],
+    "examples": [
+      {
+        "name": "InputMultiline",
+        "content": "<CustomInput aria-label=\"Demo input\" multiline placeholder=\"Type something…\" />"
+      },
+      {
+        "name": "InputMultilineAutosize",
+        "content": "<CustomInput aria-label=\"Demo input\" multiline placeholder=\"Type something…\" />"
+      },
+      {
+        "name": "UseInput",
+        "content": "<CustomInput aria-label=\"Demo input\" placeholder=\"Type something…\" />"
+      }
+    ]
+  },
+  {
+    "name": "menu",
+    "title": "Menu",
+    "description": "The Dropdown Menu components provide end users with a list of options on temporary surfaces.",
+    "components": [
+      "Menu",
+      "MenuItem",
+      "MenuButton",
+      "Dropdown"
+    ],
+    "examples": [
+      {
+        "name": "UseMenu",
+        "content": "<React.Fragment>\n  <GlobalStyles styles={styles} />\n  <DropdownContext.Provider value={dropdownContextValue}>\n    <MenuButton>Theme</MenuButton>\n    <Menu id=\"hooks-menu\">\n      <MenuItem onClick={createHandleMenuClick('OS Default')}>\n        OS default\n      </MenuItem>\n      <MenuItem onClick={createHandleMenuClick('Light')}>Light</MenuItem>\n      <MenuItem onClick={createHandleMenuClick('Dark')}>Dark</MenuItem>\n    </Menu>\n  </DropdownContext.Provider>\n</React.Fragment>"
+      }
+    ]
+  },
+  {
+    "name": "modal",
+    "title": "Modal",
+    "description": "",
+    "components": [
+      "Modal"
+    ],
+    "examples": [
+      {
+        "name": "KeepMountedModal",
+        "content": "<TriggerButton type=\"button\" onClick={handleOpen}>\n  Open modal\n</TriggerButton>\n<StyledModal\n  aria-labelledby=\"keep-mounted-modal-title\"\n  aria-describedby=\"keep-mounted-modal-description\"\n  open={open}\n  onClose={handleClose}\n  slots={{ backdrop: StyledBackdrop }}\n  keepMounted\n>\n  <Box sx={style}>\n    <h2 id=\"keep-mounted-modal-title\">Text in a modal</h2>\n    <p id=\"keep-mounted-modal-description\">Aliquid amet deserunt earum!</p>\n  </Box>\n</StyledModal>"
+      },
+      {
+        "name": "ModalUnstyled",
+        "content": "<TriggerButton type=\"button\" onClick={handleOpen}>\n  Open modal\n</TriggerButton>\n<StyledModal\n  aria-labelledby=\"unstyled-modal-title\"\n  aria-describedby=\"unstyled-modal-description\"\n  open={open}\n  onClose={handleClose}\n  slots={{ backdrop: StyledBackdrop }}\n>\n  <Box sx={style}>\n    <h2 id=\"unstyled-modal-title\">Text in a modal</h2>\n    <p id=\"unstyled-modal-description\">Aliquid amet deserunt earum!</p>\n  </Box>\n</StyledModal>"
+      },
+      {
+        "name": "NestedModal",
+        "content": "<TriggerButton onClick={handleOpen}>Open modal</TriggerButton>\n<StyledModal\n  open={open}\n  onClose={handleClose}\n  aria-labelledby=\"parent-modal-title\"\n  aria-describedby=\"parent-modal-description\"\n  slots={{ backdrop: StyledBackdrop }}\n>\n  <Box sx={style}>\n    <h2 id=\"parent-modal-title\">Text in a modal</h2>\n    <p id=\"parent-modal-description\">\n      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.\n    </p>\n    <ChildModal />\n  </Box>\n</StyledModal>"
+      },
+      {
+        "name": "ServerModal",
+        "content": "<StyledModal\n  disablePortal\n  disableEnforceFocus\n  disableAutoFocus\n  open\n  aria-labelledby=\"server-modal-title\"\n  aria-describedby=\"server-modal-description\"\n  container={() => rootRef.current}\n>\n  <Box sx={style}>\n    <h2 id=\"server-modal-title\">Server-side modal</h2>\n    <span id=\"server-modal-description\">\n      If you disable JavaScript, you will still see me.\n    </span>\n  </Box>\n</StyledModal>"
+      }
+    ]
+  },
+  {
+    "name": "no-ssr",
+    "title": "No SSR",
+    "description": "The No-SSR component defers the rendering of children components from the server to the client.",
+    "components": [
+      "NoSsr"
+    ],
+    "examples": [
+      {
+        "name": "SimpleNoSsr",
+        "content": "<Box sx={{ p: 2, bgcolor: 'primary.main', color: 'primary.contrastText' }}>\n  Server and Client\n</Box>\n<NoSsr>\n  <Box\n    sx={{ p: 2, bgcolor: 'secondary.main', color: 'secondary.contrastText' }}\n  >\n    Client only\n  </Box>\n</NoSsr>"
+      }
+    ]
+  },
+  {
+    "name": "number-input",
+    "title": "Number Input",
+    "description": "The Number Input component provides users with a field for integer values, and buttons to increment or decrement the value.",
+    "components": [
+      "NumberInput"
+    ],
+    "examples": [
+      {
+        "name": "NumberInputIntroduction",
+        "content": "<CustomNumberInput aria-label=\"Demo number input\" placeholder=\"Type a number…\" />"
+      },
+      {
+        "name": "UseNumberInput",
+        "content": "<CustomNumberInput aria-label=\"Demo number input\" placeholder=\"Type a number…\" />"
+      }
+    ]
+  },
+  {
+    "name": "popper",
+    "title": "Popper",
+    "description": "The Popper component lets you create tooltips and popovers that display information about an element on the page.",
+    "components": [
+      "Popper"
+    ],
+    "examples": [
+      {
+        "name": "SimplePopper",
+        "content": "<button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popper\n</button>\n<Popper id={id} open={open} anchorEl={anchorEl}>\n  <StyledPopperDiv>The content of the Popper.</StyledPopperDiv>\n</Popper>"
+      }
+    ]
+  },
+  {
+    "name": "popup",
+    "title": "Popup",
+    "description": "The Popup component is a utility that lets you display content in tooltips and popovers.",
+    "components": [
+      "Popup"
+    ],
+    "examples": [
+      {
+        "name": "AnimatedPopup",
+        "content": "<Button ref={setAnchor} onClick={() => setOpen((o) => !o)} type=\"button\">\n  Toggle Popup\n</Button>\n<Popup anchor={anchor} open={open} withTransition>\n  {(props: PopupChildrenProps) => (\n    <PopAnimation {...props}>\n      <PopupBody>This is an animated popup.</PopupBody>\n    </PopAnimation>\n  )}\n</Popup>"
+      },
+      {
+        "name": "DisabledPortalPopup",
+        "content": "<PopupWithTrigger id=\"popup-with-portal\" buttonLabel=\"With a portal\" />\n<PopupWithTrigger\n  id=\"popup-without-portal\"\n  buttonLabel=\"No portal, default strategy\"\n  disablePortal\n/>\n<PopupWithTrigger\n  id=\"popup-without-portal-fixed\"\n  buttonLabel=\"No portal, 'fixed' strategy\"\n  disablePortal\n  strategy=\"fixed\"\n/>"
+      },
+      {
+        "name": "Placement",
+        "content": "<PlacementForm setPlacement={setPlacement} />\n<div style={{ padding: '4rem 0', textAlign: 'center' }}>\n  <Anchor ref={setAnchor} aria-describedby=\"placement-popper\">\n    Anchor\n  </Anchor>\n  <Popup\n    id=\"placement-popper\"\n    open={Boolean(anchor)}\n    anchor={anchor}\n    placement={placement}\n    offset={4}\n  >\n    <PopupBody>The content of the Popup.</PopupBody>\n  </Popup>\n</div>"
+      },
+      {
+        "name": "SimplePopup",
+        "content": "<Button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popup\n</Button>\n<Popup id={id} open={open} anchor={anchor}>\n  <PopupBody>The content of the Popup.</PopupBody>\n</Popup>"
+      }
+    ]
+  },
+  {
+    "name": "portal",
+    "title": "Portal",
+    "description": "The Portal component lets you render its children into a DOM node that exists outside of the Portal's own DOM hierarchy.",
+    "components": [
+      "Portal"
+    ],
+    "examples": [
+      {
+        "name": "SimplePortal",
+        "content": "<button type=\"button\" onClick={handleClick}>\n  {show ? 'Unmount children' : 'Mount children'}\n</button>\n<Box sx={{ p: 1, my: 1, border: '1px solid' }}>\n  It looks like I will render here.\n  {show ? (\n    <Portal container={container.current}>\n      <span>But I actually render here!</span>\n    </Portal>\n  ) : null}\n</Box>\n<Box sx={{ p: 1, my: 1, border: '1px solid' }} ref={container} />"
+      }
+    ]
+  },
+  {
+    "name": "select",
+    "title": "Select",
+    "description": "The Select components let you create lists of options for users to choose from.",
+    "components": [
+      "Select",
+      "Option",
+      "OptionGroup"
+    ],
+    "examples": [
+      {
+        "name": "UnstyledSelectControlled",
+        "content": "<CustomSelect value={value} onChange={(_, newValue) => setValue(newValue)}>\n  <StyledOption value={10}>Ten</StyledOption>\n  <StyledOption value={20}>Twenty</StyledOption>\n  <StyledOption value={30}>Thirty</StyledOption>\n</CustomSelect>\n\n<Paragraph>Selected value: {value}</Paragraph>"
+      },
+      {
+        "name": "UnstyledSelectCustomRenderValue",
+        "content": "<CustomSelect renderValue={renderValue}>\n  <StyledOption value={10}>Ten</StyledOption>\n  <StyledOption value={20}>Twenty</StyledOption>\n  <StyledOption value={30}>Thirty</StyledOption>\n</CustomSelect>"
+      },
+      {
+        "name": "UnstyledSelectGrouping",
+        "content": "<CustomSelect>\n  <CustomOptionGroup label=\"Hobbits\">\n    <StyledOption value=\"Frodo\">Frodo</StyledOption>\n    <StyledOption value=\"Sam\">Sam</StyledOption>\n    <StyledOption value=\"Merry\">Merry</StyledOption>\n    <StyledOption value=\"Pippin\">Pippin</StyledOption>\n  </CustomOptionGroup>\n  <CustomOptionGroup label=\"Elves\">\n    <StyledOption value=\"Galadriel\">Galadriel</StyledOption>\n    <StyledOption value=\"Legolas\">Legolas</StyledOption>\n  </CustomOptionGroup>\n</CustomSelect>"
+      },
+      {
+        "name": "UnstyledSelectMultiple",
+        "content": "<CustomMultiSelect defaultValue={[10, 20]}>\n  <StyledOption value={10}>Ten</StyledOption>\n  <StyledOption value={20}>Twenty</StyledOption>\n  <StyledOption value={30}>Thirty</StyledOption>\n  <StyledOption value={40}>Forty</StyledOption>\n  <StyledOption value={50}>Fifty</StyledOption>\n</CustomMultiSelect>"
+      },
+      {
+        "name": "UnstyledSelectObjectValues",
+        "content": "<CustomSelect\n  value={character}\n  onChange={(event, newValue) => setCharacter(newValue)}\n>\n  {characters.map((c) => (\n    <StyledOption key={c.name} value={c}>\n      {c.name}\n    </StyledOption>\n  ))}\n</CustomSelect>\n<Paragraph>Selected character:</Paragraph>\n<Pre>{JSON.stringify(character, null, 2)}</Pre>"
+      },
+      {
+        "name": "UnstyledSelectRichOptions",
+        "content": "<CustomSelect>\n  {countries.map((c) => (\n    <StyledOption key={c.code} value={c.code} label={c.label}>\n      <img\n        loading=\"lazy\"\n        width=\"20\"\n        src={`https://flagcdn.com/w20/${c.code.toLowerCase()}.png`}\n        srcSet={`https://flagcdn.com/w40/${c.code.toLowerCase()}.png 2x`}\n        alt={`Flag of ${c.label}`}\n      />\n      {c.label} ({c.code}) +{c.phone}\n    </StyledOption>\n  ))}\n</CustomSelect>"
+      },
+      {
+        "name": "UseSelect",
+        "content": "<CustomSelect placeholder=\"Select a color…\" options={options} />"
+      }
+    ]
+  },
+  {
+    "name": "slider",
+    "title": "Slider",
+    "description": "A slider is a UI element that lets users select a single value or a range of values along a bar.\n",
+    "components": [
+      "Slider"
+    ],
+    "examples": [
+      {
+        "name": "DiscreteSlider",
+        "content": "<StyledSlider\n  aria-label=\"Temperature\"\n  defaultValue={30}\n  getAriaValueText={valuetext}\n  step={10}\n  marks\n  min={10}\n  max={110}\n  slots={{ valueLabel: SliderValueLabel }}\n/>"
+      },
+      {
+        "name": "DiscreteSliderMarks",
+        "content": "<StyledSlider\n  aria-label=\"Temperature\"\n  defaultValue={37}\n  getAriaValueText={valuetext}\n  marks={marks}\n/>"
+      },
+      {
+        "name": "DiscreteSliderValues",
+        "content": "<StyledSlider\n  aria-label=\"Temperature\"\n  defaultValue={37}\n  getAriaValueText={valuetext}\n  step={null}\n  marks={marks}\n/>"
+      },
+      {
+        "name": "LabeledValuesSlider",
+        "content": "<StyledSlider defaultValue={10} slots={{ valueLabel: SliderValueLabel }} />"
+      },
+      {
+        "name": "UnstyledSlider",
+        "content": "<StyledSlider defaultValue={10} />\n<StyledSlider defaultValue={10} disabled />"
+      },
+      {
+        "name": "UnstyledSliderValueLabel",
+        "content": "<StyledSlider defaultValue={10} slots={{ valueLabel: SliderValueLabel }} />"
+      },
+      {
+        "name": "VerticalSlider",
+        "content": "<StyledSlider orientation=\"vertical\" defaultValue={30} />"
+      }
+    ]
+  },
+  {
+    "name": "snackbar",
+    "title": "Snackbar",
+    "description": "The Snackbar component informs users that an action has been or will be performed by the app.",
+    "components": [
+      "Snackbar"
+    ],
+    "examples": [
+      {
+        "name": "UseSnackbar",
+        "content": "<React.Fragment>\n  <TriggerButton type=\"button\" onClick={handleOpen}>\n    Open snackbar\n  </TriggerButton>\n  {open ? (\n    <ClickAwayListener onClickAway={onClickAway}>\n      <CustomSnackbar {...getRootProps()}>Hello World</CustomSnackbar>\n    </ClickAwayListener>\n  ) : null}\n</React.Fragment>"
+      }
+    ]
+  },
+  {
+    "name": "switch",
+    "title": "Switch",
+    "description": "Switches are UI elements that let users choose between two states—most commonly on/off.",
+    "components": [
+      "Switch"
+    ],
+    "examples": [
+      {
+        "name": "UseSwitchesBasic",
+        "content": "<BasicSwitch defaultChecked />\n<BasicSwitch />\n<BasicSwitch defaultChecked disabled />\n<BasicSwitch disabled />"
+      },
+      {
+        "name": "UseSwitchesCustom",
+        "content": "<MUISwitch defaultChecked />"
+      }
+    ]
+  },
+  {
+    "name": "tabs",
+    "title": "Tabs",
+    "description": "Tabs are UI elements for organizing and navigating between groups of related content.",
+    "components": [
+      "Tabs",
+      "Tab",
+      "TabPanel",
+      "TabsList"
+    ],
+    "examples": [
+      {
+        "name": "UnstyledTabsBasic",
+        "content": "<Tabs defaultValue={1}>\n  <TabsList>\n    <Tab value={1}>One</Tab>\n    <Tab value={2}>Two</Tab>\n    <Tab value={3}>Three</Tab>\n  </TabsList>\n  <TabPanel value={1}>First page</TabPanel>\n  <TabPanel value={2}>Second page</TabPanel>\n  <TabPanel value={3}>Third page</TabPanel>\n</Tabs>"
+      },
+      {
+        "name": "UnstyledTabsIntroduction",
+        "content": "<Tabs defaultValue={0}>\n  <StyledTabsList>\n    <StyledTab value={0}>My account</StyledTab>\n    <StyledTab value={1}>Profile</StyledTab>\n    <StyledTab value={2}>Language</StyledTab>\n  </StyledTabsList>\n  <StyledTabPanel value={0}>My account page</StyledTabPanel>\n  <StyledTabPanel value={1}>Profile page</StyledTabPanel>\n  <StyledTabPanel value={2}>Language page</StyledTabPanel>\n</Tabs>"
+      },
+      {
+        "name": "UnstyledTabsRouting",
+        "content": "<Router>\n  <div>\n    <Routes>\n      <Route path=\"*\" element={<CurrentRoute />} />\n    </Routes>\n    <MyTabs />\n  </div>\n</Router>"
+      },
+      {
+        "name": "UnstyledTabsVertical",
+        "content": "<StyledTabs defaultValue={0} orientation=\"vertical\">\n  <StyledTabsList>\n    <StyledTab>One</StyledTab>\n    <StyledTab>Two</StyledTab>\n    <StyledTab>Three</StyledTab>\n  </StyledTabsList>\n  <StyledTabPanel value={0}>First page</StyledTabPanel>\n  <StyledTabPanel value={1}>Second page</StyledTabPanel>\n  <StyledTabPanel value={2}>Third page</StyledTabPanel>\n</StyledTabs>"
+      }
+    ]
+  },
+  {
+    "name": "textarea-autosize",
+    "title": "Textarea Autosize",
+    "description": "The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.",
+    "components": [
+      "TextareaAutosize"
+    ],
+    "examples": [
+      {
+        "name": "EmptyTextarea",
+        "content": "<StyledTextarea aria-label=\"empty textarea\" placeholder=\"Empty\" />"
+      },
+      {
+        "name": "MaxHeightTextarea",
+        "content": "<StyledTextarea\n  maxRows={4}\n  aria-label=\"maximum height\"\n  placeholder=\"Maximum 4 rows\"\n  defaultValue=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt\n    ut labore et dolore magna aliqua.\"\n/>"
+      },
+      {
+        "name": "MinHeightTextarea",
+        "content": "<StyledTextarea\n  aria-label=\"minimum height\"\n  minRows={3}\n  placeholder=\"Minimum 3 rows\"\n/>"
+      },
+      {
+        "name": "UnstyledTextareaIntroduction",
+        "content": "<TextareaAutosize aria-label=\"empty textarea\" placeholder=\"Empty\" />"
+      }
+    ]
+  }
+]
