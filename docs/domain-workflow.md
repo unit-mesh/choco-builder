@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Workflow
+title: Domain Workflow
 nav_order: 3
 permalink: /workflow
 ---
@@ -40,5 +40,38 @@ class FEWorkflow() : Workflow() {
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
         // ...
     }
+}
+```
+
+## 3. 定义领域特定语言（可选）
+
+我们建议为每个领域定义一个特定的语言，以便于用户更好地理解和使用。例如，我们为前端领域定义了一种特定的语言，如下所示：
+
+```design
+--------------------------------------
+| "home" |"detail" | Button("Login") |
+--------------------------------------
+```
+
+对应的 DSL 代码如下：
+
+```kotlin
+@Serializable
+data class UiPage(
+    override val id: String = IdUtil.uuid(),
+
+    @get:JsonGetter("名称")
+    override val name: String,
+
+    @get:JsonGetter("布局")
+    val layout: String,
+
+    @get:JsonGetter("内容")
+    override val content: String = "",
+
+    @get:JsonGetter("组件")
+    val components: List<String> = listOf(),
+) : Dsl, IndexElement {
+    //...  
 }
 ```

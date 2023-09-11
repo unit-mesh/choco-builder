@@ -1,6 +1,5 @@
 package cc.unitmesh.cf.domains.frontend.model
 
-import cc.unitmesh.cf.core.SubDomain
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.dsl.IndexElement
@@ -9,7 +8,6 @@ import cc.unitmesh.cf.core.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonGetter
 import kotlinx.serialization.Serializable
 
-@SubDomain(name = "页面", description = "某个页面的 DSL 描述")
 @Serializable
 data class UiPage(
     override val id: String = IdUtil.uuid(),
