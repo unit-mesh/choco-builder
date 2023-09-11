@@ -9,13 +9,13 @@ permalink: /setup
 
 ## 环境搭建
 
-1. clone 代码
+1.clone 代码
 
 ```bash
 git clone https://github.com/unit-mesh/chocolate-factory
 ```
 
-2. 配置 OpenAI API
+2.配置 OpenAI API
 
 ```bash
 export OPENAI_API_KEY=
@@ -23,9 +23,21 @@ export OPENAI_API_KEY=
 export OPENAI_API_HOST=
 ```
 
-3. 执行 bootRun
+3.启动后端
 
 ```bash
 ./gradlew bootRun
 ```
+
+4.启动前端
+
+```bash
+pnpm install
+pnpm run dev
+```
+
+## CI/CD
+
+采用的是 GitHub Actions，配置文件在 `.github/workflows` 目录下。
+
 
