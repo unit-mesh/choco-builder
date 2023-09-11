@@ -3,7 +3,7 @@ package cc.unitmesh.dsl.design
 import cc.unitmesh.dsl.DesignBaseListener
 import cc.unitmesh.dsl.DesignParser
 
-class DesignAppListener() : DesignBaseListener() {
+class DesignAppListener : DesignBaseListener() {
     private val projectConfigs: MutableMap<String, String> = mutableMapOf()
     private val components: MutableMap<String, DComponent> = mutableMapOf()
     private val flows: MutableList<DFlow> = mutableListOf()
@@ -30,9 +30,8 @@ class DesignAppListener() : DesignBaseListener() {
         declarationContexts.forEach { context ->
             when (val child = context.getChild(0)) {
                 is DesignParser.SeeDeclarationContext -> {
-                    var componentName = ""
                     var componentData = ""
-
+                    val componentName: String
                     if (child.IDENTIFIER() != null) {
                         componentName = child.IDENTIFIER().text
                     } else {
@@ -141,7 +140,13 @@ class DesignAppListener() : DesignBaseListener() {
         val layout = DLayout(ctx!!.IDENTIFIER().text, emptyList())
         val layoutRows = ctx.layoutRow()
 
-        layout.layoutRows = layoutRows.map { row ->
+        layout.layoutRows = parseLayoutRows(layoutRows)
+
+        layouts += layout
+    }
+
+    private fun parseLayoutRows(layoutRows: MutableList<DesignParser.LayoutRowContext>) =
+        layoutRows.map { row ->
             val layoutRow = DLayoutRow(emptyList())
             if (row.getChild(0) !is DesignParser.LayoutLinesContext) {
                 return@map null
@@ -158,11 +163,8 @@ class DesignAppListener() : DesignBaseListener() {
             layoutRow
         }.filterNotNull()
 
-        layouts += layout
-    }
-
     override fun enterSimpleLayoutDeclaration(ctx: DesignParser.SimpleLayoutDeclarationContext?) {
-
+        layouts += DLayout("", parseLayoutRows(ctx!!.layoutRow().toMutableList()))
     }
 
     private fun parseLayoutLine(declaration: DesignParser.ComponentUseDeclarationContext, cell: DLayoutCell) {
