@@ -24,6 +24,7 @@ Alert,AlertTitle,AppBar,Toolbar,Menu,TextField,Popper,Autocomplete,Avatar,Avatar
 question:生成一个导航栏组件的 mockup
 answer:
 请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+
 ```design
 componentName: NavComponent
 usedComponents: Link, Button
@@ -31,8 +32,11 @@ usedComponents: Link, Button
 | Link("home") | Link("博客") | Button("Login")  |
 --------------------------------------
 ```
+
 userResponse:这里的 login 应该是 button，而不是 a
-finalOutput:```design
+finalOutput:
+
+```design
 componentName: NavComponent
 usedComponents: Link, Button
 --------------------------------------
@@ -43,6 +47,7 @@ usedComponents: Link, Button
 question:生成一个包含图片的博客列表面 mockup
 answer:
 请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+
 ```design
 pageName: 博客列表
 usedComponents: Grid, Box, NavComponent, Text, BlogListComponent, ArchivesComponent, Footer
@@ -56,10 +61,10 @@ usedComponents: Grid, Box, NavComponent, Text, BlogListComponent, ArchivesCompon
 | Footer(10x)                                        |
 ------------------------------------------------------
 ```
+
 userResponse:YES
 finalOutput:
-, name=null), ChatMessage(role=User, content=编写一个带有标题、内容、时间和存为草稿按钮的响应式布局的博客发表页，如果创建成功则弹出对话框，显示：“创建成功！”, name=null)]
-59731 [http-nio-18080-exec-3] INFO  c.u.c.d.f.flow.FESolutionDesigner - Designer completion: 请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+
 ```design
 pageName: 博客发表页
 usedComponents: NavComponent, TextField, Button, Dialog
@@ -78,7 +83,9 @@ usedComponents: NavComponent, TextField, Button, Dialog
 ------------------------------------------------------
 ```
 userResponse:YES
-finalOutput:```design
+finalOutput:
+
+```design
 pageName: 博客发表页
 usedComponents: NavComponent, TextField, Button, Dialog
 ------------------------------------------------------
