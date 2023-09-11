@@ -1,6 +1,7 @@
 // walk dir in /Users/phodal/test/material-ui/docs/data to get files end with `.zh.md` and `.ts.preview`
 const fs = require('fs');
 const path = require('path');
+const parseMd = require("./docs-parser");
 
 const needToHandleDir = {}
 
@@ -15,7 +16,6 @@ function walkDir(dir) {
             walkDir(filePath);
         } else {
             if (file.endsWith('-zh.md') || file.endsWith('.tsx.preview')) {
-                // console.log(filePath);
                 const component = path.dirname(filePath);
                 if (needToHandleDir[component]) {
                     needToHandleDir[component].push(filePath);
@@ -39,10 +39,10 @@ walkDir(dirPath);
 //   ],
 // }
 //  we need to exists -zh.md and .tsx.preview
-var result = Object.keys(needToHandleDir).filter(key => {
+const result = Object.keys(needToHandleDir).filter(key => {
     let items = needToHandleDir[key];
-    var hasZhMd = false;
-    var hasTsxPreview = false;
+    let hasZhMd = false;
+    let hasTsxPreview = false;
 
     items.forEach(item => {
         if (item.endsWith('-zh.md')) {
@@ -55,5 +55,37 @@ var result = Object.keys(needToHandleDir).filter(key => {
     return hasZhMd && hasTsxPreview;
 });
 
-console.log(result);
+// console.log(result);
+const components = result.map(key => {
+    const items = needToHandleDir[key];
+    const componentInfo = {
+        name: key.split('/').pop(),
+        title: '',
+        description: '',
+        components: [],
+        examples: [],
+    };
 
+    items.forEach(item => {
+        if (item.endsWith('-zh.md')) {
+            let results = parseMd(item);
+            componentInfo.title = results.title;
+            componentInfo.description = results.description;
+            componentInfo.components = results.components;
+        }
+        if (item.endsWith('.tsx.preview')) {
+            var name = item.split('/').pop()
+            name = name.replace('.tsx.preview', '');
+            componentInfo.examples.push({
+                name: name,
+                content: fs.readFileSync(item, 'utf8')
+            });
+        }
+    });
+
+    return componentInfo;
+});
+
+// console.log(components);
+// write to file
+fs.writeFileSync('./mui-parser.json', JSON.stringify(components, null, 2));
