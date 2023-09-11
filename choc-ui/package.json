@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "cypress": "cypress open",
+    "test": "jest --watch",
     "dev": "next dev",
     "build": "NODE_ENV=production next build",
     "start": "next start",

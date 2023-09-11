@@ -13,6 +13,7 @@ dependencies {
     implementation("org.antlr:antlr4-runtime:4.13.1")
 
     implementation(libs.kotlin.stdlib)
+    implementation(libs.serialization.json)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)

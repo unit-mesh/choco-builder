@@ -1,6 +1,8 @@
 package cc.unitmesh.dsl.design
 
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 class DesignDslTest {
@@ -166,18 +168,19 @@ library Button {
         val dsl = """------------------------------------------------------
 |      NavComponent(10x)                             |
 ------------------------------------------------------
-| TextField(10x)                                      |
+|    Text(6x)                     |   Empty(4x)      |
 ------------------------------------------------------
-| TextField(10x)                                      |
+| Avatar(2x)  | Date(2x)          |   Empty(6x)      |
 ------------------------------------------------------
-| TextField(10x)                                      |
+| CardMedia(8x)                                      |
 ------------------------------------------------------
-| Button("存为草稿")                                  |
+| Typography(10x)                                    |
 ------------------------------------------------------
-| Dialog("创建成功！")                               |
+| FooterComponent(10x)                               |
 ------------------------------------------------------"""
 
         val design = DesignDsl().analysis(dsl)
+        println(Json.encodeToString(design))
         design.layouts[0].layoutRows.size shouldBe 6
     }
 }
