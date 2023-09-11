@@ -43,6 +43,7 @@ class SimpleCompilerDsl(dslName: DslName, content: String) : Dsl {
 class DesignCompiler : DslCompiler {
     override fun compile(dsl: Dsl): DslOutput {
         val information = DesignDsl().analysis(dsl.content)
+
         return DslOutput(
             name = "Design",
             description = "Design DSL",

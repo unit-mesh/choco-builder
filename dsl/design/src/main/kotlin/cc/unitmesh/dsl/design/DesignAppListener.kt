@@ -120,7 +120,7 @@ class DesignAppListener : DesignBaseListener() {
                 when (it) {
                     is DesignParser.ComponentNameContext -> {
                         val childComponent = DComponent(it.text)
-                        component.childComponents += childComponent
+                        component.child += childComponent
                     }
 
                     is DesignParser.ConfigKeyContext -> {
@@ -188,8 +188,8 @@ class DesignAppListener : DesignBaseListener() {
     }
 
     override fun enterLibraryDeclaration(ctx: DesignParser.LibraryDeclarationContext?) {
-        val library = DLibrary(libraryName = "", libraryPresets = emptyList())
-        library.libraryName = ctx!!.libraryName().text
+        val library = DLibrary(name = "", presets = emptyList())
+        library.name = ctx!!.libraryName().text
 
         for (express in ctx.libraryExpress()) {
             when (express) {
@@ -198,7 +198,7 @@ class DesignAppListener : DesignBaseListener() {
                     preset.key = express.presetKey().text
                     preset.value = express.presetValue().text
 
-                    library.libraryPresets += preset
+                    library.presets += preset
                 }
 
                 is DesignParser.PresetKeyObjectContext -> {
@@ -212,7 +212,7 @@ class DesignAppListener : DesignBaseListener() {
                         preset.subProperties += DProperty(key, value)
                     }
 
-                    library.libraryPresets += preset
+                    library.presets += preset
                 }
 
                 is DesignParser.PresetKeyArrayContext -> {
@@ -225,7 +225,7 @@ class DesignAppListener : DesignBaseListener() {
                         )
                     }
 
-                    library.libraryPresets += preset
+                    library.presets += preset
                 }
             }
         }

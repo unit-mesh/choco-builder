@@ -15,7 +15,7 @@ data class DConfig(
 
 data class DComponent(
     val name: String,
-    var childComponents: List<DComponent> = listOf(),
+    var child: List<DComponent> = listOf(),
     var configs: Map<String, String> = mapOf(),
 )
 
@@ -78,11 +78,11 @@ data class LibraryPreset(
 )
 
 data class PresetCall(
-    val libraryName: String,
-    val libraryPreset: String,
+    val name: String,
+    val preset: String,
 )
 
 data class DLibrary(
-    var libraryName: String,
-    var libraryPresets: List<LibraryPreset>,
+    var name: String,
+    var presets: List<LibraryPreset>,
 )

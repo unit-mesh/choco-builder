@@ -90,9 +90,9 @@ component BlogList {
         design.components["ImageComponent"]!!.name shouldBe "ImageComponent"
         design.components["BlogList"]!!.name shouldBe "BlogList"
 
-        design.components["BlogList"]!!.childComponents.size shouldBe 12
-        design.components["BlogList"]!!.childComponents[0].name shouldBe "BlogDetail"
-        design.components["BlogList"]!!.childComponents[1].name shouldBe "Space8"
+        design.components["BlogList"]!!.child.size shouldBe 12
+        design.components["BlogList"]!!.child[0].name shouldBe "BlogDetail"
+        design.components["BlogList"]!!.child[1].name shouldBe "Space8"
     }
 
     @Test
@@ -128,22 +128,22 @@ library Button {
         val design = DesignDsl().analysis(dsl)
 
         design.libraries.size shouldBe 3
-        design.libraries[0].libraryName shouldBe "FontSize"
-        design.libraries[0].libraryPresets.size shouldBe 5
-        design.libraries[0].libraryPresets[0].key shouldBe "H1"
-        design.libraries[0].libraryPresets[0].value shouldBe "18px"
-        design.libraries[0].libraryPresets[1].key shouldBe "H2"
-        design.libraries[0].libraryPresets[1].value shouldBe "16px"
-        design.libraries[0].libraryPresets[2].key shouldBe "H3"
-        design.libraries[0].libraryPresets[2].value shouldBe "14px"
-        design.libraries[0].libraryPresets[3].key shouldBe "H4"
-        design.libraries[0].libraryPresets[3].value shouldBe "12px"
-        design.libraries[0].libraryPresets[4].key shouldBe "H5"
-        design.libraries[0].libraryPresets[4].value shouldBe "10px"
+        design.libraries[0].name shouldBe "FontSize"
+        design.libraries[0].presets.size shouldBe 5
+        design.libraries[0].presets[0].key shouldBe "H1"
+        design.libraries[0].presets[0].value shouldBe "18px"
+        design.libraries[0].presets[1].key shouldBe "H2"
+        design.libraries[0].presets[1].value shouldBe "16px"
+        design.libraries[0].presets[2].key shouldBe "H3"
+        design.libraries[0].presets[2].value shouldBe "14px"
+        design.libraries[0].presets[3].key shouldBe "H4"
+        design.libraries[0].presets[3].value shouldBe "12px"
+        design.libraries[0].presets[4].key shouldBe "H5"
+        design.libraries[0].presets[4].value shouldBe "10px"
 
-        design.libraries[1].libraryName shouldBe "Color"
-        design.libraries[1].libraryPresets.size shouldBe 2
-        val libraryPreset = design.libraries[1].libraryPresets[0]
+        design.libraries[1].name shouldBe "Color"
+        design.libraries[1].presets.size shouldBe 2
+        val libraryPreset = design.libraries[1].presets[0]
         libraryPreset.key shouldBe "Primary"
 
         libraryPreset.subProperties.size shouldBe 2
@@ -152,13 +152,13 @@ library Button {
         libraryPreset.subProperties[1].key shouldBe "value"
         libraryPreset.subProperties[1].value shouldBe "#E53935"
 
-        design.libraries[2].libraryName shouldBe "Button"
-        design.libraries[2].libraryPresets.size shouldBe 2
-        design.libraries[2].libraryPresets[0].key shouldBe "Default"
-        design.libraries[2].libraryPresets[0].inheritProps.size shouldBe 2
+        design.libraries[2].name shouldBe "Button"
+        design.libraries[2].presets.size shouldBe 2
+        design.libraries[2].presets[0].key shouldBe "Default"
+        design.libraries[2].presets[0].inheritProps.size shouldBe 2
 
-        design.libraries[2].libraryPresets[0].inheritProps[0].key shouldBe "FontSize"
-        design.libraries[2].libraryPresets[0].inheritProps[0].value shouldBe "H2"
+        design.libraries[2].presets[0].inheritProps[0].key shouldBe "FontSize"
+        design.libraries[2].presets[0].inheritProps[0].value shouldBe "H2"
     }
 
     @Test

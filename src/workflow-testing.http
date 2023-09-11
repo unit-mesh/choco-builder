@@ -15,5 +15,11 @@ Content-Type: application/json
   "domain": "frontend"
 }
 
-### Design
+### Design DSL
+POST http://localhost:18080/api/dsl/Design
+Content-Type: application/json
+
+{
+  "dsl": "--------------------------------------\n| \"home\" |\"detail\" | Button(\"Login\") |\n--------------------------------------"
+}
 
