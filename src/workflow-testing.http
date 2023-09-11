@@ -1,0 +1,19 @@
+### Clarify
+
+POST http://localhost:18080/api/chat
+Content-Type: application/json
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "编写一个商品订单详细，布局方式：响应式，其中左边是一个商品过滤条件，右边则通过分页方式展示各种商品"
+    }
+  ],
+  "stage": "Clarify",
+  "id": "F7bbmxm",
+  "domain": "frontend"
+}
+
+### Design
+

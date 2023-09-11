@@ -26,11 +26,11 @@ class FESolutionExecutor(
         variable.put("userLayout", solution.layout)
         val components = variable.getComponents()
 
-        val userComponents : MutableList<String> = mutableListOf()
+        val userComponents: MutableList<String> = mutableListOf()
         solution.components.filter { it.isNotBlank() }.forEach {
-            val component = components.find { c -> c.name.lowercase() == it.lowercase() }
+            val component = components.find { c -> c.tagName.lowercase() == it.lowercase() }
             if (component != null && component.examples.isNotEmpty()) {
-                userComponents += "${component.name}: ${component.components}"
+                userComponents += "${component.name}\n: ```${component.examples[0]}```"
             }
         }
         variable.put("userComponents", userComponents.joinToString(separator = "\n"))

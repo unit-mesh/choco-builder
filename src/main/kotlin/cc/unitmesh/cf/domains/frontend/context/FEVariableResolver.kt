@@ -57,9 +57,12 @@ class FEVariableResolver : VariableResolver<FEVariables> {
             question = question,
             histories = listOf(),
             layouts = layouts.joinToString(separator = ",") { it.name },
-            components = components.joinToString(separator = ",") {
-                it.name + "(" + it.components.joinToString(",") + ")"
+            components = components.map {
+                it.components
             }
+                .flatten()
+                .distinct()
+                .joinToString(separator = ",")
         )
     }
 

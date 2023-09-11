@@ -1,7 +1,7 @@
 [
   {
     "name": "alert",
-    "title": "Alert",
+    "tagName": "Alert",
     "description": "An alert displays a short, important message in a way that attracts the user's attention without interrupting the user's task.",
     "components": [
       "Alert",
@@ -40,7 +40,7 @@
   },
   {
     "name": "app-bar",
-    "title": "App Bar",
+    "tagName": "App Bar",
     "description": "The App Bar displays information and actions relating to the current screen.",
     "components": [
       "AppBar",
@@ -60,7 +60,7 @@
   },
   {
     "name": "autocomplete",
-    "title": "Autocomplete",
+    "tagName": "Autocomplete",
     "description": "The autocomplete is a normal text input enhanced by a panel of suggested options.",
     "components": [
       "TextField",
@@ -108,7 +108,7 @@
   },
   {
     "name": "avatars",
-    "title": "Avatar",
+    "tagName": "Avatar",
     "description": "Avatars are found throughout material design with uses in everything from tables to dialog menus.",
     "components": [
       "Avatar",
@@ -160,7 +160,7 @@
   },
   {
     "name": "backdrop",
-    "title": "Backdrop",
+    "tagName": "Backdrop",
     "description": "The Backdrop component narrows the user's focus to a particular element on the screen.",
     "components": [
       "Backdrop"
@@ -174,7 +174,7 @@
   },
   {
     "name": "badges",
-    "title": "Badge",
+    "tagName": "Badge",
     "description": "Badge generates a small badge to the top-right of its child(ren).",
     "components": [
       "Badge"
@@ -216,7 +216,7 @@
   },
   {
     "name": "bottom-navigation",
-    "title": "Bottom Navigation",
+    "tagName": "Bottom Navigation",
     "description": "The Bottom Navigation bar allows movement between primary destinations in an app.",
     "components": [
       "BottomNavigation",
@@ -231,7 +231,7 @@
   },
   {
     "name": "box",
-    "title": "Box",
+    "tagName": "Box",
     "description": "The Box component serves as a wrapper component for most of the CSS utility needs.",
     "components": [
       "Box"
@@ -249,7 +249,7 @@
   },
   {
     "name": "breadcrumbs",
-    "title": "Breadcrumbs",
+    "tagName": "Breadcrumbs",
     "description": "A breadcrumbs is a list of links that help visualize a page's location within a site's hierarchical structure, it allows navigation up to any of the ancestors.",
     "components": [
       "Breadcrumbs",
@@ -277,7 +277,7 @@
   },
   {
     "name": "button-group",
-    "title": "Button Group",
+    "tagName": "Button Group",
     "description": "The ButtonGroup component can be used to group related buttons.",
     "components": [
       "Button",
@@ -304,7 +304,7 @@
   },
   {
     "name": "buttons",
-    "title": "Button",
+    "tagName": "Button",
     "description": "Buttons allow users to take actions, and make choices, with a single tap.",
     "components": [
       "Button",
@@ -369,7 +369,7 @@
   },
   {
     "name": "cards",
-    "title": "Card",
+    "tagName": "Card",
     "description": "Cards contain content and actions about a single subject.",
     "components": [
       "Card",
@@ -390,7 +390,7 @@
   },
   {
     "name": "checkboxes",
-    "title": "Checkbox",
+    "tagName": "Checkbox",
     "description": "Checkboxes allow the user to select one or more items from a set.",
     "components": [
       "Checkbox",
@@ -436,7 +436,7 @@
   },
   {
     "name": "chips",
-    "title": "Chip",
+    "tagName": "Chip",
     "description": "Chips are compact elements that represent an input, attribute, or action.",
     "components": [
       "Chip"
@@ -490,7 +490,7 @@
   },
   {
     "name": "click-away-listener",
-    "title": "Click-Away Listener",
+    "tagName": "Click-Away Listener",
     "description": "The Click-Away Listener component detects when a click event happens outside of its child element.",
     "components": [
       "ClickAwayListener"
@@ -512,7 +512,7 @@
   },
   {
     "name": "container",
-    "title": "Container",
+    "tagName": "Container",
     "description": "The container centers your content horizontally. It's the most basic layout element.",
     "components": [
       "Container"
@@ -530,7 +530,7 @@
   },
   {
     "name": "dialogs",
-    "title": "Dialog",
+    "tagName": "Dialog",
     "description": "Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.",
     "components": [
       "Dialog",
@@ -549,7 +549,7 @@
   },
   {
     "name": "dividers",
-    "title": "Divider",
+    "tagName": "Divider",
     "description": "A divider is a thin line that groups content in lists and layouts.",
     "components": [
       "Divider"
@@ -571,7 +571,7 @@
   },
   {
     "name": "drawers",
-    "title": "Drawer",
+    "tagName": "Drawer",
     "description": "The navigation drawers (or \"sidebars\") provide ergonomic access to destinations in a site or app functionality such as switching accounts.",
     "components": [
       "Drawer",
@@ -590,7 +590,7 @@
   },
   {
     "name": "floating-action-button",
-    "title": "Floating Action Button",
+    "tagName": "Floating Action Button",
     "description": "A Floating Action Button (FAB) performs the primary, or most common, action on a screen.",
     "components": [
       "Fab"
@@ -612,7 +612,7 @@
   },
   {
     "name": "grid",
-    "title": "Grid",
+    "tagName": "Grid",
     "description": "The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.",
     "components": [
       "Grid"
@@ -658,7 +658,7 @@
   },
   {
     "name": "grid2",
-    "title": "Grid version 2",
+    "tagName": "Grid version 2",
     "description": "The responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.",
     "components": [],
     "examples": [
@@ -706,7 +706,7 @@
   },
   {
     "name": "icons",
-    "title": "Icons",
+    "tagName": "Icons",
     "description": "Guidance and suggestions for using icons with Material UI.",
     "components": [
       "Icon",
@@ -753,7 +753,7 @@
   },
   {
     "name": "image-list",
-    "title": "Image List",
+    "tagName": "Image List",
     "description": "The Image List displays a collection of images in an organized grid.",
     "components": [
       "ImageList",
@@ -785,7 +785,7 @@
   },
   {
     "name": "links",
-    "title": "Links",
+    "tagName": "Links",
     "description": "The Link component allows you to easily customize anchor elements with your theme colors and typography styles.",
     "components": [
       "Link"
@@ -807,7 +807,7 @@
   },
   {
     "name": "lists",
-    "title": "Lists",
+    "tagName": "Lists",
     "description": "Lists are continuous, vertical indexes of text or images.",
     "components": [
       "Collapse",
@@ -834,7 +834,7 @@
   },
   {
     "name": "masonry",
-    "title": "Masonry",
+    "tagName": "Masonry",
     "description": "Masonry lays out contents of varying dimensions as blocks of the same width and different height with configurable gaps.",
     "components": [
       "Masonry"
@@ -872,7 +872,7 @@
   },
   {
     "name": "menus",
-    "title": "Menu",
+    "tagName": "Menu",
     "description": "Menus display a list of choices on temporary surfaces.",
     "components": [
       "Menu",
@@ -891,7 +891,7 @@
   },
   {
     "name": "modal",
-    "title": "Modal",
+    "tagName": "Modal",
     "description": "The modal component provides a solid foundation for creating dialogs, popovers, lightboxes, or whatever else.",
     "components": [
       "Modal"
@@ -909,7 +909,7 @@
   },
   {
     "name": "no-ssr",
-    "title": "No SSR",
+    "tagName": "No SSR",
     "description": "The No-SSR component defers the rendering of children components from the server to the client.",
     "components": [
       "NoSsr"
@@ -923,7 +923,7 @@
   },
   {
     "name": "pagination",
-    "title": "Pagination",
+    "tagName": "Pagination",
     "description": "The Pagination component enables the user to select a specific page from a range of pages.",
     "components": [
       "Pagination",
@@ -974,7 +974,7 @@
   },
   {
     "name": "paper",
-    "title": "Paper",
+    "tagName": "Paper",
     "description": "The Paper component is a container for displaying content on an elevated surface.",
     "components": [
       "Paper"
@@ -996,7 +996,7 @@
   },
   {
     "name": "popover",
-    "title": "Popover",
+    "tagName": "Popover",
     "description": "A Popover can be used to display some content on top of another.",
     "components": [
       "Grow",
@@ -1011,7 +1011,7 @@
   },
   {
     "name": "popper",
-    "title": "Popper",
+    "tagName": "Popper",
     "description": "A Popper can be used to display some content on top of another. It's an alternative to react-popper.",
     "components": [
       "Popper"
@@ -1033,7 +1033,7 @@
   },
   {
     "name": "portal",
-    "title": "Portal",
+    "tagName": "Portal",
     "description": "The Portal component lets you render its children into a DOM node that exists outside of the Portal's own DOM hierarchy.",
     "components": [
       "Portal"
@@ -1047,7 +1047,7 @@
   },
   {
     "name": "progress",
-    "title": "Progress",
+    "tagName": "Progress",
     "description": "Progress indicators commonly known as spinners, express an unspecified wait time or display the length of a process.",
     "components": [
       "CircularProgress",
@@ -1102,7 +1102,7 @@
   },
   {
     "name": "radio-buttons",
-    "title": "Radio Group",
+    "tagName": "Radio Group",
     "description": "The Radio Group allows the user to select one option from a set.",
     "components": [
       "Radio",
@@ -1140,7 +1140,7 @@
   },
   {
     "name": "rating",
-    "title": "Rating",
+    "tagName": "Rating",
     "description": "Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.",
     "components": [
       "Rating"
@@ -1178,7 +1178,7 @@
   },
   {
     "name": "selects",
-    "title": "Select",
+    "tagName": "Select",
     "description": "Select components are used for collecting user provided information from a list of options.",
     "components": [
       "Select",
@@ -1197,7 +1197,7 @@
   },
   {
     "name": "skeleton",
-    "title": "Skeleton",
+    "tagName": "Skeleton",
     "description": "Display a placeholder preview of your content before the data gets loaded to reduce load-time frustration.",
     "components": [
       "Skeleton"
@@ -1235,7 +1235,7 @@
   },
   {
     "name": "slider",
-    "title": "Slider",
+    "tagName": "Slider",
     "description": "Sliders allow users to make selections from a range of values.",
     "components": [
       "Slider"
@@ -1293,7 +1293,7 @@
   },
   {
     "name": "snackbars",
-    "title": "Snackbar",
+    "tagName": "Snackbar",
     "description": "Snackbars provide brief notifications. The component is also known as a toast.",
     "components": [
       "Snackbar",
@@ -1324,7 +1324,7 @@
   },
   {
     "name": "speed-dial",
-    "title": "Speed Dial",
+    "tagName": "Speed Dial",
     "description": "When pressed, a floating action button can display three to six related actions in the form of a Speed Dial.",
     "components": [
       "SpeedDial",
@@ -1344,7 +1344,7 @@
   },
   {
     "name": "stack",
-    "title": "Stack",
+    "tagName": "Stack",
     "description": "Stack is a container component for arranging elements vertically or horizontally.",
     "components": [
       "Stack"
@@ -1374,7 +1374,7 @@
   },
   {
     "name": "steppers",
-    "title": "Stepper",
+    "tagName": "Stepper",
     "description": "Steppers convey progress through numbered steps. It provides a wizard-like workflow.",
     "components": [
       "MobileStepper",
@@ -1399,7 +1399,7 @@
   },
   {
     "name": "switches",
-    "title": "Switch",
+    "tagName": "Switch",
     "description": "Switches toggle the state of a single setting on or off.",
     "components": [
       "Switch",
@@ -1433,7 +1433,7 @@
   },
   {
     "name": "table",
-    "title": "Table",
+    "tagName": "Table",
     "description": "Tables display sets of data. They can be fully customized.",
     "components": [
       "Table",
@@ -1459,7 +1459,7 @@
   },
   {
     "name": "tabs",
-    "title": "Tabs",
+    "tagName": "Tabs",
     "description": "Tabs make it easy to explore and switch between different views.",
     "components": [
       "Tabs",
@@ -1534,7 +1534,7 @@
   },
   {
     "name": "text-fields",
-    "title": "Text Field",
+    "tagName": "Text Field",
     "description": "Text Fields let users enter and edit text.",
     "components": [
       "FilledInput",
@@ -1596,7 +1596,7 @@
   },
   {
     "name": "textarea-autosize",
-    "title": "Textarea Autosize",
+    "tagName": "Textarea Autosize",
     "description": "The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.",
     "components": [
       "TextareaAutosize"
@@ -1618,7 +1618,7 @@
   },
   {
     "name": "timeline",
-    "title": "Timeline",
+    "tagName": "Timeline",
     "description": "The timeline displays a list of events in chronological order.",
     "components": [
       "Timeline",
@@ -1638,7 +1638,7 @@
   },
   {
     "name": "toggle-button",
-    "title": "Toggle Button",
+    "tagName": "Toggle Button",
     "description": "A Toggle Button can be used to group related options.",
     "components": [
       "ToggleButton",
@@ -1665,7 +1665,7 @@
   },
   {
     "name": "tooltips",
-    "title": "Tooltip",
+    "tagName": "Tooltip",
     "description": "Tooltips display informative text when users hover over, focus on, or tap an element.",
     "components": [
       "Tooltip"
@@ -1715,7 +1715,7 @@
   },
   {
     "name": "transitions",
-    "title": "Transitions",
+    "tagName": "Transitions",
     "description": "Transitions help to make a UI expressive and easy to use.",
     "components": [
       "Collapse",
@@ -1753,7 +1753,7 @@
   },
   {
     "name": "typography",
-    "title": "Typography",
+    "tagName": "Typography",
     "description": "",
     "components": [
       "Typography"
@@ -1767,7 +1767,7 @@
   },
   {
     "name": "use-media-query",
-    "title": "useMediaQuery",
+    "tagName": "useMediaQuery",
     "description": "This React hook listens for matches to a CSS media query. It allows the rendering of components based on whether the query matches or not.",
     "components": [],
     "examples": [

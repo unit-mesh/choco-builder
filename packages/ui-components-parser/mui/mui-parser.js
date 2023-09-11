@@ -66,7 +66,7 @@ const components = result.map(key => {
     const items = needToHandleDir[key];
     const componentInfo = {
         name: key.split('/').pop(),
-        title: '',
+        tagName: '',
         description: '',
         components: [],
         examples: [],
@@ -75,7 +75,7 @@ const components = result.map(key => {
     items.forEach(item => {
         if (item.endsWith('.md')) {
             let results = parseMd(item);
-            componentInfo.title = results.title;
+            componentInfo.tagName = results.title;
             componentInfo.description = results.description;
             componentInfo.components = results.components;
         }
@@ -90,7 +90,7 @@ const components = result.map(key => {
     });
 
     if (componentInfo.components.length === 0 && componentInfo.examples.length > 0) {
-        var maybeTagName = componentInfo.title
+        const maybeTagName = componentInfo.tagName;
         // if title same with example html tag name, then use it; like title is `Accordion`, example is <Accordion /..>
         componentInfo.examples.forEach(example => {
             if (example.content.startsWith(`<${maybeTagName}`)) {

@@ -10,7 +10,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.Id
 
 @Entity
-class EmbeddingCache(
+public class EmbeddingCache(
     @Id
     val id: String = IdUtil.uuid(),
 

@@ -11,9 +11,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UiComponent(
     override val id: String = IdUtil.uuid(),
-
     override val name: String,
-    val title: String,
+
+    // like: <div>, <Button>
+    val tagName: String,
     val components: List<String>,
     val description: String,
     val examples: List<ComponentExample> = emptyList(),
