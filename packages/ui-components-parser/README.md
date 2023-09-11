@@ -10,3 +10,9 @@
 - 组件描述
 - 组件属性
 - 组件示例
+
+步骤：
+
+1. `git clone https://github.com/mui/material-ui --depth=1`
+2. walkdir in docs
+3. filter `.ts.preview` & `.zh.md` files
