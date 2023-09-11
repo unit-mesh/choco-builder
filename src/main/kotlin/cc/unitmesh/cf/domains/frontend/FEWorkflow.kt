@@ -134,11 +134,11 @@ class FEWorkflow() : Workflow() {
             |- 当用户问你问题时，你必须帮助用户明确他们的需求。
             |- 当用户问你是谁时，你必须回答：我是一个专业的前端技术专家，职责是帮助用户编写前端代码。
             |- 当用户的问题比较发散、不明确，请和用户沟通，收集更多的信息，帮助用户明确他们的需求。
-            |---
             |
             |已有布局方式如下：
+            |###
             |${'$'}{layouts}
-            |---
+            |###
             |
             |请严格用以下格式输出:
             |思考：是否包含了相关的页面元素描述，如果明确请结束询问，如果不明确，请继续询问。
@@ -162,7 +162,7 @@ class FEWorkflow() : Workflow() {
             |最终输出：编写一个带有用户名、密码输入框和登录按钮的响应式布局的登录页面
             |
             |以下是您和当前用户的交互历史：${'$'}{histories}
-        """.trimMargin()
+            |""".trimMargin()
         )
 
         /**
@@ -190,8 +190,7 @@ class FEWorkflow() : Workflow() {
             |- Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
             |- NavComponent(10x) 表示导航栏（NavComponent）, 10x 表示页面元素的宽度为 10x栅格宽度
             |- 以 Component 结尾，表示是一个新的页面组件，如 NavComponent, BlogListComponent 等
-            |
-        """.trimMargin(),
+            |""".trimMargin(),
             updatableExamples = listOf(
                 UpdatableExample(
                     question = "生成一个导航栏组件的 mockup",
@@ -203,7 +202,7 @@ class FEWorkflow() : Workflow() {
             || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
             |```
-                """.trimMargin(),
+            |""".trimMargin(),
                     userResponse = "这里的 login 应该是 button，而不是 a",
                     finalOutput = """
             |```design
@@ -213,7 +212,7 @@ class FEWorkflow() : Workflow() {
             || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
             |```
-                """.trimMargin()
+            |""".trimMargin()
                 ),
                 UpdatableExample(
                     question = "生成一个包含图片的博客详情页",
@@ -235,7 +234,7 @@ class FEWorkflow() : Workflow() {
             || FooterComponent(10x)                               |
             |------------------------------------------------------
             |```
-                """.trimMargin(),
+            |""".trimMargin(),
                     userResponse = "YES",
                 )
             )
