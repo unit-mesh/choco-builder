@@ -64,3 +64,73 @@ onClose={handleClose}
 ```
 
 现在请你生成前端代码，代码使用 Markdown 语言编写，以便用户可以直接复制到项目中。
+
+
+## Output Examples:
+
+
+```tsx
+import React, { useState } from 'react';
+import { Grid, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+
+const BlogPostPage: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const handleSaveDraft = () => {
+    // 保存草稿的逻辑
+    setOpen(true);
+  };
+
+  const handlePublish = () => {
+    // 发布博客的逻辑
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <TextField
+          label="Title"
+          fullWidth
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Content"
+          fullWidth
+          multiline
+          rows={4}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <Typography>Date</Typography>
+      </Grid>
+      <Grid item xs={6}>
+        <Button variant="contained" onClick={handleSaveDraft}>Save Draft</Button>
+        <Button variant="contained" color="primary" onClick={handlePublish}>Publish</Button>
+      </Grid>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Success!</DialogTitle>
+        <DialogContent>
+          <Typography variant="subtitle1">Blog post created successfully!</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">OK</Button>
+        </DialogActions>
+      </Dialog>
+    </Grid>
+  );
+};
+
+export default BlogPostPage;
+``` 
