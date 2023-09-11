@@ -28,6 +28,7 @@ decalartions
     | componentDeclaration
     | libraryDeclaration
     | layoutDeclaration
+    | simpleLayoutDeclaration
     ;
 
 // Flow
@@ -81,6 +82,8 @@ componentBodyDeclaration
     ;
 
 layoutDeclaration: LAYOUT IDENTIFIER LBRACE layoutRow* RBRACE;
+
+simpleLayoutDeclaration: layoutRow (layoutRow)*;
 
 
 REPEAT: 'repeat';

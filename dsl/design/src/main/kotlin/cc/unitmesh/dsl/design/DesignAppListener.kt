@@ -18,7 +18,7 @@ class DesignAppListener() : DesignBaseListener() {
         val interactions = buildInteractions(ctx!!.interactionDeclaration())
         val flow = DFlow(
             interactions = interactions,
-            flowName = ctx!!.IDENTIFIER().text,
+            flowName = ctx.IDENTIFIER().text,
         )
         flows.add(flow)
     }
@@ -139,26 +139,30 @@ class DesignAppListener() : DesignBaseListener() {
 
     override fun enterLayoutDeclaration(ctx: DesignParser.LayoutDeclarationContext?) {
         val layout = DLayout(ctx!!.IDENTIFIER().text, emptyList())
-        ctx.layoutRow().forEach { row ->
+        val layoutRows = ctx.layoutRow()
+
+        layout.layoutRows = layoutRows.map { row ->
+            val layoutRow = DLayoutRow(emptyList())
             if (row.getChild(0) !is DesignParser.LayoutLinesContext) {
-                return@forEach
+                return@map null
             }
 
             val lines = (row.getChild(0) as DesignParser.LayoutLinesContext).layoutLine()
-            val layoutRow = DLayoutRow(emptyList())
-
-            lines.forEach { line ->
+            layoutRow.layoutCells = lines.map { line ->
                 val cell = DLayoutCell("", "", "")
                 val declaration = line.componentUseDeclaration()
                 parseLayoutLine(declaration, cell)
-
-                layoutRow.layoutCells += cell
+                cell
             }
 
-            layout.layoutRows += layoutRow
-        }
+            layoutRow
+        }.filterNotNull()
 
         layouts += layout
+    }
+
+    override fun enterSimpleLayoutDeclaration(ctx: DesignParser.SimpleLayoutDeclarationContext?) {
+
     }
 
     private fun parseLayoutLine(declaration: DesignParser.ComponentUseDeclarationContext, cell: DLayoutCell) {

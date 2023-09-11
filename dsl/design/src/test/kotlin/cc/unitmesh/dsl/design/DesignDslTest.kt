@@ -160,4 +160,24 @@ library Button {
         design.libraries[2].libraryPresets[0].inheritProps[0].key shouldBe "FontSize"
         design.libraries[2].libraryPresets[0].inheritProps[0].value shouldBe "H2"
     }
+
+    @Test
+    fun simple_dsl_for_layout() {
+        val dsl = """------------------------------------------------------
+|      NavComponent(10x)                             |
+------------------------------------------------------
+| TextField(10x)                                      |
+------------------------------------------------------
+| TextField(10x)                                      |
+------------------------------------------------------
+| TextField(10x)                                      |
+------------------------------------------------------
+| Button("存为草稿")                                  |
+------------------------------------------------------
+| Dialog("创建成功！")                               |
+------------------------------------------------------"""
+
+        val design = DesignDsl().analysis(dsl)
+        design.layouts[0].layoutRows.size shouldBe 6
+    }
 }
