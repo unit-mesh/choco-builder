@@ -15,7 +15,8 @@ function walkDir(dir) {
         if (stat.isDirectory()) {
             walkDir(filePath);
         } else {
-            if (file.endsWith('-zh.md') || file.endsWith('.tsx.preview')) {
+            const dirName = path.basename(path.dirname(filePath));
+            if (file.endsWith(dirName + '.md') || file.endsWith('.tsx.preview')) {
                 const component = path.dirname(filePath);
                 if (needToHandleDir[component]) {
                     needToHandleDir[component].push(filePath);
@@ -45,7 +46,8 @@ const result = Object.keys(needToHandleDir).filter(key => {
     let hasTsxPreview = false;
 
     items.forEach(item => {
-        if (item.endsWith('-zh.md')) {
+        const dirName = path.basename(path.dirname(item));
+        if (item.endsWith(dirName + '.md')) {
             hasZhMd = true;
         } else if (item.endsWith('.tsx.preview')) {
             hasTsxPreview = true;
@@ -67,14 +69,14 @@ const components = result.map(key => {
     };
 
     items.forEach(item => {
-        if (item.endsWith('-zh.md')) {
+        if (item.endsWith('.md')) {
             let results = parseMd(item);
             componentInfo.title = results.title;
             componentInfo.description = results.description;
             componentInfo.components = results.components;
         }
         if (item.endsWith('.tsx.preview')) {
-            var name = item.split('/').pop()
+            let name = item.split('/').pop();
             name = name.replace('.tsx.preview', '');
             componentInfo.examples.push({
                 name: name,
