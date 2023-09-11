@@ -6,15 +6,15 @@ interface LayoutCellProps {
 }
 
 const LayoutCell = ({ componentName, layoutInformation }: LayoutCellProps) => {
-  let width = layoutInformation.replace('x', '');
+  let width = layoutInformation.replace('x', '')
 
-    return <div className={`w-${width}/12 px-4 py-2 bg-violet-500 rounded-lg shadow-lg text-center text-white`}>
-      {componentName}
-    </div>
+  return <div className={`w-${width}/12 px-4 py-2 bg-violet-500 rounded-lg shadow-lg text-center text-white`}>
+    {componentName}
+  </div>
 }
 
 const LayoutRow = ({ layoutCells }: { layoutCells: DLayoutCell[] }) => (
-  <div className="flex space-x-4">
+  <div className="flex">
     {layoutCells.map((cell, index) => {
       return <LayoutCell {...cell} key={index} />
     })}

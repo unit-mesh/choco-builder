@@ -186,7 +186,7 @@ class FEWorkflow() : Workflow() {
             |
             |###
             |- a(), p() 以小写字母开头的函数，表示页面元素
-            |- Footer(10x),BlogList(10x) 以大写字母开头的函数，表示页面组件
+            |- Footer(12x),BlogList(12x) 以大写字母开头的函数，表示页面组件
             |- Grid, Box 是页面布局组件，通常都需要使用
             |- Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
             |- NavComponent(10x) 表示导航栏（NavComponent）, 10x 表示页面元素的宽度为 10x栅格宽度
@@ -221,17 +221,17 @@ class FEWorkflow() : Workflow() {
             |pageName: 博客详情页
             |usedComponents: Grid, Box, NavComponent, Avatar, Date, CardMedia, Typography, Pagination, FooterComponent
             |------------------------------------------------------
-            ||      NavComponent(10x)                             |
+            ||      NavComponent(12x)                             |
             |------------------------------------------------------
-            ||    Text(6x)                     |   Empty(4x)      |
+            ||    Text(6x)                     |   Empty(6x)      |
             |------------------------------------------------------
-            || Avatar(2x)  | Date(2x)          |   Empty(6x)      |
+            || Avatar(3x)  | Date(3x)          |   Empty(6x)      |
             |------------------------------------------------------
-            || CardMedia(8x)                                      |
+            || CardMedia(8x)                   |   Empty(4x)      |
             |------------------------------------------------------
-            || Typography(10x)                                    |
+            || Typography(12x)                                    |
             |------------------------------------------------------
-            || FooterComponent(10x)                               |
+            || FooterComponent(12x)                               |
             |------------------------------------------------------
             |```""".trimMargin()
                 )

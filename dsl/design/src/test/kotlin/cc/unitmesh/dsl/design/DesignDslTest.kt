@@ -166,17 +166,17 @@ library Button {
     @Test
     fun simple_dsl_for_layout() {
         val dsl = """------------------------------------------------------
-|      NavComponent(10x)                             |
+|      NavComponent(12x)                             |
 ------------------------------------------------------
-|    Text(6x)                     |   Empty(4x)      |
+|    Text(6x)                     |   Empty(6x)      |
 ------------------------------------------------------
-| Avatar(2x)  | Date(2x)          |   Empty(6x)      |
+| Avatar(3x)  | Date(3x)          |   Empty(6x)      |
 ------------------------------------------------------
-| CardMedia(8x)                                      |
+| CardMedia(8x)                   |   Empty(4x)      |
 ------------------------------------------------------
-| Typography(10x)                                    |
+| Typography(12x)                                    |
 ------------------------------------------------------
-| FooterComponent(10x)                               |
+| FooterComponent(12x)                               |
 ------------------------------------------------------"""
 
         val design = DesignDsl().analysis(dsl)
