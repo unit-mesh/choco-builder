@@ -29,7 +29,10 @@ const Layout = ({ layoutRows }: { layoutRows: DLayoutRow[] }) => (
   </div>
 )
 
-export const DslRender = ({ dsl }: { dsl: DesignInformation }) => {
+export const DesignDslRender = ({ dsl }: { dsl: DesignInformation }) => {
+  console.log('DesignDslRender')
+  console.log(dsl)
+
   return (
     <div>
       <Layout layoutRows={dsl.layouts[0].layoutRows} />

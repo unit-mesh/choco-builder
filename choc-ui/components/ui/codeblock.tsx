@@ -12,6 +12,8 @@ import { IconCheck, IconCopy, IconDownload } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { InterpreterMessage } from '@/components/interpreter/message'
 import { Iframe } from '@/components/interpreter/iframe'
+import {DesignDslRender} from "@/components/dsl/design-dsl-render";
+import {DesignBlock} from "@/components/dsl/design-block";
 
 interface Props {
   language: string
@@ -59,7 +61,7 @@ export const generateRandomString = (length: number, lowercase = false) => {
 }
 
 const CodeBlock: FC<Props> = memo(({ language, value }) => {
-  if (language == 'interpreter') {
+  if (language === 'interpreter') {
     // if value is string , convert to json
     if (typeof value == 'string') {
       value = JSON.parse(value)
@@ -80,6 +82,10 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
 
       return <CodeBlock language={'markdown'} value={JSON.stringify(msg.resultValue)} />
     }
+  }
+
+  if (language === 'design') {
+    return <DesignBlock value={value} />
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
