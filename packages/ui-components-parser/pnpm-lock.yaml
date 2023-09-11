@@ -1,0 +1,32 @@
+lockfileVersion: '6.0'
+
+dependencies:
+  acorn:
+    specifier: ^8.10.0
+    version: 8.10.0
+  marked:
+    specifier: ^9.0.0
+    version: 9.0.0
+  typescript:
+    specifier: ^5.2.2
+    version: 5.2.2
+
+packages:
+
+  /acorn@8.10.0:
+    resolution: {integrity: sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+    dev: false
+
+  /marked@9.0.0:
+    resolution: {integrity: sha512-37yoTpjU+TSXb9OBYY5n78z/CqXh76KiQj9xsKxEdztzU9fRLmbWO5YqKxgCVGKlNdexppnbKTkwB3RipVri8w==}
+    engines: {node: '>= 16'}
+    hasBin: true
+    dev: false
+
+  /typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: false

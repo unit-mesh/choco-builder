@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MPL-2.0"
+  "license": "MPL-2.0",
+  "dependencies": {
+    "acorn": "^8.10.0",
+    "marked": "^9.0.0",
+    "typescript": "^5.2.2"
+  }
 }
