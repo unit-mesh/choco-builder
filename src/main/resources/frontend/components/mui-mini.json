@@ -1,75 +1,490 @@
 [
   {
-    "name": "autocomplete",
-    "title": "Autocomplete",
-    "description": "An autocomplete component is a text input enhanced by a panel of suggested options.",
+    "name": "alert",
+    "title": "Alert",
+    "description": "An alert displays a short, important message in a way that attracts the user's attention without interrupting the user's task.",
     "components": [
-      "Autocomplete"
+      "Alert",
+      "AlertTitle"
     ],
     "examples": [
       {
-        "name": "UseAutocomplete",
-        "content": "<StyledLabel {...getInputLabelProps()}>Pick a movie</StyledLabel>\n<StyledAutocompleteRoot\n  {...getRootProps()}\n  className={focused ? 'focused' : ''}\n>\n  <StyledInput {...getInputProps()} />\n</StyledAutocompleteRoot>\n{groupedOptions.length > 0 && (\n  <StyledListbox {...getListboxProps()}>\n    {(groupedOptions as typeof top100Films).map((option, index) => (\n      <StyledOption {...getOptionProps({ option, index })}>\n        {option.label}\n      </StyledOption>\n    ))}\n  </StyledListbox>\n)}"
+        "name": "ActionAlerts",
+        "content": "<Alert onClose={() => {}}>This is a success alert — check it out!</Alert>\n<Alert\n  action={\n    <Button color=\"inherit\" size=\"small\">\n      UNDO\n    </Button>\n  }\n>\n  This is a success alert — check it out!\n</Alert>"
       },
       {
-        "name": "UseAutocompletePopper",
-        "content": "<Autocomplete options={top100Films} value={value} onChange={handleChange} />"
+        "name": "BasicAlerts",
+        "content": "<Alert severity=\"error\">This is an error alert — check it out!</Alert>\n<Alert severity=\"warning\">This is a warning alert — check it out!</Alert>\n<Alert severity=\"info\">This is an info alert — check it out!</Alert>\n<Alert severity=\"success\">This is a success alert — check it out!</Alert>"
+      },
+      {
+        "name": "ColorAlerts",
+        "content": "<Alert severity=\"success\" color=\"info\">\n  This is a success alert — check it out!\n</Alert>"
+      },
+      {
+        "name": "DescriptionAlerts",
+        "content": "<Alert severity=\"error\">\n  <AlertTitle>Error</AlertTitle>\n  This is an error alert — <strong>check it out!</strong>\n</Alert>\n<Alert severity=\"warning\">\n  <AlertTitle>Warning</AlertTitle>\n  This is a warning alert — <strong>check it out!</strong>\n</Alert>\n<Alert severity=\"info\">\n  <AlertTitle>Info</AlertTitle>\n  This is an info alert — <strong>check it out!</strong>\n</Alert>\n<Alert severity=\"success\">\n  <AlertTitle>Success</AlertTitle>\n  This is a success alert — <strong>check it out!</strong>\n</Alert>"
+      },
+      {
+        "name": "FilledAlerts",
+        "content": "<Alert variant=\"filled\" severity=\"error\">\n  This is an error alert — check it out!\n</Alert>\n<Alert variant=\"filled\" severity=\"warning\">\n  This is a warning alert — check it out!\n</Alert>\n<Alert variant=\"filled\" severity=\"info\">\n  This is an info alert — check it out!\n</Alert>\n<Alert variant=\"filled\" severity=\"success\">\n  This is a success alert — check it out!\n</Alert>"
+      },
+      {
+        "name": "IconAlerts",
+        "content": "<Alert icon={<CheckIcon fontSize=\"inherit\" />} severity=\"success\">\n  This is a success alert — check it out!\n</Alert>\n<Alert\n  iconMapping={{\n    success: <CheckCircleOutlineIcon fontSize=\"inherit\" />,\n  }}\n>\n  This is a success alert — check it out!\n</Alert>\n<Alert icon={false} severity=\"success\">\n  This is a success alert — check it out!\n</Alert>"
+      },
+      {
+        "name": "OutlinedAlerts",
+        "content": "<Alert variant=\"outlined\" severity=\"error\">\n  This is an error alert — check it out!\n</Alert>\n<Alert variant=\"outlined\" severity=\"warning\">\n  This is a warning alert — check it out!\n</Alert>\n<Alert variant=\"outlined\" severity=\"info\">\n  This is an info alert — check it out!\n</Alert>\n<Alert variant=\"outlined\" severity=\"success\">\n  This is a success alert — check it out!\n</Alert>"
       }
     ]
   },
   {
-    "name": "badge",
+    "name": "app-bar",
+    "title": "App Bar",
+    "description": "The App Bar displays information and actions relating to the current screen.",
+    "components": [
+      "AppBar",
+      "Toolbar",
+      "Menu"
+    ],
+    "examples": [
+      {
+        "name": "DenseAppBar",
+        "content": "<AppBar position=\"static\">\n  <Toolbar variant=\"dense\">\n    <IconButton edge=\"start\" color=\"inherit\" aria-label=\"menu\" sx={{ mr: 2 }}>\n      <MenuIcon />\n    </IconButton>\n    <Typography variant=\"h6\" color=\"inherit\" component=\"div\">\n      Photos\n    </Typography>\n  </Toolbar>\n</AppBar>"
+      },
+      {
+        "name": "EnableColorOnDarkAppBar",
+        "content": "<ThemeProvider theme={darkTheme}>\n  <AppBar position=\"static\" color=\"primary\" enableColorOnDark>\n    {appBarLabel('enableColorOnDark')}\n  </AppBar>\n  <AppBar position=\"static\" color=\"primary\">\n    {appBarLabel('default')}\n  </AppBar>\n</ThemeProvider>"
+      }
+    ]
+  },
+  {
+    "name": "autocomplete",
+    "title": "Autocomplete",
+    "description": "The autocomplete is a normal text input enhanced by a panel of suggested options.",
+    "components": [
+      "TextField",
+      "Popper",
+      "Autocomplete"
+    ],
+    "examples": [
+      {
+        "name": "ComboBox",
+        "content": "<Autocomplete\n  disablePortal\n  id=\"combo-box-demo\"\n  options={top100Films}\n  sx={{ width: 300 }}\n  renderInput={(params) => <TextField {...params} label=\"Movie\" />}\n/>"
+      },
+      {
+        "name": "DisabledOptions",
+        "content": "<Autocomplete\n  id=\"disabled-options-demo\"\n  options={timeSlots}\n  getOptionDisabled={(option) =>\n    option === timeSlots[0] || option === timeSlots[2]\n  }\n  sx={{ width: 300 }}\n  renderInput={(params) => <TextField {...params} label=\"Disabled options\" />}\n/>"
+      },
+      {
+        "name": "Filter",
+        "content": "<Autocomplete\n  id=\"filter-demo\"\n  options={top100Films}\n  getOptionLabel={(option) => option.title}\n  filterOptions={filterOptions}\n  sx={{ width: 300 }}\n  renderInput={(params) => <TextField {...params} label=\"Custom filter\" />}\n/>"
+      },
+      {
+        "name": "GloballyCustomizedOptions",
+        "content": "<ThemeProvider theme={customTheme(outerTheme)}>\n  <Stack spacing={5} sx={{ width: 300 }}>\n    <MovieSelect />\n    <CountrySelect />\n  </Stack>\n</ThemeProvider>"
+      },
+      {
+        "name": "Grouped",
+        "content": "<Autocomplete\n  id=\"grouped-demo\"\n  options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}\n  groupBy={(option) => option.firstLetter}\n  getOptionLabel={(option) => option.title}\n  sx={{ width: 300 }}\n  renderInput={(params) => <TextField {...params} label=\"With categories\" />}\n/>"
+      },
+      {
+        "name": "LimitTags",
+        "content": "<Autocomplete\n  multiple\n  limitTags={2}\n  id=\"multiple-limit-tags\"\n  options={top100Films}\n  getOptionLabel={(option) => option.title}\n  defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}\n  renderInput={(params) => (\n    <TextField {...params} label=\"limitTags\" placeholder=\"Favorites\" />\n  )}\n  sx={{ width: '500px' }}\n/>"
+      },
+      {
+        "name": "RenderGroup",
+        "content": "<Autocomplete\n  id=\"grouped-demo\"\n  options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}\n  groupBy={(option) => option.firstLetter}\n  getOptionLabel={(option) => option.title}\n  sx={{ width: 300 }}\n  renderInput={(params) => <TextField {...params} label=\"With categories\" />}\n  renderGroup={(params) => (\n    <li key={params.key}>\n      <GroupHeader>{params.group}</GroupHeader>\n      <GroupItems>{params.children}</GroupItems>\n    </li>\n  )}\n/>"
+      },
+      {
+        "name": "UseAutocomplete",
+        "content": "<div {...getRootProps()}>\n  <Label {...getInputLabelProps()}>useAutocomplete</Label>\n  <Input {...getInputProps()} />\n</div>\n{groupedOptions.length > 0 ? (\n  <Listbox {...getListboxProps()}>\n    {(groupedOptions as typeof top100Films).map((option, index) => (\n      <li {...getOptionProps({ option, index })}>{option.title}</li>\n    ))}\n  </Listbox>\n) : null}"
+      },
+      {
+        "name": "Virtualize",
+        "content": "<Autocomplete\n  id=\"virtualize-demo\"\n  sx={{ width: 300 }}\n  disableListWrap\n  PopperComponent={StyledPopper}\n  ListboxComponent={ListboxComponent}\n  options={OPTIONS}\n  groupBy={(option) => option[0].toUpperCase()}\n  renderInput={(params) => <TextField {...params} label=\"10,000 options\" />}\n  renderOption={(props, option, state) =>\n    [props, option, state.index] as React.ReactNode\n  }\n  // TODO: Post React 18 update - validate this conversion, look like a hidden bug\n  renderGroup={(params) => params as unknown as React.ReactNode}\n/>"
+      }
+    ]
+  },
+  {
+    "name": "avatars",
+    "title": "Avatar",
+    "description": "Avatars are found throughout material design with uses in everything from tables to dialog menus.",
+    "components": [
+      "Avatar",
+      "AvatarGroup",
+      "Badge"
+    ],
+    "examples": [
+      {
+        "name": "BackgroundLetterAvatars",
+        "content": "<Avatar {...stringAvatar('Kent Dodds')} />\n<Avatar {...stringAvatar('Jed Watson')} />\n<Avatar {...stringAvatar('Tim Neutkens')} />"
+      },
+      {
+        "name": "BadgeAvatars",
+        "content": "<StyledBadge\n  overlap=\"circular\"\n  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}\n  variant=\"dot\"\n>\n  <Avatar alt=\"Remy Sharp\" src=\"/static/images/avatar/1.jpg\" />\n</StyledBadge>\n<Badge\n  overlap=\"circular\"\n  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}\n  badgeContent={\n    <SmallAvatar alt=\"Remy Sharp\" src=\"/static/images/avatar/1.jpg\" />\n  }\n>\n  <Avatar alt=\"Travis Howard\" src=\"/static/images/avatar/2.jpg\" />\n</Badge>"
+      },
+      {
+        "name": "FallbackAvatars",
+        "content": "<Avatar\n  sx={{ bgcolor: deepOrange[500] }}\n  alt=\"Remy Sharp\"\n  src=\"/broken-image.jpg\"\n>\n  B\n</Avatar>\n<Avatar\n  sx={{ bgcolor: deepOrange[500] }}\n  alt=\"Remy Sharp\"\n  src=\"/broken-image.jpg\"\n/>\n<Avatar src=\"/broken-image.jpg\" />"
+      },
+      {
+        "name": "GroupAvatars",
+        "content": "<AvatarGroup max={4}>\n  <Avatar alt=\"Remy Sharp\" src=\"/static/images/avatar/1.jpg\" />\n  <Avatar alt=\"Travis Howard\" src=\"/static/images/avatar/2.jpg\" />\n  <Avatar alt=\"Cindy Baker\" src=\"/static/images/avatar/3.jpg\" />\n  <Avatar alt=\"Agnes Walker\" src=\"/static/images/avatar/4.jpg\" />\n  <Avatar alt=\"Trevor Henderson\" src=\"/static/images/avatar/5.jpg\" />\n</AvatarGroup>"
+      },
+      {
+        "name": "IconAvatars",
+        "content": "<Avatar>\n  <FolderIcon />\n</Avatar>\n<Avatar sx={{ bgcolor: pink[500] }}>\n  <PageviewIcon />\n</Avatar>\n<Avatar sx={{ bgcolor: green[500] }}>\n  <AssignmentIcon />\n</Avatar>"
+      },
+      {
+        "name": "ImageAvatars",
+        "content": "<Avatar alt=\"Remy Sharp\" src=\"/static/images/avatar/1.jpg\" />\n<Avatar alt=\"Travis Howard\" src=\"/static/images/avatar/2.jpg\" />\n<Avatar alt=\"Cindy Baker\" src=\"/static/images/avatar/3.jpg\" />"
+      },
+      {
+        "name": "LetterAvatars",
+        "content": "<Avatar>H</Avatar>\n<Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>\n<Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>"
+      },
+      {
+        "name": "SizeAvatars",
+        "content": "<Avatar\n  alt=\"Remy Sharp\"\n  src=\"/static/images/avatar/1.jpg\"\n  sx={{ width: 24, height: 24 }}\n/>\n<Avatar alt=\"Remy Sharp\" src=\"/static/images/avatar/1.jpg\" />\n<Avatar\n  alt=\"Remy Sharp\"\n  src=\"/static/images/avatar/1.jpg\"\n  sx={{ width: 56, height: 56 }}\n/>"
+      },
+      {
+        "name": "TotalAvatars",
+        "content": "<AvatarGroup total={24}>\n  <Avatar alt=\"Remy Sharp\" src=\"/static/images/avatar/1.jpg\" />\n  <Avatar alt=\"Travis Howard\" src=\"/static/images/avatar/2.jpg\" />\n  <Avatar alt=\"Agnes Walker\" src=\"/static/images/avatar/4.jpg\" />\n  <Avatar alt=\"Trevor Henderson\" src=\"/static/images/avatar/5.jpg\" />\n</AvatarGroup>"
+      },
+      {
+        "name": "VariantAvatars",
+        "content": "<Avatar sx={{ bgcolor: deepOrange[500] }} variant=\"square\">\n  N\n</Avatar>\n<Avatar sx={{ bgcolor: green[500] }} variant=\"rounded\">\n  <AssignmentIcon />\n</Avatar>"
+      }
+    ]
+  },
+  {
+    "name": "backdrop",
+    "title": "Backdrop",
+    "description": "The Backdrop component narrows the user's focus to a particular element on the screen.",
+    "components": [
+      "Backdrop"
+    ],
+    "examples": [
+      {
+        "name": "SimpleBackdrop",
+        "content": "<Button onClick={handleOpen}>Show backdrop</Button>\n<Backdrop\n  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}\n  open={open}\n  onClick={handleClose}\n>\n  <CircularProgress color=\"inherit\" />\n</Backdrop>"
+      }
+    ]
+  },
+  {
+    "name": "badges",
     "title": "Badge",
-    "description": "The Badge component generates a small label that is attached to its child element.",
+    "description": "Badge generates a small badge to the top-right of its child(ren).",
     "components": [
       "Badge"
     ],
     "examples": [
       {
         "name": "AccessibleBadges",
-        "content": "<StyledBadge badgeContent={100}>\n  <MailIcon />\n</StyledBadge>"
+        "content": "<IconButton aria-label={notificationsLabel(100)}>\n  <Badge badgeContent={100} color=\"secondary\">\n    <MailIcon />\n  </Badge>\n</IconButton>"
       },
       {
         "name": "BadgeMax",
-        "content": "<StyledBadge badgeContent={99}>\n  <MailIcon />\n</StyledBadge>\n<StyledBadge badgeContent={100}>\n  <MailIcon />\n</StyledBadge>\n<StyledBadge badgeContent={1000} max={999}>\n  <MailIcon />\n</StyledBadge>"
+        "content": "<Badge color=\"secondary\" badgeContent={99}>\n  <MailIcon />\n</Badge>\n<Badge color=\"secondary\" badgeContent={100}>\n  <MailIcon />\n</Badge>\n<Badge color=\"secondary\" badgeContent={1000} max={999}>\n  <MailIcon />\n</Badge>"
+      },
+      {
+        "name": "BadgeOverlap",
+        "content": "<Badge color=\"secondary\" badgeContent=\" \">\n  {rectangle}\n</Badge>\n<Badge color=\"secondary\" badgeContent=\" \" variant=\"dot\">\n  {rectangle}\n</Badge>\n<Badge color=\"secondary\" overlap=\"circular\" badgeContent=\" \">\n  {circle}\n</Badge>\n<Badge color=\"secondary\" overlap=\"circular\" badgeContent=\" \" variant=\"dot\">\n  {circle}\n</Badge>"
+      },
+      {
+        "name": "ColorBadge",
+        "content": "<Badge badgeContent={4} color=\"secondary\">\n  <MailIcon color=\"action\" />\n</Badge>\n<Badge badgeContent={4} color=\"success\">\n  <MailIcon color=\"action\" />\n</Badge>"
+      },
+      {
+        "name": "CustomizedBadges",
+        "content": "<IconButton aria-label=\"cart\">\n  <StyledBadge badgeContent={4} color=\"secondary\">\n    <ShoppingCartIcon />\n  </StyledBadge>\n</IconButton>"
+      },
+      {
+        "name": "DotBadge",
+        "content": "<Badge color=\"secondary\" variant=\"dot\">\n  <MailIcon />\n</Badge>"
       },
       {
         "name": "ShowZeroBadge",
-        "content": "<StyledBadge badgeContent={0}>\n  <MailIcon />\n</StyledBadge>\n<StyledBadge badgeContent={0} showZero>\n  <MailIcon />\n</StyledBadge>"
+        "content": "<Badge color=\"secondary\" badgeContent={0}>\n  <MailIcon />\n</Badge>\n<Badge color=\"secondary\" badgeContent={0} showZero>\n  <MailIcon />\n</Badge>"
+      },
+      {
+        "name": "SimpleBadge",
+        "content": "<Badge badgeContent={4} color=\"primary\">\n  <MailIcon color=\"action\" />\n</Badge>"
       }
     ]
   },
   {
-    "name": "button",
-    "title": "Button",
-    "description": "Buttons let users take actions and make choices with a single tap.",
+    "name": "bottom-navigation",
+    "title": "Bottom Navigation",
+    "description": "The Bottom Navigation bar allows movement between primary destinations in an app.",
     "components": [
-      "Button"
+      "BottomNavigation",
+      "BottomNavigationAction"
     ],
     "examples": [
       {
-        "name": "UnstyledButtonCustom",
-        "content": "<SvgButton>Button</SvgButton>"
+        "name": "SimpleBottomNavigation",
+        "content": "<BottomNavigation\n  showLabels\n  value={value}\n  onChange={(event, newValue) => {\n    setValue(newValue);\n  }}\n>\n  <BottomNavigationAction label=\"Recents\" icon={<RestoreIcon />} />\n  <BottomNavigationAction label=\"Favorites\" icon={<FavoriteIcon />} />\n  <BottomNavigationAction label=\"Nearby\" icon={<LocationOnIcon />} />\n</BottomNavigation>"
+      }
+    ]
+  },
+  {
+    "name": "box",
+    "title": "Box",
+    "description": "The Box component serves as a wrapper component for most of the CSS utility needs.",
+    "components": [
+      "Box"
+    ],
+    "examples": [
+      {
+        "name": "BoxComponent",
+        "content": "<Button>Save</Button>"
       },
       {
-        "name": "UnstyledButtonsDisabledFocus",
-        "content": "<CustomButton disabled>focusableWhenDisabled = false</CustomButton>\n<CustomButton disabled focusableWhenDisabled>\n  focusableWhenDisabled = true\n</CustomButton>"
+        "name": "BoxSx",
+        "content": "<Box\n  sx={{\n    width: 300,\n    height: 300,\n    backgroundColor: 'primary.dark',\n    '&:hover': {\n      backgroundColor: 'primary.main',\n      opacity: [0.9, 0.8, 0.7],\n    },\n  }}\n/>"
+      }
+    ]
+  },
+  {
+    "name": "breadcrumbs",
+    "title": "Breadcrumbs",
+    "description": "A breadcrumbs is a list of links that help visualize a page's location within a site's hierarchical structure, it allows navigation up to any of the ancestors.",
+    "components": [
+      "Breadcrumbs",
+      "Link",
+      "Typography"
+    ],
+    "examples": [
+      {
+        "name": "BasicBreadcrumbs",
+        "content": "<Breadcrumbs aria-label=\"breadcrumb\">\n  <Link underline=\"hover\" color=\"inherit\" href=\"/\">\n    MUI\n  </Link>\n  <Link\n    underline=\"hover\"\n    color=\"inherit\"\n    href=\"/material-ui/getting-started/installation/\"\n  >\n    Core\n  </Link>\n  <Typography color=\"text.primary\">Breadcrumbs</Typography>\n</Breadcrumbs>"
       },
       {
-        "name": "UnstyledButtonsDisabledFocusCustom",
-        "content": "<CustomButton slots={{ root: 'span' }} disabled>\n  focusableWhenDisabled = false\n</CustomButton>\n<CustomButton slots={{ root: 'span' }} disabled focusableWhenDisabled>\n  focusableWhenDisabled = true\n</CustomButton>"
+        "name": "CollapsedBreadcrumbs",
+        "content": "<Breadcrumbs maxItems={2} aria-label=\"breadcrumb\">\n  <Link underline=\"hover\" color=\"inherit\" href=\"#\">\n    Home\n  </Link>\n  <Link underline=\"hover\" color=\"inherit\" href=\"#\">\n    Catalog\n  </Link>\n  <Link underline=\"hover\" color=\"inherit\" href=\"#\">\n    Accessories\n  </Link>\n  <Link underline=\"hover\" color=\"inherit\" href=\"#\">\n    New Collection\n  </Link>\n  <Typography color=\"text.primary\">Belts</Typography>\n</Breadcrumbs>"
       },
       {
-        "name": "UnstyledButtonsSpan",
-        "content": "<CustomButton slots={{ root: 'span' }}>Button</CustomButton>\n<CustomButton slots={{ root: 'span' }} disabled>\n  Disabled\n</CustomButton>"
+        "name": "CustomSeparator",
+        "content": "<Breadcrumbs separator=\"›\" aria-label=\"breadcrumb\">\n  {breadcrumbs}\n</Breadcrumbs>\n<Breadcrumbs separator=\"-\" aria-label=\"breadcrumb\">\n  {breadcrumbs}\n</Breadcrumbs>\n<Breadcrumbs\n  separator={<NavigateNextIcon fontSize=\"small\" />}\n  aria-label=\"breadcrumb\"\n>\n  {breadcrumbs}\n</Breadcrumbs>"
       },
       {
-        "name": "UnstyledLinkButton",
-        "content": "<CustomButton href={'https://mui.com/'}>Standard link</CustomButton>\n<Link href={'https://mui.com/'}>\n  <CustomButton>Next link</CustomButton>\n</Link>"
+        "name": "CustomizedBreadcrumbs",
+        "content": "<Breadcrumbs aria-label=\"breadcrumb\">\n  <StyledBreadcrumb\n    component=\"a\"\n    href=\"#\"\n    label=\"Home\"\n    icon={<HomeIcon fontSize=\"small\" />}\n  />\n  <StyledBreadcrumb component=\"a\" href=\"#\" label=\"Catalog\" />\n  <StyledBreadcrumb\n    label=\"Accessories\"\n    deleteIcon={<ExpandMoreIcon />}\n    onDelete={handleClick}\n  />\n</Breadcrumbs>"
+      }
+    ]
+  },
+  {
+    "name": "button-group",
+    "title": "Button Group",
+    "description": "The ButtonGroup component can be used to group related buttons.",
+    "components": [
+      "Button",
+      "ButtonGroup"
+    ],
+    "examples": [
+      {
+        "name": "BasicButtonGroup",
+        "content": "<ButtonGroup variant=\"contained\" aria-label=\"outlined primary button group\">\n  <Button>One</Button>\n  <Button>Two</Button>\n  <Button>Three</Button>\n</ButtonGroup>"
       },
       {
-        "name": "UseButton",
-        "content": "<CustomButton onClick={() => console.log('click!')}>Button</CustomButton>\n<CustomButton disabled>Disabled</CustomButton>"
+        "name": "DisableElevation",
+        "content": "<ButtonGroup\n  disableElevation\n  variant=\"contained\"\n  aria-label=\"Disabled elevation buttons\"\n>\n  <Button>One</Button>\n  <Button>Two</Button>\n</ButtonGroup>"
+      },
+      {
+        "name": "GroupSizesColors",
+        "content": "<ButtonGroup size=\"small\" aria-label=\"small button group\">\n  {buttons}\n</ButtonGroup>\n<ButtonGroup color=\"secondary\" aria-label=\"medium secondary button group\">\n  {buttons}\n</ButtonGroup>\n<ButtonGroup size=\"large\" aria-label=\"large button group\">\n  {buttons}\n</ButtonGroup>"
+      },
+      {
+        "name": "VariantButtonGroup",
+        "content": "<ButtonGroup variant=\"outlined\" aria-label=\"outlined button group\">\n  <Button>One</Button>\n  <Button>Two</Button>\n  <Button>Three</Button>\n</ButtonGroup>\n<ButtonGroup variant=\"text\" aria-label=\"text button group\">\n  <Button>One</Button>\n  <Button>Two</Button>\n  <Button>Three</Button>\n</ButtonGroup>"
+      }
+    ]
+  },
+  {
+    "name": "buttons",
+    "title": "Button",
+    "description": "Buttons allow users to take actions, and make choices, with a single tap.",
+    "components": [
+      "Button",
+      "IconButton",
+      "ButtonBase",
+      "LoadingButton"
+    ],
+    "examples": [
+      {
+        "name": "BasicButtons",
+        "content": "<Button variant=\"text\">Text</Button>\n<Button variant=\"contained\">Contained</Button>\n<Button variant=\"outlined\">Outlined</Button>"
+      },
+      {
+        "name": "ColorButtons",
+        "content": "<Button color=\"secondary\">Secondary</Button>\n<Button variant=\"contained\" color=\"success\">\n  Success\n</Button>\n<Button variant=\"outlined\" color=\"error\">\n  Error\n</Button>"
+      },
+      {
+        "name": "ContainedButtons",
+        "content": "<Button variant=\"contained\">Contained</Button>\n<Button variant=\"contained\" disabled>\n  Disabled\n</Button>\n<Button variant=\"contained\" href=\"#contained-buttons\">\n  Link\n</Button>"
+      },
+      {
+        "name": "CustomizedButtons",
+        "content": "<ColorButton variant=\"contained\">Custom CSS</ColorButton>\n<BootstrapButton variant=\"contained\" disableRipple>\n  Bootstrap\n</BootstrapButton>"
+      },
+      {
+        "name": "DisableElevation",
+        "content": "<Button variant=\"contained\" disableElevation>\n  Disable elevation\n</Button>"
+      },
+      {
+        "name": "IconButtonColors",
+        "content": "<IconButton aria-label=\"fingerprint\" color=\"secondary\">\n  <Fingerprint />\n</IconButton>\n<IconButton aria-label=\"fingerprint\" color=\"success\">\n  <Fingerprint />\n</IconButton>"
+      },
+      {
+        "name": "IconButtonSizes",
+        "content": "<IconButton aria-label=\"delete\" size=\"small\">\n  <DeleteIcon fontSize=\"inherit\" />\n</IconButton>\n<IconButton aria-label=\"delete\" size=\"small\">\n  <DeleteIcon fontSize=\"small\" />\n</IconButton>\n<IconButton aria-label=\"delete\" size=\"large\">\n  <DeleteIcon />\n</IconButton>\n<IconButton aria-label=\"delete\" size=\"large\">\n  <DeleteIcon fontSize=\"inherit\" />\n</IconButton>"
+      },
+      {
+        "name": "IconButtons",
+        "content": "<IconButton aria-label=\"delete\">\n  <DeleteIcon />\n</IconButton>\n<IconButton aria-label=\"delete\" disabled color=\"primary\">\n  <DeleteIcon />\n</IconButton>\n<IconButton color=\"secondary\" aria-label=\"add an alarm\">\n  <AlarmIcon />\n</IconButton>\n<IconButton color=\"primary\" aria-label=\"add to shopping cart\">\n  <AddShoppingCartIcon />\n</IconButton>"
+      },
+      {
+        "name": "IconLabelButtons",
+        "content": "<Button variant=\"outlined\" startIcon={<DeleteIcon />}>\n  Delete\n</Button>\n<Button variant=\"contained\" endIcon={<SendIcon />}>\n  Send\n</Button>"
+      },
+      {
+        "name": "InputFileUpload",
+        "content": "<Button component=\"label\" variant=\"contained\" startIcon={<CloudUploadIcon />}>\n  Upload file\n  <VisuallyHiddenInput type=\"file\" />\n</Button>"
+      },
+      {
+        "name": "LoadingButtons",
+        "content": "<LoadingButton loading variant=\"outlined\">\n  Submit\n</LoadingButton>\n<LoadingButton loading loadingIndicator=\"Loading…\" variant=\"outlined\">\n  Fetch data\n</LoadingButton>\n<LoadingButton\n  loading\n  loadingPosition=\"start\"\n  startIcon={<SaveIcon />}\n  variant=\"outlined\"\n>\n  Save\n</LoadingButton>"
+      },
+      {
+        "name": "OutlinedButtons",
+        "content": "<Button variant=\"outlined\">Primary</Button>\n<Button variant=\"outlined\" disabled>\n  Disabled\n</Button>\n<Button variant=\"outlined\" href=\"#outlined-buttons\">\n  Link\n</Button>"
+      },
+      {
+        "name": "TextButtons",
+        "content": "<Button>Primary</Button>\n<Button disabled>Disabled</Button>\n<Button href=\"#text-buttons\">Link</Button>"
+      }
+    ]
+  },
+  {
+    "name": "cards",
+    "title": "Card",
+    "description": "Cards contain content and actions about a single subject.",
+    "components": [
+      "Card",
+      "CardActionArea",
+      "CardActions",
+      "CardContent",
+      "CardHeader",
+      "CardMedia",
+      "Collapse",
+      "Paper"
+    ],
+    "examples": [
+      {
+        "name": "OutlinedCard",
+        "content": "<Card variant=\"outlined\">{card}</Card>"
+      }
+    ]
+  },
+  {
+    "name": "checkboxes",
+    "title": "Checkbox",
+    "description": "Checkboxes allow the user to select one or more items from a set.",
+    "components": [
+      "Checkbox",
+      "FormControl",
+      "FormGroup",
+      "FormLabel",
+      "FormControlLabel"
+    ],
+    "examples": [
+      {
+        "name": "CheckboxLabels",
+        "content": "<FormGroup>\n  <FormControlLabel control={<Checkbox defaultChecked />} label=\"Label\" />\n  <FormControlLabel required control={<Checkbox />} label=\"Required\" />\n  <FormControlLabel disabled control={<Checkbox />} label=\"Disabled\" />\n</FormGroup>"
+      },
+      {
+        "name": "Checkboxes",
+        "content": "<Checkbox {...label} defaultChecked />\n<Checkbox {...label} />\n<Checkbox {...label} disabled />\n<Checkbox {...label} disabled checked />"
+      },
+      {
+        "name": "ColorCheckboxes",
+        "content": "<Checkbox {...label} defaultChecked />\n<Checkbox {...label} defaultChecked color=\"secondary\" />\n<Checkbox {...label} defaultChecked color=\"success\" />\n<Checkbox {...label} defaultChecked color=\"default\" />\n<Checkbox\n  {...label}\n  defaultChecked\n  sx={{\n    color: pink[800],\n    '&.Mui-checked': {\n      color: pink[600],\n    },\n  }}\n/>"
+      },
+      {
+        "name": "ControlledCheckbox",
+        "content": "<Checkbox\n  checked={checked}\n  onChange={handleChange}\n  inputProps={{ 'aria-label': 'controlled' }}\n/>"
+      },
+      {
+        "name": "CustomizedCheckbox",
+        "content": "<BpCheckbox />\n<BpCheckbox defaultChecked />\n<BpCheckbox disabled />"
+      },
+      {
+        "name": "IconCheckboxes",
+        "content": "<Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />\n<Checkbox\n  {...label}\n  icon={<BookmarkBorderIcon />}\n  checkedIcon={<BookmarkIcon />}\n/>"
+      },
+      {
+        "name": "IndeterminateCheckbox",
+        "content": "<FormControlLabel\n  label=\"Parent\"\n  control={\n    <Checkbox\n      checked={checked[0] && checked[1]}\n      indeterminate={checked[0] !== checked[1]}\n      onChange={handleChange1}\n    />\n  }\n/>\n{children}"
+      },
+      {
+        "name": "SizeCheckboxes",
+        "content": "<Checkbox {...label} defaultChecked size=\"small\" />\n<Checkbox {...label} defaultChecked />\n<Checkbox\n  {...label}\n  defaultChecked\n  sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}\n/>"
+      }
+    ]
+  },
+  {
+    "name": "chips",
+    "title": "Chip",
+    "description": "Chips are compact elements that represent an input, attribute, or action.",
+    "components": [
+      "Chip"
+    ],
+    "examples": [
+      {
+        "name": "AvatarChips",
+        "content": "<Chip avatar={<Avatar>M</Avatar>} label=\"Avatar\" />\n<Chip\n  avatar={<Avatar alt=\"Natacha\" src=\"/static/images/avatar/1.jpg\" />}\n  label=\"Avatar\"\n  variant=\"outlined\"\n/>"
+      },
+      {
+        "name": "BasicChips",
+        "content": "<Chip label=\"Chip Filled\" />\n<Chip label=\"Chip Outlined\" variant=\"outlined\" />"
+      },
+      {
+        "name": "ClickableAndDeletableChips",
+        "content": "<Chip\n  label=\"Clickable Deletable\"\n  onClick={handleClick}\n  onDelete={handleDelete}\n/>\n<Chip\n  label=\"Clickable Deletable\"\n  variant=\"outlined\"\n  onClick={handleClick}\n  onDelete={handleDelete}\n/>"
+      },
+      {
+        "name": "ClickableChips",
+        "content": "<Chip label=\"Clickable\" onClick={handleClick} />\n<Chip label=\"Clickable\" variant=\"outlined\" onClick={handleClick} />"
+      },
+      {
+        "name": "ClickableLinkChips",
+        "content": "<Chip label=\"Clickable Link\" component=\"a\" href=\"#basic-chip\" clickable />\n<Chip\n  label=\"Clickable Link\"\n  component=\"a\"\n  href=\"#basic-chip\"\n  variant=\"outlined\"\n  clickable\n/>"
+      },
+      {
+        "name": "ColorChips",
+        "content": "<Stack direction=\"row\" spacing={1}>\n  <Chip label=\"primary\" color=\"primary\" />\n  <Chip label=\"success\" color=\"success\" />\n</Stack>\n<Stack direction=\"row\" spacing={1}>\n  <Chip label=\"primary\" color=\"primary\" variant=\"outlined\" />\n  <Chip label=\"success\" color=\"success\" variant=\"outlined\" />\n</Stack>"
+      },
+      {
+        "name": "CustomDeleteIconChips",
+        "content": "<Chip\n  label=\"Custom delete icon\"\n  onClick={handleClick}\n  onDelete={handleDelete}\n  deleteIcon={<DoneIcon />}\n/>\n<Chip\n  label=\"Custom delete icon\"\n  onClick={handleClick}\n  onDelete={handleDelete}\n  deleteIcon={<DeleteIcon />}\n  variant=\"outlined\"\n/>"
+      },
+      {
+        "name": "DeletableChips",
+        "content": "<Chip label=\"Deletable\" onDelete={handleDelete} />\n<Chip label=\"Deletable\" variant=\"outlined\" onDelete={handleDelete} />"
+      },
+      {
+        "name": "IconChips",
+        "content": "<Chip icon={<FaceIcon />} label=\"With Icon\" />\n<Chip icon={<FaceIcon />} label=\"With Icon\" variant=\"outlined\" />"
+      },
+      {
+        "name": "MultilineChips",
+        "content": "<Chip\n  sx={{\n    height: 'auto',\n    '& .MuiChip-label': {\n      display: 'block',\n      whiteSpace: 'normal',\n    },\n  }}\n  label=\"This is a chip that has multiple lines.\"\n/>"
+      },
+      {
+        "name": "SizesChips",
+        "content": "<Chip label=\"Small\" size=\"small\" />\n<Chip label=\"Small\" size=\"small\" variant=\"outlined\" />"
       }
     ]
   },
@@ -96,111 +511,399 @@
     ]
   },
   {
-    "name": "focus-trap",
-    "title": "Focus Trap",
-    "description": "The Focus Trap component prevents the user's focus from escaping its children components.",
+    "name": "container",
+    "title": "Container",
+    "description": "The container centers your content horizontally. It's the most basic layout element.",
     "components": [
-      "FocusTrap"
+      "Container"
     ],
     "examples": [
       {
-        "name": "BasicFocusTrap",
-        "content": "<button type=\"button\" onClick={() => setOpen(true)}>\n  Open\n</button>\n{open && (\n  <FocusTrap open>\n    <Box tabIndex={-1} sx={{ mt: 1, p: 1 }}>\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n      <br />\n      <button type=\"button\" onClick={() => setOpen(false)}>\n        Close\n      </button>\n    </Box>\n  </FocusTrap>\n)}"
+        "name": "FixedContainer",
+        "content": "<React.Fragment>\n  <CssBaseline />\n  <Container fixed>\n    <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />\n  </Container>\n</React.Fragment>"
       },
       {
-        "name": "ContainedToggleTrappedFocus",
-        "content": "<FocusTrap open={open} disableRestoreFocus disableAutoFocus>\n  <Stack alignItems=\"center\" spacing={2}>\n    <button type=\"button\" onClick={() => setOpen(!open)}>\n      {open ? 'Close' : 'Open'}\n    </button>\n    {open && (\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n    )}\n  </Stack>\n</FocusTrap>"
-      },
-      {
-        "name": "DisableEnforceFocus",
-        "content": "<button type=\"button\" onClick={() => setOpen(true)}>\n  Open\n</button>\n{open && (\n  <FocusTrap disableEnforceFocus open>\n    <Box tabIndex={-1} sx={{ mt: 1, p: 1 }}>\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n      <br />\n      <button type=\"button\" onClick={() => setOpen(false)}>\n        Close\n      </button>\n    </Box>\n  </FocusTrap>\n)}"
-      },
-      {
-        "name": "LazyFocusTrap",
-        "content": "<button type=\"button\" onClick={() => setOpen(true)}>\n  Open\n</button>\n{open && (\n  <FocusTrap open disableAutoFocus>\n    <Box tabIndex={-1} sx={{ mt: 1, p: 1 }}>\n      <label>\n        First name: <input type=\"text\" />\n      </label>\n      <br />\n      <button type=\"button\" onClick={() => setOpen(false)}>\n        Close\n      </button>\n    </Box>\n  </FocusTrap>\n)}"
+        "name": "SimpleContainer",
+        "content": "<React.Fragment>\n  <CssBaseline />\n  <Container maxWidth=\"sm\">\n    <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />\n  </Container>\n</React.Fragment>"
       }
     ]
   },
   {
-    "name": "form-control",
-    "title": "Form Control",
-    "description": "The Form Control component is a utility that lets you associate a form input with auxiliary components, such as labels, error indicators, or helper text.",
+    "name": "dialogs",
+    "title": "Dialog",
+    "description": "Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.",
     "components": [
-      "FormControl"
+      "Dialog",
+      "DialogTitle",
+      "DialogContent",
+      "DialogContentText",
+      "DialogActions",
+      "Slide"
     ],
     "examples": [
       {
-        "name": "FormControlFunctionChild",
-        "content": "<FormControl defaultValue=\"\" required>\n  {({ filled, focused }: FormControlState) => (\n    <React.Fragment>\n      <StyledInput className={filled ? 'filled' : ''} />\n      {filled && !focused && <OkMark>✔</OkMark>}\n    </React.Fragment>\n  )}\n</FormControl>"
-      },
-      {
-        "name": "UseFormControl",
-        "content": "<FormControl defaultValue=\"\" required>\n  <CustomInput />\n  <ControlStateDisplay />\n</FormControl>"
+        "name": "SimpleDialogDemo",
+        "content": "<Typography variant=\"subtitle1\" component=\"div\">\n  Selected: {selectedValue}\n</Typography>\n<br />\n<Button variant=\"outlined\" onClick={handleClickOpen}>\n  Open simple dialog\n</Button>\n<SimpleDialog\n  selectedValue={selectedValue}\n  open={open}\n  onClose={handleClose}\n/>"
       }
     ]
   },
   {
-    "name": "input",
-    "title": "Input",
-    "description": "The Input component provides users with a field to enter and edit text.",
+    "name": "dividers",
+    "title": "Divider",
+    "description": "A divider is a thin line that groups content in lists and layouts.",
     "components": [
-      "Input"
+      "Divider"
     ],
     "examples": [
       {
-        "name": "InputMultiline",
-        "content": "<CustomInput aria-label=\"Demo input\" multiline placeholder=\"Type something…\" />"
+        "name": "DividerText",
+        "content": "<Root>\n  {content}\n  <Divider>CENTER</Divider>\n  {content}\n  <Divider textAlign=\"left\">LEFT</Divider>\n  {content}\n  <Divider textAlign=\"right\">RIGHT</Divider>\n  {content}\n  <Divider>\n    <Chip label=\"CHIP\" />\n  </Divider>\n  {content}\n</Root>"
       },
       {
-        "name": "InputMultilineAutosize",
-        "content": "<CustomInput aria-label=\"Demo input\" multiline placeholder=\"Type something…\" />"
+        "name": "ListDividers",
+        "content": "<List sx={style} component=\"nav\" aria-label=\"mailbox folders\">\n  <ListItem button>\n    <ListItemText primary=\"Inbox\" />\n  </ListItem>\n  <Divider />\n  <ListItem button divider>\n    <ListItemText primary=\"Drafts\" />\n  </ListItem>\n  <ListItem button>\n    <ListItemText primary=\"Trash\" />\n  </ListItem>\n  <Divider light />\n  <ListItem button>\n    <ListItemText primary=\"Spam\" />\n  </ListItem>\n</List>"
       },
       {
-        "name": "UseInput",
-        "content": "<CustomInput aria-label=\"Demo input\" placeholder=\"Type something…\" />"
+        "name": "VerticalDividerText",
+        "content": "<Grid container>\n  <Grid item xs>\n    {content}\n  </Grid>\n  <Divider orientation=\"vertical\" flexItem>\n    VERTICAL\n  </Divider>\n  <Grid item xs>\n    {content}\n  </Grid>\n</Grid>"
       }
     ]
   },
   {
-    "name": "menu",
+    "name": "drawers",
+    "title": "Drawer",
+    "description": "The navigation drawers (or \"sidebars\") provide ergonomic access to destinations in a site or app functionality such as switching accounts.",
+    "components": [
+      "Drawer",
+      "SwipeableDrawer"
+    ],
+    "examples": [
+      {
+        "name": "SwipeableTemporaryDrawer",
+        "content": "{(['left', 'right', 'top', 'bottom'] as const).map((anchor) => (\n  <React.Fragment key={anchor}>\n    <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>\n    <SwipeableDrawer\n      anchor={anchor}\n      open={state[anchor]}\n      onClose={toggleDrawer(anchor, false)}\n      onOpen={toggleDrawer(anchor, true)}\n    >\n      {list(anchor)}\n    </SwipeableDrawer>\n  </React.Fragment>\n))}"
+      },
+      {
+        "name": "TemporaryDrawer",
+        "content": "{(['left', 'right', 'top', 'bottom'] as const).map((anchor) => (\n  <React.Fragment key={anchor}>\n    <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>\n    <Drawer\n      anchor={anchor}\n      open={state[anchor]}\n      onClose={toggleDrawer(anchor, false)}\n    >\n      {list(anchor)}\n    </Drawer>\n  </React.Fragment>\n))}"
+      }
+    ]
+  },
+  {
+    "name": "floating-action-button",
+    "title": "Floating Action Button",
+    "description": "A Floating Action Button (FAB) performs the primary, or most common, action on a screen.",
+    "components": [
+      "Fab"
+    ],
+    "examples": [
+      {
+        "name": "FloatingActionButtonExtendedSize",
+        "content": "<Fab variant=\"extended\" size=\"small\" color=\"primary\">\n  <NavigationIcon sx={{ mr: 1 }} />\n  Extended\n</Fab>\n<Fab variant=\"extended\" size=\"medium\" color=\"primary\">\n  <NavigationIcon sx={{ mr: 1 }} />\n  Extended\n</Fab>\n<Fab variant=\"extended\" color=\"primary\">\n  <NavigationIcon sx={{ mr: 1 }} />\n  Extended\n</Fab>"
+      },
+      {
+        "name": "FloatingActionButtonSize",
+        "content": "<Fab size=\"small\" color=\"secondary\" aria-label=\"add\">\n  <AddIcon />\n</Fab>\n<Fab size=\"medium\" color=\"secondary\" aria-label=\"add\">\n  <AddIcon />\n</Fab>\n<Fab color=\"secondary\" aria-label=\"add\">\n  <AddIcon />\n</Fab>"
+      },
+      {
+        "name": "FloatingActionButtons",
+        "content": "<Fab color=\"primary\" aria-label=\"add\">\n  <AddIcon />\n</Fab>\n<Fab color=\"secondary\" aria-label=\"edit\">\n  <EditIcon />\n</Fab>\n<Fab variant=\"extended\">\n  <NavigationIcon sx={{ mr: 1 }} />\n  Navigate\n</Fab>\n<Fab disabled aria-label=\"like\">\n  <FavoriteIcon />\n</Fab>"
+      }
+    ]
+  },
+  {
+    "name": "grid",
+    "title": "Grid",
+    "description": "The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.",
+    "components": [
+      "Grid"
+    ],
+    "examples": [
+      {
+        "name": "AutoGrid",
+        "content": "<Grid container spacing={3}>\n  <Grid item xs>\n    <Item>xs</Item>\n  </Grid>\n  <Grid item xs={6}>\n    <Item>xs=6</Item>\n  </Grid>\n  <Grid item xs>\n    <Item>xs</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "BasicGrid",
+        "content": "<Grid container spacing={2}>\n  <Grid item xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n  <Grid item xs={4}>\n    <Item>xs=4</Item>\n  </Grid>\n  <Grid item xs={4}>\n    <Item>xs=4</Item>\n  </Grid>\n  <Grid item xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "CSSGrid",
+        "content": "<Box display=\"grid\" gridTemplateColumns=\"repeat(12, 1fr)\" gap={2}>\n  <Box gridColumn=\"span 8\">\n    <Item>xs=8</Item>\n  </Box>\n  <Box gridColumn=\"span 4\">\n    <Item>xs=4</Item>\n  </Box>\n  <Box gridColumn=\"span 4\">\n    <Item>xs=4</Item>\n  </Box>\n  <Box gridColumn=\"span 8\">\n    <Item>xs=8</Item>\n  </Box>\n</Box>"
+      },
+      {
+        "name": "ColumnsGrid",
+        "content": "<Grid container spacing={2} columns={16}>\n  <Grid item xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n  <Grid item xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "FullWidthGrid",
+        "content": "<Grid container spacing={2}>\n  <Grid item xs={6} md={8}>\n    <Item>xs=6 md=8</Item>\n  </Grid>\n  <Grid item xs={6} md={4}>\n    <Item>xs=6 md=4</Item>\n  </Grid>\n  <Grid item xs={6} md={4}>\n    <Item>xs=6 md=4</Item>\n  </Grid>\n  <Grid item xs={6} md={8}>\n    <Item>xs=6 md=8</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "NestedGrid",
+        "content": "<Grid container spacing={1}>\n  <Grid container item spacing={3}>\n    <FormRow />\n  </Grid>\n  <Grid container item spacing={3}>\n    <FormRow />\n  </Grid>\n  <Grid container item spacing={3}>\n    <FormRow />\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "ResponsiveGrid",
+        "content": "<Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>\n  {Array.from(Array(6)).map((_, index) => (\n    <Grid item xs={2} sm={4} md={4} key={index}>\n      <Item>xs=2</Item>\n    </Grid>\n  ))}\n</Grid>"
+      },
+      {
+        "name": "RowAndColumnSpacing",
+        "content": "<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>\n  <Grid item xs={6}>\n    <Item>1</Item>\n  </Grid>\n  <Grid item xs={6}>\n    <Item>2</Item>\n  </Grid>\n  <Grid item xs={6}>\n    <Item>3</Item>\n  </Grid>\n  <Grid item xs={6}>\n    <Item>4</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "VariableWidthGrid",
+        "content": "<Grid container spacing={3}>\n  <Grid item xs=\"auto\">\n    <Item>variable width content</Item>\n  </Grid>\n  <Grid item xs={6}>\n    <Item>xs=6</Item>\n  </Grid>\n  <Grid item xs>\n    <Item>xs</Item>\n  </Grid>\n</Grid>"
+      }
+    ]
+  },
+  {
+    "name": "grid2",
+    "title": "Grid version 2",
+    "description": "The responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.",
+    "components": [],
+    "examples": [
+      {
+        "name": "AutoGrid",
+        "content": "<Grid container spacing={3}>\n  <Grid xs>\n    <Item>xs</Item>\n  </Grid>\n  <Grid xs={6}>\n    <Item>xs=6</Item>\n  </Grid>\n  <Grid xs>\n    <Item>xs</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "BasicGrid",
+        "content": "<Grid container spacing={2}>\n  <Grid xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n  <Grid xs={4}>\n    <Item>xs=4</Item>\n  </Grid>\n  <Grid xs={4}>\n    <Item>xs=4</Item>\n  </Grid>\n  <Grid xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "CenteredElementGrid",
+        "content": "<Grid container spacing={2} minHeight={160}>\n  <Grid xs display=\"flex\" justifyContent=\"center\" alignItems=\"center\">\n    <Avatar src=\"/static/images/avatar/1.jpg\" />\n  </Grid>\n  <Grid display=\"flex\" justifyContent=\"center\" alignItems=\"center\">\n    <Avatar src=\"/static/images/avatar/2.jpg\" />\n  </Grid>\n  <Grid xs display=\"flex\" justifyContent=\"center\" alignItems=\"center\">\n    <Avatar src=\"/static/images/avatar/3.jpg\" />\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "ColumnsGrid",
+        "content": "<Grid container spacing={2} columns={16}>\n  <Grid xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n  <Grid xs={8}>\n    <Item>xs=8</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "FullWidthGrid",
+        "content": "<Grid container spacing={2}>\n  <Grid xs={6} md={8}>\n    <Item>xs=6 md=8</Item>\n  </Grid>\n  <Grid xs={6} md={4}>\n    <Item>xs=6 md=4</Item>\n  </Grid>\n  <Grid xs={6} md={4}>\n    <Item>xs=6 md=4</Item>\n  </Grid>\n  <Grid xs={6} md={8}>\n    <Item>xs=6 md=8</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "OffsetGrid",
+        "content": "<Grid container spacing={3} sx={{ flexGrow: 1 }}>\n  <Grid xs={6} xsOffset={3} md={2} mdOffset={0}>\n    <Item>1</Item>\n  </Grid>\n  <Grid xs={4} md={2} mdOffset=\"auto\">\n    <Item>2</Item>\n  </Grid>\n  <Grid xs={4} xsOffset={4} md={2} mdOffset={0}>\n    <Item>3</Item>\n  </Grid>\n  <Grid xs md={6} mdOffset={2}>\n    <Item>4</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "OverflowGrid",
+        "content": "<div>\n  <Grid container spacing={3}>\n    <Grid xs={12}>\n      <Item>Scroll bar appears</Item>\n    </Grid>\n  </Grid>\n</div>\n<div>\n  <Grid container spacing={3} disableEqualOverflow>\n    <Grid xs={12}>\n      <Item>`disableEqualOverflow` prevents scrollbar</Item>\n    </Grid>\n  </Grid>\n</div>"
+      },
+      {
+        "name": "ResponsiveGrid",
+        "content": "<Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>\n  {Array.from(Array(6)).map((_, index) => (\n    <Grid xs={2} sm={4} md={4} key={index}>\n      <Item>xs=2</Item>\n    </Grid>\n  ))}\n</Grid>"
+      },
+      {
+        "name": "RowAndColumnSpacing",
+        "content": "<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>\n  <Grid xs={6}>\n    <Item>1</Item>\n  </Grid>\n  <Grid xs={6}>\n    <Item>2</Item>\n  </Grid>\n  <Grid xs={6}>\n    <Item>3</Item>\n  </Grid>\n  <Grid xs={6}>\n    <Item>4</Item>\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "VariableWidthGrid",
+        "content": "<Grid container spacing={3}>\n  <Grid xs=\"auto\">\n    <Item>variable width content</Item>\n  </Grid>\n  <Grid xs={6}>\n    <Item>xs=6</Item>\n  </Grid>\n  <Grid xs>\n    <Item>xs</Item>\n  </Grid>\n</Grid>"
+      }
+    ]
+  },
+  {
+    "name": "icons",
+    "title": "Icons",
+    "description": "Guidance and suggestions for using icons with Material UI.",
+    "components": [
+      "Icon",
+      "SvgIcon"
+    ],
+    "examples": [
+      {
+        "name": "CreateSvgIcon",
+        "content": "<HomeIcon />\n<HomeIcon color=\"primary\" />\n<PlusIcon />\n<PlusIcon color=\"secondary\" />"
+      },
+      {
+        "name": "FontAwesomeIcon",
+        "content": "<Icon baseClassName=\"fas\" className=\"fa-plus-circle\" />\n<Icon baseClassName=\"fas\" className=\"fa-plus-circle\" color=\"primary\" />\n<Icon\n  baseClassName=\"fas\"\n  className=\"fa-plus-circle\"\n  sx={{ color: green[500] }}\n/>\n<Icon baseClassName=\"fas\" className=\"fa-plus-circle\" fontSize=\"small\" />\n<Icon baseClassName=\"fas\" className=\"fa-plus-circle\" sx={{ fontSize: 30 }} />"
+      },
+      {
+        "name": "FontAwesomeIconSize",
+        "content": "<ThemeProvider theme={theme}>\n  <Chip icon={<MdPhone />} label=\"Call me\" />\n  <Chip icon={<Icon className=\"fas fa-phone-alt\" />} label=\"Call me\" />\n</ThemeProvider>"
+      },
+      {
+        "name": "FontAwesomeSvgIconDemo",
+        "content": "<IconButton aria-label=\"Example\">\n  <FontAwesomeIcon icon={faEllipsisV} />\n</IconButton>\n<IconButton aria-label=\"Example\">\n  <FontAwesomeSvgIcon icon={faEllipsisV} />\n</IconButton>\n<Button variant=\"contained\" startIcon={<FontAwesomeIcon icon={faInfo} />}>\n  Example\n</Button>\n<Button variant=\"contained\" startIcon={<FontAwesomeSvgIcon icon={faInfo} />}>\n  Example\n</Button>"
+      },
+      {
+        "name": "Icons",
+        "content": "<Icon>add_circle</Icon>\n<Icon color=\"primary\">add_circle</Icon>\n<Icon sx={{ color: green[500] }}>add_circle</Icon>\n<Icon fontSize=\"small\">add_circle</Icon>\n<Icon sx={{ fontSize: 30 }}>add_circle</Icon>"
+      },
+      {
+        "name": "SvgIconChildren",
+        "content": "<SvgIcon>\n  {/* credit: plus icon from https://heroicons.com/ */}\n  <svg\n    xmlns=\"http://www.w3.org/2000/svg\"\n    fill=\"none\"\n    viewBox=\"0 0 24 24\"\n    strokeWidth={1.5}\n    stroke=\"currentColor\"\n  >\n    <path\n      strokeLinecap=\"round\"\n      strokeLinejoin=\"round\"\n      d=\"M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495\"\n    />\n  </svg>\n</SvgIcon>"
+      },
+      {
+        "name": "SvgIconsColor",
+        "content": "<HomeIcon />\n<HomeIcon color=\"primary\" />\n<HomeIcon color=\"secondary\" />\n<HomeIcon color=\"success\" />\n<HomeIcon color=\"action\" />\n<HomeIcon color=\"disabled\" />\n<HomeIcon sx={{ color: pink[500] }} />"
+      },
+      {
+        "name": "SvgIconsSize",
+        "content": "<HomeIcon fontSize=\"small\" />\n<HomeIcon />\n<HomeIcon fontSize=\"large\" />\n<HomeIcon sx={{ fontSize: 40 }} />"
+      },
+      {
+        "name": "TwoToneIcons",
+        "content": "<Icon baseClassName=\"material-icons-two-tone\">add_circle</Icon>"
+      }
+    ]
+  },
+  {
+    "name": "image-list",
+    "title": "Image List",
+    "description": "The Image List displays a collection of images in an organized grid.",
+    "components": [
+      "ImageList",
+      "ImageListItem",
+      "ImageListItemBar"
+    ],
+    "examples": [
+      {
+        "name": "MasonryImageList",
+        "content": "<ImageList variant=\"masonry\" cols={3} gap={8}>\n  {itemData.map((item) => (\n    <ImageListItem key={item.img}>\n      <img\n        src={`${item.img}?w=248&fit=crop&auto=format`}\n        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}\n        alt={item.title}\n        loading=\"lazy\"\n      />\n    </ImageListItem>\n  ))}\n</ImageList>"
+      },
+      {
+        "name": "QuiltedImageList",
+        "content": "<ImageList\n  sx={{ width: 500, height: 450 }}\n  variant=\"quilted\"\n  cols={4}\n  rowHeight={121}\n>\n  {itemData.map((item) => (\n    <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>\n      <img\n        {...srcset(item.img, 121, item.rows, item.cols)}\n        alt={item.title}\n        loading=\"lazy\"\n      />\n    </ImageListItem>\n  ))}\n</ImageList>"
+      },
+      {
+        "name": "StandardImageList",
+        "content": "<ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>\n  {itemData.map((item) => (\n    <ImageListItem key={item.img}>\n      <img\n        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}\n        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}\n        alt={item.title}\n        loading=\"lazy\"\n      />\n    </ImageListItem>\n  ))}\n</ImageList>"
+      },
+      {
+        "name": "TitlebarBelowMasonryImageList",
+        "content": "<ImageList variant=\"masonry\" cols={3} gap={8}>\n  {itemData.map((item) => (\n    <ImageListItem key={item.img}>\n      <img\n        src={`${item.img}?w=248&fit=crop&auto=format`}\n        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}\n        alt={item.title}\n        loading=\"lazy\"\n      />\n      <ImageListItemBar position=\"below\" title={item.author} />\n    </ImageListItem>\n  ))}\n</ImageList>"
+      },
+      {
+        "name": "WovenImageList",
+        "content": "<ImageList sx={{ width: 500, height: 450 }} variant=\"woven\" cols={3} gap={8}>\n  {itemData.map((item) => (\n    <ImageListItem key={item.img}>\n      <img\n        src={`${item.img}?w=161&fit=crop&auto=format`}\n        srcSet={`${item.img}?w=161&fit=crop&auto=format&dpr=2 2x`}\n        alt={item.title}\n        loading=\"lazy\"\n      />\n    </ImageListItem>\n  ))}\n</ImageList>"
+      }
+    ]
+  },
+  {
+    "name": "links",
+    "title": "Links",
+    "description": "The Link component allows you to easily customize anchor elements with your theme colors and typography styles.",
+    "components": [
+      "Link"
+    ],
+    "examples": [
+      {
+        "name": "ButtonLink",
+        "content": "<Link\n  component=\"button\"\n  variant=\"body2\"\n  onClick={() => {\n    console.info(\"I'm a button.\");\n  }}\n>\n  Button Link\n</Link>"
+      },
+      {
+        "name": "Links",
+        "content": "<Link href=\"#\">Link</Link>\n<Link href=\"#\" color=\"inherit\">\n  {'color=\"inherit\"'}\n</Link>\n<Link href=\"#\" variant=\"body2\">\n  {'variant=\"body2\"'}\n</Link>"
+      },
+      {
+        "name": "UnderlineLink",
+        "content": "<Link href=\"#\" underline=\"none\">\n  {'underline=\"none\"'}\n</Link>\n<Link href=\"#\" underline=\"hover\">\n  {'underline=\"hover\"'}\n</Link>\n<Link href=\"#\" underline=\"always\">\n  {'underline=\"always\"'}\n</Link>"
+      }
+    ]
+  },
+  {
+    "name": "lists",
+    "title": "Lists",
+    "description": "Lists are continuous, vertical indexes of text or images.",
+    "components": [
+      "Collapse",
+      "Divider",
+      "List",
+      "ListItem",
+      "ListItemButton",
+      "ListItemAvatar",
+      "ListItemIcon",
+      "ListItemSecondaryAction",
+      "ListItemText",
+      "ListSubheader"
+    ],
+    "examples": [
+      {
+        "name": "GutterlessList",
+        "content": "<List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>\n  {[1, 2, 3].map((value) => (\n    <ListItem\n      key={value}\n      disableGutters\n      secondaryAction={\n        <IconButton aria-label=\"comment\">\n          <CommentIcon />\n        </IconButton>\n      }\n    >\n      <ListItemText primary={`Line item ${value}`} />\n    </ListItem>\n  ))}\n</List>"
+      },
+      {
+        "name": "VirtualizedList",
+        "content": "<FixedSizeList\n  height={400}\n  width={360}\n  itemSize={46}\n  itemCount={200}\n  overscanCount={5}\n>\n  {renderRow}\n</FixedSizeList>"
+      }
+    ]
+  },
+  {
+    "name": "masonry",
+    "title": "Masonry",
+    "description": "Masonry lays out contents of varying dimensions as blocks of the same width and different height with configurable gaps.",
+    "components": [
+      "Masonry"
+    ],
+    "examples": [
+      {
+        "name": "BasicMasonry",
+        "content": "<Masonry columns={4} spacing={2}>\n  {heights.map((height, index) => (\n    <Item key={index} sx={{ height }}>\n      {index + 1}\n    </Item>\n  ))}\n</Masonry>"
+      },
+      {
+        "name": "FixedColumns",
+        "content": "<Masonry columns={4} spacing={2}>\n  {heights.map((height, index) => (\n    <Item key={index} sx={{ height }}>\n      {index + 1}\n    </Item>\n  ))}\n</Masonry>"
+      },
+      {
+        "name": "FixedSpacing",
+        "content": "<Masonry columns={3} spacing={3}>\n  {heights.map((height, index) => (\n    <Item key={index} sx={{ height }}>\n      {index + 1}\n    </Item>\n  ))}\n</Masonry>"
+      },
+      {
+        "name": "MasonryWithVariableHeightItems",
+        "content": "<Masonry columns={3} spacing={2}>\n  {heights.map((height, index) => (\n    <Paper key={index}>\n      <StyledAccordion sx={{ minHeight: height }}>\n        <AccordionSummary expandIcon={<ExpandMoreIcon />}>\n          <Typography>Accordion {index + 1}</Typography>\n        </AccordionSummary>\n        <AccordionDetails>Contents</AccordionDetails>\n      </StyledAccordion>\n    </Paper>\n  ))}\n</Masonry>"
+      },
+      {
+        "name": "ResponsiveColumns",
+        "content": "<Masonry columns={{ xs: 3, sm: 4 }} spacing={2}>\n  {heights.map((height, index) => (\n    <Item key={index} sx={{ height }}>\n      {index + 1}\n    </Item>\n  ))}\n</Masonry>"
+      },
+      {
+        "name": "ResponsiveSpacing",
+        "content": "<Masonry columns={3} spacing={{ xs: 1, sm: 2, md: 3 }}>\n  {heights.map((height, index) => (\n    <Item key={index} sx={{ height }}>\n      {index + 1}\n    </Item>\n  ))}\n</Masonry>"
+      },
+      {
+        "name": "SSRMasonry",
+        "content": "<Masonry\n  columns={4}\n  spacing={2}\n  defaultHeight={450}\n  defaultColumns={4}\n  defaultSpacing={1}\n>\n  {heights.map((height, index) => (\n    <Item key={index} sx={{ height }}>\n      {index + 1}\n    </Item>\n  ))}\n</Masonry>"
+      }
+    ]
+  },
+  {
+    "name": "menus",
     "title": "Menu",
-    "description": "The Dropdown Menu components provide end users with a list of options on temporary surfaces.",
+    "description": "Menus display a list of choices on temporary surfaces.",
     "components": [
       "Menu",
       "MenuItem",
-      "MenuButton",
-      "Dropdown"
+      "MenuList",
+      "ClickAwayListener",
+      "Popover",
+      "Popper"
     ],
     "examples": [
       {
-        "name": "UseMenu",
-        "content": "<React.Fragment>\n  <GlobalStyles styles={styles} />\n  <DropdownContext.Provider value={dropdownContextValue}>\n    <MenuButton>Theme</MenuButton>\n    <Menu id=\"hooks-menu\">\n      <MenuItem onClick={createHandleMenuClick('OS Default')}>\n        OS default\n      </MenuItem>\n      <MenuItem onClick={createHandleMenuClick('Light')}>Light</MenuItem>\n      <MenuItem onClick={createHandleMenuClick('Dark')}>Dark</MenuItem>\n    </Menu>\n  </DropdownContext.Provider>\n</React.Fragment>"
+        "name": "MenuPopupState",
+        "content": "<PopupState variant=\"popover\" popupId=\"demo-popup-menu\">\n  {(popupState) => (\n    <React.Fragment>\n      <Button variant=\"contained\" {...bindTrigger(popupState)}>\n        Dashboard\n      </Button>\n      <Menu {...bindMenu(popupState)}>\n        <MenuItem onClick={popupState.close}>Profile</MenuItem>\n        <MenuItem onClick={popupState.close}>My account</MenuItem>\n        <MenuItem onClick={popupState.close}>Logout</MenuItem>\n      </Menu>\n    </React.Fragment>\n  )}\n</PopupState>"
       }
     ]
   },
   {
     "name": "modal",
     "title": "Modal",
-    "description": "",
+    "description": "The modal component provides a solid foundation for creating dialogs, popovers, lightboxes, or whatever else.",
     "components": [
       "Modal"
     ],
     "examples": [
       {
-        "name": "KeepMountedModal",
-        "content": "<TriggerButton type=\"button\" onClick={handleOpen}>\n  Open modal\n</TriggerButton>\n<StyledModal\n  aria-labelledby=\"keep-mounted-modal-title\"\n  aria-describedby=\"keep-mounted-modal-description\"\n  open={open}\n  onClose={handleClose}\n  slots={{ backdrop: StyledBackdrop }}\n  keepMounted\n>\n  <Box sx={style}>\n    <h2 id=\"keep-mounted-modal-title\">Text in a modal</h2>\n    <p id=\"keep-mounted-modal-description\">Aliquid amet deserunt earum!</p>\n  </Box>\n</StyledModal>"
-      },
-      {
-        "name": "ModalUnstyled",
-        "content": "<TriggerButton type=\"button\" onClick={handleOpen}>\n  Open modal\n</TriggerButton>\n<StyledModal\n  aria-labelledby=\"unstyled-modal-title\"\n  aria-describedby=\"unstyled-modal-description\"\n  open={open}\n  onClose={handleClose}\n  slots={{ backdrop: StyledBackdrop }}\n>\n  <Box sx={style}>\n    <h2 id=\"unstyled-modal-title\">Text in a modal</h2>\n    <p id=\"unstyled-modal-description\">Aliquid amet deserunt earum!</p>\n  </Box>\n</StyledModal>"
+        "name": "BasicModal",
+        "content": "<Button onClick={handleOpen}>Open modal</Button>\n<Modal\n  open={open}\n  onClose={handleClose}\n  aria-labelledby=\"modal-modal-title\"\n  aria-describedby=\"modal-modal-description\"\n>\n  <Box sx={style}>\n    <Typography id=\"modal-modal-title\" variant=\"h6\" component=\"h2\">\n      Text in a modal\n    </Typography>\n    <Typography id=\"modal-modal-description\" sx={{ mt: 2 }}>\n      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.\n    </Typography>\n  </Box>\n</Modal>"
       },
       {
         "name": "NestedModal",
-        "content": "<TriggerButton onClick={handleOpen}>Open modal</TriggerButton>\n<StyledModal\n  open={open}\n  onClose={handleClose}\n  aria-labelledby=\"parent-modal-title\"\n  aria-describedby=\"parent-modal-description\"\n  slots={{ backdrop: StyledBackdrop }}\n>\n  <Box sx={style}>\n    <h2 id=\"parent-modal-title\">Text in a modal</h2>\n    <p id=\"parent-modal-description\">\n      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.\n    </p>\n    <ChildModal />\n  </Box>\n</StyledModal>"
-      },
-      {
-        "name": "ServerModal",
-        "content": "<StyledModal\n  disablePortal\n  disableEnforceFocus\n  disableAutoFocus\n  open\n  aria-labelledby=\"server-modal-title\"\n  aria-describedby=\"server-modal-description\"\n  container={() => rootRef.current}\n>\n  <Box sx={style}>\n    <h2 id=\"server-modal-title\">Server-side modal</h2>\n    <span id=\"server-modal-description\">\n      If you disable JavaScript, you will still see me.\n    </span>\n  </Box>\n</StyledModal>"
+        "content": "<Button onClick={handleOpen}>Open modal</Button>\n<Modal\n  open={open}\n  onClose={handleClose}\n  aria-labelledby=\"parent-modal-title\"\n  aria-describedby=\"parent-modal-description\"\n>\n  <Box sx={{ ...style, width: 400 }}>\n    <h2 id=\"parent-modal-title\">Text in a modal</h2>\n    <p id=\"parent-modal-description\">\n      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.\n    </p>\n    <ChildModal />\n  </Box>\n</Modal>"
       }
     ]
   },
@@ -219,60 +922,112 @@
     ]
   },
   {
-    "name": "number-input",
-    "title": "Number Input",
-    "description": "The Number Input component provides users with a field for integer values, and buttons to increment or decrement the value.",
+    "name": "pagination",
+    "title": "Pagination",
+    "description": "The Pagination component enables the user to select a specific page from a range of pages.",
     "components": [
-      "NumberInput"
+      "Pagination",
+      "PaginationItem"
     ],
     "examples": [
       {
-        "name": "NumberInputIntroduction",
-        "content": "<CustomNumberInput aria-label=\"Demo number input\" placeholder=\"Type a number…\" />"
+        "name": "BasicPagination",
+        "content": "<Pagination count={10} />\n<Pagination count={10} color=\"primary\" />\n<Pagination count={10} color=\"secondary\" />\n<Pagination count={10} disabled />"
       },
       {
-        "name": "UseNumberInput",
-        "content": "<CustomNumberInput aria-label=\"Demo number input\" placeholder=\"Type a number…\" />"
+        "name": "CustomIcons",
+        "content": "<Pagination\n  count={10}\n  renderItem={(item) => (\n    <PaginationItem\n      slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}\n      {...item}\n    />\n  )}\n/>"
+      },
+      {
+        "name": "PaginationButtons",
+        "content": "<Pagination count={10} showFirstButton showLastButton />\n<Pagination count={10} hidePrevButton hideNextButton />"
+      },
+      {
+        "name": "PaginationControlled",
+        "content": "<Typography>Page: {page}</Typography>\n<Pagination count={10} page={page} onChange={handleChange} />"
+      },
+      {
+        "name": "PaginationLink",
+        "content": "<MemoryRouter initialEntries={['/inbox']} initialIndex={0}>\n  <Routes>\n    <Route path=\"*\" element={<Content />} />\n  </Routes>\n</MemoryRouter>"
+      },
+      {
+        "name": "PaginationOutlined",
+        "content": "<Pagination count={10} variant=\"outlined\" />\n<Pagination count={10} variant=\"outlined\" color=\"primary\" />\n<Pagination count={10} variant=\"outlined\" color=\"secondary\" />\n<Pagination count={10} variant=\"outlined\" disabled />"
+      },
+      {
+        "name": "PaginationRanges",
+        "content": "<Pagination count={11} defaultPage={6} siblingCount={0} />\n<Pagination count={11} defaultPage={6} /> {/* Default ranges */}\n<Pagination count={11} defaultPage={6} siblingCount={0} boundaryCount={2} />\n<Pagination count={11} defaultPage={6} boundaryCount={2} />"
+      },
+      {
+        "name": "PaginationRounded",
+        "content": "<Pagination count={10} shape=\"rounded\" />\n<Pagination count={10} variant=\"outlined\" shape=\"rounded\" />"
+      },
+      {
+        "name": "PaginationSize",
+        "content": "<Pagination count={10} size=\"small\" />\n<Pagination count={10} />\n<Pagination count={10} size=\"large\" />"
+      },
+      {
+        "name": "TablePaginationDemo",
+        "content": "<TablePagination\n  component=\"div\"\n  count={100}\n  page={page}\n  onPageChange={handleChangePage}\n  rowsPerPage={rowsPerPage}\n  onRowsPerPageChange={handleChangeRowsPerPage}\n/>"
+      }
+    ]
+  },
+  {
+    "name": "paper",
+    "title": "Paper",
+    "description": "The Paper component is a container for displaying content on an elevated surface.",
+    "components": [
+      "Paper"
+    ],
+    "examples": [
+      {
+        "name": "SimplePaper",
+        "content": "<Paper elevation={0} />\n<Paper />\n<Paper elevation={3} />"
+      },
+      {
+        "name": "SquareCorners",
+        "content": "<DemoPaper square={false}>rounded corners</DemoPaper>\n<DemoPaper square>square corners</DemoPaper>"
+      },
+      {
+        "name": "Variants",
+        "content": "<DemoPaper variant=\"elevation\">default variant</DemoPaper>\n<DemoPaper variant=\"outlined\">outlined variant</DemoPaper>"
+      }
+    ]
+  },
+  {
+    "name": "popover",
+    "title": "Popover",
+    "description": "A Popover can be used to display some content on top of another.",
+    "components": [
+      "Grow",
+      "Popover"
+    ],
+    "examples": [
+      {
+        "name": "BasicPopover",
+        "content": "<Button aria-describedby={id} variant=\"contained\" onClick={handleClick}>\n  Open Popover\n</Button>\n<Popover\n  id={id}\n  open={open}\n  anchorEl={anchorEl}\n  onClose={handleClose}\n  anchorOrigin={{\n    vertical: 'bottom',\n    horizontal: 'left',\n  }}\n>\n  <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>\n</Popover>"
       }
     ]
   },
   {
     "name": "popper",
     "title": "Popper",
-    "description": "The Popper component lets you create tooltips and popovers that display information about an element on the page.",
+    "description": "A Popper can be used to display some content on top of another. It's an alternative to react-popper.",
     "components": [
       "Popper"
     ],
     "examples": [
       {
         "name": "SimplePopper",
-        "content": "<button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popper\n</button>\n<Popper id={id} open={open} anchorEl={anchorEl}>\n  <StyledPopperDiv>The content of the Popper.</StyledPopperDiv>\n</Popper>"
-      }
-    ]
-  },
-  {
-    "name": "popup",
-    "title": "Popup",
-    "description": "The Popup component is a utility that lets you display content in tooltips and popovers.",
-    "components": [
-      "Popup"
-    ],
-    "examples": [
-      {
-        "name": "AnimatedPopup",
-        "content": "<Button ref={setAnchor} onClick={() => setOpen((o) => !o)} type=\"button\">\n  Toggle Popup\n</Button>\n<Popup anchor={anchor} open={open} withTransition>\n  {(props: PopupChildrenProps) => (\n    <PopAnimation {...props}>\n      <PopupBody>This is an animated popup.</PopupBody>\n    </PopAnimation>\n  )}\n</Popup>"
+        "content": "<button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popper\n</button>\n<Popper id={id} open={open} anchorEl={anchorEl}>\n  <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>\n    The content of the Popper.\n  </Box>\n</Popper>"
       },
       {
-        "name": "DisabledPortalPopup",
-        "content": "<PopupWithTrigger id=\"popup-with-portal\" buttonLabel=\"With a portal\" />\n<PopupWithTrigger\n  id=\"popup-without-portal\"\n  buttonLabel=\"No portal, default strategy\"\n  disablePortal\n/>\n<PopupWithTrigger\n  id=\"popup-without-portal-fixed\"\n  buttonLabel=\"No portal, 'fixed' strategy\"\n  disablePortal\n  strategy=\"fixed\"\n/>"
+        "name": "SpringPopper",
+        "content": "<button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popper\n</button>\n<Popper id={id} open={open} anchorEl={anchorEl} transition>\n  {({ TransitionProps }) => (\n    <Fade {...TransitionProps}>\n      <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>\n        The content of the Popper.\n      </Box>\n    </Fade>\n  )}\n</Popper>"
       },
       {
-        "name": "Placement",
-        "content": "<PlacementForm setPlacement={setPlacement} />\n<div style={{ padding: '4rem 0', textAlign: 'center' }}>\n  <Anchor ref={setAnchor} aria-describedby=\"placement-popper\">\n    Anchor\n  </Anchor>\n  <Popup\n    id=\"placement-popper\"\n    open={Boolean(anchor)}\n    anchor={anchor}\n    placement={placement}\n    offset={4}\n  >\n    <PopupBody>The content of the Popup.</PopupBody>\n  </Popup>\n</div>"
-      },
-      {
-        "name": "SimplePopup",
-        "content": "<Button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popup\n</Button>\n<Popup id={id} open={open} anchor={anchor}>\n  <PopupBody>The content of the Popup.</PopupBody>\n</Popup>"
+        "name": "TransitionsPopper",
+        "content": "<button aria-describedby={id} type=\"button\" onClick={handleClick}>\n  Toggle Popper\n</button>\n<Popper id={id} open={open} anchorEl={anchorEl} transition>\n  {({ TransitionProps }) => (\n    <Fade {...TransitionProps} timeout={350}>\n      <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>\n        The content of the Popper.\n      </Box>\n    </Fade>\n  )}\n</Popper>"
       }
     ]
   },
@@ -291,141 +1046,551 @@
     ]
   },
   {
-    "name": "select",
-    "title": "Select",
-    "description": "The Select components let you create lists of options for users to choose from.",
+    "name": "progress",
+    "title": "Progress",
+    "description": "Progress indicators commonly known as spinners, express an unspecified wait time or display the length of a process.",
     "components": [
-      "Select",
-      "Option",
-      "OptionGroup"
+      "CircularProgress",
+      "LinearProgress"
     ],
     "examples": [
       {
-        "name": "UnstyledSelectControlled",
-        "content": "<CustomSelect value={value} onChange={(_, newValue) => setValue(newValue)}>\n  <StyledOption value={10}>Ten</StyledOption>\n  <StyledOption value={20}>Twenty</StyledOption>\n  <StyledOption value={30}>Thirty</StyledOption>\n</CustomSelect>\n\n<Paragraph>Selected value: {value}</Paragraph>"
+        "name": "CircularColor",
+        "content": "<CircularProgress color=\"secondary\" />\n<CircularProgress color=\"success\" />\n<CircularProgress color=\"inherit\" />"
       },
       {
-        "name": "UnstyledSelectCustomRenderValue",
-        "content": "<CustomSelect renderValue={renderValue}>\n  <StyledOption value={10}>Ten</StyledOption>\n  <StyledOption value={20}>Twenty</StyledOption>\n  <StyledOption value={30}>Thirty</StyledOption>\n</CustomSelect>"
+        "name": "CircularDeterminate",
+        "content": "<CircularProgress variant=\"determinate\" value={25} />\n<CircularProgress variant=\"determinate\" value={50} />\n<CircularProgress variant=\"determinate\" value={75} />\n<CircularProgress variant=\"determinate\" value={100} />\n<CircularProgress variant=\"determinate\" value={progress} />"
       },
       {
-        "name": "UnstyledSelectGrouping",
-        "content": "<CustomSelect>\n  <CustomOptionGroup label=\"Hobbits\">\n    <StyledOption value=\"Frodo\">Frodo</StyledOption>\n    <StyledOption value=\"Sam\">Sam</StyledOption>\n    <StyledOption value=\"Merry\">Merry</StyledOption>\n    <StyledOption value=\"Pippin\">Pippin</StyledOption>\n  </CustomOptionGroup>\n  <CustomOptionGroup label=\"Elves\">\n    <StyledOption value=\"Galadriel\">Galadriel</StyledOption>\n    <StyledOption value=\"Legolas\">Legolas</StyledOption>\n  </CustomOptionGroup>\n</CustomSelect>"
+        "name": "CircularIndeterminate",
+        "content": "<CircularProgress />"
       },
       {
-        "name": "UnstyledSelectMultiple",
-        "content": "<CustomMultiSelect defaultValue={[10, 20]}>\n  <StyledOption value={10}>Ten</StyledOption>\n  <StyledOption value={20}>Twenty</StyledOption>\n  <StyledOption value={30}>Thirty</StyledOption>\n  <StyledOption value={40}>Forty</StyledOption>\n  <StyledOption value={50}>Fifty</StyledOption>\n</CustomMultiSelect>"
+        "name": "CircularUnderLoad",
+        "content": "<CircularProgress disableShrink />"
       },
       {
-        "name": "UnstyledSelectObjectValues",
-        "content": "<CustomSelect\n  value={character}\n  onChange={(event, newValue) => setCharacter(newValue)}\n>\n  {characters.map((c) => (\n    <StyledOption key={c.name} value={c}>\n      {c.name}\n    </StyledOption>\n  ))}\n</CustomSelect>\n<Paragraph>Selected character:</Paragraph>\n<Pre>{JSON.stringify(character, null, 2)}</Pre>"
+        "name": "CircularWithValueLabel",
+        "content": "<CircularProgressWithLabel value={progress} />"
       },
       {
-        "name": "UnstyledSelectRichOptions",
-        "content": "<CustomSelect>\n  {countries.map((c) => (\n    <StyledOption key={c.code} value={c.code} label={c.label}>\n      <img\n        loading=\"lazy\"\n        width=\"20\"\n        src={`https://flagcdn.com/w20/${c.code.toLowerCase()}.png`}\n        srcSet={`https://flagcdn.com/w40/${c.code.toLowerCase()}.png 2x`}\n        alt={`Flag of ${c.label}`}\n      />\n      {c.label} ({c.code}) +{c.phone}\n    </StyledOption>\n  ))}\n</CustomSelect>"
+        "name": "CustomizedProgressBars",
+        "content": "<FacebookCircularProgress />\n<br />\n<BorderLinearProgress variant=\"determinate\" value={50} />"
       },
       {
-        "name": "UseSelect",
-        "content": "<CustomSelect placeholder=\"Select a color…\" options={options} />"
+        "name": "LinearBuffer",
+        "content": "<LinearProgress variant=\"buffer\" value={progress} valueBuffer={buffer} />"
+      },
+      {
+        "name": "LinearColor",
+        "content": "<LinearProgress color=\"secondary\" />\n<LinearProgress color=\"success\" />\n<LinearProgress color=\"inherit\" />"
+      },
+      {
+        "name": "LinearDeterminate",
+        "content": "<LinearProgress variant=\"determinate\" value={progress} />"
+      },
+      {
+        "name": "LinearIndeterminate",
+        "content": "<LinearProgress />"
+      },
+      {
+        "name": "LinearWithValueLabel",
+        "content": "<LinearProgressWithLabel value={progress} />"
+      }
+    ]
+  },
+  {
+    "name": "radio-buttons",
+    "title": "Radio Group",
+    "description": "The Radio Group allows the user to select one option from a set.",
+    "components": [
+      "Radio",
+      "RadioGroup",
+      "FormControl",
+      "FormLabel",
+      "FormControlLabel"
+    ],
+    "examples": [
+      {
+        "name": "ColorRadioButtons",
+        "content": "<Radio {...controlProps('a')} />\n<Radio {...controlProps('b')} color=\"secondary\" />\n<Radio {...controlProps('c')} color=\"success\" />\n<Radio {...controlProps('d')} color=\"default\" />\n<Radio\n  {...controlProps('e')}\n  sx={{\n    color: pink[800],\n    '&.Mui-checked': {\n      color: pink[600],\n    },\n  }}\n/>"
+      },
+      {
+        "name": "ControlledRadioButtonsGroup",
+        "content": "<FormControl>\n  <FormLabel id=\"demo-controlled-radio-buttons-group\">Gender</FormLabel>\n  <RadioGroup\n    aria-labelledby=\"demo-controlled-radio-buttons-group\"\n    name=\"controlled-radio-buttons-group\"\n    value={value}\n    onChange={handleChange}\n  >\n    <FormControlLabel value=\"female\" control={<Radio />} label=\"Female\" />\n    <FormControlLabel value=\"male\" control={<Radio />} label=\"Male\" />\n  </RadioGroup>\n</FormControl>"
+      },
+      {
+        "name": "RadioButtons",
+        "content": "<Radio\n  checked={selectedValue === 'a'}\n  onChange={handleChange}\n  value=\"a\"\n  name=\"radio-buttons\"\n  inputProps={{ 'aria-label': 'A' }}\n/>\n<Radio\n  checked={selectedValue === 'b'}\n  onChange={handleChange}\n  value=\"b\"\n  name=\"radio-buttons\"\n  inputProps={{ 'aria-label': 'B' }}\n/>"
+      },
+      {
+        "name": "RadioButtonsGroup",
+        "content": "<FormControl>\n  <FormLabel id=\"demo-radio-buttons-group-label\">Gender</FormLabel>\n  <RadioGroup\n    aria-labelledby=\"demo-radio-buttons-group-label\"\n    defaultValue=\"female\"\n    name=\"radio-buttons-group\"\n  >\n    <FormControlLabel value=\"female\" control={<Radio />} label=\"Female\" />\n    <FormControlLabel value=\"male\" control={<Radio />} label=\"Male\" />\n    <FormControlLabel value=\"other\" control={<Radio />} label=\"Other\" />\n  </RadioGroup>\n</FormControl>"
+      },
+      {
+        "name": "SizeRadioButtons",
+        "content": "<Radio {...controlProps('a')} size=\"small\" />\n<Radio {...controlProps('b')} />\n<Radio\n  {...controlProps('c')}\n  sx={{\n    '& .MuiSvgIcon-root': {\n      fontSize: 28,\n    },\n  }}\n/>"
+      },
+      {
+        "name": "UseRadioGroup",
+        "content": "<RadioGroup name=\"use-radio-group\" defaultValue=\"first\">\n  <MyFormControlLabel value=\"first\" label=\"First\" control={<Radio />} />\n  <MyFormControlLabel value=\"second\" label=\"Second\" control={<Radio />} />\n</RadioGroup>"
+      }
+    ]
+  },
+  {
+    "name": "rating",
+    "title": "Rating",
+    "description": "Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.",
+    "components": [
+      "Rating"
+    ],
+    "examples": [
+      {
+        "name": "BasicRating",
+        "content": "<Typography component=\"legend\">Controlled</Typography>\n<Rating\n  name=\"simple-controlled\"\n  value={value}\n  onChange={(event, newValue) => {\n    setValue(newValue);\n  }}\n/>\n<Typography component=\"legend\">Read only</Typography>\n<Rating name=\"read-only\" value={value} readOnly />\n<Typography component=\"legend\">Disabled</Typography>\n<Rating name=\"disabled\" value={value} disabled />\n<Typography component=\"legend\">No rating given</Typography>\n<Rating name=\"no-value\" value={null} />"
+      },
+      {
+        "name": "CustomizedRating",
+        "content": "<Typography component=\"legend\">Custom icon and color</Typography>\n<StyledRating\n  name=\"customized-color\"\n  defaultValue={2}\n  getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}\n  precision={0.5}\n  icon={<FavoriteIcon fontSize=\"inherit\" />}\n  emptyIcon={<FavoriteBorderIcon fontSize=\"inherit\" />}\n/>\n<Typography component=\"legend\">10 stars</Typography>\n<Rating name=\"customized-10\" defaultValue={2} max={10} />"
+      },
+      {
+        "name": "HalfRating",
+        "content": "<Rating name=\"half-rating\" defaultValue={2.5} precision={0.5} />\n<Rating name=\"half-rating-read\" defaultValue={2.5} precision={0.5} readOnly />"
+      },
+      {
+        "name": "HoverRating",
+        "content": "<Rating\n  name=\"hover-feedback\"\n  value={value}\n  precision={0.5}\n  getLabelText={getLabelText}\n  onChange={(event, newValue) => {\n    setValue(newValue);\n  }}\n  onChangeActive={(event, newHover) => {\n    setHover(newHover);\n  }}\n  emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize=\"inherit\" />}\n/>\n{value !== null && (\n  <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>\n)}"
+      },
+      {
+        "name": "RadioGroupRating",
+        "content": "<StyledRating\n  name=\"highlight-selected-only\"\n  defaultValue={2}\n  IconContainerComponent={IconContainer}\n  getLabelText={(value: number) => customIcons[value].label}\n  highlightSelectedOnly\n/>"
+      },
+      {
+        "name": "RatingSize",
+        "content": "<Rating name=\"size-small\" defaultValue={2} size=\"small\" />\n<Rating name=\"size-medium\" defaultValue={2} />\n<Rating name=\"size-large\" defaultValue={2} size=\"large\" />"
+      },
+      {
+        "name": "TextRating",
+        "content": "<Rating\n  name=\"text-feedback\"\n  value={value}\n  readOnly\n  precision={0.5}\n  emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize=\"inherit\" />}\n/>\n<Box sx={{ ml: 2 }}>{labels[value]}</Box>"
+      }
+    ]
+  },
+  {
+    "name": "selects",
+    "title": "Select",
+    "description": "Select components are used for collecting user provided information from a list of options.",
+    "components": [
+      "Select",
+      "NativeSelect"
+    ],
+    "examples": [
+      {
+        "name": "BasicSelect",
+        "content": "<FormControl fullWidth>\n  <InputLabel id=\"demo-simple-select-label\">Age</InputLabel>\n  <Select\n    labelId=\"demo-simple-select-label\"\n    id=\"demo-simple-select\"\n    value={age}\n    label=\"Age\"\n    onChange={handleChange}\n  >\n    <MenuItem value={10}>Ten</MenuItem>\n    <MenuItem value={20}>Twenty</MenuItem>\n    <MenuItem value={30}>Thirty</MenuItem>\n  </Select>\n</FormControl>"
+      },
+      {
+        "name": "NativeSelectDemo",
+        "content": "<FormControl fullWidth>\n  <InputLabel variant=\"standard\" htmlFor=\"uncontrolled-native\">\n    Age\n  </InputLabel>\n  <NativeSelect\n    defaultValue={30}\n    inputProps={{\n      name: 'age',\n      id: 'uncontrolled-native',\n    }}\n  >\n    <option value={10}>Ten</option>\n    <option value={20}>Twenty</option>\n    <option value={30}>Thirty</option>\n  </NativeSelect>\n</FormControl>"
+      }
+    ]
+  },
+  {
+    "name": "skeleton",
+    "title": "Skeleton",
+    "description": "Display a placeholder preview of your content before the data gets loaded to reduce load-time frustration.",
+    "components": [
+      "Skeleton"
+    ],
+    "examples": [
+      {
+        "name": "Animations",
+        "content": "<Skeleton />\n<Skeleton animation=\"wave\" />\n<Skeleton animation={false} />"
+      },
+      {
+        "name": "Facebook",
+        "content": "<Media loading />\n<Media />"
+      },
+      {
+        "name": "SkeletonChildren",
+        "content": "<Grid container spacing={8}>\n  <Grid item xs>\n    <SkeletonChildrenDemo loading />\n  </Grid>\n  <Grid item xs>\n    <SkeletonChildrenDemo />\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "SkeletonColor",
+        "content": "<Skeleton\n  sx={{ bgcolor: 'grey.900' }}\n  variant=\"rectangular\"\n  width={210}\n  height={118}\n/>"
+      },
+      {
+        "name": "SkeletonTypography",
+        "content": "<Grid container spacing={8}>\n  <Grid item xs>\n    <TypographyDemo loading />\n  </Grid>\n  <Grid item xs>\n    <TypographyDemo />\n  </Grid>\n</Grid>"
+      },
+      {
+        "name": "Variants",
+        "content": "{/* For variant=\"text\", adjust the height via font-size */}\n<Skeleton variant=\"text\" sx={{ fontSize: '1rem' }} />\n\n{/* For other variants, adjust the size with `width` and `height` */}\n<Skeleton variant=\"circular\" width={40} height={40} />\n<Skeleton variant=\"rectangular\" width={210} height={60} />\n<Skeleton variant=\"rounded\" width={210} height={60} />"
+      },
+      {
+        "name": "YouTube",
+        "content": "<Media loading />\n<Media />"
       }
     ]
   },
   {
     "name": "slider",
     "title": "Slider",
-    "description": "A slider is a UI element that lets users select a single value or a range of values along a bar.\n",
+    "description": "Sliders allow users to make selections from a range of values.",
     "components": [
       "Slider"
     ],
     "examples": [
       {
+        "name": "ColorSlider",
+        "content": "<Slider\n  aria-label=\"Temperature\"\n  defaultValue={30}\n  getAriaValueText={valuetext}\n  color=\"secondary\"\n/>"
+      },
+      {
+        "name": "ContinuousSlider",
+        "content": "<Stack spacing={2} direction=\"row\" sx={{ mb: 1 }} alignItems=\"center\">\n  <VolumeDown />\n  <Slider aria-label=\"Volume\" value={value} onChange={handleChange} />\n  <VolumeUp />\n</Stack>\n<Slider disabled defaultValue={30} aria-label=\"Disabled slider\" />"
+      },
+      {
         "name": "DiscreteSlider",
-        "content": "<StyledSlider\n  aria-label=\"Temperature\"\n  defaultValue={30}\n  getAriaValueText={valuetext}\n  step={10}\n  marks\n  min={10}\n  max={110}\n  slots={{ valueLabel: SliderValueLabel }}\n/>"
+        "content": "<Slider\n  aria-label=\"Temperature\"\n  defaultValue={30}\n  getAriaValueText={valuetext}\n  valueLabelDisplay=\"auto\"\n  step={10}\n  marks\n  min={10}\n  max={110}\n/>\n<Slider defaultValue={30} step={10} marks min={10} max={110} disabled />"
+      },
+      {
+        "name": "DiscreteSliderLabel",
+        "content": "<Slider\n  aria-label=\"Always visible\"\n  defaultValue={80}\n  getAriaValueText={valuetext}\n  step={10}\n  marks={marks}\n  valueLabelDisplay=\"on\"\n/>"
       },
       {
         "name": "DiscreteSliderMarks",
-        "content": "<StyledSlider\n  aria-label=\"Temperature\"\n  defaultValue={37}\n  getAriaValueText={valuetext}\n  marks={marks}\n/>"
+        "content": "<Slider\n  aria-label=\"Custom marks\"\n  defaultValue={20}\n  getAriaValueText={valuetext}\n  step={10}\n  valueLabelDisplay=\"auto\"\n  marks={marks}\n/>"
+      },
+      {
+        "name": "DiscreteSliderSteps",
+        "content": "<Slider\n  aria-label=\"Small steps\"\n  defaultValue={0.00000005}\n  getAriaValueText={valuetext}\n  step={0.00000001}\n  marks\n  min={-0.00000005}\n  max={0.0000001}\n  valueLabelDisplay=\"auto\"\n/>"
       },
       {
         "name": "DiscreteSliderValues",
-        "content": "<StyledSlider\n  aria-label=\"Temperature\"\n  defaultValue={37}\n  getAriaValueText={valuetext}\n  step={null}\n  marks={marks}\n/>"
+        "content": "<Slider\n  aria-label=\"Restricted values\"\n  defaultValue={20}\n  valueLabelFormat={valueLabelFormat}\n  getAriaValueText={valuetext}\n  step={null}\n  valueLabelDisplay=\"auto\"\n  marks={marks}\n/>"
       },
       {
-        "name": "LabeledValuesSlider",
-        "content": "<StyledSlider defaultValue={10} slots={{ valueLabel: SliderValueLabel }} />"
+        "name": "MinimumDistanceSlider",
+        "content": "<Slider\n  getAriaLabel={() => 'Minimum distance'}\n  value={value1}\n  onChange={handleChange1}\n  valueLabelDisplay=\"auto\"\n  getAriaValueText={valuetext}\n  disableSwap\n/>\n<Slider\n  getAriaLabel={() => 'Minimum distance shift'}\n  value={value2}\n  onChange={handleChange2}\n  valueLabelDisplay=\"auto\"\n  getAriaValueText={valuetext}\n  disableSwap\n/>"
       },
       {
-        "name": "UnstyledSlider",
-        "content": "<StyledSlider defaultValue={10} />\n<StyledSlider defaultValue={10} disabled />"
+        "name": "NonLinearSlider",
+        "content": "<Typography id=\"non-linear-slider\" gutterBottom>\n  Storage: {valueLabelFormat(calculateValue(value))}\n</Typography>\n<Slider\n  value={value}\n  min={5}\n  step={1}\n  max={30}\n  scale={calculateValue}\n  getAriaValueText={valueLabelFormat}\n  valueLabelFormat={valueLabelFormat}\n  onChange={handleChange}\n  valueLabelDisplay=\"auto\"\n  aria-labelledby=\"non-linear-slider\"\n/>"
       },
       {
-        "name": "UnstyledSliderValueLabel",
-        "content": "<StyledSlider defaultValue={10} slots={{ valueLabel: SliderValueLabel }} />"
+        "name": "RangeSlider",
+        "content": "<Slider\n  getAriaLabel={() => 'Temperature range'}\n  value={value}\n  onChange={handleChange}\n  valueLabelDisplay=\"auto\"\n  getAriaValueText={valuetext}\n/>"
       },
       {
-        "name": "VerticalSlider",
-        "content": "<StyledSlider orientation=\"vertical\" defaultValue={30} />"
+        "name": "SliderSizes",
+        "content": "<Slider\n  size=\"small\"\n  defaultValue={70}\n  aria-label=\"Small\"\n  valueLabelDisplay=\"auto\"\n/>\n<Slider defaultValue={50} aria-label=\"Default\" valueLabelDisplay=\"auto\" />"
+      },
+      {
+        "name": "VerticalAccessibleSlider",
+        "content": "<Slider\n  sx={{\n    '& input[type=\"range\"]': {\n      WebkitAppearance: 'slider-vertical',\n    },\n  }}\n  orientation=\"vertical\"\n  defaultValue={30}\n  aria-label=\"Temperature\"\n  valueLabelDisplay=\"auto\"\n  onKeyDown={preventHorizontalKeyboardNavigation}\n/>"
       }
     ]
   },
   {
-    "name": "snackbar",
+    "name": "snackbars",
     "title": "Snackbar",
-    "description": "The Snackbar component informs users that an action has been or will be performed by the app.",
+    "description": "Snackbars provide brief notifications. The component is also known as a toast.",
     "components": [
-      "Snackbar"
+      "Snackbar",
+      "SnackbarContent"
     ],
     "examples": [
       {
-        "name": "UseSnackbar",
-        "content": "<React.Fragment>\n  <TriggerButton type=\"button\" onClick={handleOpen}>\n    Open snackbar\n  </TriggerButton>\n  {open ? (\n    <ClickAwayListener onClickAway={onClickAway}>\n      <CustomSnackbar {...getRootProps()}>Hello World</CustomSnackbar>\n    </ClickAwayListener>\n  ) : null}\n</React.Fragment>"
+        "name": "CustomizedSnackbars",
+        "content": "<Button variant=\"outlined\" onClick={handleClick}>\n  Open success snackbar\n</Button>\n<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>\n  <Alert onClose={handleClose} severity=\"success\" sx={{ width: '100%' }}>\n    This is a success message!\n  </Alert>\n</Snackbar>\n<Alert severity=\"error\">This is an error message!</Alert>\n<Alert severity=\"warning\">This is a warning message!</Alert>\n<Alert severity=\"info\">This is an information message!</Alert>\n<Alert severity=\"success\">This is a success message!</Alert>"
+      },
+      {
+        "name": "IntegrationNotistack",
+        "content": "<SnackbarProvider maxSnack={3}>\n  <MyApp />\n</SnackbarProvider>"
+      },
+      {
+        "name": "PositionedSnackbar",
+        "content": "{buttons}\n<Snackbar\n  anchorOrigin={{ vertical, horizontal }}\n  open={open}\n  onClose={handleClose}\n  message=\"I love snacks\"\n  key={vertical + horizontal}\n/>"
+      },
+      {
+        "name": "SimpleSnackbar",
+        "content": "<Button onClick={handleClick}>Open simple snackbar</Button>\n<Snackbar\n  open={open}\n  autoHideDuration={6000}\n  onClose={handleClose}\n  message=\"Note archived\"\n  action={action}\n/>"
+      },
+      {
+        "name": "TransitionsSnackbar",
+        "content": "<Button onClick={handleClick(GrowTransition)}>Grow Transition</Button>\n<Button onClick={handleClick(Fade)}>Fade Transition</Button>\n<Button onClick={handleClick(SlideTransition)}>Slide Transition</Button>\n<Snackbar\n  open={state.open}\n  onClose={handleClose}\n  TransitionComponent={state.Transition}\n  message=\"I love snacks\"\n  key={state.Transition.name}\n/>"
       }
     ]
   },
   {
-    "name": "switch",
-    "title": "Switch",
-    "description": "Switches are UI elements that let users choose between two states—most commonly on/off.",
+    "name": "speed-dial",
+    "title": "Speed Dial",
+    "description": "When pressed, a floating action button can display three to six related actions in the form of a Speed Dial.",
     "components": [
-      "Switch"
+      "SpeedDial",
+      "SpeedDialAction",
+      "SpeedDialIcon"
     ],
     "examples": [
       {
-        "name": "UseSwitchesBasic",
-        "content": "<BasicSwitch defaultChecked />\n<BasicSwitch />\n<BasicSwitch defaultChecked disabled />\n<BasicSwitch disabled />"
+        "name": "BasicSpeedDial",
+        "content": "<SpeedDial\n  ariaLabel=\"SpeedDial basic example\"\n  sx={{ position: 'absolute', bottom: 16, right: 16 }}\n  icon={<SpeedDialIcon />}\n>\n  {actions.map((action) => (\n    <SpeedDialAction\n      key={action.name}\n      icon={action.icon}\n      tooltipTitle={action.name}\n    />\n  ))}\n</SpeedDial>"
       },
       {
-        "name": "UseSwitchesCustom",
-        "content": "<MUISwitch defaultChecked />"
+        "name": "OpenIconSpeedDial",
+        "content": "<SpeedDial\n  ariaLabel=\"SpeedDial openIcon example\"\n  sx={{ position: 'absolute', bottom: 16, right: 16 }}\n  icon={<SpeedDialIcon openIcon={<EditIcon />} />}\n>\n  {actions.map((action) => (\n    <SpeedDialAction\n      key={action.name}\n      icon={action.icon}\n      tooltipTitle={action.name}\n    />\n  ))}\n</SpeedDial>"
+      }
+    ]
+  },
+  {
+    "name": "stack",
+    "title": "Stack",
+    "description": "Stack is a container component for arranging elements vertically or horizontally.",
+    "components": [
+      "Stack"
+    ],
+    "examples": [
+      {
+        "name": "BasicStack",
+        "content": "<Stack spacing={2}>\n  <Item>Item 1</Item>\n  <Item>Item 2</Item>\n  <Item>Item 3</Item>\n</Stack>"
+      },
+      {
+        "name": "DirectionStack",
+        "content": "<Stack direction=\"row\" spacing={2}>\n  <Item>Item 1</Item>\n  <Item>Item 2</Item>\n  <Item>Item 3</Item>\n</Stack>"
+      },
+      {
+        "name": "DividerStack",
+        "content": "<Stack\n  direction=\"row\"\n  divider={<Divider orientation=\"vertical\" flexItem />}\n  spacing={2}\n>\n  <Item>Item 1</Item>\n  <Item>Item 2</Item>\n  <Item>Item 3</Item>\n</Stack>"
+      },
+      {
+        "name": "FlexboxGapStack",
+        "content": "<Stack spacing={{ xs: 1, sm: 2 }} direction=\"row\" useFlexGap flexWrap=\"wrap\">\n  <Item>Item 1</Item>\n  <Item>Item 2</Item>\n  <Item>Long content</Item>\n</Stack>"
+      },
+      {
+        "name": "ResponsiveStack",
+        "content": "<Stack\n  direction={{ xs: 'column', sm: 'row' }}\n  spacing={{ xs: 1, sm: 2, md: 4 }}\n>\n  <Item>Item 1</Item>\n  <Item>Item 2</Item>\n  <Item>Item 3</Item>\n</Stack>"
+      }
+    ]
+  },
+  {
+    "name": "steppers",
+    "title": "Stepper",
+    "description": "Steppers convey progress through numbered steps. It provides a wizard-like workflow.",
+    "components": [
+      "MobileStepper",
+      "Step",
+      "StepButton",
+      "StepConnector",
+      "StepContent",
+      "StepIcon",
+      "StepLabel",
+      "Stepper"
+    ],
+    "examples": [
+      {
+        "name": "CustomizedSteppers",
+        "content": "<Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>\n  {steps.map((label) => (\n    <Step key={label}>\n      <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>\n    </Step>\n  ))}\n</Stepper>\n<Stepper alternativeLabel activeStep={1} connector={<ColorlibConnector />}>\n  {steps.map((label) => (\n    <Step key={label}>\n      <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>\n    </Step>\n  ))}\n</Stepper>"
+      },
+      {
+        "name": "HorizontalLinearAlternativeLabelStepper",
+        "content": "<Stepper activeStep={1} alternativeLabel>\n  {steps.map((label) => (\n    <Step key={label}>\n      <StepLabel>{label}</StepLabel>\n    </Step>\n  ))}\n</Stepper>"
+      }
+    ]
+  },
+  {
+    "name": "switches",
+    "title": "Switch",
+    "description": "Switches toggle the state of a single setting on or off.",
+    "components": [
+      "Switch",
+      "FormControl",
+      "FormGroup",
+      "FormLabel",
+      "FormControlLabel"
+    ],
+    "examples": [
+      {
+        "name": "BasicSwitches",
+        "content": "<Switch {...label} defaultChecked />\n<Switch {...label} />\n<Switch {...label} disabled defaultChecked />\n<Switch {...label} disabled />"
+      },
+      {
+        "name": "ColorSwitches",
+        "content": "<Switch {...label} defaultChecked />\n<Switch {...label} defaultChecked color=\"secondary\" />\n<Switch {...label} defaultChecked color=\"warning\" />\n<Switch {...label} defaultChecked color=\"default\" />\n<PinkSwitch {...label} defaultChecked />"
+      },
+      {
+        "name": "ControlledSwitches",
+        "content": "<Switch\n  checked={checked}\n  onChange={handleChange}\n  inputProps={{ 'aria-label': 'controlled' }}\n/>"
+      },
+      {
+        "name": "SwitchLabels",
+        "content": "<FormGroup>\n  <FormControlLabel control={<Switch defaultChecked />} label=\"Label\" />\n  <FormControlLabel required control={<Switch />} label=\"Required\" />\n  <FormControlLabel disabled control={<Switch />} label=\"Disabled\" />\n</FormGroup>"
+      },
+      {
+        "name": "SwitchesSize",
+        "content": "<Switch {...label} defaultChecked size=\"small\" />\n<Switch {...label} defaultChecked />"
+      }
+    ]
+  },
+  {
+    "name": "table",
+    "title": "Table",
+    "description": "Tables display sets of data. They can be fully customized.",
+    "components": [
+      "Table",
+      "TableBody",
+      "TableCell",
+      "TableContainer",
+      "TableFooter",
+      "TableHead",
+      "TablePagination",
+      "TableRow",
+      "TableSortLabel"
+    ],
+    "examples": [
+      {
+        "name": "DataTable",
+        "content": "<DataGrid\n  rows={rows}\n  columns={columns}\n  initialState={{\n    pagination: {\n      paginationModel: { page: 0, pageSize: 5 },\n    },\n  }}\n  pageSizeOptions={[5, 10]}\n  checkboxSelection\n/>"
+      },
+      {
+        "name": "ReactVirtualizedTable",
+        "content": "<Paper style={{ height: 400, width: '100%' }}>\n  <TableVirtuoso\n    data={rows}\n    components={VirtuosoTableComponents}\n    fixedHeaderContent={fixedHeaderContent}\n    itemContent={rowContent}\n  />\n</Paper>"
       }
     ]
   },
   {
     "name": "tabs",
     "title": "Tabs",
-    "description": "Tabs are UI elements for organizing and navigating between groups of related content.",
+    "description": "Tabs make it easy to explore and switch between different views.",
     "components": [
       "Tabs",
       "Tab",
-      "TabPanel",
-      "TabsList"
+      "TabScrollButton",
+      "TabContext",
+      "TabList",
+      "TabPanel"
     ],
     "examples": [
       {
-        "name": "UnstyledTabsBasic",
-        "content": "<Tabs defaultValue={1}>\n  <TabsList>\n    <Tab value={1}>One</Tab>\n    <Tab value={2}>Two</Tab>\n    <Tab value={3}>Three</Tab>\n  </TabsList>\n  <TabPanel value={1}>First page</TabPanel>\n  <TabPanel value={2}>Second page</TabPanel>\n  <TabPanel value={3}>Third page</TabPanel>\n</Tabs>"
+        "name": "AccessibleTabs1",
+        "content": "<Tabs\n  onChange={handleChange}\n  value={value}\n  aria-label=\"Tabs where selection follows focus\"\n  selectionFollowsFocus\n>\n  <Tab label=\"Item One\" />\n  <Tab label=\"Item Two\" />\n  <Tab label=\"Item Three\" />\n</Tabs>"
       },
       {
-        "name": "UnstyledTabsIntroduction",
-        "content": "<Tabs defaultValue={0}>\n  <StyledTabsList>\n    <StyledTab value={0}>My account</StyledTab>\n    <StyledTab value={1}>Profile</StyledTab>\n    <StyledTab value={2}>Language</StyledTab>\n  </StyledTabsList>\n  <StyledTabPanel value={0}>My account page</StyledTabPanel>\n  <StyledTabPanel value={1}>Profile page</StyledTabPanel>\n  <StyledTabPanel value={2}>Language page</StyledTabPanel>\n</Tabs>"
+        "name": "AccessibleTabs2",
+        "content": "<Tabs\n  onChange={handleChange}\n  value={value}\n  aria-label=\"Tabs where each tab needs to be selected manually\"\n>\n  <Tab label=\"Item One\" />\n  <Tab label=\"Item Two\" />\n  <Tab label=\"Item Three\" />\n</Tabs>"
       },
       {
-        "name": "UnstyledTabsRouting",
-        "content": "<Router>\n  <div>\n    <Routes>\n      <Route path=\"*\" element={<CurrentRoute />} />\n    </Routes>\n    <MyTabs />\n  </div>\n</Router>"
+        "name": "BasicTabs",
+        "content": "<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>\n  <Tabs value={value} onChange={handleChange} aria-label=\"basic tabs example\">\n    <Tab label=\"Item One\" {...a11yProps(0)} />\n    <Tab label=\"Item Two\" {...a11yProps(1)} />\n    <Tab label=\"Item Three\" {...a11yProps(2)} />\n  </Tabs>\n</Box>\n<CustomTabPanel value={value} index={0}>\n  Item One\n</CustomTabPanel>\n<CustomTabPanel value={value} index={1}>\n  Item Two\n</CustomTabPanel>\n<CustomTabPanel value={value} index={2}>\n  Item Three\n</CustomTabPanel>"
       },
       {
-        "name": "UnstyledTabsVertical",
-        "content": "<StyledTabs defaultValue={0} orientation=\"vertical\">\n  <StyledTabsList>\n    <StyledTab>One</StyledTab>\n    <StyledTab>Two</StyledTab>\n    <StyledTab>Three</StyledTab>\n  </StyledTabsList>\n  <StyledTabPanel value={0}>First page</StyledTabPanel>\n  <StyledTabPanel value={1}>Second page</StyledTabPanel>\n  <StyledTabPanel value={2}>Third page</StyledTabPanel>\n</StyledTabs>"
+        "name": "CenteredTabs",
+        "content": "<Tabs value={value} onChange={handleChange} centered>\n  <Tab label=\"Item One\" />\n  <Tab label=\"Item Two\" />\n  <Tab label=\"Item Three\" />\n</Tabs>"
+      },
+      {
+        "name": "ColorTabs",
+        "content": "<Tabs\n  value={value}\n  onChange={handleChange}\n  textColor=\"secondary\"\n  indicatorColor=\"secondary\"\n  aria-label=\"secondary tabs example\"\n>\n  <Tab value=\"one\" label=\"Item One\" />\n  <Tab value=\"two\" label=\"Item Two\" />\n  <Tab value=\"three\" label=\"Item Three\" />\n</Tabs>"
+      },
+      {
+        "name": "DisabledTabs",
+        "content": "<Tabs value={value} onChange={handleChange} aria-label=\"disabled tabs example\">\n  <Tab label=\"Active\" />\n  <Tab label=\"Disabled\" disabled />\n  <Tab label=\"Active\" />\n</Tabs>"
+      },
+      {
+        "name": "IconLabelTabs",
+        "content": "<Tabs value={value} onChange={handleChange} aria-label=\"icon label tabs example\">\n  <Tab icon={<PhoneIcon />} label=\"RECENTS\" />\n  <Tab icon={<FavoriteIcon />} label=\"FAVORITES\" />\n  <Tab icon={<PersonPinIcon />} label=\"NEARBY\" />\n</Tabs>"
+      },
+      {
+        "name": "IconPositionTabs",
+        "content": "<Tabs\n  value={value}\n  onChange={handleChange}\n  aria-label=\"icon position tabs example\"\n>\n  <Tab icon={<PhoneIcon />} label=\"top\" />\n  <Tab icon={<PhoneMissedIcon />} iconPosition=\"start\" label=\"start\" />\n  <Tab icon={<FavoriteIcon />} iconPosition=\"end\" label=\"end\" />\n  <Tab icon={<PersonPinIcon />} iconPosition=\"bottom\" label=\"bottom\" />\n</Tabs>"
+      },
+      {
+        "name": "IconTabs",
+        "content": "<Tabs value={value} onChange={handleChange} aria-label=\"icon tabs example\">\n  <Tab icon={<PhoneIcon />} aria-label=\"phone\" />\n  <Tab icon={<FavoriteIcon />} aria-label=\"favorite\" />\n  <Tab icon={<PersonPinIcon />} aria-label=\"person\" />\n</Tabs>"
+      },
+      {
+        "name": "LabTabs",
+        "content": "<TabContext value={value}>\n  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>\n    <TabList onChange={handleChange} aria-label=\"lab API tabs example\">\n      <Tab label=\"Item One\" value=\"1\" />\n      <Tab label=\"Item Two\" value=\"2\" />\n      <Tab label=\"Item Three\" value=\"3\" />\n    </TabList>\n  </Box>\n  <TabPanel value=\"1\">Item One</TabPanel>\n  <TabPanel value=\"2\">Item Two</TabPanel>\n  <TabPanel value=\"3\">Item Three</TabPanel>\n</TabContext>"
+      },
+      {
+        "name": "NavTabs",
+        "content": "<Tabs value={value} onChange={handleChange} aria-label=\"nav tabs example\">\n  <LinkTab label=\"Page One\" href=\"/drafts\" />\n  <LinkTab label=\"Page Two\" href=\"/trash\" />\n  <LinkTab label=\"Page Three\" href=\"/spam\" />\n</Tabs>"
+      },
+      {
+        "name": "ScrollableTabsButtonAuto",
+        "content": "<Tabs\n  value={value}\n  onChange={handleChange}\n  variant=\"scrollable\"\n  scrollButtons=\"auto\"\n  aria-label=\"scrollable auto tabs example\"\n>\n  <Tab label=\"Item One\" />\n  <Tab label=\"Item Two\" />\n  <Tab label=\"Item Three\" />\n  <Tab label=\"Item Four\" />\n  <Tab label=\"Item Five\" />\n  <Tab label=\"Item Six\" />\n  <Tab label=\"Item Seven\" />\n</Tabs>"
+      },
+      {
+        "name": "ScrollableTabsButtonForce",
+        "content": "<Tabs\n  value={value}\n  onChange={handleChange}\n  variant=\"scrollable\"\n  scrollButtons\n  allowScrollButtonsMobile\n  aria-label=\"scrollable force tabs example\"\n>\n  <Tab label=\"Item One\" />\n  <Tab label=\"Item Two\" />\n  <Tab label=\"Item Three\" />\n  <Tab label=\"Item Four\" />\n  <Tab label=\"Item Five\" />\n  <Tab label=\"Item Six\" />\n  <Tab label=\"Item Seven\" />\n</Tabs>"
+      },
+      {
+        "name": "ScrollableTabsButtonPrevent",
+        "content": "<Tabs\n  value={value}\n  onChange={handleChange}\n  variant=\"scrollable\"\n  scrollButtons={false}\n  aria-label=\"scrollable prevent tabs example\"\n>\n  <Tab label=\"Item One\" />\n  <Tab label=\"Item Two\" />\n  <Tab label=\"Item Three\" />\n  <Tab label=\"Item Four\" />\n  <Tab label=\"Item Five\" />\n  <Tab label=\"Item Six\" />\n  <Tab label=\"Item Seven\" />\n</Tabs>"
+      },
+      {
+        "name": "TabsWrappedLabel",
+        "content": "<Tabs\n  value={value}\n  onChange={handleChange}\n  aria-label=\"wrapped label tabs example\"\n>\n  <Tab\n    value=\"one\"\n    label=\"New Arrivals in the Longest Text of Nonfiction that should appear in the next line\"\n    wrapped\n  />\n  <Tab value=\"two\" label=\"Item Two\" />\n  <Tab value=\"three\" label=\"Item Three\" />\n</Tabs>"
+      }
+    ]
+  },
+  {
+    "name": "text-fields",
+    "title": "Text Field",
+    "description": "Text Fields let users enter and edit text.",
+    "components": [
+      "FilledInput",
+      "FormControl",
+      "FormHelperText",
+      "Input",
+      "InputAdornment",
+      "InputBase",
+      "InputLabel",
+      "OutlinedInput",
+      "TextField"
+    ],
+    "examples": [
+      {
+        "name": "BasicTextFields",
+        "content": "<TextField id=\"outlined-basic\" label=\"Outlined\" variant=\"outlined\" />\n<TextField id=\"filled-basic\" label=\"Filled\" variant=\"filled\" />\n<TextField id=\"standard-basic\" label=\"Standard\" variant=\"standard\" />"
+      },
+      {
+        "name": "ColorTextFields",
+        "content": "<TextField label=\"Outlined secondary\" color=\"secondary\" focused />\n<TextField label=\"Filled success\" variant=\"filled\" color=\"success\" focused />\n<TextField\n  label=\"Standard warning\"\n  variant=\"standard\"\n  color=\"warning\"\n  focused\n/>"
+      },
+      {
+        "name": "CustomizedInputsStyleOverrides",
+        "content": "<ThemeProvider theme={customTheme(outerTheme)}>\n  <TextField label=\"Outlined\" />\n  <TextField label=\"Filled\" variant=\"filled\" />\n  <TextField label=\"Standard\" variant=\"standard\" />\n</ThemeProvider>"
+      },
+      {
+        "name": "FullWidthTextField",
+        "content": "<TextField fullWidth label=\"fullWidth\" id=\"fullWidth\" />"
+      },
+      {
+        "name": "HelperTextAligned",
+        "content": "<TextField\n  helperText=\"Please enter your name\"\n  id=\"demo-helper-text-aligned\"\n  label=\"Name\"\n/>\n<TextField\n  helperText=\" \"\n  id=\"demo-helper-text-aligned-no-helper\"\n  label=\"Name\"\n/>"
+      },
+      {
+        "name": "HelperTextMisaligned",
+        "content": "<TextField\n  helperText=\"Please enter your name\"\n  id=\"demo-helper-text-misaligned\"\n  label=\"Name\"\n/>\n<TextField id=\"demo-helper-text-misaligned-no-helper\" label=\"Name\" />"
+      },
+      {
+        "name": "Inputs",
+        "content": "<Input defaultValue=\"Hello world\" inputProps={ariaLabel} />\n<Input placeholder=\"Placeholder\" inputProps={ariaLabel} />\n<Input disabled defaultValue=\"Disabled\" inputProps={ariaLabel} />\n<Input defaultValue=\"Error\" error inputProps={ariaLabel} />"
+      },
+      {
+        "name": "LayoutTextFields",
+        "content": "<RedBar />\n<TextField label={'margin=\"none\"'} id=\"margin-none\" />\n<RedBar />\n<TextField label={'margin=\"dense\"'} id=\"margin-dense\" margin=\"dense\" />\n<RedBar />\n<TextField label={'margin=\"normal\"'} id=\"margin-normal\" margin=\"normal\" />\n<RedBar />"
+      },
+      {
+        "name": "StateTextFields",
+        "content": "<TextField\n  id=\"outlined-controlled\"\n  label=\"Controlled\"\n  value={name}\n  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {\n    setName(event.target.value);\n  }}\n/>\n<TextField\n  id=\"outlined-uncontrolled\"\n  label=\"Uncontrolled\"\n  defaultValue=\"foo\"\n/>"
+      },
+      {
+        "name": "TextFieldHiddenLabel",
+        "content": "<TextField\n  hiddenLabel\n  id=\"filled-hidden-label-small\"\n  defaultValue=\"Small\"\n  variant=\"filled\"\n  size=\"small\"\n/>\n<TextField\n  hiddenLabel\n  id=\"filled-hidden-label-normal\"\n  defaultValue=\"Normal\"\n  variant=\"filled\"\n/>"
+      },
+      {
+        "name": "UseFormControl",
+        "content": "<form noValidate autoComplete=\"off\">\n  <FormControl sx={{ width: '25ch' }}>\n    <OutlinedInput placeholder=\"Please enter text\" />\n    <MyFormHelperText />\n  </FormControl>\n</form>"
       }
     ]
   },
@@ -439,19 +1604,192 @@
     "examples": [
       {
         "name": "EmptyTextarea",
-        "content": "<StyledTextarea aria-label=\"empty textarea\" placeholder=\"Empty\" />"
+        "content": "<TextareaAutosize\n  aria-label=\"empty textarea\"\n  placeholder=\"Empty\"\n  style={{ width: 200 }}\n/>"
       },
       {
         "name": "MaxHeightTextarea",
-        "content": "<StyledTextarea\n  maxRows={4}\n  aria-label=\"maximum height\"\n  placeholder=\"Maximum 4 rows\"\n  defaultValue=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt\n    ut labore et dolore magna aliqua.\"\n/>"
+        "content": "<TextareaAutosize\n  maxRows={4}\n  aria-label=\"maximum height\"\n  placeholder=\"Maximum 4 rows\"\n  defaultValue=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt\n      ut labore et dolore magna aliqua.\"\n  style={{ width: 200 }}\n/>"
       },
       {
         "name": "MinHeightTextarea",
-        "content": "<StyledTextarea\n  aria-label=\"minimum height\"\n  minRows={3}\n  placeholder=\"Minimum 3 rows\"\n/>"
+        "content": "<TextareaAutosize\n  aria-label=\"minimum height\"\n  minRows={3}\n  placeholder=\"Minimum 3 rows\"\n  style={{ width: 200 }}\n/>"
+      }
+    ]
+  },
+  {
+    "name": "timeline",
+    "title": "Timeline",
+    "description": "The timeline displays a list of events in chronological order.",
+    "components": [
+      "Timeline",
+      "TimelineItem",
+      "TimelineSeparator",
+      "TimelineDot",
+      "TimelineConnector",
+      "TimelineContent",
+      "TimelineOppositeContent"
+    ],
+    "examples": [
+      {
+        "name": "ColorsTimeline",
+        "content": "<Timeline position=\"alternate\">\n  <TimelineItem>\n    <TimelineSeparator>\n      <TimelineDot color=\"secondary\" />\n      <TimelineConnector />\n    </TimelineSeparator>\n    <TimelineContent>Secondary</TimelineContent>\n  </TimelineItem>\n  <TimelineItem>\n    <TimelineSeparator>\n      <TimelineDot color=\"success\" />\n    </TimelineSeparator>\n    <TimelineContent>Success</TimelineContent>\n  </TimelineItem>\n</Timeline>"
+      }
+    ]
+  },
+  {
+    "name": "toggle-button",
+    "title": "Toggle Button",
+    "description": "A Toggle Button can be used to group related options.",
+    "components": [
+      "ToggleButton",
+      "ToggleButtonGroup"
+    ],
+    "examples": [
+      {
+        "name": "ColorToggleButton",
+        "content": "<ToggleButtonGroup\n  color=\"primary\"\n  value={alignment}\n  exclusive\n  onChange={handleChange}\n  aria-label=\"Platform\"\n>\n  <ToggleButton value=\"web\">Web</ToggleButton>\n  <ToggleButton value=\"android\">Android</ToggleButton>\n  <ToggleButton value=\"ios\">iOS</ToggleButton>\n</ToggleButtonGroup>"
       },
       {
-        "name": "UnstyledTextareaIntroduction",
-        "content": "<TextareaAutosize aria-label=\"empty textarea\" placeholder=\"Empty\" />"
+        "name": "StandaloneToggleButton",
+        "content": "<ToggleButton\n  value=\"check\"\n  selected={selected}\n  onChange={() => {\n    setSelected(!selected);\n  }}\n>\n  <CheckIcon />\n</ToggleButton>"
+      },
+      {
+        "name": "ToggleButtonSizes",
+        "content": "<ToggleButtonGroup size=\"small\" {...control} aria-label=\"Small sizes\">\n  {children}\n</ToggleButtonGroup>\n<ToggleButtonGroup {...control} aria-label=\"Medium sizes\">\n  {children}\n</ToggleButtonGroup>\n<ToggleButtonGroup size=\"large\" {...control} aria-label=\"Large sizes\">\n  {children}\n</ToggleButtonGroup>"
+      },
+      {
+        "name": "VerticalToggleButtons",
+        "content": "<ToggleButtonGroup\n  orientation=\"vertical\"\n  value={view}\n  exclusive\n  onChange={handleChange}\n>\n  <ToggleButton value=\"list\" aria-label=\"list\">\n    <ViewListIcon />\n  </ToggleButton>\n  <ToggleButton value=\"module\" aria-label=\"module\">\n    <ViewModuleIcon />\n  </ToggleButton>\n  <ToggleButton value=\"quilt\" aria-label=\"quilt\">\n    <ViewQuiltIcon />\n  </ToggleButton>\n</ToggleButtonGroup>"
+      }
+    ]
+  },
+  {
+    "name": "tooltips",
+    "title": "Tooltip",
+    "description": "Tooltips display informative text when users hover over, focus on, or tap an element.",
+    "components": [
+      "Tooltip"
+    ],
+    "examples": [
+      {
+        "name": "AccessibilityTooltips",
+        "content": "<Tooltip title=\"Delete\">\n  <IconButton>\n    <DeleteIcon />\n  </IconButton>\n</Tooltip>\n<Tooltip describeChild title=\"Does not add if it already exists.\">\n  <Button>Add</Button>\n</Tooltip>"
+      },
+      {
+        "name": "ArrowTooltips",
+        "content": "<Tooltip title=\"Add\" arrow>\n  <Button>Arrow</Button>\n</Tooltip>"
+      },
+      {
+        "name": "BasicTooltip",
+        "content": "<Tooltip title=\"Delete\">\n  <IconButton>\n    <DeleteIcon />\n  </IconButton>\n</Tooltip>"
+      },
+      {
+        "name": "ControlledTooltips",
+        "content": "<Tooltip open={open} onClose={handleClose} onOpen={handleOpen} title=\"Add\">\n  <Button>Controlled</Button>\n</Tooltip>"
+      },
+      {
+        "name": "DelayTooltips",
+        "content": "<Tooltip title=\"Add\" enterDelay={500} leaveDelay={200}>\n  <Button>[500ms, 200ms]</Button>\n</Tooltip>"
+      },
+      {
+        "name": "DisabledTooltips",
+        "content": "<Tooltip title=\"You don't have permission to do this\">\n  <span>\n    <Button disabled>A Disabled Button</Button>\n  </span>\n</Tooltip>"
+      },
+      {
+        "name": "FollowCursorTooltips",
+        "content": "<Tooltip title=\"You don't have permission to do this\" followCursor>\n  <Box sx={{ bgcolor: 'text.disabled', color: 'background.paper', p: 2 }}>\n    Disabled Action\n  </Box>\n</Tooltip>"
+      },
+      {
+        "name": "NonInteractiveTooltips",
+        "content": "<Tooltip title=\"Add\" disableInteractive>\n  <Button>Not interactive</Button>\n</Tooltip>"
+      },
+      {
+        "name": "TransitionsTooltips",
+        "content": "<Tooltip title=\"Add\">\n  <Button>Grow</Button>\n</Tooltip>\n<Tooltip\n  TransitionComponent={Fade}\n  TransitionProps={{ timeout: 600 }}\n  title=\"Add\"\n>\n  <Button>Fade</Button>\n</Tooltip>\n<Tooltip TransitionComponent={Zoom} title=\"Add\">\n  <Button>Zoom</Button>\n</Tooltip>"
+      },
+      {
+        "name": "VariableWidth",
+        "content": "<Tooltip title={longText}>\n  <Button sx={{ m: 1 }}>Default Width [300px]</Button>\n</Tooltip>\n<CustomWidthTooltip title={longText}>\n  <Button sx={{ m: 1 }}>Custom Width [500px]</Button>\n</CustomWidthTooltip>\n<NoMaxWidthTooltip title={longText}>\n  <Button sx={{ m: 1 }}>No wrapping</Button>\n</NoMaxWidthTooltip>"
+      }
+    ]
+  },
+  {
+    "name": "transitions",
+    "title": "Transitions",
+    "description": "Transitions help to make a UI expressive and easy to use.",
+    "components": [
+      "Collapse",
+      "Fade",
+      "Grow",
+      "Slide",
+      "Zoom"
+    ],
+    "examples": [
+      {
+        "name": "SimpleFade",
+        "content": "<FormControlLabel\n  control={<Switch checked={checked} onChange={handleChange} />}\n  label=\"Show\"\n/>\n<Box sx={{ display: 'flex' }}>\n  <Fade in={checked}>{icon}</Fade>\n</Box>"
+      },
+      {
+        "name": "SimpleGrow",
+        "content": "<FormControlLabel\n  control={<Switch checked={checked} onChange={handleChange} />}\n  label=\"Show\"\n/>\n<Box sx={{ display: 'flex' }}>\n  <Grow in={checked}>{icon}</Grow>\n  {/* Conditionally applies the timeout prop to change the entry speed. */}\n  <Grow\n    in={checked}\n    style={{ transformOrigin: '0 0 0' }}\n    {...(checked ? { timeout: 1000 } : {})}\n  >\n    {icon}\n  </Grow>\n</Box>"
+      },
+      {
+        "name": "SimpleSlide",
+        "content": "<FormControlLabel\n  control={<Switch checked={checked} onChange={handleChange} />}\n  label=\"Show\"\n/>\n<Slide direction=\"up\" in={checked} mountOnEnter unmountOnExit>\n  {icon}\n</Slide>"
+      },
+      {
+        "name": "SimpleZoom",
+        "content": "<FormControlLabel\n  control={<Switch checked={checked} onChange={handleChange} />}\n  label=\"Show\"\n/>\n<Box sx={{ display: 'flex' }}>\n  <Zoom in={checked}>{icon}</Zoom>\n  <Zoom in={checked} style={{ transitionDelay: checked ? '500ms' : '0ms' }}>\n    {icon}\n  </Zoom>\n</Box>"
+      },
+      {
+        "name": "SlideFromContainer",
+        "content": "<Box sx={{ p: 2, height: 200, overflow: 'hidden' }} ref={containerRef}>\n  <FormControlLabel\n    control={<Switch checked={checked} onChange={handleChange} />}\n    label=\"Show from target\"\n  />\n  <Slide in={checked} container={containerRef.current}>\n    {icon}\n  </Slide>\n</Box>"
+      },
+      {
+        "name": "TransitionGroupExample",
+        "content": "{addFruitButton}\n<List sx={{ mt: 1 }}>\n  <TransitionGroup>\n    {fruitsInBasket.map((item) => (\n      <Collapse key={item}>{renderItem({ item, handleRemoveFruit })}</Collapse>\n    ))}\n  </TransitionGroup>\n</List>"
+      }
+    ]
+  },
+  {
+    "name": "typography",
+    "title": "Typography",
+    "description": "",
+    "components": [
+      "Typography"
+    ],
+    "examples": [
+      {
+        "name": "TypographyTheme",
+        "content": "<Div>{\"This div's text looks like that of a button.\"}</Div>"
+      }
+    ]
+  },
+  {
+    "name": "use-media-query",
+    "title": "useMediaQuery",
+    "description": "This React hook listens for matches to a CSS media query. It allows the rendering of components based on whether the query matches or not.",
+    "components": [],
+    "examples": [
+      {
+        "name": "JavaScriptMedia",
+        "content": "<span>{`{ minWidth: 600 } matches: ${matches}`}</span>"
+      },
+      {
+        "name": "ServerSide",
+        "content": "<ThemeProvider<Theme>\n  theme={{\n    components: {\n      MuiUseMediaQuery: {\n        // Change the default options of useMediaQuery\n        defaultProps: { ssrMatchMedia },\n      },\n    },\n  }}\n>\n  <MyComponent />\n</ThemeProvider>"
+      },
+      {
+        "name": "SimpleMediaQuery",
+        "content": "<span>{`(min-width:600px) matches: ${matches}`}</span>"
+      },
+      {
+        "name": "ThemeHelper",
+        "content": "<ThemeProvider theme={theme}>\n  <MyComponent />\n</ThemeProvider>"
+      },
+      {
+        "name": "UseWidth",
+        "content": "<ThemeProvider theme={theme}>\n  <MyComponent />\n</ThemeProvider>"
       }
     ]
   }

@@ -32,7 +32,7 @@ function walkDir(dir) {
     });
 }
 
-const dirPath = path.join('/Users/phodal/test/material-ui', 'docs/data/base/components');
+const dirPath = path.join('/Users/phodal/test/material-ui', 'docs/data/material/components');
 walkDir(dirPath);
 // needToHandleDir will be:
 // {
