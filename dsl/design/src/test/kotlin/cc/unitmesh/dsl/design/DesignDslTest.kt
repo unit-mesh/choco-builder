@@ -221,5 +221,8 @@ usedComponents: Grid, Box, NavComponent, Avatar, Date, CardMedia, Typography, Pa
 -------------------------------------------------------------------------------------
 """
 
+        val design = DesignDsl().analysis(dsl)
+        design.layouts[0].layoutRows.size shouldBe 5
     }
 }
+

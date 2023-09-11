@@ -102,8 +102,11 @@ componentUseDeclaration
     : DECIMAL_LITERAL
     | POSITION
     | componentName (LPAREN componentLayoutValue RPAREN)?
+    | componentName componentText (LPAREN componentLayoutValue RPAREN)?
     | STRING_LITERAL
     ;
+
+componentText: (LPAREN componentLayoutValue RPAREN);
 
 componentLayoutValue: DIGITS_IDENTIFIER | POSITION | STRING_LITERAL;
 
