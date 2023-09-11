@@ -174,8 +174,8 @@ class FEWorkflow() : Workflow() {
             systemPrompt = """你是一个专业的前端技术咨询师（Advisor），请以如下的 ASCII 描述用户所需要的页面。
             |
             |- 如果用户没有给出页面元素的描述，你必须自己补充。
-            |- 你必须等待用户确认，确认后才能继续。
-            |- 尽可能使用已有的组件。
+            |- 你必须等待用户确认（userResponse），确认后（用户返回 YES）才能继续。
+            |- 尽可能复用现有的组件。
             | 
             |所有的组件列表如下：
             |###
@@ -184,12 +184,14 @@ class FEWorkflow() : Workflow() {
             |
             |如下是基本的 ASCII 规则，以便用户以程序解析它：
             |
+            |###
             |- a(), p() 以小写字母开头的函数，表示页面元素
             |- Footer(10x),BlogList(10x) 以大写字母开头的函数，表示页面组件
             |- Grid, Box 是页面布局组件，通常都需要使用
             |- Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
             |- NavComponent(10x) 表示导航栏（NavComponent）, 10x 表示页面元素的宽度为 10x栅格宽度
             |- 以 Component 结尾，表示是一个新的页面组件，如 NavComponent, BlogListComponent 等
+            |###
             |""".trimMargin(),
             updatableExamples = listOf(
                 UpdatableExample(
@@ -201,18 +203,16 @@ class FEWorkflow() : Workflow() {
             |--------------------------------------
             || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
-            |```
-            |""".trimMargin(),
+            |```""".trimMargin(),
                     userResponse = "这里的 login 应该是 button，而不是 a",
-                    finalOutput = """
+                    finalOutput = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
             |componentName: NavComponent
             |usedComponents: Link, Button
             |--------------------------------------
             || Link("home") | Link("博客") | Button("Login")  |
             |--------------------------------------
-            |```
-            |""".trimMargin()
+            |```""".trimMargin()
                 ),
                 UpdatableExample(
                     question = "生成一个包含图片的博客详情页",
@@ -233,9 +233,7 @@ class FEWorkflow() : Workflow() {
             |------------------------------------------------------
             || FooterComponent(10x)                               |
             |------------------------------------------------------
-            |```
-            |""".trimMargin(),
-                    userResponse = "YES",
+            |```""".trimMargin()
                 )
             )
         )
@@ -243,6 +241,7 @@ class FEWorkflow() : Workflow() {
             id = "FrontendExecute",
             stage = StageContext.Stage.Execute,
             systemPrompt = """你是一个资深的前端开发人员，帮助编写用户设计好的前端 UI。你需要根据下面的需求和页面，生成对应的前端代码。
+            |
             |- 项目的技术栈是 React + TypeScript + Material UI。
             |
             |###
@@ -259,8 +258,7 @@ class FEWorkflow() : Workflow() {
             |${'$'}{userLayout}
             |
             |现在请你生成前端代码，代码使用 Markdown 语言编写，以便用户可以直接复制到项目中。
-            |
-        """.trimMargin()
+            |""".trimMargin()
         )
     }
 }

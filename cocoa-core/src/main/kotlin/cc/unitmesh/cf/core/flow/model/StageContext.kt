@@ -78,10 +78,13 @@ data class StageContext(
 
         if (updatableExamples.isNotEmpty()) {
             updatableExamples.forEachIndexed { index, updatableExample ->
-                output += "Example $index:\n"
-                output += "Q:${updatableExample.question}\nA:\n${updatableExample.answer}\n"
+                output += "Example ${index + 1}:\n"
+                output += "question:${updatableExample.question}\nanswer:${updatableExample.answer}\n"
                 if (updatableExample.userResponse.isNotEmpty()) {
-                    output += "response:${updatableExample.userResponse}\nOutput:${updatableExample.finalOutput}\n"
+                    output += """userResponse:${updatableExample.userResponse}"""
+                    if (updatableExample.finalOutput.isNotEmpty()) {
+                        output += "\nOutput:\n${updatableExample.finalOutput}\n"
+                    }
                 }
             }
         }

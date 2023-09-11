@@ -33,9 +33,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     setStage(promptStage?.stage ?? Stage.Classify)
   }, [domain])
 
-  console.log('domain: ' + domain)
-  console.log('stage: ' + stage)
-
   useEffect(() => {
     fetch(`/api/workflows/${domain}`)
       .then(res => res.json())
