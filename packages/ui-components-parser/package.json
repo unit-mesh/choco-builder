@@ -12,6 +12,7 @@
   "dependencies": {
     "acorn": "^8.10.0",
     "gray-matter": "^4.0.3",
+    "jsdom": "^22.1.0",
     "marked": "^9.0.0",
     "typescript": "^5.2.2"
   }

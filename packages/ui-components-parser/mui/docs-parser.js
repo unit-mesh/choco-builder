@@ -18,6 +18,7 @@
 const marked = require('marked');
 const matter = require('gray-matter');
 const fs = require('fs');
+const {JSDOM} = require('jsdom');
 
 function parseFile(path) {
     const markdownContent = fs.readFileSync(path, 'utf8');
@@ -29,22 +30,17 @@ function parseFile(path) {
     const tokens = marked.lexer(markdownContent);
 
     let title = '';
-    let componentName = '';
     let description = '';
 
     for (const token of tokens) {
         if (token.type === 'heading' && token.depth === 1) {
-            // Extract the component name from the top-level heading
-            componentName = token.text;
-        } else if (token.type === 'heading' && token.depth === 2) {
-            // Extract the title from the second-level heading
             title = token.text;
-        } else if (token.type === 'paragraph') {
-            // Extract the description from the paragraph with class "description"
-            const match = token.text.match(/<p class="description">(.*?)<\/p>/);
-            if (match) {
-                description = match[1];
-            }
+        } else if (token.type === 'html') {
+            const dom = new JSDOM(parsedData.content);
+            const descriptionElement = dom.window.document.querySelector('p.description');
+            description = descriptionElement ? descriptionElement.textContent : '';
+        } else {
+            // console.log(token.type)
         }
     }
 
