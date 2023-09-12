@@ -16,13 +16,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
-import java.io.IOException
 
 @Controller
 class ChatController(
@@ -49,19 +46,17 @@ class ChatController(
         val chatWebContext = chat.toContext()
 
         val out = res.outputStream;
+
+        // TODO: use better SSE events
         val result = workflow.execute(prompt, chatWebContext)
         runBlocking {
             result
                 .observeOn(Schedulers.io())
-                .doOnComplete {
-                    out.write("[DONE]".toByteArray());
-                    out.flush();
-                }
                 .blockingForEach {
                     val output = Json.encodeToString(MessageResponse.from(chat.id, it))
                     out.write((output).toByteArray());
                     out.flush()
-                    out.write("\n".toByteArray());
+                    out.write("\n\n".toByteArray());
                     out.flush()
                 }
         }
