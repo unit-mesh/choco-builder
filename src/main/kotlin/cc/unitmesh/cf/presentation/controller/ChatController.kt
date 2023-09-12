@@ -8,7 +8,12 @@ import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
+import io.reactivex.rxjava3.schedulers.Schedulers
+import jakarta.servlet.http.HttpServletResponse
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,9 +31,7 @@ class ChatController(
     val testcaseFlow: TestcaseWorkflow,
 ) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-    fun chat(@RequestBody chat: ChatRequest): SseEmitter {
-        val emitter = SseEmitter()
-
+    fun chat(@RequestBody chat: ChatRequest, res: HttpServletResponse) {
         // 1. search by domains
         val workflow = when (chat.domain) {
             SupportedDomains.Frontend -> feFlow
@@ -45,25 +48,24 @@ class ChatController(
         // 3. execute stage with prompt
         val chatWebContext = chat.toContext()
 
+        val out = res.outputStream;
         val result = workflow.execute(prompt, chatWebContext)
-        result.subscribe({
-            log.info("workflow result: {}", it)
-            try {
-                emitter.send(MessageResponse.from(chat.id, it))
-            } catch (e: IOException) {
-                emitter.completeWithError(e)
-            }
-        }, {
-            emitter.completeWithError(it)
-        }, {
-            try {
-                emitter.complete()
-            } catch (e: IOException) {
-                // ignore
-            }
-        })
+        runBlocking {
+            result
+                .observeOn(Schedulers.io())
+                .doOnComplete {
+                    out.write("[DONE]".toByteArray());
+                    out.flush();
+                }
+                .blockingForEach {
+                    val output = Json.encodeToString(MessageResponse.from(chat.id, it))
+                    out.write((output).toByteArray());
+                    out.flush()
+                    out.write("\n".toByteArray());
+                    out.flush()
+                }
+        }
 
-        return emitter
     }
 
     companion object {

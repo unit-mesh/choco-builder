@@ -40,7 +40,6 @@ class CodeSolutionExecutor(
         var content = ""
         return Flowable.create({ emitter ->
             completion
-                .observeOn(Schedulers.newThread())
                 .subscribe(
                     { result ->
                         content += result

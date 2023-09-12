@@ -301,42 +301,54 @@ const getStreamedResponse = async (
       if (done) {
         break
       }
+
+
       // Update the chat state with the new message tokens.
-      streamedResponse += decode(value)
+      var lines: string[] = decode(value).split('\n')
       // if streamedResponse starts with `data:\s` with regex, then remove data:\s prefix
-      if (streamedResponse.startsWith('data:')) {
-        streamedResponse = streamedResponse.replace('data:', '')
-      }
+      lines.forEach((line) => {
+        // skip empty
+        if (!line) return
+        if (line === '[DONE]') return;
 
-      if (streamedResponse.startsWith('{"function_call":')) {
-        // While the function call is streaming, it will be a string.
-        responseMessage['function_call'] = streamedResponse
-      } else {
-        // Chocolate Factory custom response
-        try {
-          let parsed: MessageResponse | any
-          try {
-            parsed = JSON.parse(streamedResponse)
-          } catch (e) {
-            // If the response is not valid JSON, we assume it is a string.
-            // This is the case for the `text` field of the response.
-            parsed = { messages: [{ content: streamedResponse }] }
-          }
-          let content = parsed['messages'][0]['content']
-          if (typeof content === 'object') {
-            content = (JSON.stringify(content) as any)['content']
-          }
-
-          responseMessage['content'] = content
-          responseMessage['object'] = parsed
-        } catch (e) {
-          responseMessage['content'] = streamedResponse
+        if (line.startsWith('data:')) {
+          line = line.replace('data:', '')
         }
-      }
 
-      mutate([...chatRequest.messages, { ...responseMessage }], false)
+        if (line.startsWith('{"function_call":')) {
+          // While the function call is streaming, it will be a string.
+          responseMessage['function_call'] = line
+        } else {
+          // Chocolate Factory custom response
+          try {
+            let parsed: MessageResponse | any
+            try {
+              parsed = JSON.parse(line)
+            } catch (e) {
+              // If the response is not valid JSON, we assume it is a string.
+              // This is the case for the `text` field of the response.
+              parsed = { messages: [{ content: line }] }
+            }
 
-      // The request has been aborted, stop reading the stream.
+            // {"id":"GhLFKDl", "messages":[{"role":"assistant","content":"你"}]}
+
+            let content = parsed['messages'][0]['content']
+            if (typeof parsed === 'object') {
+              content = parsed['messages'][0]['content']
+            }
+
+            responseMessage['content'] += content
+            responseMessage['object'] = parsed
+          } catch (e) {
+            responseMessage['content'] = line
+          }
+        }
+
+        mutate([...chatRequest.messages, { ...responseMessage }], false)
+
+        // The request has been aborted, stop reading the stream.
+      });
+
       if (abortControllerRef.current === null) {
         reader.cancel()
         break

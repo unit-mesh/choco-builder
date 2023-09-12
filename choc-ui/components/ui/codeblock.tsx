@@ -62,7 +62,7 @@ export const generateRandomString = (length: number, lowercase = false) => {
 const CodeBlock: FC<Props> = memo(({ language, value }) => {
   if (language === 'interpreter') {
     // if value is string , convert to json
-    if (typeof value == 'string') {
+    if (value && typeof value == 'string') {
       value = JSON.parse(value)
     }
 
