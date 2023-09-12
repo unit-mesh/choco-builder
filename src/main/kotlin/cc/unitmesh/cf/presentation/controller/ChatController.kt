@@ -49,18 +49,6 @@ class ChatController(
 
         val out = res.outputStream;
 
-// TODO: use better SSE events, which not working in browser
-//
-//        val emitter = SseEmitter()
-//        val result = workflow.execute(prompt, chatWebContext)
-//        result
-//            .doOnError { log.info("{}", it) }
-//            .doOnComplete { emitter.complete() }
-//            .map { MessageResponse.from(chat.id, it) }
-//            .subscribe { emitter.send(it) }
-//
-//        return emitter
-
         val result = workflow.execute(prompt, chatWebContext)
         runBlocking {
             result
