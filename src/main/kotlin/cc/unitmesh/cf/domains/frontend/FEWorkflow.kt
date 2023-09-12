@@ -247,18 +247,21 @@ class FEWorkflow() : Workflow() {
             |
             |- 项目的技术栈是 React + TypeScript + Material UI。
             |
-            |###
             |请根据用户提供的问题，生成前端代码。
-            |###
             |
-            |相关的组件列表如下：
+            |相关的组件示例如下：
+            |###
             |${'$'}{userComponents}
+            |###
             |
             |用户提供的问题：
             |${'$'}{question}
             |
             |页面布局要求：
+            |
+            |```design
             |${'$'}{userLayout}
+            |```
             |
             |现在请你生成前端代码，代码使用 Markdown 语言编写，以便用户可以直接复制到项目中。
             |""".trimMargin()

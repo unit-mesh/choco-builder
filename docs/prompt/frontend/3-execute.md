@@ -11,7 +11,8 @@ nav_order: 3
 
 请根据用户提供的问题，生成前端代码。
 
-相关的组件列表如下：
+相关的组件示例如下：
+###
 grid component:
  ```design
 <Grid container spacing={3}>
@@ -37,7 +38,7 @@ avatars component:
 <Avatar {...stringAvatar('Tim Neutkens')} />
 ```
 typography component:
- ```design
+```design
 <Div>{"This div's text looks like that of a button."}</Div>
 ```
 pagination component:
@@ -47,11 +48,14 @@ pagination component:
 <Pagination count={10} color="secondary" />
 <Pagination count={10} disabled />
 ```
+###
 
 用户提供的问题：
 编写一个响应式布局的博客发表页，需要包含标题、内容、时间、存为草稿，如果创建成功则弹出对话框，显示：“创建成功!”
 
 页面布局要求：
+
+```design
 ------------------------------------------------------
 |      NavComponent(12x)                             |
 ------------------------------------------------------
@@ -65,6 +69,7 @@ pagination component:
 ------------------------------------------------------
 | FooterComponent(12x)                               |
 ------------------------------------------------------
+```
 
 现在请你生成前端代码，代码使用 Markdown 语言编写，以便用户可以直接复制到项目中。
 

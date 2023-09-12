@@ -24,15 +24,8 @@ class FESolutionExecutor(
     override fun execute(solution: UiPage): Answer {
         val basePrompt = FEWorkflow.EXECUTE.format()
         variable.put("userLayout", solution.layout)
-        val components = variable.getComponents()
 
-        val userComponents: MutableList<String> = mutableListOf()
-        solution.components.filter { it.isNotBlank() }.forEach {
-            val component = components.find { c -> c.tagName.lowercase() == it.lowercase() }
-            if (component != null && component.examples.isNotEmpty()) {
-                userComponents += "${component.name} component:\n ```design\n${component.examples[0].content}\n```"
-            }
-        }
+        val userComponents: MutableList<String> = prepareRelatedComponents(solution)
         variable.put("userComponents", userComponents.joinToString(separator = "\n"))
 
         val messages = listOf(
@@ -47,5 +40,17 @@ class FESolutionExecutor(
             override var executor: String = ""
             override var values: Any = completion
         }
+    }
+
+    private fun prepareRelatedComponents(solution: UiPage): MutableList<String> {
+        val components = variable.getComponents()
+        val userComponents: MutableList<String> = mutableListOf()
+        solution.components.filter { it.isNotBlank() }.forEach {
+            val component = components.find { c -> c.tagName.lowercase() == it.lowercase() }
+            if (component != null && component.examples.isNotEmpty()) {
+                userComponents += "${component.name} component:\n```design\n${component.examples[0].content}\n```"
+            }
+        }
+        return userComponents
     }
 }
