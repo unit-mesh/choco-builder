@@ -75,6 +75,8 @@ dependencies {
     implementation(libs.serialization.json)
     implementation(libs.coroutines.core)
 
+    implementation("io.reactivex.rxjava3:rxjava:3.1.7")
+
     // spring dependencies
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-actuator")

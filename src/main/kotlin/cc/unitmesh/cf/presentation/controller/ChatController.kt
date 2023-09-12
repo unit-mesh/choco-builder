@@ -44,11 +44,14 @@ class ChatController(
         // 3. execute stage with prompt
         val chatWebContext = chat.toContext()
         val result = workflow.execute(prompt, chatWebContext)
+        result
+            .doOnComplete {
+                emitter.complete()
+            }
+            .subscribe {
+                emitter.send(MessageResponse.from(chat.id, it))
+            }
 
-        // 4. return response
-        emitter.send(MessageResponse.from(chat.id, result))
-
-        emitter.complete()
         return emitter
     }
 

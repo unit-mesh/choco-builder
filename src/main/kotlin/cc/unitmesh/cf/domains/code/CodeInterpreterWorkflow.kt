@@ -8,6 +8,7 @@ import cc.unitmesh.cf.domains.code.flow.CodeInput
 import cc.unitmesh.cf.domains.code.flow.CodeSolutionExecutor
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.flow.model.ChatWebContext
+import io.reactivex.rxjava3.core.Flowable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -24,18 +25,20 @@ class CodeInterpreterWorkflow : Workflow() {
             StageContext.Stage.Execute to EXECUTE
         )
 
-    override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
+    override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
         val answer = CodeSolutionExecutor(llmProvider, codeInterpreter).execute(
             CodeInput(content = chatWebContext.messages.last().content)
         )
 
-        return WorkflowResult(
+        val workflowResult = WorkflowResult(
             currentStage = StageContext.Stage.Execute,
             nextStage = StageContext.Stage.Execute,
             responseMsg = answer.values.toString(),
             resultType = String::class.java.toString(),
             result = answer.toString()
         )
+
+        return Flowable.just(workflowResult)
     }
 
     companion object {

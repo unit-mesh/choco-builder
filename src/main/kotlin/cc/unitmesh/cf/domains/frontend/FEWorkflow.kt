@@ -16,6 +16,7 @@ import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.flow.model.Message
 import cc.unitmesh.cf.core.flow.model.ChatWebContext
+import io.reactivex.rxjava3.core.Flowable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +40,7 @@ class FEWorkflow() : Workflow() {
             EXECUTE.stage to EXECUTE
         )
 
-    override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
+    override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
         val messages = chatWebContext.messages
 
         var stage = prompt.stage
@@ -48,7 +49,7 @@ class FEWorkflow() : Workflow() {
             stage = StageContext.Stage.Execute
         }
 
-        when (stage) {
+        val result = when (stage) {
             StageContext.Stage.Clarify -> {
                 val clarify = FEProblemClarifier(contextBuilder, llmProvider, variableResolver)
                     .clarify(
@@ -69,10 +70,10 @@ class FEWorkflow() : Workflow() {
                         content = clarify.second,
                     )
 
-                    return execute(DESIGN, chatWebContext)
+                    execute(DESIGN, chatWebContext)
                 }
 
-                return WorkflowResult(
+                WorkflowResult(
                     currentStage = StageContext.Stage.Clarify,
                     nextStage = nextStage,
                     responseMsg = clarify.second,
@@ -88,7 +89,7 @@ class FEWorkflow() : Workflow() {
                     histories = messages.map { it.content }
                 )
 
-                return WorkflowResult(
+                WorkflowResult(
                     currentStage = StageContext.Stage.Design,
                     nextStage = StageContext.Stage.Design,
                     responseMsg = design.content,
@@ -110,7 +111,7 @@ class FEWorkflow() : Workflow() {
                 variableResolver.updateQuestion(messages.first().content)
 
                 val answer: Answer = FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
-                return WorkflowResult(
+                WorkflowResult(
                     currentStage = StageContext.Stage.Execute,
                     nextStage = StageContext.Stage.Done,
                     responseMsg = answer.values.toString(),
@@ -122,6 +123,8 @@ class FEWorkflow() : Workflow() {
                 throw IllegalStateException("stage not supported")
             }
         }
+
+        return Flowable.just(result)
     }
 
     companion object {

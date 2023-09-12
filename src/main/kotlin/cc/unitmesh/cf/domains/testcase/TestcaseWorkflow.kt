@@ -12,6 +12,7 @@ import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.TemperatureMode
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.flow.model.ChatWebContext
+import io.reactivex.rxjava3.core.Flowable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -37,7 +38,7 @@ class TestcaseWorkflow : Workflow() {
         REVIEW.stage to REVIEW
     )
 
-    override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): WorkflowResult? {
+    override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
         var stage = prompt.stage
         var messages = chatWebContext.messages
         var lastMsg = messages.last().content
@@ -141,7 +142,7 @@ class TestcaseWorkflow : Workflow() {
             else -> TODO()
         }
 
-        return result
+        return Flowable.just(result)
     }
 
     companion object {

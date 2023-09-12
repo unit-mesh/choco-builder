@@ -9,4 +9,5 @@ class WorkflowResult(
     val responseMsg: String,
     val resultType: String,
     val result: String,
+    val isComplete: Boolean = false,
 )

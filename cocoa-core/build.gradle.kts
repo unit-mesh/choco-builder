@@ -8,6 +8,8 @@ dependencies {
     implementation(libs.coroutines.core)
     implementation(libs.serialization.json)
 
+    implementation("io.reactivex.rxjava3:rxjava:3.1.7")
+
     implementation(kotlin("reflect"))
     implementation(libs.reflections)
 
