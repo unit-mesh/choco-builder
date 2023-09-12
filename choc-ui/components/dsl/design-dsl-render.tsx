@@ -36,7 +36,7 @@ const LayoutRow = ({ layoutCells }: { layoutCells: DLayoutCell[] }) => (
 )
 
 const Layout = ({ layoutRows }: { layoutRows: DLayoutRow[] }) => (
-  <div className="mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md space-y-1">
+  <div className="mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-4xl space-y-1">
     {layoutRows.map((row, index) => (
       <LayoutRow key={index} {...row} />
     ))}
