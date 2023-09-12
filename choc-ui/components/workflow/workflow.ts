@@ -37,19 +37,19 @@ export class StageContext {
   }
 }
 
-export class Workflow {
-  prompts: StageContext[]
-
-  constructor() {
-    this.prompts = []
-  }
-
-  // iteration prompts and find the first prompt that is not done
-  get currentPrompt() {
-    return this.prompts.find(prompt => !prompt.isDone)
-  }
-
-  static default() {
-    return new Workflow()
-  }
-}
+// export class Workflow {
+//   prompts: StageContext[]
+//
+//   constructor() {
+//     this.prompts = []
+//   }
+//
+//   // iteration prompts and find the first prompt that is not done
+//   get currentPrompt() {
+//     return this.prompts.find(prompt => !prompt.isDone)
+//   }
+//
+//   static default() {
+//     return new Workflow()
+//   }
+// }

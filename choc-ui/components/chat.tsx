@@ -6,7 +6,7 @@ import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { ChatList } from '@/components/chat-list'
-import { StageContext, Workflow } from '@/components/workflow/workflow'
+import { StageContext } from '@/components/workflow/workflow'
 import { domains } from '@/components/workflow/domains'
 import { Stage } from '@/components/workflow/stage'
 import { useChat } from '@/components/flow/use-chat'
@@ -21,17 +21,13 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
   const [domain, setDomain] = useState<string | null>(domains[0].value)
-  const [workflow, setWorkflow] = useState<Workflow>(Workflow.default())
+  const [workflow, setWorkflow] = useState<StageContext[]>([])
   const [promptStage, setPromptStage] = useState<StageContext | null>(
-    workflow?.prompts?.length ? workflow.prompts[0] : null
+    workflow?.length ? workflow[0] : null
   )
   const [stage, setStage] = useState<Stage>(
     promptStage?.stage ?? Stage.Classify
   )
-
-  useEffect(() => {
-    setStage(promptStage?.stage ?? Stage.Classify)
-  }, [domain])
 
   useEffect(() => {
     fetch(`/api/workflows/${domain}`)
