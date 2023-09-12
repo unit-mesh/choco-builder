@@ -91,8 +91,10 @@ REPEAT: 'repeat';
 REPEAT_TIMES: INTEGER;
 
 layoutRow
-    : '-' '-'*
-    | layoutLines  '|'
+    : '-' '-'*                        #lineBreadk
+    | layoutLines  '|'                #fullLine
+    | '|' '-' '-'* '|'                #spacedLineBreadk
+    | '|' layoutLines '|' '|'         #spacedLine
     ;
 
 layoutLines: layoutLine layoutLine*;
@@ -101,7 +103,7 @@ layoutLine: '|' componentUseDeclaration;
 componentUseDeclaration
     : DECIMAL_LITERAL
     | POSITION
-    | componentName (LPAREN componentLayoutValue (',' commentString?)? RPAREN)?
+    | componentName (LPAREN (componentLayoutValue | componentUseDeclaration (',' componentUseDeclaration)?) (',' commentString?)? RPAREN)?
     | STRING_LITERAL
     ;
 
@@ -109,7 +111,7 @@ commentString: STRING_LITERAL;
 
 componentText: (LPAREN componentLayoutValue RPAREN);
 
-componentLayoutValue: DIGITS_IDENTIFIER | POSITION | STRING_LITERAL;
+componentLayoutValue: DIGITS_IDENTIFIER | POSITION | STRING_LITERAL | IDENTIFIER;
 
 LAYOUT: 'layout' | 'Layout' | '布局';
 POSITION: 'LEFT' | 'RIGHT' | 'TOP' | 'BOTTOM';

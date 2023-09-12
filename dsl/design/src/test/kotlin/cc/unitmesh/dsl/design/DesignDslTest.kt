@@ -1,8 +1,6 @@
 package cc.unitmesh.dsl.design
 
 import io.kotest.matchers.shouldBe
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 class DesignDslTest {
@@ -229,6 +227,24 @@ usedComponents: Grid, Box, NavComponent, Avatar, Date, CardMedia, Typography, Pa
         row.layoutCells[0].componentName shouldBe "TextField"
         row.layoutCells[0].comment shouldBe "标题"
         row.layoutCells[0].layoutSize shouldBe "12x"
+    }
+
+    @Test
+    fun should_handle_for_dialog_case() {
+        val dsl = """-------------------------------------------------------------------------------
+|         Dialog (centered)                                                   |
+|         --------------------------------------                              |
+|         |  DialogTitle ("创建成功！")         |                              |
+|         --------------------------------------                              |
+|         |  DialogContent ("您的博客已成功创建。")  |                            |
+|         --------------------------------------                              |
+|         |  DialogActions(Button("确定"), Button("取消"))     |               |
+|         --------------------------------------                              |
+-------------------------------------------------------------------------------"""
+
+        val design = DesignDsl().analysis(dsl)
+        design.layouts[0].layoutRows.size shouldBe 1
+        design.layouts[0].layoutRows[0].layoutCells.size shouldBe 1
     }
 }
 
