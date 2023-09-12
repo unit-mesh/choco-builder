@@ -9,6 +9,7 @@ import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
@@ -97,20 +98,35 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         val request = prepareRequest(messages)
 
         return Flowable.create({ emitter ->
-            openai.streamChatCompletion(request)
-                .subscribe({ response ->
-                    val completion = response.choices[0].message
-                    if (completion != null && completion.content != null) {
-                        emitter.onNext(completion.content)
+            val disposable = openai.streamChatCompletion(request)
+                .doOnSubscribe {
+                    log.info("Start completion: {}", messages)
+                }
+                .subscribe(
+                    { response ->
+                        val completion = response.choices[0].message
+                        if (completion != null && completion.content != null) {
+                            emitter.onNext(completion.content)
+                        }
+                    },
+                    { error ->
+                        log.error("Completion failed: {}", error.message, error)
+                        emitter.onError(error)
+                    },
+                    {
+                        emitter.onComplete()
                     }
-                }, { error ->
-                    log.error("Completion failed: {}", error.message, error);
-                    emitter.tryOnError(error)
-                }, {
-                    emitter.onComplete()
-                });
+                )
+
+            emitter.setCancellable {
+                // This will be called when the Flowable is unsubscribed
+                disposable.dispose()
+            }
         }, BackpressureStrategy.BUFFER)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
     }
+
 }
 
 private fun ChatCompletionChoice.toAbstract(): LlmMsg.ChatChoice {
