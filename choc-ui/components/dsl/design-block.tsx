@@ -21,7 +21,7 @@ export function DesignBlock({ value }: { value: string }) {
       body: JSON.stringify({ dsl: value })
     })
       .then(res => res.json())
-      .then(data => {
+      .then((data: DslOutput) => {
         setDsl(data.output)
       })
   }, [])
@@ -29,8 +29,6 @@ export function DesignBlock({ value }: { value: string }) {
   if (!dsl) {
     return <CodeBlock language={'pre-design'} value={value} />
   }
-
-  console.log(dsl);
 
   if (dsl.layouts.length == 0) {
     return <CodeBlock language={'markdown'} value={value} />

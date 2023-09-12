@@ -12,8 +12,7 @@ import { IconCheck, IconCopy, IconDownload } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { InterpreterMessage } from '@/components/interpreter/message'
 import { Iframe } from '@/components/interpreter/iframe'
-import {DesignDslRender} from "@/components/dsl/design-dsl-render";
-import {DesignBlock} from "@/components/dsl/design-block";
+import { DesignBlock } from '@/components/dsl/design-block'
 
 interface Props {
   language: string
