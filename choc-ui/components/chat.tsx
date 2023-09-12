@@ -69,9 +69,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         if (msgResponse.result!!) {
           setStage(msgResponse.result?.nextStage!!)
         }
-      },
-      onResponse: (data: any) => {
-        console.log(data)
       }
     })
   return (

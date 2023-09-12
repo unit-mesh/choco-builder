@@ -12,29 +12,12 @@ import kotlinx.serialization.Serializable
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
-import reactor.core.publisher.Flux
 import java.io.IOException
-import java.util.concurrent.ArrayBlockingQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
-
-
-@Configuration
-class ExecutorConfiguration {
-    @get:Bean
-    val threadPoolExecutor: ThreadPoolExecutor
-        get() = ThreadPoolExecutor(
-            2, 4, 100L, TimeUnit.SECONDS, ArrayBlockingQueue(10),
-            ThreadPoolExecutor.AbortPolicy()
-        )
-}
 
 @Controller
 class ChatController(
@@ -42,10 +25,6 @@ class ChatController(
     val codeFlow: CodeInterpreterWorkflow,
     val testcaseFlow: TestcaseWorkflow,
 ) {
-
-    @Autowired
-    private val threadPoolExecutor: ThreadPoolExecutor? = null
-
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest): SseEmitter {
         val emitter = SseEmitter()
@@ -66,28 +45,23 @@ class ChatController(
         // 3. execute stage with prompt
         val chatWebContext = chat.toContext()
 
-        threadPoolExecutor?.execute {
-            val result = workflow.execute(prompt, chatWebContext)
-            result
-                .doOnError {
-                    emitter.completeWithError(it)
-                }
-                .doOnComplete {
-                    try {
-                        emitter.complete()
-                    } catch (e: IOException) {
-                        // ignore
-                    }
-                }
-                .blockingForEach {
-                    log.info("workflow result: {}", it)
-                    try {
-                        emitter.send(MessageResponse.from(chat.id, it))
-                    } catch (e: IOException) {
-                        emitter.completeWithError(e)
-                    }
-                }
-        }
+        val result = workflow.execute(prompt, chatWebContext)
+        result.subscribe({
+            log.info("workflow result: {}", it)
+            try {
+                emitter.send(MessageResponse.from(chat.id, it))
+            } catch (e: IOException) {
+                emitter.completeWithError(e)
+            }
+        }, {
+            emitter.completeWithError(it)
+        }, {
+            try {
+                emitter.complete()
+            } catch (e: IOException) {
+                // ignore
+            }
+        })
 
         return emitter
     }
