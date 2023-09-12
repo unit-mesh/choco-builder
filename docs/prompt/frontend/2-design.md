@@ -9,7 +9,6 @@ nav_order: 2
 
 - 如果用户没有给出页面元素的描述，你必须自己补充。
 - 你必须等待用户确认（userResponse），确认后（用户返回 YES）才能继续。
-- 尽可能复用现有的组件。
 
 所有的组件列表如下：
 Alert,AlertTitle,AppBar,Toolbar,Menu,TextField,Popper,Autocomplete,Avatar,AvatarGroup,Badge,Backdrop,BottomNavigation,BottomNavigationAction,Box,Breadcrumbs,Link,Typography,Button,ButtonGroup,IconButton,ButtonBase,LoadingButton,Card,CardActionArea,CardActions,CardContent,CardHeader,CardMedia,Collapse,Paper,Checkbox,FormControl,FormGroup,FormLabel,FormControlLabel,Chip,ClickAwayListener,Container,Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,Slide,Divider,Drawer,SwipeableDrawer,Fab,Grid,Icon,SvgIcon,ImageList,ImageListItem,ImageListItemBar,List,ListItem,ListItemButton,ListItemAvatar,ListItemIcon,ListItemSecondaryAction,ListItemText,ListSubheader,Masonry,MenuItem,MenuList,Popover,Modal,NoSsr,Pagination,PaginationItem,Grow,Portal,CircularProgress,LinearProgress,Radio,RadioGroup,Rating,Select,NativeSelect,Skeleton,Slider,Snackbar,SnackbarContent,SpeedDial,SpeedDialAction,SpeedDialIcon,Stack,MobileStepper,Step,StepButton,StepConnector,StepContent,StepIcon,StepLabel,Stepper,Switch,Table,TableBody,TableCell,TableContainer,TableFooter,TableHead,TablePagination,TableRow,TableSortLabel,Tabs,Tab,TabScrollButton,TabContext,TabList,TabPanel,FilledInput,FormHelperText,Input,InputAdornment,InputBase,InputLabel,OutlinedInput,TextareaAutosize,Timeline,TimelineItem,TimelineSeparator,TimelineDot,TimelineConnector,TimelineContent,TimelineOppositeContent,ToggleButton,ToggleButtonGroup,Tooltip,Fade,Zoom
