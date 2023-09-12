@@ -17,9 +17,13 @@ import kotlinx.serialization.json.Json
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
+import org.springframework.http.codec.ServerSentEvent
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
+import reactor.core.publisher.Flux
+
 
 @Controller
 class ChatController(
@@ -47,7 +51,18 @@ class ChatController(
 
         val out = res.outputStream;
 
-        // TODO: use better SSE events
+// TODO: use better SSE events, which not working in browser
+//
+//        val emitter = SseEmitter()
+//        val result = workflow.execute(prompt, chatWebContext)
+//        result
+//            .doOnError { log.info("{}", it) }
+//            .doOnComplete { emitter.complete() }
+//            .map { MessageResponse.from(chat.id, it) }
+//            .subscribe { emitter.send(it) }
+//
+//        return emitter
+
         val result = workflow.execute(prompt, chatWebContext)
         runBlocking {
             result

@@ -79,7 +79,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
         )
       }
 
-      return <CodeBlock language={'markdown'} value={JSON.stringify(msg.resultValue)} />
+      return <CodeBlock language={'markdown'} value={msg.resultValue} />
     }
   }
 
