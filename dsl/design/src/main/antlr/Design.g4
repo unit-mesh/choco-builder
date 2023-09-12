@@ -91,10 +91,10 @@ REPEAT: 'repeat';
 REPEAT_TIMES: INTEGER;
 
 layoutRow
-    : '-' '-'*                        #lineBreadk
-    | layoutLines  '|'                #fullLine
-    | '|' '-' '-'* '|'                #spacedLineBreadk
-    | '|' layoutLines '|' '|'         #spacedLine
+    : '-' '-'*                        #fullLineBreak
+    | layoutLines  '|'                #fullLayoutLine
+    | '|' '-' '-'* '|'                #columnedLineBreak
+    | '|' layoutLines '|' '|'         #columnedLayoutLine
     ;
 
 layoutLines: layoutLine layoutLine*;

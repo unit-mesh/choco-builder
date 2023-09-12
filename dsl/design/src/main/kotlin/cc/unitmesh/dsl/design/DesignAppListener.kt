@@ -138,30 +138,42 @@ class DesignAppListener : DesignBaseListener() {
 
     override fun enterLayoutDeclaration(ctx: DesignParser.LayoutDeclarationContext?) {
         val layout = DLayout(ctx!!.IDENTIFIER().text, emptyList())
-        val layoutRows = ctx.layoutRow()
 
+        val layoutRows = ctx.layoutRow()
         layout.layoutRows = parseLayoutRows(layoutRows)
 
         layouts += layout
     }
 
     private fun parseLayoutRows(layoutRows: MutableList<DesignParser.LayoutRowContext>) =
-        layoutRows.map { row ->
-            val layoutRow = DLayoutRow(emptyList())
-            if (row.getChild(0) !is DesignParser.LayoutLinesContext) {
-                return@map null
-            }
+        layoutRows.mapNotNull { row ->
+            parseLayoutRow(row)
+        }
 
-            val lines = (row.getChild(0) as DesignParser.LayoutLinesContext).layoutLine()
-            layoutRow.layoutCells = lines.map { line ->
-                val cell = DLayoutCell("", "", "")
-                val declaration = line.componentUseDeclaration()
-                parseLayoutLine(declaration, cell)
-                cell
-            }
+    private fun parseLayoutRow(row: DesignParser.LayoutRowContext): DLayoutRow? {
+        val rowType = when(row) {
+            is DesignParser.FullLayoutLineContext -> DLayoutType.FullLayoutLine
+            is DesignParser.FullLineBreakContext -> DLayoutType.FullLineBreak
+            is DesignParser.ColumnedLayoutLineContext -> DLayoutType.ColumnedLayoutLine
+            is DesignParser.ColumnedLineBreakContext -> DLayoutType.ColumnedLineBreak
+            else -> null
+        }
 
-            layoutRow
-        }.filterNotNull()
+        val layoutRow = DLayoutRow(emptyList(), rowType ?: DLayoutType.FullLineBreak)
+        if (row.getChild(0) !is DesignParser.LayoutLinesContext) {
+            return null
+        }
+
+        val lines = (row.getChild(0) as DesignParser.LayoutLinesContext).layoutLine()
+        layoutRow.layoutCells = lines.map { line ->
+            val cell = DLayoutCell("", "", "")
+            val declaration = line.componentUseDeclaration()
+            parseLayoutLine(declaration, cell)
+            cell
+        }
+
+        return layoutRow
+    }
 
     override fun enterSimpleLayoutDeclaration(ctx: DesignParser.SimpleLayoutDeclarationContext?) {
         layouts += DLayout("", parseLayoutRows(ctx!!.layoutRow().toMutableList()))
@@ -240,7 +252,7 @@ class DesignAppListener : DesignBaseListener() {
         libraries += library
     }
 
-    fun getDesign(): DesignInformation = DesignInformation(
+    fun buildDesign(): DesignInformation = DesignInformation(
         projectConfigs = projectConfigs,
         flows = flows,
         components = components,

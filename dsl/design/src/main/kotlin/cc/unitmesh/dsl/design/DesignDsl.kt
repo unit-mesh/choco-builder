@@ -13,8 +13,7 @@ class DesignDsl {
 
         ParseTreeWalker().walk(listener, context)
 
-        val nodeInfo = listener.getDesign()
-        return nodeInfo
+        return listener.buildDesign()
     }
 
     fun parse(str: String): DesignParser {

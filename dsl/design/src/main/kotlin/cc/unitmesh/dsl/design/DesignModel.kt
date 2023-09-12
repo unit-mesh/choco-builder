@@ -68,7 +68,17 @@ data class DLayout(
 @Serializable
 data class DLayoutRow(
     var layoutCells: List<DLayoutCell>,
+    val type: DLayoutType = DLayoutType.FullLayoutLine,
 )
+
+@Serializable
+enum class DLayoutType {
+// fullLineBreak,fullLayoutLine,columnedLineBreak,columnedLayoutLine
+    FullLineBreak,
+    FullLayoutLine,
+    ColumnedLineBreak,
+    ColumnedLayoutLine;
+}
 
 @Serializable
 data class DLayoutCell(
