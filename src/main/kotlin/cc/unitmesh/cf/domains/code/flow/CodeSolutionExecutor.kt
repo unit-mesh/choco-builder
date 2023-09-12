@@ -50,8 +50,10 @@ class CodeSolutionExecutor(
                     },
                     { throwable: Throwable ->
                         emitter.tryOnError(throwable)
-                    }) {
-                    // 在完成时，进行额外的操作
+                    })
+
+                // 在完成时，进行额外的操作
+                {
                     var evalResult = ""
                     val code = MarkdownCode.parse(content)
                     if (code.language.lowercase() == "kotlin") {
@@ -59,8 +61,10 @@ class CodeSolutionExecutor(
                         evalResult = Json.encodeToString(result)
                         log.info("Execute result: {}", evalResult)
                     }
+
                     val formattedResult = "\n```interpreter\n$evalResult\n```\n"
-                    Answer(this.javaClass.name, formattedResult)
+                    emitter.onNext(Answer(this.javaClass.name, formattedResult))
+                    emitter.onComplete()
                 }
         }, BackpressureStrategy.BUFFER)
     }

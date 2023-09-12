@@ -59,7 +59,10 @@ class ChatController(
                     }
                 },
                 { ex: Throwable? -> emitter.completeWithError(ex!!) }
-            ) { emitter.complete() }
+            )
+            {
+                emitter.complete()
+            }
 
         return emitter
     }
