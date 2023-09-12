@@ -84,8 +84,9 @@ componentBodyDeclaration
 layoutDeclaration: LAYOUT IDENTIFIER LBRACE layoutRow* RBRACE;
 
 simpleLayoutDeclaration
-    : (configKey COLON configValue (',' configValue)*)* layoutRow (layoutRow)*;
-
+    : (configKey COLON configValue (',' configValue)*)* layoutRow (layoutRow)*
+    | configKey COLON layoutRow (layoutRow)*
+    ;
 
 REPEAT: 'repeat';
 REPEAT_TIMES: INTEGER;
