@@ -44,9 +44,6 @@ const Layout = ({ layoutRows }: { layoutRows: DLayoutRow[] }) => (
 )
 
 export const DesignDslRender = ({ dsl }: { dsl: DesignInformation }) => {
-  console.log('DesignDslRender')
-  console.log(dsl)
-
   return (
     <div>
       <Layout layoutRows={dsl.layouts[0].layoutRows} />

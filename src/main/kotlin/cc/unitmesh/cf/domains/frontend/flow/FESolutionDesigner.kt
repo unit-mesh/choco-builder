@@ -20,7 +20,7 @@ class FESolutionDesigner(
     override fun design(domain: String, question: String, histories: List<String>): UiPage {
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, variable.compile(FEWorkflow.DESIGN.format())),
-            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, question),
+            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, histories.joinToString("\n")),
         ).filter { it.content.isNotBlank() }
 
         log.info("Designer messages: {}", messages)
