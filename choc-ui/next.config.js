@@ -4,6 +4,7 @@ module.exports = {
   reactStrictMode: true,
   experimental: {
     // serverActions: true,
+    proxyTimeout: 120_000,
   },
   async rewrites() {
     return [

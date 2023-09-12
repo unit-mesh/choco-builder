@@ -302,7 +302,6 @@ const getStreamedResponse = async (
         break
       }
 
-
       // Update the chat state with the new message tokens.
       var lines: string[] = decode(value).split('\n')
       // if streamedResponse starts with `data:\s` with regex, then remove data:\s prefix

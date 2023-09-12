@@ -84,7 +84,10 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
   }
 
   if (language === 'design') {
-    return <DesignBlock value={value} />
+    return <div>
+      <CodeBlock language={'origin-design'} value={value} />
+      <DesignBlock value={value} />
+    </div>
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks

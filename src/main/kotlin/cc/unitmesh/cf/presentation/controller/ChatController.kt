@@ -17,12 +17,10 @@ import kotlinx.serialization.json.Json
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
-import org.springframework.http.codec.ServerSentEvent
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
-import reactor.core.publisher.Flux
+import java.io.IOException
 
 
 @Controller
@@ -68,11 +66,15 @@ class ChatController(
             result
                 .observeOn(Schedulers.io())
                 .blockingForEach {
-                    val output = Json.encodeToString(MessageResponse.from(chat.id, it))
-                    out.write((output).toByteArray());
-                    out.flush()
-                    out.write("\n\n".toByteArray());
-                    out.flush()
+                    try {
+                        val output = Json.encodeToString(MessageResponse.from(chat.id, it))
+                        out.write((output).toByteArray());
+                        out.flush()
+                        out.write("\n\n".toByteArray());
+                        out.flush()
+                    } catch (e: IOException) {
+                        log.error("{}", e)
+                    }
                 }
         }
 
