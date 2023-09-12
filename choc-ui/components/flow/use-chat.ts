@@ -308,8 +308,6 @@ const getStreamedResponse = async (
         streamedResponse = streamedResponse.replace('data:', '')
       }
 
-      console.log(streamedResponse);
-
       if (streamedResponse.startsWith('{"function_call":')) {
         // While the function call is streaming, it will be a string.
         responseMessage['function_call'] = streamedResponse

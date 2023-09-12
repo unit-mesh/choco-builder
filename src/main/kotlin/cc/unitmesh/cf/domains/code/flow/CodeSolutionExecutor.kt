@@ -13,6 +13,7 @@ import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.parser.MarkdownCode
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.slf4j.Logger
@@ -34,22 +35,35 @@ class CodeSolutionExecutor(
         ).filter { it.content.isNotBlank() }
 
         log.info("Execute messages: {}", messages)
-        val completion = completion.simpleCompletion(messages)
-        log.info("Execute completion: {}", completion)
+        val completion: Flowable<String> = completion.flowCompletion(messages)
 
-        var evalResult = ""
-
-        val code = MarkdownCode.parse(completion)
-        if (code.language.lowercase() == "kotlin") {
-            val result = codeInterpreter.interpret(CodeInput(content = code.text));
-
-            evalResult = Json.encodeToString(result)
-            log.info("Execute result: {}", evalResult)
-        }
-
-        return Flowable.just(Answer("", "$completion\n\n```interpreter\n$evalResult\n```\n"))
+        var content = ""
+        return Flowable.create({ emitter ->
+            completion
+                .observeOn(Schedulers.newThread())
+                .subscribe(
+                    { result ->
+                        content += result
+                        // 在这里将 completion 的结果映射为 Answer 对象
+                        val answer = Answer(this.javaClass.name, result)
+                        emitter.onNext(answer)
+                    },
+                    { throwable: Throwable ->
+                        emitter.tryOnError(throwable)
+                    }) {
+                    // 在完成时，进行额外的操作
+                    var evalResult = ""
+                    val code = MarkdownCode.parse(content)
+                    if (code.language.lowercase() == "kotlin") {
+                        val result = codeInterpreter.interpret(CodeInput(content = code.text))
+                        evalResult = Json.encodeToString(result)
+                        log.info("Execute result: {}", evalResult)
+                    }
+                    val formattedResult = "\n```interpreter\n$evalResult\n```\n"
+                    Answer(this.javaClass.name, formattedResult)
+                }
+        }, BackpressureStrategy.BUFFER)
     }
-
 }
 
 class CodeInput(

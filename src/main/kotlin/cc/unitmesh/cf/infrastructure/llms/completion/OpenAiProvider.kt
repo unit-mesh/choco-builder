@@ -98,18 +98,17 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
 
         return Flowable.create({ emitter ->
             openai.streamChatCompletion(request)
-                .doOnComplete {
-                    emitter.onComplete()
-                }
-                .doOnError {
-                    log.error("Completion failed: {}", it.message, it);
-                }
-                .subscribe { response ->
+                .subscribe({ response ->
                     val completion = response.choices[0].message
                     if (completion != null && completion.content != null) {
                         emitter.onNext(completion.content)
                     }
-                }
+                }, { error ->
+                    log.error("Completion failed: {}", error.message, error);
+                    emitter.tryOnError(error)
+                }, {
+                    emitter.onComplete()
+                });
         }, BackpressureStrategy.BUFFER)
     }
 }

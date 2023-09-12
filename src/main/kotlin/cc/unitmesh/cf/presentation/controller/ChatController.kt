@@ -53,7 +53,7 @@ class ChatController(
             .subscribe(
                 { data ->
                     try {
-                        emitter.send(data)
+                        emitter.send(MessageResponse.from(chat.id, data))
                     } catch (e: IOException) {
                         emitter.completeWithError(e)
                     }
