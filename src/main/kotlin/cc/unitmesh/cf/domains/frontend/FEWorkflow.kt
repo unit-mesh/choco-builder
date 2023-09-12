@@ -190,10 +190,10 @@ class FEWorkflow() : Workflow() {
             id = "FrontendDesign",
             stage = StageContext.Stage.Design,
             systemPrompt = """你是一个专业的前端技术咨询师（Advisor），请以如下的 ASCII 描述用户所需要的页面。
-            |
+            |- 请深吸一口气，放松自己，尽可能的想象用户的需求。
             |- 如果用户没有给出页面元素的描述，你必须自己补充。
             |- 你必须等待用户确认（userResponse），确认后（用户返回 YES）才能继续。
-            |- 尽可能简洁地描述页面，不要包含过多的细节。
+            |- 你必须根据示例语法，生成对应的页面。
             | 
             |所有的组件列表如下：
             |###
@@ -204,10 +204,8 @@ class FEWorkflow() : Workflow() {
             |
             |###
             |- 项目使用 12x 布局，表示页面宽度为 12x 栅格宽度。
-            |- 必须为所有的页面元素指定宽度（最小 1x，最大 12x），否则会报错。
-            |- a(), p() 以小写字母开头的函数，表示页面元素
-            |- Footer(12x),BlogList(12x) 以大写字母开头的函数，表示页面组件
-            |- Grid, Box 是页面布局组件，通常都需要使用
+            |- Footer(12x, "copyright"), BlogList(12x) 以大写字母开头的函数，表示页面组件, "copyright" 表示注释
+            |- Grid, Box 是页面布局组件
             |- Empty(2x) 表示空白, 2x 表示页面元素的宽度为 2x栅格宽度
             |- NavComponent(10x) 表示导航栏（NavComponent）, 10x 表示页面元素的宽度为 10x栅格宽度
             |- 以 Component 结尾，表示是一个新的页面组件，如 NavComponent, BlogListComponent 等
@@ -221,16 +219,16 @@ class FEWorkflow() : Workflow() {
             |componentName: NavComponent
             |usedComponents: Link, Button
             |--------------------------------------
-            || Link("home") | Link("博客") | Button("Login")  |
+            || Link("home", 2x) | Link("博客", 2x) | a("Login", 2x)  |
             |--------------------------------------
             |```""".trimMargin(),
-                    userResponse = "这里的 login 应该是 button，而不是 a",
+                    userResponse = "这里的 login 应该用 Button，而不是 a",
                     finalOutput = """请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
             |```design
             |componentName: NavComponent
             |usedComponents: Link, Button
             |--------------------------------------
-            || Link("home") | Link("博客") | Button("Login")  |
+            || Link("home", 2x) | Link("博客", 2x) | Button("Login", 2x)  |
             |--------------------------------------
             |```""".trimMargin()
                 ),
