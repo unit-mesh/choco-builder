@@ -64,7 +64,11 @@ class CodeSolutionExecutor(
 
                     val formattedResult = "\n```interpreter\n$evalResult\n```\n"
                     emitter.onNext(Answer(this.javaClass.name, formattedResult))
-                    emitter.onComplete()
+                    // new Thread with new thread pool an sleep 50ms
+                    Thread {
+                        Thread.sleep(50)
+                        emitter.onComplete()
+                    }.start()
                 }
         }, BackpressureStrategy.BUFFER)
     }

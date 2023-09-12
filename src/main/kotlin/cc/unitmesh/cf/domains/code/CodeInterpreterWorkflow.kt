@@ -50,6 +50,7 @@ class CodeInterpreterWorkflow : Workflow() {
     }
 
     companion object {
+        val log = org.slf4j.LoggerFactory.getLogger(CodeInterpreterWorkflow::class.java)
         val EXECUTE: StageContext = StageContext(
             id = "FrontendExecute",
             stage = StageContext.Stage.Execute,
