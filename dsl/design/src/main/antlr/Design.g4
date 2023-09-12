@@ -101,10 +101,11 @@ layoutLine: '|' componentUseDeclaration;
 componentUseDeclaration
     : DECIMAL_LITERAL
     | POSITION
-    | componentName (LPAREN componentLayoutValue RPAREN)?
-    | componentName componentText (LPAREN componentLayoutValue RPAREN)?
+    | componentName (LPAREN componentLayoutValue (',' commentString?)? RPAREN)?
     | STRING_LITERAL
     ;
+
+commentString: STRING_LITERAL;
 
 componentText: (LPAREN componentLayoutValue RPAREN);
 

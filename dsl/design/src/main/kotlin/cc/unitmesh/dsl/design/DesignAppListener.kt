@@ -175,14 +175,21 @@ class DesignAppListener : DesignBaseListener() {
                 if (declaration.childCount > 2) {
                     layoutValue = declaration.getChild(2).text
                 }
+
                 cell.componentName = componentName
-                cell.layoutInformation = removeQuote(layoutValue)
+                cell.layoutSize = removeQuote(layoutValue)
+                if (declaration.commentString() != null) {
+                    cell.comment = removeQuote(declaration.commentString().text)
+                }
             }
 
             else -> {
                 val componentValue = firstChild.text
                 cell.componentName = removeQuote(componentValue)
-                cell.normalInformation = removeQuote(componentValue)
+
+                if (declaration.commentString() != null) {
+                    cell.comment = removeQuote(declaration.commentString().text)
+                }
             }
         }
     }

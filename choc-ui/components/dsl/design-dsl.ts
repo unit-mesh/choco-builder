@@ -58,8 +58,8 @@ interface DLayoutRow {
 
 interface DLayoutCell {
   componentName: string
-  layoutInformation: string
-  normalInformation: string
+  layoutSize: string
+  comment: string
 }
 
 interface DProperty {

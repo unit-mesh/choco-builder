@@ -2,15 +2,29 @@ import React from 'react'
 
 interface LayoutCellProps {
   componentName: String
-  layoutInformation: String
+  layoutSize: String
+  comment: String
 }
 
-const LayoutCell = ({ componentName, layoutInformation }: LayoutCellProps) => {
-  let width = layoutInformation.replace('x', '')
+const LayoutCell = ({
+  componentName,
+  layoutSize,
+  comment
+}: LayoutCellProps) => {
+  let width = layoutSize.replace('x', '')
+  // if comment is not empty, then after commentName
+  let displayName = componentName
+  if (comment) {
+    displayName = `${displayName} (${comment})`
+  }
 
-  return <div className={`w-${width}/12 px-4 py-2 bg-violet-500 rounded-lg shadow-lg text-center text-white`}>
-    {componentName}
-  </div>
+  return (
+    <div
+      className={`w-${width}/12 px-4 py-2 bg-violet-500 rounded-lg shadow-lg text-center text-white`}
+    >
+      {displayName}
+    </div>
+  )
 }
 
 const LayoutRow = ({ layoutCells }: { layoutCells: DLayoutCell[] }) => (

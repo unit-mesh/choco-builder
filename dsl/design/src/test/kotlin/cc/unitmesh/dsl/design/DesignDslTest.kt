@@ -211,18 +211,24 @@ usedComponents: Grid, Box, NavComponent, Avatar, Date, CardMedia, Typography, Pa
         val dsl = """-------------------------------------------------------------------------------------
 |      NavComponent(12x)                                                            |
 -------------------------------------------------------------------------------------
-|    TextField(12x)                                                                 |
+|    TextField(12x, "标题")                                                           |
 -------------------------------------------------------------------------------------
-|    TextField(12x)                                                                 |
+|    TextField(12x, "内容")                                                          |
 -------------------------------------------------------------------------------------
-|    TextField(6x)                            |   Button("存为草稿")(6x)           |
+|    TextField(6x, "保存")                       |   Button(6x, "存为草稿")           |
 -------------------------------------------------------------------------------------
-|    Button("发布")(12x)                                                           |
+|    Button(12x, "发布")                                                           |
 -------------------------------------------------------------------------------------
 """
 
         val design = DesignDsl().analysis(dsl)
         design.layouts[0].layoutRows.size shouldBe 5
+
+        val row = design.layouts[0].layoutRows[1]
+        row.layoutCells.size shouldBe 1
+        row.layoutCells[0].componentName shouldBe "TextField"
+        row.layoutCells[0].comment shouldBe "标题"
+        row.layoutCells[0].layoutSize shouldBe "12x"
     }
 }
 

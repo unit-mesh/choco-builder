@@ -73,8 +73,8 @@ data class DLayoutRow(
 @Serializable
 data class DLayoutCell(
     var componentName: String,
-    var layoutInformation: String,
-    var normalInformation: String,
+    var layoutSize: String,
+    var comment: String,
 )
 
 @Serializable
