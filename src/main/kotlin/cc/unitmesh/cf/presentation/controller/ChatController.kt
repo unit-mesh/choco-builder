@@ -1,14 +1,15 @@
 package cc.unitmesh.cf.presentation.controller
 
+import cc.unitmesh.cf.core.flow.model.ChatWebContext
+import cc.unitmesh.cf.core.flow.model.Message
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
-import cc.unitmesh.cf.core.flow.model.ChatWebContext
-import cc.unitmesh.cf.core.flow.model.Message
 import cc.unitmesh.cf.presentation.ext.SseEmitterUtf8
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.serialization.Serializable
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
+import java.io.IOException
+
 
 @RestController
 class ChatController(
@@ -44,13 +47,19 @@ class ChatController(
         // 3. execute stage with prompt
         val chatWebContext = chat.toContext()
         val result = workflow.execute(prompt, chatWebContext)
+
         result
-            .doOnComplete {
-                emitter.complete()
-            }
-            .subscribe {
-                emitter.send(MessageResponse.from(chat.id, it))
-            }
+            .observeOn(Schedulers.newThread())
+            .subscribe(
+                { data ->
+                    try {
+                        emitter.send(data)
+                    } catch (e: IOException) {
+                        emitter.completeWithError(e)
+                    }
+                },
+                { ex: Throwable? -> emitter.completeWithError(ex!!) }
+            ) { emitter.complete() }
 
         return emitter
     }
@@ -65,12 +74,13 @@ data class MessageResponse(
     val id: String,
     val result: WorkflowResult?,
     val created: Long = DateTime.now().millis,
+    val isFlowable: Boolean = false,
     val messages: List<Message> = emptyList(),
 ) {
     companion object {
         fun from(id: String, result: WorkflowResult?): MessageResponse {
             val messages = listOf(Message("assistant", result?.responseMsg ?: ""))
-            return MessageResponse(id, result, messages = messages)
+            return MessageResponse(id, result, messages = messages, isFlowable = result?.isFlowable ?: false)
         }
     }
 }

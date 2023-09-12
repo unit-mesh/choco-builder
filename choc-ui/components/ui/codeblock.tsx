@@ -70,7 +70,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
     if (msg.msgType == 'html') {
       return <Iframe content={msg.content.html!!} />
     } else {
-      if (msg.content.type == 'cc.unitmesh.code.messaging.ErrorContent') {
+      if (msg && msg.content && msg.content.type == 'cc.unitmesh.code.messaging.ErrorContent') {
         return (
           <CodeBlock
             language={'json'}

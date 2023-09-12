@@ -11,19 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
-import useSWR, { KeyedMutator } from 'swr'
-import { CreateChatCompletionRequestMessage } from 'openai/resources/chat'
+import {useCallback, useEffect, useId, useRef, useState} from 'react'
+import useSWR, {KeyedMutator} from 'swr'
+import {CreateChatCompletionRequestMessage} from 'openai/resources/chat'
 
-import type {
-  ChatRequest,
-  ChatRequestOptions,
-  CreateMessage,
-  Message,
-  UseChatOptions
-} from './types'
-import { nanoid } from '@/lib/utils'
-import { COMPLEX_HEADER, createChunkDecoder } from '@/components/flow/utils'
+import type {ChatRequest, ChatRequestOptions, CreateMessage, Message, UseChatOptions} from './types'
+import {nanoid} from '@/lib/utils'
+import {COMPLEX_HEADER, createChunkDecoder} from '@/components/flow/utils'
+import {MessageResponse} from '../workflow/workflow-dto'
 
 export type UseChatHelpers = {
   /** Current messages in the chat */
@@ -313,12 +308,15 @@ const getStreamedResponse = async (
         streamedResponse = streamedResponse.replace('data:', '')
       }
 
+      console.log(streamedResponse);
+
       if (streamedResponse.startsWith('{"function_call":')) {
         // While the function call is streaming, it will be a string.
         responseMessage['function_call'] = streamedResponse
       } else {
+        // Chocolate Factory custom response
         try {
-          let parsed
+          let parsed: MessageResponse | any
           try {
             parsed = JSON.parse(streamedResponse)
           } catch (e) {
@@ -327,7 +325,6 @@ const getStreamedResponse = async (
             parsed = { messages: [{ content: streamedResponse }] }
           }
           let content = parsed['messages'][0]['content']
-          console.log(content)
           if (typeof content === 'object') {
             content = (JSON.stringify(content) as any)['content']
           }

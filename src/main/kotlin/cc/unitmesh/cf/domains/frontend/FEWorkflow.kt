@@ -123,8 +123,10 @@ class FEWorkflow() : Workflow() {
                             nextStage = StageContext.Stage.Done,
                             responseMsg = it.values.toString(),
                             resultType = String::class.java.toString(),
-                            result = ""
+                            result = "",
+                            isFlowable = true,
                         )
+
                         emitter.onNext(result)
                     }, {
                         emitter.onError(it)
