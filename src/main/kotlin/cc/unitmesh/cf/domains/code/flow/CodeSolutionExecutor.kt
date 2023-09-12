@@ -11,6 +11,7 @@ import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.parser.MarkdownCode
+import io.reactivex.rxjava3.core.Flowable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.slf4j.Logger
@@ -25,7 +26,7 @@ class CodeSolutionExecutor(
         val log: Logger = org.slf4j.LoggerFactory.getLogger(CodeSolutionExecutor::class.java)
     }
 
-    override fun execute(solution: CodeInput): Answer {
+    override fun execute(solution: CodeInput): Flowable<Answer> {
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, CodeInterpreterWorkflow.EXECUTE.format()),
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, solution.content),
@@ -45,10 +46,7 @@ class CodeSolutionExecutor(
             log.info("Execute result: {}", evalResult)
         }
 
-        return object : Answer {
-            override var executor: String = ""
-            override var values: Any = "$completion\n\n```interpreter\n$evalResult\n```\n"
-        }
+        return Flowable.just(Answer("", "$completion\n\n```interpreter\n$evalResult\n```\n"))
     }
 
 }

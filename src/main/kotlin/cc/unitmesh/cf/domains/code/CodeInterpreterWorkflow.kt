@@ -3,6 +3,7 @@ package cc.unitmesh.cf.domains.code
 import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.Workflow
+import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.code.flow.CodeInput
 import cc.unitmesh.cf.domains.code.flow.CodeSolutionExecutor
@@ -26,19 +27,26 @@ class CodeInterpreterWorkflow : Workflow() {
         )
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
-        val answer = CodeSolutionExecutor(llmProvider, codeInterpreter).execute(
+        val answer: Flowable<Answer> = CodeSolutionExecutor(llmProvider, codeInterpreter).execute(
             CodeInput(content = chatWebContext.messages.last().content)
         )
 
-        val workflowResult = WorkflowResult(
-            currentStage = StageContext.Stage.Execute,
-            nextStage = StageContext.Stage.Execute,
-            responseMsg = answer.values.toString(),
-            resultType = String::class.java.toString(),
-            result = answer.toString()
-        )
-
-        return Flowable.just(workflowResult)
+        return Flowable.create({ emitter ->
+            answer.subscribe({
+                val workflowResult = WorkflowResult(
+                    currentStage = StageContext.Stage.Execute,
+                    nextStage = StageContext.Stage.Execute,
+                    responseMsg = it.values.toString(),
+                    resultType = String::class.java.toString(),
+                    result = it.values.toString()
+                )
+                emitter.onNext(workflowResult)
+            }, {
+                emitter.onError(it)
+            }, {
+                emitter.onComplete()
+            })
+        }, io.reactivex.rxjava3.core.BackpressureStrategy.BUFFER)
     }
 
     companion object {

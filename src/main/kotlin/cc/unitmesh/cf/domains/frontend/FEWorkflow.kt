@@ -49,7 +49,7 @@ class FEWorkflow() : Workflow() {
             stage = StageContext.Stage.Execute
         }
 
-        val result = when (stage) {
+        return when (stage) {
             StageContext.Stage.Clarify -> {
                 val clarify = FEProblemClarifier(contextBuilder, llmProvider, variableResolver)
                     .clarify(
@@ -73,13 +73,15 @@ class FEWorkflow() : Workflow() {
                     return execute(DESIGN, chatWebContext)
                 }
 
-                WorkflowResult(
+                val result = WorkflowResult(
                     currentStage = StageContext.Stage.Clarify,
                     nextStage = nextStage,
                     responseMsg = clarify.second,
                     resultType = String::class.java.toString(),
                     result = clarify.second
                 )
+
+                Flowable.just(result)
             }
 
             StageContext.Stage.Design -> {
@@ -89,13 +91,15 @@ class FEWorkflow() : Workflow() {
                     histories = messages.map { it.content }
                 )
 
-                WorkflowResult(
+                val result = WorkflowResult(
                     currentStage = StageContext.Stage.Design,
                     nextStage = StageContext.Stage.Design,
                     responseMsg = design.content,
                     resultType = UiPage::class.java.toString(),
                     result = Json.encodeToString(design)
                 )
+
+                Flowable.just(result)
             }
 
             StageContext.Stage.Execute -> {
@@ -110,21 +114,30 @@ class FEWorkflow() : Workflow() {
                 // todo: use the updated DSL as question
                 variableResolver.updateQuestion(messages.first().content)
 
-                val answer: Answer = FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
-                WorkflowResult(
-                    currentStage = StageContext.Stage.Execute,
-                    nextStage = StageContext.Stage.Done,
-                    responseMsg = answer.values.toString(),
-                    resultType = String::class.java.toString(),
-                    result = answer.toString()
-                )
+                val answerFlowable: Flowable<Answer> =
+                    FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
+                Flowable.create({ emitter ->
+                    answerFlowable.subscribe({
+                        val result = WorkflowResult(
+                            currentStage = StageContext.Stage.Execute,
+                            nextStage = StageContext.Stage.Done,
+                            responseMsg = it.values.toString(),
+                            resultType = String::class.java.toString(),
+                            result = ""
+                        )
+                        emitter.onNext(result)
+                    }, {
+                        emitter.onError(it)
+                    }, {
+                        emitter.onComplete()
+                    })
+                }, io.reactivex.rxjava3.core.BackpressureStrategy.BUFFER)
             }
+
             else -> {
                 throw IllegalStateException("stage not supported")
             }
         }
-
-        return Flowable.just(result)
     }
 
     companion object {

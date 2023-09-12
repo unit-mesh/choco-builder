@@ -9,6 +9,8 @@ import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder
 import cc.unitmesh.cf.domains.frontend.model.UiPage
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
 
 class FESolutionExecutor(
     private val contextBuilder: FEDslContextBuilder,
@@ -21,7 +23,7 @@ class FESolutionExecutor(
         val log = org.slf4j.LoggerFactory.getLogger(FESolutionExecutor::class.java)
     }
 
-    override fun execute(solution: UiPage): Answer {
+    override fun execute(solution: UiPage): Flowable<Answer> {
         val basePrompt = FEWorkflow.EXECUTE.format()
         variable.put("userLayout", solution.layout)
 
@@ -33,13 +35,19 @@ class FESolutionExecutor(
         ).filter { it.content.isNotBlank() }
 
         log.info("Execute messages: {}", messages)
-        val completion = completion.simpleCompletion(messages)
+        val completion: Flowable<String> = completion.flowCompletion(messages)
         log.info("Execute completion: {}", completion)
 
-        return object : Answer {
-            override var executor: String = ""
-            override var values: Any = completion
-        }
+        return Flowable.create({ emitter ->
+            completion.subscribe({
+                val answer = Answer(this.javaClass.name, it)
+                emitter.onNext(answer)
+            }, {
+                emitter.onError(it)
+            }, {
+                emitter.onComplete()
+            })
+        }, BackpressureStrategy.BUFFER)
     }
 
     private fun prepareRelatedComponents(solution: UiPage): MutableList<String> {
