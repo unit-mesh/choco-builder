@@ -1,5 +1,7 @@
 package cc.unitmesh.cf.core.llms
 
+import io.reactivex.rxjava3.core.Flowable
+
 enum class TemperatureMode(val value: Double) {
     Creative(0.7),
     Balanced(0.3),
@@ -12,6 +14,8 @@ interface LlmProvider {
     fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice>
 
     fun simpleCompletion(messages: List<LlmMsg.ChatMessage>): String
+
+    fun flowCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String>
 
     fun setTemperatureMode(mode: TemperatureMode) {
         this.temperature = mode.value

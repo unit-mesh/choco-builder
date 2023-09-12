@@ -70,7 +70,7 @@ class FEWorkflow() : Workflow() {
                         content = clarify.second,
                     )
 
-                    execute(DESIGN, chatWebContext)
+                    return execute(DESIGN, chatWebContext)
                 }
 
                 WorkflowResult(

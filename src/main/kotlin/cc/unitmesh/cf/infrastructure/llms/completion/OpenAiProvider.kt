@@ -7,6 +7,8 @@ import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
@@ -89,6 +91,26 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
             }
 
         return result
+    }
+
+    override fun flowCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
+        val request = prepareRequest(messages)
+
+        return Flowable.create({ emitter ->
+            openai.streamChatCompletion(request)
+                .doOnComplete {
+                    emitter.onComplete()
+                }
+                .doOnError {
+                    log.error("Completion failed: {}", it.message, it);
+                }
+                .subscribe { response ->
+                    val completion = response.choices[0].message
+                    if (completion != null && completion.content != null) {
+                        emitter.onNext(completion.content)
+                    }
+                }
+        }, BackpressureStrategy.BUFFER)
     }
 }
 
