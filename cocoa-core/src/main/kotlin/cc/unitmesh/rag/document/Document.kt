@@ -1,6 +1,6 @@
 package cc.unitmesh.rag.document
 
-import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.cf.core.utils.IdUtil
 import java.util.*
 

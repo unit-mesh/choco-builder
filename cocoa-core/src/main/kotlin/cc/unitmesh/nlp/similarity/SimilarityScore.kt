@@ -1,3 +1,3 @@
-package cc.unitmesh.cf.core.nlp.similarity
+package cc.unitmesh.nlp.similarity
 
 data class SimilarityScore(val key: String, val similarity: Double)

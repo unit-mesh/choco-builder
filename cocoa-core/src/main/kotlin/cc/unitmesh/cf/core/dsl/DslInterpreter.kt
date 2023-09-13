@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.core.dsl
 
-import cc.unitmesh.cf.core.llms.EmbeddingElement
+import cc.unitmesh.nlp.embedding.EmbeddingElement
 import cc.unitmesh.cf.core.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonIgnore
 import kotlinx.serialization.Serializable

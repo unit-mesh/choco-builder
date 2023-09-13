@@ -1,8 +1,8 @@
 package cc.unitmesh.cf.infrastructure.cache
 
 import cc.unitmesh.cf.core.cache.CachableEmbedding
-import cc.unitmesh.cf.core.llms.Embedding
-import cc.unitmesh.cf.core.llms.EmbeddingProvider
+import cc.unitmesh.nlp.embedding.Embedding
+import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.cf.infrastructure.repository.EmbeddingCacheRepository
 import org.springframework.stereotype.Component
 

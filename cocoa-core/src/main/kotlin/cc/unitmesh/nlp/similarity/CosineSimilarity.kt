@@ -1,6 +1,5 @@
-package cc.unitmesh.cf.core.nlp.similarity
+package cc.unitmesh.nlp.similarity
 
-import cc.unitmesh.cf.core.llms.EmbeddingElement
 import kotlin.math.sqrt
 
 /**

@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.similarity
 
-import cc.unitmesh.cf.core.nlp.similarity.CosineSimilarity
+import cc.unitmesh.nlp.similarity.CosineSimilarity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName

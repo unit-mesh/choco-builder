@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.core.llms
+package cc.unitmesh.nlp.embedding
 
 import cc.unitmesh.rag.document.Document
 

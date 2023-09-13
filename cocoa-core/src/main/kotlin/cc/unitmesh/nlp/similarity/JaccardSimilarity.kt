@@ -1,7 +1,6 @@
-package cc.unitmesh.cf.core.nlp.similarity
+package cc.unitmesh.nlp.similarity
 
-import cc.unitmesh.cf.core.llms.EmbeddingElement
-import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.nlp.embedding.Embedding
 
 /**
  * Jaccard similarity implementation.

@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.cache
 
-import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.cf.core.utils.Constants
 import cc.unitmesh.cf.core.utils.IdUtil
 import cc.unitmesh.cf.infrastructure.cache.utils.EmbeddingConverter

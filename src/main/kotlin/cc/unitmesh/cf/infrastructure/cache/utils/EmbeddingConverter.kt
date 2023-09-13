@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.infrastructure.cache.utils
 
-import cc.unitmesh.cf.core.llms.Embedding
+import cc.unitmesh.nlp.embedding.Embedding
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
 

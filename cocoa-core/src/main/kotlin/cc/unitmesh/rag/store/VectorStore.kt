@@ -1,6 +1,6 @@
 package cc.unitmesh.rag.store
 
-import cc.unitmesh.cf.core.nlp.similarity.Similarity
+import cc.unitmesh.nlp.similarity.Similarity
 import cc.unitmesh.rag.document.Document
 import java.util.*
 

@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.context.DslContext
 import cc.unitmesh.cf.core.context.DslContextBuilder
 import cc.unitmesh.cf.core.dsl.InterpreterContext
 import cc.unitmesh.cf.infrastructure.cache.CachedEmbeddingService
-import cc.unitmesh.cf.core.nlp.similarity.JaccardSimilarity
+import cc.unitmesh.nlp.similarity.JaccardSimilarity
 import org.springframework.stereotype.Component
 
 @Component
