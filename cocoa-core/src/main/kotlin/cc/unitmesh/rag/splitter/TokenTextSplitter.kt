@@ -25,10 +25,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class TokenTextSplitter(
-    private var keepSeparator: Boolean = true
-) : TextSplitter() {
-    private val defaultChunkSize = 800 // The target size of each text
+class TokenTextSplitter : TextSplitter() {
+    override var chunkSize = 800 // The target size of each text
 
     // chunk in tokens
     private val minChunkSizeChars = 350 // The minimum size of each text
@@ -41,7 +39,7 @@ class TokenTextSplitter(
     private val registry: EncodingRegistry = newLazyEncodingRegistry()
     private val encoding: Encoding = registry.getEncoding(EncodingType.CL100K_BASE)
     override fun splitText(text: String): List<String> {
-        return split(text, defaultChunkSize)
+        return split(text, chunkSize)
     }
 
     private fun split(text: String?, chunkSize: Int): List<String> {

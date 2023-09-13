@@ -2,7 +2,12 @@ package cc.unitmesh.rag.splitter
 
 import cc.unitmesh.rag.document.Document
 
+
 abstract class TextSplitter : Splitter {
+    protected var keepSeparator = false
+    protected open var chunkSize: Int = 4000
+    protected var chunkOverlap = 200
+
     override fun apply(documents: List<Document>): List<Document> {
         val texts: MutableList<String> = ArrayList()
         val metadata: MutableMap<String, Any> = HashMap()
@@ -29,5 +34,5 @@ abstract class TextSplitter : Splitter {
         return documents
     }
 
-    protected abstract fun splitText(text: String): List<String>
+    public abstract fun splitText(text: String): List<String>
 }
