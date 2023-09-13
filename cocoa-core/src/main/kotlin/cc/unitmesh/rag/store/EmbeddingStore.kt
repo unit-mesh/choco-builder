@@ -22,7 +22,6 @@ import cc.unitmesh.nlp.embedding.Embedding
 
 interface EmbeddingStore<Embedded> {
     fun add(embedding: Embedding): String
-
     fun add(id: String, embedding: Embedding)
     fun add(embedding: Embedding, embedded: Embedded): String
     fun addAll(embeddings: List<Embedding>): List<String>

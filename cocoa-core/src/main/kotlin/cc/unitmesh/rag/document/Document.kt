@@ -8,9 +8,9 @@ import java.util.*
 data class Document(
     val id: String = IdUtil.uuid(),
     var embedding: Embedding = listOf(),
-    override var metadata: Metadata = HashMap(),
-    override var text: String = "",
-) : TextSegment(text, metadata) {
+    var metadata: Metadata = HashMap(),
+    var text: String = "",
+) {
     constructor(text: String, metadata: Metadata = HashMap()) : this(
         IdUtil.uuid(),
         listOf(),
