@@ -1,6 +1,7 @@
 import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
+import cc.unitmesh.nlp.similarity.meanPool
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.loader.JsonLoader
 import cc.unitmesh.rag.retriever.EmbeddingStoreRetriever
@@ -38,6 +39,7 @@ class RagIntegrationTests {
         val embeddings: List<Embedding> = documentList.map {
             embeddingProvider.embed(it.text)
         }
+//        val meanPool = meanPool(embeddings)
         vectorStore.addAll(embeddings, documentList)
 
         val vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore)

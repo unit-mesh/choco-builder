@@ -89,14 +89,15 @@ class TokenTextSplitter(
                 chunks.add(remainingText)
             }
         }
+
         return chunks
     }
 
-    private fun getEncodedTokens(text: String): List<Int?> {
+    private fun getEncodedTokens(text: String): List<Int> {
         return encoding.encode(text)
     }
 
-    private fun decodeTokens(tokens: List<Int?>): String {
+    private fun decodeTokens(tokens: List<Int>): String {
         return encoding.decode(tokens)
     }
 }

@@ -6,7 +6,15 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import ai.onnxruntime.OrtUtil
 
-class STSemantic(val tokenizer: HuggingFaceTokenizer, val session: OrtSession, val env: OrtEnvironment) : Semantic {
+class STSemantic(
+    private val tokenizer: HuggingFaceTokenizer,
+    private val session: OrtSession,
+    private val env: OrtEnvironment,
+) : Semantic {
+    override fun getTokenizer(): HuggingFaceTokenizer {
+        return tokenizer
+    }
+
     override fun embed(input: String): DoubleArray {
         val tokenized = tokenizer.encode(input, true)
 
