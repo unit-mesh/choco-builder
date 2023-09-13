@@ -3,7 +3,7 @@ layout: default
 title: Retrieval Augmented Generation
 nav_order: 4
 has_children: true
-permalink: /docs/rag.md
+permalink: /docs/rag
 ---
 
 检索增强（Retrieval Augmented Generation）生成将从源数据（DataSource）中提取信息并将其分成（Splitter）较小的单元，每个单元都在模型的
