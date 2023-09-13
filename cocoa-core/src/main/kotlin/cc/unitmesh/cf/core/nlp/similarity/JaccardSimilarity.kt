@@ -3,6 +3,10 @@ package cc.unitmesh.cf.core.nlp.similarity
 import cc.unitmesh.cf.core.llms.EmbeddingElement
 import cc.unitmesh.cf.core.llms.Embedding
 
+/**
+ * Jaccard similarity implementation.
+ * use for Code, like GitHub Copilot, JetBrains AI Assistant
+ */
 class JaccardSimilarity : Similarity {
     override fun <T : EmbeddingElement> findNearest(
         data: List<T>,

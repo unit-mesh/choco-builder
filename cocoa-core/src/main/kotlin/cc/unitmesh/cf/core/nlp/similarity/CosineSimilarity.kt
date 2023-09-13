@@ -3,28 +3,34 @@ package cc.unitmesh.cf.core.nlp.similarity
 import cc.unitmesh.cf.core.llms.EmbeddingElement
 import kotlin.math.sqrt
 
+/**
+ * Cosine similarity implementation.
+ * use for Document, like LangChain, Spring AI, etc.
+ */
 class CosineSimilarity : Similarity {
-    internal fun cosineDistance(a: List<Double>, b: List<Double>): Double {
-        require(a.size == b.size) { "Vectors must be of equal length" }
+    private fun cosineSimilarity(vectorX: List<Double>, vectorY: List<Double>): Double {
+        require(vectorX.size == vectorY.size) { "Vectors lengths must be equal" }
 
-        var dotProduct = 0.0
-        var normA = 0.0
-        var normB = 0.0
+        val dotProduct = dotProduct(vectorX, vectorY)
+        val normX = norm(vectorX)
+        val normY = norm(vectorY)
 
-        for (i in a.indices) {
-            dotProduct += a[i] * b[i]
-            normA += a[i] * a[i]
-            normB += b[i] * b[i]
+        require(!(normX == 0.0 || normY == 0.0)) { "Vectors cannot have zero norm" }
+        return dotProduct / (sqrt(normX) * sqrt(normY))
+    }
+
+    private fun dotProduct(vectorX: List<Double>, vectorY: List<Double>): Double {
+        require(vectorX.size == vectorY.size) { "Vectors lengths must be equal" }
+        var result = 0.0
+        for (i in vectorX.indices) {
+            result += vectorX[i] * vectorY[i]
         }
 
-        normA = sqrt(normA)
-        normB = sqrt(normB)
+        return result
+    }
 
-        return if (normA * normB != 0.0) {
-            1 - dotProduct / (normA * normB)
-        } else {
-            1.0
-        }
+    private fun norm(vector: List<Double>): Double {
+        return dotProduct(vector, vector)
     }
 
     override fun <T : EmbeddingElement> findNearest(
@@ -35,7 +41,7 @@ class CosineSimilarity : Similarity {
     ): List<T> {
         return data
             .asSequence()
-            .map { cosineDistance(it.embedding, questionVector) to it }
+            .map { cosineSimilarity(it.embedding, questionVector) to it }
             .filter { it.first < maxDistance }
             .sortedBy { it.first }
             .take(maxResults)
