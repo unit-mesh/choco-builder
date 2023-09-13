@@ -8,10 +8,10 @@ import java.util.*
 data class Document(
     val id: String = IdUtil.uuid(),
     var embedding: Embedding = listOf(),
-    var metadata: Map<String, Any> = HashMap(),
-    var text: String = ""
-) {
-    constructor(text: String, metadata: Map<String, Any> = HashMap()) : this(
+    override var metadata: Metadata = HashMap(),
+    override var text: String = "",
+) : TextSegment(text, metadata) {
+    constructor(text: String, metadata: Metadata = HashMap()) : this(
         IdUtil.uuid(),
         listOf(),
         metadata,
@@ -25,6 +25,10 @@ data class Document(
         }
 
         return this.text == other.text && this.metadata == other.metadata
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(text, metadata)
     }
 }
 

@@ -10,6 +10,7 @@ include(":cocoa-local-embedding")
 
 include(":dsl:design")
 include(":rag-modules:code-splitter")
+include(":rag-modules:milvus")
 
 dependencyResolutionManagement {
     repositories {
