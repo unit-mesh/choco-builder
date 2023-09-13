@@ -18,6 +18,8 @@ class STSemantic(val tokenizer: HuggingFaceTokenizer, val session: OrtSession, v
         val tensorAttentionMask = OrtUtil.reshape(attentionMask, longArrayOf(1, attentionMask.size.toLong()))
         val tensorTypeIds = OrtUtil.reshape(typeIds, longArrayOf(1, typeIds.size.toLong()))
 
+        println("input: $input")
+        println("inputIds: ${inputIds.size}")
         val result = session.run(
             mapOf(
                 "input_ids" to OnnxTensor.createTensor(env, tensorInput),

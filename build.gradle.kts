@@ -81,8 +81,6 @@ dependencies {
 
     implementation("io.reactivex.rxjava3:rxjava:3.1.7")
 
-    implementation("org.springframework.experimental.ai:spring-ai-core:0.2.0-SNAPSHOT")
-
     // spring dependencies
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-actuator")

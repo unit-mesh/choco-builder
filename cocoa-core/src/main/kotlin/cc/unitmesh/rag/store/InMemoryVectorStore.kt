@@ -2,6 +2,7 @@ package cc.unitmesh.rag.store
 
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
+import cc.unitmesh.nlp.similarity.CosineSimilarity
 import cc.unitmesh.nlp.similarity.Similarity
 import cc.unitmesh.nlp.similarity.SimilarityScore
 import cc.unitmesh.rag.document.Document
@@ -10,9 +11,10 @@ import java.util.concurrent.ConcurrentHashMap
 
 class InMemoryVectorStore(
     private val embeddingClient: EmbeddingProvider,
-    override val similarity: Similarity,
+    override val similarity: Similarity = CosineSimilarity(),
 ) : VectorStore {
     private val store: ConcurrentHashMap<String, Document> = ConcurrentHashMap<String, Document>()
+
     override fun add(documents: List<Document>) {
         for (document in documents) {
             val embedding: Embedding = this.embeddingClient.embed(document)

@@ -7,6 +7,7 @@ interface EmbeddingProvider {
 
     fun embed(text: String): Embedding {
         val results: List<Embedding> = embed(listOf(text))
+
         if (results.isNotEmpty()) {
             return results[0]
         }

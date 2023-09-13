@@ -1,5 +1,6 @@
 package cc.unitmesh.cf
 
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class STSemanticTest {
@@ -9,6 +10,6 @@ class STSemanticTest {
         val semantic = STSemantic.create()
         val embedding = semantic.embed("what is the weather today?")
 
-        println(embedding.joinToString(","))
+        embedding.size shouldBe 3072
     }
 }
