@@ -15,6 +15,9 @@ class SpecRelevantSearch(
 ) {
     private lateinit var vectorStoreRetriever: VectorStoreRetriever
 
+    // cached for performance
+    private val searchCache: MutableMap<String, List<String>> = mutableMapOf()
+
     init {
         val text = javaClass.getResourceAsStream("/be/specification.md")!!.bufferedReader().readText()
         val headersToSplitOn: List<Pair<String, String>> = listOf(
@@ -34,8 +37,15 @@ class SpecRelevantSearch(
         this.vectorStoreRetriever = VectorStoreRetriever(vectorStore)
     }
 
+    // TODO: change to search engine
     fun search(query: String): List<String> {
+        if (searchCache.containsKey(query)) {
+            return searchCache[query]!!
+        }
+
         val similarDocuments = vectorStoreRetriever.retrieve(query)
-        return similarDocuments.map { it.text }
+        val results = similarDocuments.map { it.text }
+        searchCache[query] = results
+        return results
     }
 }

@@ -9,6 +9,7 @@ enum class SupportedDomains(@JsonValue val value: String) {
     CodeInterpreter("code-interpreter"),
     Testcase("testcase"),
     SQL("sql"),
+    Spec("spec"),
     Custom("custom"),
     ;
 }

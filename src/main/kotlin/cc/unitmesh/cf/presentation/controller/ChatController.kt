@@ -7,6 +7,7 @@ import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.code.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
+import cc.unitmesh.cf.domains.spec.SpecWorkflow
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import io.reactivex.rxjava3.schedulers.Schedulers
 import jakarta.servlet.http.HttpServletResponse
@@ -28,6 +29,7 @@ class ChatController(
     val feFlow: FEWorkflow,
     val codeFlow: CodeInterpreterWorkflow,
     val testcaseFlow: TestcaseWorkflow,
+    val specFlow: SpecWorkflow,
 ) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest, res: HttpServletResponse) {
@@ -36,6 +38,7 @@ class ChatController(
             SupportedDomains.Frontend -> feFlow
             SupportedDomains.CodeInterpreter -> codeFlow
             SupportedDomains.Testcase -> testcaseFlow
+            SupportedDomains.Spec -> specFlow
             SupportedDomains.SQL -> TODO()
             SupportedDomains.Custom -> TODO()
         }
@@ -50,6 +53,7 @@ class ChatController(
         val out = res.outputStream;
 
         val result = workflow.execute(prompt, chatWebContext)
+
         runBlocking {
             result
                 .observeOn(Schedulers.io())

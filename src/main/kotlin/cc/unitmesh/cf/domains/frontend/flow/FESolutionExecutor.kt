@@ -3,6 +3,8 @@ package cc.unitmesh.cf.domains.frontend.flow
 import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.dsl.Interpreter
 import cc.unitmesh.cf.core.flow.SolutionExecutor
+import cc.unitmesh.cf.core.flow.model.StageContext
+import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
 import cc.unitmesh.cf.domains.frontend.context.FEVariableResolver
 import cc.unitmesh.cf.domains.frontend.context.FEDslContextBuilder

@@ -57,6 +57,16 @@ export const domains: DomainFormItem[] = [
     value: 'sql'
   },
   {
+    label: '规范查询',
+    value: 'spec',
+    examples: [
+      {
+        title: '规范查询',
+        content: '明文密码是不符合哪条规范？'
+      }
+    ]
+  },
+  {
     label: '逻辑分析 (Todo)',
     value: 'logic-analysis'
   },
