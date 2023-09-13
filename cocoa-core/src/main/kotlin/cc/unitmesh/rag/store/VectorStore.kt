@@ -1,4 +1,4 @@
-package cc.unitmesh.rag.vectorstore
+package cc.unitmesh.rag.store
 
 import cc.unitmesh.cf.core.nlp.similarity.Similarity
 import cc.unitmesh.rag.document.Document
