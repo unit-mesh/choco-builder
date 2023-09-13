@@ -20,7 +20,6 @@ package cc.unitmesh.rag.splitter;
 import cc.unitmesh.rag.document.Document
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import java.util.Map
 
 
 internal class MarkdownHeaderTextSplitterTest {
@@ -52,11 +51,11 @@ internal class MarkdownHeaderTextSplitterTest {
         val expectedOutput: List<Document> = listOf(
             Document(
                 "Hi this is Jim  \nHi this is Joe",
-                Map.of("Header 1", "Foo", "Header 2", "Bar")
+                mapOf("Header 1" to "Foo", "Header 2" to "Bar")
             ),
             Document(
                 "Hi this is Molly",
-                Map.of("Header 1", "Foo", "Header 2", "Baz")
+                mapOf("Header 1" to "Foo", "Header 2" to "Baz")
             )
         )
         assertEquals(expectedOutput, output)
@@ -92,18 +91,18 @@ internal class MarkdownHeaderTextSplitterTest {
         )
         val markdownSplitter = MarkdownHeaderTextSplitter(headersToSplitOn)
         val output: List<Document> = markdownSplitter.splitText(markdownDocument)
-        val expectedOutput: List<Document> = listOf<Document>(
+        val expectedOutput: List<Document> = listOf(
             Document(
                 "Hi this is Jim  \nHi this is Joe",
-                Map.of("Header 1", "Foo", "Header 2", "Bar")
+                mapOf("Header 1" to "Foo", "Header 2" to "Bar")
             ),
             Document(
                 "Hi this is Lance",
-                Map.of("Header 1", "Foo", "Header 2", "Bar", "Header 3", "Boo")
+                mapOf("Header 1" to "Foo", "Header 2" to "Bar", "Header 3" to "Boo")
             ),
             Document(
                 "Hi this is Molly",
-                Map.of("Header 1", "Foo", "Header 2", "Baz")
+                mapOf("Header 1" to "Foo", "Header 2" to "Baz")
             )
         )
         assertEquals(expectedOutput, output)
@@ -147,19 +146,19 @@ internal class MarkdownHeaderTextSplitterTest {
         val expectedOutput: List<Document> = listOf<Document>(
             Document(
                 "Hi this is Jim  \nHi this is Joe",
-                Map.of("Header 1", "Foo", "Header 2", "Bar")
+                mapOf("Header 1" to "Foo", "Header 2" to "Bar")
             ),
             Document(
                 "Hi this is Lance",
-                Map.of("Header 1", "Foo", "Header 2", "Bar", "Header 3", "Boo")
+                mapOf("Header 1" to "Foo", "Header 2" to "Bar", "Header 3" to "Boo")
             ),
             Document(
                 "Hi this is John",
-                Map.of("Header 1", "Foo", "Header 2", "Bar", "Header 3", "Boo", "Header 4", "Bim")
+                mapOf("Header 1" to "Foo", "Header 2" to "Bar", "Header 3" to "Boo", "Header 4" to "Bim")
             ),
             Document(
                 "Hi this is Molly",
-                Map.of("Header 1", "Foo", "Header 2", "Baz")
+                mapOf("Header 1" to "Foo", "Header 2" to "Baz")
             )
         )
         assertEquals(expectedOutput, output)
