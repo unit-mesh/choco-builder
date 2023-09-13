@@ -19,36 +19,43 @@ class JsonLoader(
 
     override fun load(textSplitter: TextSplitter): List<Document> {
         val objectMapper = ObjectMapper()
-        val documents: MutableList<Document> = ArrayList()
-
+        val documents: List<Document>
         try {
             // TODO, not all json will be an array
             val jsonData: List<Map<String, Any>> =
                 objectMapper.readValue(inputStream, object : TypeReference<List<Map<String, Any>>>() {})
 
-            for (item in jsonData) {
-                val sb = StringBuilder()
-                for (key in jsonKeysToUse) {
-                    if (item.containsKey(key)) {
-                        sb.append(key)
-                        sb.append(": ")
-                        sb.append(item[key])
-                        sb.append(System.lineSeparator())
-                    }
-                }
-
-                if (sb.isNotEmpty()) {
-                    val document = Document(sb.toString())
-                    documents.add(document)
-                } else {
-                    val document: Document = Document(item.toString())
-                    documents.add(document)
-                }
-            }
+            documents = load(jsonData)
         } catch (e: IOException) {
             throw RuntimeException(e)
         }
+
         return textSplitter.apply(documents)
     }
 
+    fun load(jsonData: List<Map<String, Any>>): List<Document> {
+        val documents: MutableList<Document> = ArrayList()
+
+        for (item in jsonData) {
+            val sb = StringBuilder()
+            for (key in jsonKeysToUse) {
+                if (item.containsKey(key)) {
+                    sb.append(key)
+                    sb.append(": ")
+                    sb.append(item[key])
+                    sb.append(System.lineSeparator())
+                }
+            }
+
+            if (sb.isNotEmpty()) {
+                val document = Document(sb.toString())
+                documents.add(document)
+            } else {
+                val document = Document(item.toString())
+                documents.add(document)
+            }
+        }
+
+        return documents
+    }
 }
