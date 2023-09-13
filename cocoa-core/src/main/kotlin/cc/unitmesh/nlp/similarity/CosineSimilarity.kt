@@ -32,4 +32,10 @@ class CosineSimilarity : Similarity {
     private fun norm(vector: List<Double>): Double {
         return dotProduct(vector, vector)
     }
+
+    companion object {
+        fun between(embedding: List<Double>, referenceEmbedding: List<Double>): Double {
+            return CosineSimilarity().similarityScore(embedding, referenceEmbedding)
+        }
+    }
 }

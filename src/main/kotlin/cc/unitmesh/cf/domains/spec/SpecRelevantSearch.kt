@@ -10,9 +10,7 @@ import cc.unitmesh.rag.store.VectorStore
 import org.springframework.stereotype.Component
 
 @Component
-class SpecRelevantSearch(
-    val embeddingProvider: EmbeddingProvider,
-) {
+class SpecRelevantSearch(val embeddingProvider: EmbeddingProvider) {
     private lateinit var vectorStoreRetriever: VectorStoreRetriever
 
     // cached for performance

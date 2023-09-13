@@ -2,7 +2,6 @@ import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.nlp.similarity.JaccardSimilarity
-import cc.unitmesh.nlp.similarity.meanPool
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.loader.JsonLoader
 import cc.unitmesh.rag.retriever.VectorStoreRetriever
