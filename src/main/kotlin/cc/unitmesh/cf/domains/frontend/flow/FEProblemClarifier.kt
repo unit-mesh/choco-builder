@@ -33,7 +33,7 @@ class FEProblemClarifier(
         ).filter { it.content.isNotBlank() }
 
         log.info("Clarify messages: {}", messages)
-        val completion = completion.simpleCompletion(messages)
+        val completion = completion.completion(messages)
         log.info("Clarify completion: {}", completion)
         return FlowActionFlag.parse(completion)
     }

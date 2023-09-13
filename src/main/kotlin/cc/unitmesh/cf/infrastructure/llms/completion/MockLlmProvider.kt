@@ -7,15 +7,11 @@ import io.reactivex.rxjava3.core.Flowable
 class MockLlmProvider : LlmProvider {
     override var temperature: Double = 0.0
 
-    override fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice> {
-        return listOf()
-    }
-
-    override fun simpleCompletion(messages: List<LlmMsg.ChatMessage>): String {
+    override fun completion(messages: List<LlmMsg.ChatMessage>): String {
         return ""
     }
 
-    override fun flowCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
+    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
         TODO("Not yet implemented")
     }
 }

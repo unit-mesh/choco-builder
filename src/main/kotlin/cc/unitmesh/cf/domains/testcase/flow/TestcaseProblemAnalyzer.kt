@@ -28,7 +28,7 @@ class TestcaseProblemAnalyzer(
 
         val oldTemperatureMode = temperatureMode
         completion.setTemperatureMode(temperatureMode)
-        val output = completion.simpleCompletion(messages)
+        val output = completion.completion(messages)
         completion.setTemperatureMode(oldTemperatureMode)
 
         // TODO: add multiple temperatures support

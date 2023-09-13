@@ -22,7 +22,7 @@ class TestcaseSolutionReviewer(
         ).filter { it.content.isNotBlank() }
 
         log.info("messages: {}", messages)
-        val completion = completion.simpleCompletion(messages)
+        val completion = completion.completion(messages)
         log.info("completion: {}", completion)
 
         return object : Dsl {

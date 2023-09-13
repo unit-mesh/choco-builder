@@ -50,20 +50,6 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         }
     }
 
-    @Cacheable("completion")
-    override fun createCompletions(messages: List<LlmMsg.ChatMessage>): List<LlmMsg.ChatChoice> {
-        val request = prepareRequest(messages)
-
-        val response = openai.createChatCompletion(request)
-
-        totalTokens += response.usage.totalTokens
-        if (response.choices[0].finishReason != "stop") {
-            throw OpenAiCompletionException("Completion failed: ${response.choices[0].finishReason}")
-        }
-
-        return response.choices.map { it.toAbstract() }
-    }
-
     private fun prepareRequest(messages: List<LlmMsg.ChatMessage>): ChatCompletionRequest? {
         return ChatCompletionRequest.builder()
             .model("gpt-3.5-turbo")
@@ -76,7 +62,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
     fun LlmMsg.ChatMessage.toInternal() =
         com.theokanning.openai.completion.chat.ChatMessage(this.role.name.lowercase(), this.content)
 
-    override fun simpleCompletion(messages: List<LlmMsg.ChatMessage>): String {
+    override fun completion(messages: List<LlmMsg.ChatMessage>): String {
         val request = prepareRequest(messages)
 
         var result = ""
@@ -94,7 +80,7 @@ class OpenAiProvider(val config: OpenAiConfiguration) : LlmProvider {
         return result
     }
 
-    override fun flowCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
+    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
         val request = prepareRequest(messages)
 
         return Flowable.create({ emitter ->

@@ -35,7 +35,7 @@ class FESolutionExecutor(
         ).filter { it.content.isNotBlank() }
 
         log.info("Execute messages: {}", messages)
-        val completion: Flowable<String> = completion.flowCompletion(messages)
+        val completion: Flowable<String> = completion.streamCompletion(messages)
         log.info("Execute completion: {}", completion)
 
         return Flowable.create({ emitter ->

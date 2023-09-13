@@ -13,7 +13,6 @@ import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.parser.MarkdownCode
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.slf4j.Logger
@@ -35,7 +34,7 @@ class CodeSolutionExecutor(
         ).filter { it.content.isNotBlank() }
 
         log.info("Execute messages: {}", messages)
-        val completion: Flowable<String> = completion.flowCompletion(messages)
+        val completion: Flowable<String> = completion.streamCompletion(messages)
 
         var content = ""
         return Flowable.create({ emitter ->

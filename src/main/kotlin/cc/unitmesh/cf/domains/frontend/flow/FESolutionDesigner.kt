@@ -24,7 +24,7 @@ class FESolutionDesigner(
         ).filter { it.content.isNotBlank() }
 
         log.info("Designer messages: {}", messages)
-        val completion = completion.simpleCompletion(messages)
+        val completion = completion.completion(messages)
         log.info("Designer completion: {}", completion)
         return UiPage.parse(completion)
     }

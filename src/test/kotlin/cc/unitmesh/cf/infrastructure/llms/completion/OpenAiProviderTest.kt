@@ -12,7 +12,7 @@ class OpenAiProviderTest {
         config.apiKey = ""
         config.apiHost = ""
         val provider = OpenAiProvider(config)
-        val chatChoices = provider.simpleCompletion(listOf(LlmMsg.ChatMessage(LlmMsg.ChatRole.User, "你好")))
+        val chatChoices = provider.completion(listOf(LlmMsg.ChatMessage(LlmMsg.ChatRole.User, "你好")))
         println(chatChoices)
     }
 }
