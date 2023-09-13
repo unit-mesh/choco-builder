@@ -20,7 +20,6 @@ class SpecWorkflow : Workflow() {
     @Autowired
     private lateinit var relevantSearch: SpecRelevantSearch
 
-
     override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
             EXECUTE.stage to EXECUTE

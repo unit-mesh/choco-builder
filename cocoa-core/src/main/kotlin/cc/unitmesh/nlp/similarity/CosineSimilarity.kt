@@ -1,5 +1,6 @@
 package cc.unitmesh.nlp.similarity
 
+import cc.unitmesh.nlp.embedding.Embedding
 import kotlin.math.sqrt
 
 /**
@@ -7,30 +8,24 @@ import kotlin.math.sqrt
  * use for Document, like LangChain, Spring AI, etc.
  */
 class CosineSimilarity : Similarity {
-    override fun similarityScore(set1: List<Double>, set2: List<Double>): Double {
-        println("set1: ${set1.size}, set2: ${set2.size}")
-        require(set1.size == set2.size) { "Vectors lengths must be equal" }
-
-        val dotProduct = dotProduct(set1, set2)
-        val normX = norm(set1)
-        val normY = norm(set2)
-
-        require(!(normX == 0.0 || normY == 0.0)) { "Vectors cannot have zero norm" }
-        return dotProduct / (sqrt(normX) * sqrt(normY))
-    }
-
-    private fun dotProduct(vectorX: List<Double>, vectorY: List<Double>): Double {
-        require(vectorX.size == vectorY.size) { "Vectors lengths must be equal" }
-        var result = 0.0
-        for (i in vectorX.indices) {
-            result += vectorX[i] * vectorY[i]
+    override fun similarityScore(vectorA: Embedding, vectorB: Embedding): Double {
+        if (vectorA.size != vectorB.size) {
+            throw IllegalArgumentException(
+                "Length of vector a (${vectorA.size}) must be equal to the length of vector b (${vectorB.size})"
+            )
         }
 
-        return result
-    }
+        var dotProduct = 0.0
+        var normA = 0.0
+        var normB = 0.0
 
-    private fun norm(vector: List<Double>): Double {
-        return dotProduct(vector, vector)
+        for (i in vectorA.indices) {
+            dotProduct += (vectorA[i] * vectorB[i])
+            normA += (vectorA[i] * vectorA[i])
+            normB += (vectorB[i] * vectorB[i])
+        }
+
+        return dotProduct / (sqrt(normA) * sqrt(normB))
     }
 
     companion object {

@@ -1,7 +1,9 @@
 package cc.unitmesh.rag.retriever
 
+import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.store.EmbeddingMatch
 
-interface Retriever {
-    fun retrieve(query: String): List<Document>
+interface Retriever<Embedded> {
+    fun retrieve(query: Embedding): List<EmbeddingMatch<Embedded>>
 }
