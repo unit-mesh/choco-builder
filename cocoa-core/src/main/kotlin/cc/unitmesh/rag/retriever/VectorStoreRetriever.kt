@@ -27,9 +27,9 @@ class VectorStoreRetriever : Retriever {
 
     override fun retrieve(query: String): List<Document> {
         return if (threshold.isPresent) {
-            vectorStore.similaritySearch(query, k, threshold.get())
+            vectorStore.findRelevant(query, k, threshold.get())
         } else {
-            vectorStore.similaritySearch(query, k)
+            vectorStore.findRelevant(query, k)
         }
     }
 }

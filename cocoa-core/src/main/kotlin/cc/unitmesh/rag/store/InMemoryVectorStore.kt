@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 class InMemoryVectorStore(
     private val embeddingClient: EmbeddingProvider,
     override val similarity: Similarity = CosineSimilarity(),
-) : VectorStore {
+) : VectorStore<Document> {
     private val store: ConcurrentHashMap<String, Document> = ConcurrentHashMap<String, Document>()
 
     override fun add(documents: List<Document>) {
@@ -30,11 +30,11 @@ class InMemoryVectorStore(
         return Optional.of(true)
     }
 
-    override fun similaritySearch(query: String): List<Document> {
-        return similaritySearch(query, 4)
+    override fun findRelevant(query: String): List<Document> {
+        return findRelevant(query, 4)
     }
 
-    override fun similaritySearch(query: String, k: Int): List<Document> {
+    override fun findRelevant(query: String, maxResults: Int): List<Document> {
         val userQueryEmbedding: List<Double> = queryEmbedding(query)
         return store.values
             .stream()
@@ -43,12 +43,12 @@ class InMemoryVectorStore(
                 SimilarityScore(entry.id, similarityScore)
             }
             .sorted(Comparator.comparingDouble(SimilarityScore::similarity).reversed())
-            .limit(k.toLong())
+            .limit(maxResults.toLong())
             .map<Document> { s -> store[s.key] }
             .toList()
     }
 
-    override fun similaritySearch(query: String, k: Int, threshold: Double): List<Document> {
+    override fun findRelevant(query: String, maxResults: Int, minSimilarity: Double): List<Document> {
         val userQueryEmbedding: List<Double> = queryEmbedding(query)
         return store.values
             .stream()
@@ -56,9 +56,9 @@ class InMemoryVectorStore(
                 val similarityScore = similarity.similarityScore(userQueryEmbedding, entry.embedding)
                 SimilarityScore(entry.id, similarityScore)
             }
-            .filter { s: SimilarityScore -> s.similarity >= threshold }
+            .filter { s: SimilarityScore -> s.similarity >= minSimilarity }
             .sorted(Comparator.comparingDouble(SimilarityScore::similarity).reversed())
-            .limit(k.toLong())
+            .limit(maxResults.toLong())
             .map<Document> { s -> store[s.key] }
             .toList()
     }

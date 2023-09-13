@@ -5,11 +5,11 @@ import cc.unitmesh.rag.document.Document
 import java.util.*
 
 
-interface VectorStore {
+interface VectorStore<Embedded> {
     val similarity: Similarity
-    fun add(documents: List<Document>)
+    fun add(documents: List<Embedded>)
     fun delete(idList: List<String>): Optional<Boolean>
-    fun similaritySearch(query: String): List<Document>
-    fun similaritySearch(query: String, k: Int): List<Document>
-    fun similaritySearch(query: String, k: Int, threshold: Double): List<Document>
+    fun findRelevant(query: String): List<Embedded>
+    fun findRelevant(query: String, maxResults: Int): List<Embedded>
+    fun findRelevant(query: String, maxResults: Int, minSimilarity: Double): List<Embedded>
 }
