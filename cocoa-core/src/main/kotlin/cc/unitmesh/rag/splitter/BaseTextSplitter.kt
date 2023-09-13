@@ -5,35 +5,34 @@ import cc.unitmesh.rag.document.Document
 const val DEFAULT_CHUNK_SIZE: Int = 4000
 const val SENTENCE_CHUNK_OVERLAP: Int = 200
 
-abstract class TextSplitter() : Splitter {
+abstract class BaseTextSplitter() : Splitter {
     companion object {
-        private val log = org.slf4j.LoggerFactory.getLogger(TextSplitter::class.java)
+        private val log = org.slf4j.LoggerFactory.getLogger(BaseTextSplitter::class.java)
     }
 
     override fun apply(documents: List<Document>): List<Document> {
         val texts: MutableList<String> = ArrayList()
+        val metadata: MutableMap<String, Any> = HashMap()
 
         for (doc in documents) {
             texts.add(doc.text)
+            metadata.putAll(doc.metadata)
         }
 
-        return createDocuments(texts)
+        return createDocuments(texts, metadata)
     }
 
-    private fun createDocuments(texts: List<String>): List<Document> {
+    private fun createDocuments(texts: List<String>, metadata: MutableMap<String, Any>): List<Document> {
         val documents: MutableList<Document> = mutableListOf()
+
         for (i in texts.indices) {
             val text = texts[i]
-            val chunks: List<String> = splitText(text)
-            if (chunks.size > 1) {
-                log.info("Broke up document " + i + " into " + chunks.size + " chunks.")
-            }
-            for (chunk in chunks) {
-                val newDoc: Document = Document(text = chunk)
+            for (chunk in splitText(text)) {
+                val metadataCopy = metadata.entries.associate { (key, value) -> key to value }
+                val newDoc = Document(chunk, metadata = metadataCopy)
                 documents.add(newDoc)
             }
         }
-
         return documents
     }
 
