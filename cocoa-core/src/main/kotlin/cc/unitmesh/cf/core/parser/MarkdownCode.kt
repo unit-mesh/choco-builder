@@ -1,6 +1,6 @@
 package cc.unitmesh.cf.core.parser
 
-class MarkdownCode(val language: String, val text: String) {
+class MarkdownCode(val language: String, val text: String, isComplete: Boolean = true) {
     companion object {
         fun parse(content: String): MarkdownCode {
             val regex = Regex("```([\\w#+]*)")
@@ -42,6 +42,10 @@ class MarkdownCode(val language: String, val text: String) {
                     break
                 }
                 endIndex--
+            }
+
+            if (!codeClosed) {
+                return MarkdownCode(languageId ?: "", codeBuilder.toString(), false)
             }
 
             val trimmedCode = codeBuilder.substring(startIndex, endIndex + 1).toString()

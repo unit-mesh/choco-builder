@@ -61,7 +61,7 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
         ggtitle("2023 年上半年电费")
 """
 
-        val res = compiler.eval(code)
+        compiler.eval(code)
     }
 
     @Test

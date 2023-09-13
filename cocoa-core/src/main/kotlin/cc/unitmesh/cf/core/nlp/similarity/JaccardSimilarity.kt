@@ -8,22 +8,6 @@ import cc.unitmesh.cf.core.llms.Embedding
  * use for Code, like GitHub Copilot, JetBrains AI Assistant
  */
 class JaccardSimilarity : Similarity {
-    override fun <T : EmbeddingElement> findNearest(
-        data: List<T>,
-        questionVector: Embedding,
-        maxDistance: Double,
-        maxResults: Int,
-    ): List<T> {
-        return data
-            .asSequence()
-            .map { similarityScore(it.embedding, questionVector) to it }
-            .filter { it.first < maxDistance }
-            .sortedBy { it.first }
-            .take(maxResults)
-            .map { (_, item) -> item }
-            .toList()
-    }
-
     override fun similarityScore(set1: Embedding, set2: Embedding): Double {
         val intersectionSize: Int = (set1 intersect set2).size
         val unionSize: Int = (set1 union set2).size

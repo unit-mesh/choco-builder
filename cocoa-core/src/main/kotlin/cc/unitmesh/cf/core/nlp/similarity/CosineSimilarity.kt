@@ -8,12 +8,12 @@ import kotlin.math.sqrt
  * use for Document, like LangChain, Spring AI, etc.
  */
 class CosineSimilarity : Similarity {
-    override fun similarityScore(vectorX: List<Double>, vectorY: List<Double>): Double {
-        require(vectorX.size == vectorY.size) { "Vectors lengths must be equal" }
+    override fun similarityScore(set1: List<Double>, set2: List<Double>): Double {
+        require(set1.size == set2.size) { "Vectors lengths must be equal" }
 
-        val dotProduct = dotProduct(vectorX, vectorY)
-        val normX = norm(vectorX)
-        val normY = norm(vectorY)
+        val dotProduct = dotProduct(set1, set2)
+        val normX = norm(set1)
+        val normY = norm(set2)
 
         require(!(normX == 0.0 || normY == 0.0)) { "Vectors cannot have zero norm" }
         return dotProduct / (sqrt(normX) * sqrt(normY))
@@ -31,21 +31,5 @@ class CosineSimilarity : Similarity {
 
     private fun norm(vector: List<Double>): Double {
         return dotProduct(vector, vector)
-    }
-
-    override fun <T : EmbeddingElement> findNearest(
-        data: List<T>,
-        questionVector: List<Double>,
-        maxDistance: Double,
-        maxResults: Int,
-    ): List<T> {
-        return data
-            .asSequence()
-            .map { similarityScore(it.embedding, questionVector) to it }
-            .filter { it.first < maxDistance }
-            .sortedBy { it.first }
-            .take(maxResults)
-            .map { (_, item) -> item }
-            .toList()
     }
 }
