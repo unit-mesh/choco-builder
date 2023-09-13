@@ -8,6 +8,7 @@ import kotlin.math.sqrt
  */
 class CosineSimilarity : Similarity {
     override fun similarityScore(set1: List<Double>, set2: List<Double>): Double {
+        println("set1: ${set1.size}, set2: ${set2.size}")
         require(set1.size == set2.size) { "Vectors lengths must be equal" }
 
         val dotProduct = dotProduct(set1, set2)

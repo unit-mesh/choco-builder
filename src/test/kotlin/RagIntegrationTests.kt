@@ -2,6 +2,7 @@ import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.nlp.similarity.JaccardSimilarity
+import cc.unitmesh.nlp.similarity.meanPool
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.loader.JsonLoader
 import cc.unitmesh.rag.retriever.VectorStoreRetriever
@@ -28,9 +29,11 @@ class RagIntegrationTests {
         val inputStream = javaClass.getResourceAsStream("/rag/bikes.json")!!
 
         val jsonLoader = JsonLoader(inputStream, listOf("name", "price", "shortDescription"))
-        val documents = jsonLoader.load(TokenTextSplitter(
-            chunkSize = 400,
-        ))
+        val documents = jsonLoader.load(
+            TokenTextSplitter(
+                chunkSize = 400,
+            )
+        )
 
         val vectorStore: VectorStore = InMemoryVectorStore(embeddingProvider, JaccardSimilarity())
         vectorStore.add(documents)
@@ -64,17 +67,35 @@ class RagIntegrationTests {
             }
 
         documents.size shouldBe 13
+    }
+
+    @Test
+    fun should_able_search_for_sentence() {
+        val text = javaClass.getResourceAsStream("/rag/be.md")!!.bufferedReader().readText();
+
+        val headersToSplitOn: List<Pair<String, String>> = listOf(
+            Pair("#", "Header 1"),
+            Pair("##", "Header 2"),
+            Pair("###", "Header 3"),
+        )
+
+        val documents = MarkdownHeaderTextSplitter(headersToSplitOn)
+            .splitText(text)
+
+        documents.size shouldBe 13
+
+        val documentList = TokenTextSplitter(chunkSize = 384).apply(documents)
 
         val vectorStore: VectorStore = InMemoryVectorStore(embeddingProvider, JaccardSimilarity())
-        vectorStore.add(documents)
+        vectorStore.add(documentList)
 
         val vectorStoreRetriever = VectorStoreRetriever(vectorStore)
-        val userQuery = "安全规范里规定了哪些要素？（敏感数据、隐私）"
+        val userQuery = "安全规定了哪些要素？（敏感数据、隐私）"
 
-//        val similarDocuments: List<Document> = vectorStoreRetriever.retrieve(userQuery)
-//        similarDocuments.size shouldBe 4
-//        similarDocuments.forEach {
-//            println(it.text)
-//        }
+        val similarDocuments: List<Document> = vectorStoreRetriever.retrieve(userQuery)
+        similarDocuments.size shouldBe 4
+        similarDocuments.forEach {
+            println(it.text)
+        }
     }
 }
