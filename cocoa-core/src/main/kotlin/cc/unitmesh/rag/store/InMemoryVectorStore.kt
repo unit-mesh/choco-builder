@@ -11,6 +11,9 @@ import java.util.concurrent.ConcurrentHashMap
 
 class InMemoryVectorStore(
     private val embeddingClient: EmbeddingProvider,
+    /**
+     * if your are use sentence-transformers, you should use [cc.unitmesh.nlp.similarity.JaccardSimilarity]
+     */
     override val similarity: Similarity = CosineSimilarity(),
 ) : VectorStore {
     private val store: ConcurrentHashMap<String, Document> = ConcurrentHashMap<String, Document>()
