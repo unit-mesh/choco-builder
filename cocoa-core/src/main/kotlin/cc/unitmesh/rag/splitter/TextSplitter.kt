@@ -2,14 +2,7 @@ package cc.unitmesh.rag.splitter
 
 import cc.unitmesh.rag.document.Document
 
-const val DEFAULT_CHUNK_SIZE: Int = 4000
-const val SENTENCE_CHUNK_OVERLAP: Int = 200
-
-abstract class BaseTextSplitter() : Splitter {
-    companion object {
-        private val log = org.slf4j.LoggerFactory.getLogger(BaseTextSplitter::class.java)
-    }
-
+abstract class TextSplitter : Splitter {
     override fun apply(documents: List<Document>): List<Document> {
         val texts: MutableList<String> = ArrayList()
         val metadata: MutableMap<String, Any> = HashMap()

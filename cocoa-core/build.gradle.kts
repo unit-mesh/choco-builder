@@ -7,6 +7,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.core)
     implementation(libs.serialization.json)
+    implementation(libs.jtokkit)
 
     implementation("io.reactivex.rxjava3:rxjava:3.1.7")
 

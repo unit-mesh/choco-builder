@@ -10,5 +10,21 @@ data class Document(
     var embedding: Embedding = listOf(),
     var metadata: Map<String, Any> = HashMap(),
     var text: String = ""
-)
+) {
+    constructor(text: String, metadata: Map<String, Any> = HashMap()) : this(
+        IdUtil.uuid(),
+        listOf(),
+        metadata,
+        text
+    )
+
+    // equals ignore id
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Document) {
+            return false
+        }
+
+        return this.text == other.text && this.metadata == other.metadata
+    }
+}
 
