@@ -57,6 +57,14 @@ export const domains: DomainFormItem[] = [
     value: 'sql'
   },
   {
+    label: '逻辑分析 (Todo)',
+    value: 'logic-analysis'
+  },
+  {
+    label: '需求分析 (Todo)',
+    value: 'requirement-analysis'
+  },
+  {
     label: 'Custom (Todo)',
     value: 'custom'
   }
