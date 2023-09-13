@@ -112,4 +112,6 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 
 ## License
 
+RAG module was inspired by LangChain && [Spring AI](https://github.com/spring-projects-experimental/spring-ai) project
+
 This code is distributed under the MPL 2.0 license. See `LICENSE` in this directory.
