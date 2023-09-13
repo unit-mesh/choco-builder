@@ -99,9 +99,9 @@ class MarkdownHeaderTextSplitter(
                 strippedLine, linesWithMetadata, currentContent, currentMetadata,
                 headerStack, initialMetadata
             )
-            if (!foundHeader && !strippedLine.isEmpty()) {
+            if (!foundHeader && strippedLine.isNotEmpty()) {
                 currentContent.add(strippedLine)
-            } else if (!currentContent.isEmpty()) {
+            } else if (currentContent.isNotEmpty()) {
                 linesWithMetadata.add(
                     LineType(
                         java.lang.String.join("\n", currentContent),
@@ -112,6 +112,7 @@ class MarkdownHeaderTextSplitter(
             }
             currentMetadata = HashMap<String, Any>(initialMetadata)
         }
+
         return processOutput(linesWithMetadata, currentContent, currentMetadata)
     }
 
