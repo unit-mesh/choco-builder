@@ -7,4 +7,3 @@ interface Similarity {
 }
 
 
-class SimilarityScore(val key: String, val similarity: Double)
