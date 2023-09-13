@@ -18,12 +18,12 @@
 package cc.unitmesh.store
 
 import cc.unitmesh.nlp.embedding.Embedding
-import cc.unitmesh.rag.document.TextSegment
+import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
 
 // TODO
-class MilvusEmbeddingStoreImpl : EmbeddingStore<TextSegment> {
+class MilvusEmbeddingStoreImpl : EmbeddingStore<Document> {
     override fun add(embedding: Embedding): String {
         TODO("Not yet implemented")
     }
@@ -40,15 +40,15 @@ class MilvusEmbeddingStoreImpl : EmbeddingStore<TextSegment> {
         referenceEmbedding: Embedding,
         maxResults: Int,
         minScore: Double,
-    ): List<EmbeddingMatch<TextSegment>> {
+    ): List<EmbeddingMatch<Document>> {
         TODO("Not yet implemented")
     }
 
-    override fun addAll(embeddings: List<Embedding>, embedded: List<TextSegment>): List<String> {
+    override fun addAll(embeddings: List<Embedding>, embedded: List<Document>): List<String> {
         TODO("Not yet implemented")
     }
 
-    override fun add(embedding: Embedding, embedded: TextSegment): String {
+    override fun add(embedding: Embedding, embedded: Document): String {
         TODO("Not yet implemented")
     }
 }

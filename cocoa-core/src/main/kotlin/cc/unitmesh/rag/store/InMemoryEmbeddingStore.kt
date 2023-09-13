@@ -4,7 +4,7 @@ import cc.unitmesh.cf.core.utils.IdUtil
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.similarity.CosineSimilarity
 import cc.unitmesh.nlp.similarity.RelevanceScore
-import cc.unitmesh.rag.document.TextSegment
+import cc.unitmesh.rag.document.Document
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
@@ -103,12 +103,12 @@ class InMemoryEmbeddingStore<Embedded> : EmbeddingStore<Embedded> {
         serializeToFile(Paths.get(filePath))
     }
 
-    private fun fromJson(json: String): InMemoryEmbeddingStore<TextSegment> {
-        val type: Type = object : TypeToken<InMemoryEmbeddingStore<TextSegment>>() {}.type
+    private fun fromJson(json: String): InMemoryEmbeddingStore<Document> {
+        val type: Type = object : TypeToken<InMemoryEmbeddingStore<Document>>() {}.type
         return Gson().fromJson(json, type)
     }
 
-    private fun fromFile(filePath: Path?): InMemoryEmbeddingStore<TextSegment> {
+    private fun fromFile(filePath: Path?): InMemoryEmbeddingStore<Document> {
         return try {
             val json = String(Files.readAllBytes(filePath))
             fromJson(json)
@@ -117,7 +117,7 @@ class InMemoryEmbeddingStore<Embedded> : EmbeddingStore<Embedded> {
         }
     }
 
-    fun fromFile(filePath: String): InMemoryEmbeddingStore<TextSegment> {
+    fun fromFile(filePath: String): InMemoryEmbeddingStore<Document> {
         return fromFile(Paths.get(filePath))
     }
 }

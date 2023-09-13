@@ -22,7 +22,7 @@ import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.toEmbedding
 import cc.unitmesh.nlp.similarity.CosineSimilarity
 import cc.unitmesh.nlp.similarity.RelevanceScore
-import cc.unitmesh.rag.document.TextSegment
+import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
 import com.google.protobuf.Struct
@@ -40,7 +40,7 @@ class PineconeEmbeddingStoreImpl(
     projectId: String,
     index: String,
     private var nameSpace: String = DEFAULT_NAMESPACE,
-) : EmbeddingStore<TextSegment> {
+) : EmbeddingStore<Document> {
     companion object {
         // do not change, will break backward compatibility!
         private const val DEFAULT_NAMESPACE = "default"
@@ -73,17 +73,17 @@ class PineconeEmbeddingStoreImpl(
         addInternal(id, embedding, null)
     }
 
-    override fun add(embedding: Embedding, embedded: TextSegment): String {
+    override fun add(embedding: Embedding, embedded: Document): String {
         val id: String = IdUtil.uuid()
         addInternal(id, embedding, embedded)
         return id
     }
 
-    private fun addInternal(id: String, embedding: Embedding, textSegment: TextSegment?) {
+    private fun addInternal(id: String, embedding: Embedding, textSegment: Document?) {
         addAllInternal(listOf(id), listOf(embedding), if (textSegment == null) null else listOf(textSegment))
     }
 
-    private fun addAllInternal(ids: List<String>, embeddings: List<Embedding>, textSegments: List<TextSegment>?) {
+    private fun addAllInternal(ids: List<String>, embeddings: List<Embedding>, textSegments: List<Document>?) {
         val upsertRequestBuilder = UpsertRequest.newBuilder()
             .setNamespace(nameSpace)
 
@@ -111,7 +111,7 @@ class PineconeEmbeddingStoreImpl(
         return ids
     }
 
-    override fun addAll(embeddings: List<Embedding>, embedded: List<TextSegment>): List<String> {
+    override fun addAll(embeddings: List<Embedding>, embedded: List<Document>): List<String> {
         val ids = embeddings.stream()
             .map { _ -> IdUtil.uuid() }
             .collect(Collectors.toList())
@@ -123,7 +123,7 @@ class PineconeEmbeddingStoreImpl(
         referenceEmbedding: Embedding,
         maxResults: Int,
         minScore: Double,
-    ): List<EmbeddingMatch<TextSegment>> {
+    ): List<EmbeddingMatch<Document>> {
         val queryVector = QueryVector
             .newBuilder()
             .addAllValues(referenceEmbedding.vectorAsList())
@@ -161,11 +161,11 @@ class PineconeEmbeddingStoreImpl(
             .map { vector: Vector ->
                 toEmbeddingMatch(vector, referenceEmbedding)
             }
-            .filter { match: EmbeddingMatch<TextSegment> -> match.score >= minScore }
+            .filter { match: EmbeddingMatch<Document> -> match.score >= minScore }
             .collect(Collectors.toList())
     }
 
-    private fun toEmbeddingMatch(vector: Vector, referenceEmbedding: Embedding): EmbeddingMatch<TextSegment> {
+    private fun toEmbeddingMatch(vector: Vector, referenceEmbedding: Embedding): EmbeddingMatch<Document> {
         val textSegmentValue = vector.metadata.fieldsMap[METADATA_TEXT_SEGMENT]
         val embedding: Embedding = toEmbedding(vector.valuesList)
         val cosineSimilarity: Double = CosineSimilarity().similarityScore(embedding, referenceEmbedding)
@@ -175,14 +175,14 @@ class PineconeEmbeddingStoreImpl(
                 RelevanceScore.fromCosineSimilarity(cosineSimilarity),
                 vector.getId(),
                 embedding,
-                null as TextSegment
+                null as Document
             )
 
             else -> EmbeddingMatch(
                 RelevanceScore.fromCosineSimilarity(cosineSimilarity),
                 vector.getId(),
                 embedding,
-                TextSegment.from(textSegmentValue.getStringValue())
+                Document.from(textSegmentValue.getStringValue())
             )
         }
 
