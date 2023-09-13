@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Testcase Prompt
+title: Testcase - Clarify
 parent: Prompt logs
 nav_order: 11
 ---
