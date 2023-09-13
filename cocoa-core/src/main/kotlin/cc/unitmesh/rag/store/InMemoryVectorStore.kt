@@ -3,7 +3,7 @@ package cc.unitmesh.rag.store
 import cc.unitmesh.cf.core.llms.Embedding
 import cc.unitmesh.cf.core.llms.EmbeddingProvider
 import cc.unitmesh.cf.core.nlp.similarity.Similarity
-import cc.unitmesh.cf.core.nlp.similarity.SimilarityData
+import cc.unitmesh.cf.core.nlp.similarity.SimilarityScore
 import cc.unitmesh.rag.document.Document
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -38,9 +38,9 @@ class InMemoryVectorStore(
             .stream()
             .map { entry: Document ->
                 val similarityScore = similarity.similarityScore(userQueryEmbedding, entry.embedding)
-                SimilarityData(entry.id, similarityScore)
+                SimilarityScore(entry.id, similarityScore)
             }
-            .sorted(Comparator.comparingDouble(SimilarityData::similarity).reversed())
+            .sorted(Comparator.comparingDouble(SimilarityScore::similarity).reversed())
             .limit(k.toLong())
             .map<Document> { s -> store[s.key] }
             .toList()
@@ -52,10 +52,10 @@ class InMemoryVectorStore(
             .stream()
             .map { entry: Document ->
                 val similarityScore = similarity.similarityScore(userQueryEmbedding, entry.embedding)
-                SimilarityData(entry.id, similarityScore)
+                SimilarityScore(entry.id, similarityScore)
             }
-            .filter { s: SimilarityData -> s.similarity >= threshold }
-            .sorted(Comparator.comparingDouble(SimilarityData::similarity).reversed())
+            .filter { s: SimilarityScore -> s.similarity >= threshold }
+            .sorted(Comparator.comparingDouble(SimilarityScore::similarity).reversed())
             .limit(k.toLong())
             .map<Document> { s -> store[s.key] }
             .toList()

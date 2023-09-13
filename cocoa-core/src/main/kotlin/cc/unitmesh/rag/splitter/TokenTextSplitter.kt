@@ -25,17 +25,16 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class TokenTextSplitter : TextSplitter() {
-    override var chunkSize = 800 // The target size of each text
-
-    // chunk in tokens
-    private val minChunkSizeChars = 350 // The minimum size of each text
-
-    // chunk in characters
-    private val minChunkLengthToEmbed = 5 // Discard chunks shorter than this
-    private val maxNumChunks = 10000 // The maximum number of chunks to generate from a
-
-
+class TokenTextSplitter(
+    // The target size of each text chunk in tokens
+    override var chunkSize: Int = 800,
+    // The minimum size of each text chunk in characters
+    private val minChunkSizeChars: Int = 350,
+    // The maximum number of chunks to generate from a text
+    private val minChunkLengthToEmbed: Int = 5,
+    // The maximum number of chunks to generate from a text
+    private val maxNumChunks: Int = 10000,
+) : TextSplitter() {
     private val registry: EncodingRegistry = newLazyEncodingRegistry()
     private val encoding: Encoding = registry.getEncoding(EncodingType.CL100K_BASE)
     override fun splitText(text: String): List<String> {
@@ -48,8 +47,8 @@ class TokenTextSplitter : TextSplitter() {
         }
         var tokens = getEncodedTokens(text)
         val chunks: MutableList<String> = ArrayList()
-        var num_chunks = 0
-        while (!tokens.isEmpty() && num_chunks < maxNumChunks) {
+        var numChunks = 0
+        while (tokens.isNotEmpty() && numChunks < maxNumChunks) {
             val chunk = tokens.subList(
                 0,
                 min(chunkSize.toDouble(), tokens.size.toDouble()).toInt()
@@ -63,35 +62,31 @@ class TokenTextSplitter : TextSplitter() {
             }
 
             // Find the last period or punctuation mark in the chunk
-            val lastPunctuation =
-                max(
-                    chunkText.lastIndexOf('.').toDouble(),
-                    max(
-                        chunkText.lastIndexOf('?').toDouble(),
-                        max(chunkText.lastIndexOf('!').toDouble(), chunkText.lastIndexOf('\n').toDouble())
-                    )
-                )
-                    .toInt()
+            val lastPunctuation = max(
+                chunkText.lastIndexOf('.'),
+                max(chunkText.lastIndexOf('?'), max(chunkText.lastIndexOf('!'), chunkText.lastIndexOf('\n')))
+            )
+
             if (lastPunctuation != -1 && lastPunctuation > minChunkSizeChars) {
                 // Truncate the chunk text at the punctuation mark
                 chunkText = chunkText.substring(0, lastPunctuation + 1)
             }
-            val chunk_text_to_append =
+            val chunkTextToAppend =
                 if (keepSeparator) chunkText.trim { it <= ' ' } else chunkText.replace("\n", " ").trim { it <= ' ' }
-            if (chunk_text_to_append.length > minChunkLengthToEmbed) {
-                chunks.add(chunk_text_to_append)
+            if (chunkTextToAppend.length > minChunkLengthToEmbed) {
+                chunks.add(chunkTextToAppend)
             }
 
             // Remove the tokens corresponding to the chunk text from the remaining tokens
             tokens = tokens.subList(getEncodedTokens(chunkText).size, tokens.size)
-            num_chunks++
+            numChunks++
         }
 
         // Handle the remaining tokens
-        if (!tokens.isEmpty()) {
-            val remaining_text = decodeTokens(tokens).replace("\n", " ").trim { it <= ' ' }
-            if (remaining_text.length > minChunkLengthToEmbed) {
-                chunks.add(remaining_text)
+        if (tokens.isNotEmpty()) {
+            val remainingText = decodeTokens(tokens).replace("\n", " ").trim { it <= ' ' }
+            if (remainingText.length > minChunkLengthToEmbed) {
+                chunks.add(remainingText)
             }
         }
         return chunks
