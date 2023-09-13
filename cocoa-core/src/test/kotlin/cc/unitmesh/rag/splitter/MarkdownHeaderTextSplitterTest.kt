@@ -58,6 +58,7 @@ internal class MarkdownHeaderTextSplitterTest {
                 mapOf("Header 1" to "Foo", "Header 2" to "Baz")
             )
         )
+
         assertEquals(expectedOutput, output)
     }
 

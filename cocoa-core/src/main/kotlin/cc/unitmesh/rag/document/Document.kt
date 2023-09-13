@@ -15,10 +15,30 @@ data class Document(
         text
     )
 
+
+
     companion object {
         fun from(stringValue: String): Document {
             return Document(stringValue)
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Document
+
+        if (metadata != other.metadata) return false
+        if (text != other.text) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = metadata.hashCode()
+        result = 31 * result + text.hashCode()
+        return result
     }
 }
 

@@ -6,7 +6,6 @@ import cc.unitmesh.rag.loader.JsonLoader
 import cc.unitmesh.rag.retriever.EmbeddingStoreRetriever
 import cc.unitmesh.rag.splitter.MarkdownHeaderTextSplitter
 import cc.unitmesh.rag.splitter.TokenTextSplitter
-import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
 import cc.unitmesh.rag.store.InMemoryEmbeddingStore
 import io.kotest.matchers.shouldBe
@@ -30,17 +29,16 @@ class RagIntegrationTests {
         val jsonLoader = JsonLoader(inputStream, listOf("name", "price", "shortDescription"))
         val documents = jsonLoader.load(
             TokenTextSplitter(
-                chunkSize = 400,
+                chunkSize = 384,
             )
         )
 
+        val documentList = TokenTextSplitter(chunkSize = 384).apply(documents)
         val vectorStore: EmbeddingStore<Document> = InMemoryEmbeddingStore()
-
-        val embeddings: List<Embedding> = documents.map {
+        val embeddings: List<Embedding> = documentList.map {
             embeddingProvider.embed(it.text)
         }
-
-        vectorStore.addAll(embeddings, documents)
+        vectorStore.addAll(embeddings, documentList)
 
         val vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore)
         val userQuery = embeddingProvider.embed("What bike is good for city commuting?")
