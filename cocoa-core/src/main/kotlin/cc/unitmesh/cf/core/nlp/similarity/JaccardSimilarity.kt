@@ -24,7 +24,7 @@ class JaccardSimilarity : Similarity {
             .toList()
     }
 
-    fun similarityScore(set1: Embedding, set2: Embedding): Double {
+    override fun similarityScore(set1: Embedding, set2: Embedding): Double {
         val intersectionSize: Int = (set1 intersect set2).size
         val unionSize: Int = (set1 union set2).size
         return intersectionSize.toDouble() / unionSize.toDouble()

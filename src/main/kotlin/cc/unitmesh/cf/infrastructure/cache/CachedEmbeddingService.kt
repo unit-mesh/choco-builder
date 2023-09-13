@@ -12,7 +12,7 @@ class CachedEmbeddingService(
     val cacheRepository: EmbeddingCacheRepository,
 ) : CachableEmbedding {
     override fun create(text: String): Embedding {
-        val cache = EmbeddingCache(text = text, embedding = embeddingProvider.createEmbedding(text))
+        val cache = EmbeddingCache(text = text, embedding = embeddingProvider.embed(text))
         val entry = cacheRepository.findByText(text) ?: cacheRepository.save(cache)
         return entry.embedding
     }

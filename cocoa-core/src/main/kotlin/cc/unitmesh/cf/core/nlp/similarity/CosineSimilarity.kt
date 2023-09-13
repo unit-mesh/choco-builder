@@ -8,7 +8,7 @@ import kotlin.math.sqrt
  * use for Document, like LangChain, Spring AI, etc.
  */
 class CosineSimilarity : Similarity {
-    private fun cosineSimilarity(vectorX: List<Double>, vectorY: List<Double>): Double {
+    override fun similarityScore(vectorX: List<Double>, vectorY: List<Double>): Double {
         require(vectorX.size == vectorY.size) { "Vectors lengths must be equal" }
 
         val dotProduct = dotProduct(vectorX, vectorY)
@@ -41,7 +41,7 @@ class CosineSimilarity : Similarity {
     ): List<T> {
         return data
             .asSequence()
-            .map { cosineSimilarity(it.embedding, questionVector) to it }
+            .map { similarityScore(it.embedding, questionVector) to it }
             .filter { it.first < maxDistance }
             .sortedBy { it.first }
             .take(maxResults)
