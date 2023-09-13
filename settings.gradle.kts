@@ -9,6 +9,7 @@ include(":code-interpreter")
 include(":cocoa-local-embedding")
 
 include(":dsl:design")
+include(":rag-modules:code-splitter")
 
 dependencyResolutionManagement {
     repositories {
