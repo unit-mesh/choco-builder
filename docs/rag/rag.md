@@ -19,5 +19,15 @@ permalink: /docs/rag
 
 ## Indexing Stage
 
+示例：
+
+```mermaid
+graph LR
+    DataSource -->|DataLoader| Documents;
+    Documents -->|Split| Chunk;
+    Chunk -->|Tokenize| EmbedDocument;
+    EmbedDocument -->|Indexing| KnowledgeBase;
+```
+
 ## Querying Stage
 

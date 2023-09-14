@@ -2,7 +2,6 @@ package cc.unitmesh.cf.domains.spec
 
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
-import cc.unitmesh.nlp.embedding.EncodingTokenizer
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.retriever.EmbeddingStoreRetriever
 import cc.unitmesh.rag.splitter.MarkdownHeaderTextSplitter
