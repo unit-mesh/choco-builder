@@ -7,6 +7,7 @@ import cc.unitmesh.rag.loader.JsonLoader
 import cc.unitmesh.rag.retriever.EmbeddingStoreRetriever
 import cc.unitmesh.rag.splitter.MarkdownHeaderTextSplitter
 import cc.unitmesh.rag.splitter.TokenTextSplitter
+import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
 import cc.unitmesh.rag.store.InMemoryEmbeddingStore
 import io.kotest.matchers.shouldBe
@@ -46,8 +47,12 @@ class RagIntegrationTests {
         val userQuery = embeddingProvider.embed("What bike is good for city commuting?")
 
         // slowly in local
-//        val similarDocuments: List<EmbeddingMatch<Document>> = vectorStoreRetriever.retrieve(userQuery)
-//        similarDocuments.size shouldBe 4
+        val similarDocuments: List<EmbeddingMatch<Document>> = vectorStoreRetriever.retrieve(userQuery)
+        similarDocuments.size shouldBe 4
+
+        similarDocuments.forEach {
+            println(it.embedded.text)
+        }
     }
 
     @Test
