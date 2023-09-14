@@ -1,4 +1,4 @@
-package cc.unitmesh.rag.splitter
+package cc.unitmesh.nlp.embedding
 
 interface EncodingTokenizer {
     fun encode(text: String): List<Int>

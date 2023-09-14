@@ -26,14 +26,18 @@ class SpecWorkflow : Workflow() {
         )
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
-        // TODO clarify user question, 如系统包含了这些规范，你需要哪些规范？
-        val specs = relevantSearch.search(chatWebContext.messages.last {
+        val question = chatWebContext.messages.last {
             it.role == LlmMsg.ChatRole.User.value
-        }.content)
+        }.content
+
+        // TODO clarify user question, 如系统包含了这些规范，你需要哪些规范？
+        val specs = relevantSearch.search(question)
 
         val userMsg = EXECUTE.format()
-            .replace("${'$'}{specs}", specs.joinToString("\n"))
-            .replace("${'$'}{question}", chatWebContext.messages[0].content)
+            .replace("${'$'}{specs}", specs.map {
+                "source: ${it.source} content: ${it.content}"
+            }.joinToString("\n"))
+            .replace("${'$'}{question}", question)
 
         val flowable = llmProvider.streamCompletion(listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.System, userMsg),
@@ -67,17 +71,27 @@ class SpecWorkflow : Workflow() {
             |
             |- 如果规范缺少对应的信息，你不要回答。
             |- 你必须回答用户的问题。
+            |- 请根据客户的问题，返回对应的规范，并返回对应的 source 相关信息。
+            |
             |
             |已有规范信息：
             |
             |```design
             |${'$'}{specs}
             |```
-            |用户的问题：
-            |${'$'}{question}
+            |
+            |示例：
+            |用户的问题：哪些规范包含了架构设计？
+            |回答：
+            |###
+            |
+            |出处：后端代码规范的命名规范章节 // 这里根据规范的 source 项信息，写出对应的来源
+            |// 这里，你需要返回是规范中的详细信息，而不是规范的标题。
+            |###
             |
             |现在请你根据规范信息，回答用户的问题。
-            |
+            |用户的问题：
+            |${'$'}{question}
             |""".trimMargin()
         )
     }

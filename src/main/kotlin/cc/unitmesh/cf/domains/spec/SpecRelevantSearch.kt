@@ -2,6 +2,7 @@ package cc.unitmesh.cf.domains.spec
 
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
+import cc.unitmesh.nlp.embedding.EncodingTokenizer
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.retriever.EmbeddingStoreRetriever
 import cc.unitmesh.rag.splitter.MarkdownHeaderTextSplitter
@@ -15,20 +16,23 @@ class SpecRelevantSearch(val embeddingProvider: EmbeddingProvider) {
     private lateinit var vectorStoreRetriever: EmbeddingStoreRetriever
 
     // cached for performance
-    private val searchCache: MutableMap<String, List<String>> = mutableMapOf()
+    private val searchCache: MutableMap<String, List<SearchResult>> = mutableMapOf()
 
     init {
         val text = javaClass.getResourceAsStream("/be/specification.md")!!.bufferedReader().readText()
         val headersToSplitOn: List<Pair<String, String>> = listOf(
-            Pair("#", "Header 1"),
-            Pair("##", "Header 2"),
-            Pair("###", "Header 3"),
+            Pair("#", "H1"),
+            Pair("##", "H2"),
         )
 
         val documents = MarkdownHeaderTextSplitter(headersToSplitOn)
             .splitText(text)
 
-        val documentList = TokenTextSplitter(chunkSize = 384).apply(documents)
+        val documentList = documents.map {
+            val header = "${it.metadata["H1"]} > ${it.metadata["H2"]}"
+            val withHeader = it.copy(text = "$header ${it.text}")
+            TokenTextSplitter(chunkSize = 384).apply(listOf(withHeader)).first()
+        }
 
         val vectorStore: EmbeddingStore<Document> = InMemoryEmbeddingStore()
         val embeddings: List<Embedding> = documentList.map {
@@ -36,19 +40,29 @@ class SpecRelevantSearch(val embeddingProvider: EmbeddingProvider) {
         }
         vectorStore.addAll(embeddings, documentList)
 
-        this.vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore)
+        this.vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore, 5, 0.6)
     }
 
     // TODO: change to search engine
-    fun search(query: String): List<String> {
+    fun search(query: String): List<SearchResult> {
         if (searchCache.containsKey(query)) {
             return searchCache[query]!!
         }
 
         val queryEmbedding = embeddingProvider.embed(query)
         val similarDocuments = vectorStoreRetriever.retrieve(queryEmbedding)
-        val results = similarDocuments.map { it.embedded.text }
+        val results = similarDocuments.map {
+                SearchResult(
+                    source = it.embedded.metadata.toString(),
+                    content = it.embedded.text
+                )
+        }
         searchCache[query] = results
         return results
     }
 }
+
+data class SearchResult(
+    val source: String,
+    val content: String
+)

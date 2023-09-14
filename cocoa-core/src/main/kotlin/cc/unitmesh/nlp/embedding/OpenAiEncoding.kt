@@ -1,4 +1,4 @@
-package cc.unitmesh.rag.splitter
+package cc.unitmesh.nlp.embedding
 
 import com.knuddels.jtokkit.Encodings
 import com.knuddels.jtokkit.api.Encoding

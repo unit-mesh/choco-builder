@@ -17,6 +17,8 @@
  */
 package cc.unitmesh.rag.splitter
 
+import cc.unitmesh.nlp.embedding.EncodingTokenizer
+import cc.unitmesh.nlp.embedding.OpenAiEncoding
 import kotlin.math.max
 import kotlin.math.min
 

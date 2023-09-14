@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
-import cc.unitmesh.rag.splitter.EncodingTokenizer
+import cc.unitmesh.nlp.embedding.EncodingTokenizer
 
 @Component
 class SentenceTransformersEmbedding : EmbeddingProvider, EncodingTokenizer {
@@ -26,8 +26,7 @@ class SentenceTransformersEmbedding : EmbeddingProvider, EncodingTokenizer {
 
     override fun decode(tokens: List<Int>): String {
         val map = tokens.map { it.toLong() }.toLongArray()
-        val output = tokenizer.decode(map)
         // output will be "[CLS] blog [SEP]" for input "blog", so we need to remove the first and last token
-        return output
+        return tokenizer.decode(map)
     }
 }
