@@ -5,6 +5,18 @@ import org.junit.jupiter.api.Test
 import kotlin.test.Ignore
 
 class STSemanticTest {
+    @Test
+    fun test_for_encode_decode() {
+        val semantic = STSemantic.create()
+        val embedding = semantic.getTokenizer().encode("blog")
+
+        embedding.ids shouldBe listOf(101L, 9927L, 102L)
+
+        embedding.attentionMask shouldBe listOf(1L, 1L, 1L)
+
+        val text = semantic.getTokenizer().decode(embedding.ids)
+        text shouldBe "[CLS] blog [SEP]"
+    }
 
     @Test
     @Ignore
