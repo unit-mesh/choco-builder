@@ -307,40 +307,37 @@ const getStreamedResponse = async (
       // if streamedResponse starts with `data:\s` with regex, then remove data:\s prefix
       lines.forEach((line) => {
         // skip empty
-        if (!line) return
         if (line === '[DONE]') return;
 
         if (line.startsWith('data:')) {
           line = line.replace('data:', '')
         }
 
-        if (line.startsWith('{"function_call":')) {
-          // While the function call is streaming, it will be a string.
-          responseMessage['function_call'] = line
-        } else {
-          // Chocolate Factory custom response
+        if (!line) return
+
+        // Chocolate Factory custom response
+        try {
+          let parsed: MessageResponse | any
           try {
-            let parsed: MessageResponse | any
-            try {
-              parsed = JSON.parse(line)
-            } catch (e) {
-              // If the response is not valid JSON, we assume it is a string.
-              // This is the case for the `text` field of the response.
-              parsed = { messages: [{ content: line }] }
-            }
-
-            // {"id":"GhLFKDl", "messages":[{"role":"assistant","content":"你"}]}
-
-            let content = parsed['messages'][0]['content']
-            if (typeof parsed === 'object') {
-              content = parsed['messages'][0]['content']
-            }
-
-            responseMessage['content'] += content
-            responseMessage['object'] = parsed
+            parsed = JSON.parse(line)
           } catch (e) {
-            responseMessage['content'] = line
+            // If the response is not valid JSON, we assume it is a string.
+            // This is the case for the `text` field of the response.
+            console.error(line);
+            parsed = {messages: [{content: line}]}
           }
+
+          // {"id":"GhLFKDl", "messages":[{"role":"assistant","content":"你"}]}
+
+          let content = parsed['messages'][0]['content']
+          if (typeof parsed === 'object') {
+            content = parsed['messages'][0]['content']
+          }
+
+          responseMessage['content'] += content
+          responseMessage['object'] = parsed
+        } catch (e) {
+          responseMessage['content'] = line
         }
 
         mutate([...chatRequest.messages, { ...responseMessage }], false)
