@@ -28,7 +28,7 @@ class RagIntegrationTests {
     fun should_able_to_search_by_documents_by_json() {
         val inputStream = javaClass.getResourceAsStream("/rag/bikes.json")!!
 
-        val jsonLoader = JsonLoader(inputStream, listOf("name", "price", "shortDescription"))
+        val jsonLoader = JsonLoader(inputStream, listOf("name", "price", "shortDescription", "description"))
         val documents = jsonLoader.load(
             TokenTextSplitter(
                 chunkSize = 384,
@@ -40,7 +40,7 @@ class RagIntegrationTests {
         val embeddings: List<Embedding> = documentList.map {
             embeddingProvider.embed(it.text)
         }
-//        val meanPool = meanPool(embeddings)
+
         vectorStore.addAll(embeddings, documentList)
 
         val vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore)

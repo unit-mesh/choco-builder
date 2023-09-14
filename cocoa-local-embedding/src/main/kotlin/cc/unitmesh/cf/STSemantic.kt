@@ -15,7 +15,7 @@ class STSemantic(
         return tokenizer
     }
 
-    override fun embed(input: String): DoubleArray {
+    override fun embed(input: String): List<Double> {
         val tokenized = tokenizer.encode(input, true)
 
         val inputIds = tokenized.ids
@@ -48,7 +48,7 @@ class STSemantic(
             meanArray[i] = sum / inputIds.size
         }
 
-        return meanArray.map { it.toDouble() }.toDoubleArray()
+        return meanArray.map { it.toDouble() }
     }
 
 
