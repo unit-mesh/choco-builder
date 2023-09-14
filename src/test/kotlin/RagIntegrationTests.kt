@@ -1,8 +1,6 @@
 import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
 import cc.unitmesh.nlp.embedding.Embedding
-import cc.unitmesh.nlp.embedding.EmbeddingProvider
-import cc.unitmesh.nlp.similarity.meanPool
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.loader.JsonLoader
 import cc.unitmesh.rag.retriever.EmbeddingStoreRetriever
@@ -17,26 +15,16 @@ import org.junit.jupiter.api.Test
 class RagIntegrationTests {
     val semantic = STSemantic.create()
 
-    private val embeddingProvider = object : EmbeddingProvider {
-        override fun embed(texts: List<String>): List<Embedding> {
-            return texts.map {
-                semantic.embed(it).toList()
-            }
-        }
-    }
+    private val embeddingProvider = SentenceTransformersEmbedding()
 
     @Test
     fun should_able_to_search_by_documents_by_json() {
         val inputStream = javaClass.getResourceAsStream("/rag/bikes.json")!!
 
         val jsonLoader = JsonLoader(inputStream, listOf("name", "price", "shortDescription", "description"))
-        val documents = jsonLoader.load(
-            TokenTextSplitter(
-                chunkSize = 384,
-            )
-        )
+        val documents = jsonLoader.load(TokenTextSplitter(encoding = embeddingProvider, chunkSize = 500))
 
-        val documentList = TokenTextSplitter(chunkSize = 384).apply(documents)
+        val documentList = TokenTextSplitter(encoding = embeddingProvider, chunkSize = 500).apply(documents)
         val vectorStore: EmbeddingStore<Document> = InMemoryEmbeddingStore()
         val embeddings: List<Embedding> = documentList.map {
             embeddingProvider.embed(it.text)

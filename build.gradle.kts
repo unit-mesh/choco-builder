@@ -97,6 +97,7 @@ dependencies {
     // llm dependencies
     implementation(libs.azure.openai)
     implementation(libs.bundles.openai)
+    implementation(libs.huggingface.tokenizers)
 
     // data serialization dependencies
     implementation(libs.bundles.jackson)
