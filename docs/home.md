@@ -17,12 +17,22 @@ permalink: /
 <a href="https://hub.docker.com/r/unitmesh"><img src="https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest" alt="Docker Image Version (latest semver)" /></a>
 </p>
 
-## What is Chocolate Factory?
+# What is Chocolate Factory?
 
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
-### 设计理念：领域驱动的问题求解
+在线体验：[http://ai.dts.plus](http://ai.dts.plus)
+
+本地部署
+
+```bash
+git clone https://github.com/unit-mesh/chocolate-factory
+# modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
+docker-compose up
+```
+
+## 设计理念：领域驱动的问题求解
 
 Chocolate Factory 是基于领域驱动设计思想的，如下图所示：
 
@@ -50,21 +60,13 @@ DDD 强调问题空间和解空间之间的分离，这意味着在开始开发�
 
 在不同的领域里，会根据场景不同，而有所取舍。
 
-## Development
+### 示例：文本生成前端代码
 
-### 技术栈
+- 步骤 1：ProblemClarifier：使用响应式布局，编写一个聊天页面
+    - 步骤 1.1：ProblemClarifier：左边是一个导航，中间是聊天区，聊天区的下方是一个输入按钮。
+- 步骤 2：SolutionDesigner：请确认以下的设计是否符合您的要求。如果符合，请回复"YES"，如果不符合，请提出你的要求。
+- 步骤 3：SolutionExecutor：生成一个聊天页面
 
-Tech Stack:
+示例：
 
-- [Spring Boot](https://spring.io/projects/spring-boot) is a framework for building web applications.
-- [Kotlin](https://kotlinlang.org/) is a modern programming language that makes developers happier.
-- [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
-- [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
-
-### 项目结构
-
-- cocoa-core, 核心模块，包含了核心的流程控制、领域模型、领域流程等
-- cocoa-local-embedding，本地向量化模块，包含了本地向量化的实现，如 Sentence-Transformers 等。
-- code-interpreter，代码解释器，包含了代码解释器的实现，如 Kotlin Jupyter 等。
-- dsl
-    - design，Design DSL 的解析器 
+![Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
