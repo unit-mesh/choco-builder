@@ -295,7 +295,7 @@ const getStreamedResponse = async (
       role: 'assistant'
     }
 
-    // TODO-STREAMDATA: Remove this once Strem Data is not experimental
+    var undoneLine = ''
     while (true) {
       const { done, value } = await reader.read()
       if (done) {
@@ -303,7 +303,20 @@ const getStreamedResponse = async (
       }
 
       // Update the chat state with the new message tokens.
-      var lines: string[] = decode(value).split('\n')
+      const lines: string[] = decode(value).split('\n');
+
+      // if undoneLine is not empty, prepend it to the first line
+      if (undoneLine !== '') {
+        lines[0] = undoneLine + lines[0]
+        undoneLine = ''
+      }
+
+      const lastLine = lines[lines.length - 1];
+      if (lastLine !== '' && !lastLine.endsWith('}')) {
+        undoneLine = lastLine
+        lines.pop()
+      }
+
       // if streamedResponse starts with `data:\s` with regex, then remove data:\s prefix
       lines.forEach((line) => {
         // skip empty
