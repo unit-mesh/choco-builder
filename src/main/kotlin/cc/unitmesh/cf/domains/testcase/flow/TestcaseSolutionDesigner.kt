@@ -49,7 +49,7 @@ class TestcaseSolutionDesigner(
     }
 
     fun putCreativeCase(creativeCase: String) {
-        this.creativeCase = """初级 BA 写的测试用例集
+        this.creativeCase = """初级 QA 写的测试用例集
             |```testcases
             |$creativeCase
             |```

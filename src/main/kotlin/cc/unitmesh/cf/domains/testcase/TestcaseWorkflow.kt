@@ -214,7 +214,7 @@ class TestcaseWorkflow : Workflow() {
             stage = StageContext.Stage.Design,
             systemPrompt = """你是一个资深的质量工程师（Quality assurance）教练，职责是根据多个不同级别的 QA 测试用例，构造出更合理的测试用例。
                 |
-                |资深 BA 写的测试用例集：
+                |资深 QA 写的测试用例集：
                 |```testcases
                 |${'$'}{testcases}
                 |```
