@@ -52,9 +52,9 @@ DDD 强调问题空间和解空间之间的分离，这意味着在开始开发�
 
 ```mermaid
 graph LR
-  ProblemClarifier --> |RAG| ProblemAnalyzer
-  ProblemAnalyzer  --> |DSL| SolutionDesigner
-  SolutionDesigner --> |Code Interpreter|SolutionExecutor
+    ProblemClarifier -->|RAG| ProblemAnalyzer
+    ProblemAnalyzer -->|DSL| SolutionDesigner
+    SolutionDesigner -->|Code Interpreter| SolutionExecutor
 ```
 
 根据上面的思想，我们设计了五个 Stage：
