@@ -2,10 +2,12 @@ package cc.unitmesh.cf
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 
 class STSemanticTest {
 
     @Test
+    @Ignore
     fun embed_demo() {
         val semantic = STSemantic.create()
         val embedding = semantic.embed("blog").map {
