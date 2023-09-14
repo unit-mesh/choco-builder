@@ -8,6 +8,8 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.core)
 
+    implementation(libs.dataframe)
+
     implementation(libs.onnxruntime)
     implementation(libs.huggingface.tokenizers)
 

@@ -34,11 +34,13 @@ class STSemantic(
             ),
         )
 
-        val outputTensor = result.get(0) as OnnxTensor
+        val outputTensor: OnnxTensor = result.get(0) as OnnxTensor
 
-        return outputTensor.floatBuffer.array().map {
-            it.toDouble()
-        }.toDoubleArray()
+        val floatArray = outputTensor.floatBuffer.array()
+        val doubleBuffer = floatArray.map { it.toDouble() }
+
+
+        return doubleBuffer.toDoubleArray()
     }
 
     companion object {
