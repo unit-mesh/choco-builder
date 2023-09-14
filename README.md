@@ -23,7 +23,7 @@ The key concepts of Chocolate Factory are:
 (PS: Origin made by Michael Plöd
 at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
 
-A user query is processed by the following steps:
+A user's problem is processed by the following steps:
 
 1. [ProblemClarifier.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemClarifier.kt)
 2. [ProblemAnalyzer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/ProblemAnalyzer.kt)
@@ -58,7 +58,7 @@ See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see i
 
 输出示例：
 
-```kotlin
+```markdown
 1    2    3    4    5    6    7    8    9
 2    4    6    8    10    12    14    16    18
 3    6    9    12    15    18    21    24    27
