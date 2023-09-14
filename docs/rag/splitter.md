@@ -2,7 +2,7 @@
 layout: default
 title: Splitter
 parent: Retrieval Augmented Generation
-nav_order: 1
+nav_order: 2
 ---
 
 ## Code Splitter
