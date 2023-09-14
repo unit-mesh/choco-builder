@@ -4,7 +4,6 @@ import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.toEmbedding
 import cc.unitmesh.rag.document.Document
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class InMemoryEmbeddingStoreTest {

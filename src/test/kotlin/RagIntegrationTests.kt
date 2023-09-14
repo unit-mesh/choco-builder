@@ -1,4 +1,5 @@
 import cc.unitmesh.cf.STSemantic
+import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.nlp.similarity.meanPool
@@ -80,17 +81,42 @@ class RagIntegrationTests {
 
     @Test
     fun should_able_search_for_sentence() {
+        val embeddingProvider = SentenceTransformersEmbedding()
         val text = javaClass.getResourceAsStream("/rag/be.md")!!.bufferedReader().readText();
 
         val headersToSplitOn: List<Pair<String, String>> = listOf(
-            Pair("#", "Header 1"),
-            Pair("##", "Header 2"),
-            Pair("###", "Header 3"),
+            Pair("#", "H1"),
+            Pair("##", "H2"),
+//            Pair("###", "H3"),
         )
 
         val documents = MarkdownHeaderTextSplitter(headersToSplitOn)
             .splitText(text)
 
-        documents.size shouldBe 13
+
+        // 去尾处理，如果文本长度大于 384，就截断。只取前 384 个字符
+        val documentList = documents.map {
+            val header = "${it.metadata["H1"]} > ${it.metadata["H2"]}"
+//            if (it.metadata.containsKey("H3")) {
+//                header += "$header > ${it.metadata["H3"]}"
+//            }
+
+            val withHeader = it.copy(text = "$header ${it.text}")
+            TokenTextSplitter(chunkSize = 384).apply(listOf(withHeader)).first()
+        }
+
+        val vectorStore: EmbeddingStore<Document> = InMemoryEmbeddingStore()
+        val embeddings: List<Embedding> = documentList.map {
+            embeddingProvider.embed(it.text)
+        }
+        vectorStore.addAll(embeddings, documentList)
+
+        val vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore, 5, 0.6)
+
+        vectorStoreRetriever.retrieve(embeddingProvider.embed("如何处理敏感数据"))
+            .forEach {
+                println(it.score.toString() + it.embedded.metadata.toString())
+                println(it.embedded.text)
+            }
     }
 }
