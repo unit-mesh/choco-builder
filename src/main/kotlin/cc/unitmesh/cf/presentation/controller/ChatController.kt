@@ -18,9 +18,11 @@ import kotlinx.serialization.json.Json
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody
 import java.io.IOException
 
 
@@ -32,7 +34,7 @@ class ChatController(
     val specFlow: SpecWorkflow,
 ) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-    fun chat(@RequestBody chat: ChatRequest, res: HttpServletResponse) {
+    fun chat(@RequestBody chat: ChatRequest): ResponseEntity<StreamingResponseBody> {
         // 1. search by domains
         val workflow = when (chat.domain) {
             SupportedDomains.Frontend -> feFlow
@@ -50,25 +52,26 @@ class ChatController(
         // 3. execute stage with prompt
         val chatWebContext = chat.toContext()
 
-        val out = res.outputStream;
-
-        val result = workflow.execute(prompt, chatWebContext)
-
-        runBlocking {
-            result
-                .observeOn(Schedulers.io())
-                .blockingForEach {
-                    try {
-                        val output = Json.encodeToString(MessageResponse.from(chat.id, it))
-                        out.write((output).toByteArray());
-                        out.flush()
-                        out.write("\n\n".toByteArray());
-                        out.flush()
-                    } catch (e: IOException) {
-                        log.error("{}", e)
+        val out = StreamingResponseBody { outputStream ->
+            runBlocking {
+                val result = workflow.execute(prompt, chatWebContext)
+                result
+                    .observeOn(Schedulers.io())
+                    .blockingForEach {
+                        try {
+                            val output = Json.encodeToString(MessageResponse.from(chat.id, it))
+                            outputStream.write((output).toByteArray());
+                            outputStream.flush()
+                            outputStream.write("\n\n".toByteArray());
+                            outputStream.flush()
+                        } catch (e: IOException) {
+                            log.error("{}", e)
+                        }
                     }
-                }
+            }
         }
+
+        return ResponseEntity.ok().body(out)
 
     }
 
