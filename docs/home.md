@@ -50,6 +50,13 @@ DDD 强调问题空间和解空间之间的分离，这意味着在开始开发�
 
 ### Stage 设计
 
+```mermaid
+graph LR
+  ProblemClarifier --> |RAG| ProblemAnalyzer
+  ProblemAnalyzer  --> |DSL| SolutionDesigner
+  SolutionDesigner --> |Code Interpreter|SolutionExecutor
+```
+
 根据上面的思想，我们设计了五个 Stage：
 
 - ProblemClarifier.kt：根据用户提供的文本来澄清问题，以确保准确理解用户的需求。问题澄清器的任务是分析用户的输入，提取关键信息，可能要求用户提供更多详细信息以确保问题清晰，并将清晰的问题描述传递给下一步。
