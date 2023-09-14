@@ -17,15 +17,12 @@
  */
 package cc.unitmesh.rag.splitter
 
-import com.knuddels.jtokkit.Encodings.*
-import com.knuddels.jtokkit.api.Encoding
-import com.knuddels.jtokkit.api.EncodingRegistry
-import com.knuddels.jtokkit.api.EncodingType
 import kotlin.math.max
 import kotlin.math.min
 
 
 class TokenTextSplitter(
+    private val encoding: EncodingTokenizer = OpenAiEncoding(),
     // The target size of each text chunk in tokens
     override var chunkSize: Int = 800,
     // The minimum size of each text chunk in characters
@@ -35,8 +32,6 @@ class TokenTextSplitter(
     // The maximum number of chunks to generate from a text
     private val maxNumChunks: Int = 10000,
 ) : TextSplitter() {
-    private val registry: EncodingRegistry = newLazyEncodingRegistry()
-    private val encoding: Encoding = registry.getEncoding(EncodingType.CL100K_BASE)
     override fun splitText(text: String): List<String> {
         return split(text, chunkSize)
     }
