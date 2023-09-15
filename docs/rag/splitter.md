@@ -11,6 +11,13 @@ nav_order: 2
 方案，它已经在 [ArchGuard](https://github.com/archguard/archguard)
 项目中得到了验证。
 
+1. 下载 ArchGuard Scanner CLI，地址：[https://github.com/archguard/archguard/releases](https://github.com/archguard/archguard/releases)
+2. 上传代码，用于 indexing，并存储到 ElasticSearch ：
+
+```
+java -jar scanner_cli-2.0.5-all.jar --language=Kotlin --output=http --server-url=http://localhost:18080 --path=/Volumes/source/ai/chocolate-factory
+```
+
 ## Markdown Splitter
 
 在使用本地的 Sentence Transformers，由于受输出是 384 的长度影响，需要控制好 token 的长度。因此，需要对文档进行**二次分割**。
