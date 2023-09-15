@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.code
+package cc.unitmesh.cf.domains.interpreter
 
 import cc.unitmesh.cf.core.flow.DomainDeclaration
 import cc.unitmesh.cf.core.flow.Workflow

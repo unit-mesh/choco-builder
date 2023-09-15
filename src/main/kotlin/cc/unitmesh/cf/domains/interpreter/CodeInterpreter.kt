@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.code
+package cc.unitmesh.cf.domains.interpreter
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.Interpreter

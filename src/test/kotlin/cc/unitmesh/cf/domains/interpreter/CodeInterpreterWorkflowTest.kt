@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.code
+package cc.unitmesh.cf.domains.interpreter
 
 import org.junit.jupiter.api.Test
 

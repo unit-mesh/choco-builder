@@ -1,12 +1,12 @@
-package cc.unitmesh.cf.domains.code
+package cc.unitmesh.cf.domains.interpreter
 
 import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.Workflow
 import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
-import cc.unitmesh.cf.domains.code.flow.CodeInput
-import cc.unitmesh.cf.domains.code.flow.CodeSolutionExecutor
+import cc.unitmesh.cf.domains.interpreter.flow.CodeInput
+import cc.unitmesh.cf.domains.interpreter.flow.CodeSolutionExecutor
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import io.reactivex.rxjava3.core.Flowable
