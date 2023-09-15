@@ -13,6 +13,7 @@ include(":rag-modules:code-splitter")
 include(":rag-modules:document")
 include(":rag-modules:store-milvus")
 include(":rag-modules:store-pinecone")
+include(":rag-modules:store-elasticsearch")
 
 dependencyResolutionManagement {
     repositories {
