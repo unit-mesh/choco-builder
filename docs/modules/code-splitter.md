@@ -48,6 +48,13 @@ public static <T> ImmutableList<T> of(T... elements) {
 > [Chapi](https://github.com/modernizing/chapi) is A common language meta information convertor, convert different
 > languages to same meta-data model. 一个通用语言元信息转换器，能将不同语言转换为相同的模型。
 
+### 扫描
+
+```
+java -jar scanner_cli/build/libs/scanner_cli-2.0.5-all.jar --language=Kotlin --output=http --server-url=http://localhost:18080 --
+path=/Volumes/source/ai/chocolate-factory --with-function-code
+```
+
 ## LangChain 实现
 
 [RecursiveCharacterTextSplitter](https://js.langchain.com/docs/modules/data_connection/document_transformers/text_splitters/code_splitter)

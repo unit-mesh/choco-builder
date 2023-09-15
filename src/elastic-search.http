@@ -1,6 +1,9 @@
-## Localhost
+### Localhost
 GET http://localhost:18080/api/code?q="archguard"
 
+### ElasticSearch
+DELETE http://localhost:9200/chocolate-code
+Content-Type: application/json
 
 # curl -X GET "localhost:9200/_search?pretty" -H 'Content-Type: application/json' -d'
 #{
@@ -11,6 +14,7 @@ GET http://localhost:18080/api/code?q="archguard"
 #    }
 #  }
 #}
+### ElasticSearch
 GET localhost:9200/chocolate-code/_search?pretty
 Content-Type: application/json
 
