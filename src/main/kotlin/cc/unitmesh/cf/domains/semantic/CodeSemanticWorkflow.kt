@@ -5,7 +5,6 @@ import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.core.llms.LlmProvider
-import cc.unitmesh.cf.core.prompt.QAExample
 import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
 import io.reactivex.rxjava3.core.Flowable
@@ -43,6 +42,5 @@ class CodeSemanticWorkflow : Workflow() {
                 |""".trimMargin(),
             examples = ExplainQuery.QAExamples,
         )
-
     }
 }

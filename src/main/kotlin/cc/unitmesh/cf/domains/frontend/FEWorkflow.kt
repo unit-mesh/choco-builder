@@ -51,7 +51,7 @@ class FEWorkflow() : Workflow() {
 
         return when (stage) {
             StageContext.Stage.Clarify -> {
-                val clarify = FEProblemClarifier(contextBuilder, llmProvider, variableResolver)
+                val clarify = FEProblemClarifier(llmProvider, variableResolver)
                     .clarify(
                         domain = "frontend",
                         question = messages.last().content,

@@ -2,6 +2,7 @@ package cc.unitmesh.cf.domains.semantic.model
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
+import cc.unitmesh.cf.core.parser.MarkdownCode
 import cc.unitmesh.cf.core.prompt.QAExample
 import kotlinx.serialization.Serializable
 
@@ -18,13 +19,26 @@ data class ExplainQuery(
     override val content: String
         get() = """question: $question
         |answer:
-        |```explain-dsl
         |query: $query
         |natureLangQuery: $natureLangQuery
         |hypotheticalDocument: $hypotheticalDocument
-        |```""".trimMargin()
+        |""".trimMargin()
 
     companion object {
+        fun parse(question: String, completion: String): ExplainQuery {
+            val code = MarkdownCode.parse(completion)
+
+            val query = completion.substringAfter("query: ").substringBefore("\n")
+            val natureLangQuery = completion.substringAfter("natureLangQuery: ").substringBefore("\n")
+            var hypotheticalDocument = code.text
+
+            if (hypotheticalDocument.isBlank()) {
+                hypotheticalDocument = completion.substringAfter("hypotheticalDocument: ")
+            }
+
+            return ExplainQuery(question, query, natureLangQuery, hypotheticalDocument)
+        }
+
         val log = org.slf4j.LoggerFactory.getLogger(ExplainQuery::class.java)
         val EXAMPLES = listOf(
             ExplainQuery(
@@ -62,12 +76,11 @@ data class ExplainQuery(
         )
         val QAExamples = EXAMPLES.map {
             QAExample(
-                it.question, """
-                |```explain-dsl
+                it.question, """###
                 |query: ${it.query}
                 |natureLangQuery: ${it.natureLangQuery}
                 |hypotheticalDocument: ${it.hypotheticalDocument}
-                |```
+                |###
                 |""".trimMargin()
             )
         }

@@ -21,10 +21,26 @@ class ExplainQueryTest {
         assertEquals("""
             |question: get all records
             |answer:
-            |```explain-dsl
             |query: SELECT * FROM table
             |natureLangQuery: Retrieve all records from the table
             |hypotheticalDocument: document
-            |```""".trimMargin(), content)
+            |""".trimMargin(), content)
+    }
+
+    @Test
+    fun should_parse_from_answer() {
+        val query = ExplainQuery.parse("get all records", """
+            |query: SELECT * FROM table
+            |natureLangQuery: Retrieve all records from the table
+            |hypotheticalDocument: 
+            |```
+            |document
+            |```
+            |""".trimMargin())
+
+        assertEquals("get all records", query.question)
+        assertEquals("SELECT * FROM table", query.query)
+        assertEquals("Retrieve all records from the table", query.natureLangQuery)
+        assertEquals("document", query.hypotheticalDocument)
     }
 }
