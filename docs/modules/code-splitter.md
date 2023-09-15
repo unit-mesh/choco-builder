@@ -26,6 +26,23 @@ Code Splitter 模块是一个代码分割模块，用于将代码分割成多个
 
 ## Chocolate Factory 实现
 
+Chunk 格式
+
+1. 代码块的第一部分是上下文相关的注释，诸如包名、类名等。
+2. 代码块的第三部分是代码块的内容。
+
+示例：
+
+```chunk
+// canonicalName: com.google.common.collect.ImmutableList
+
+public static <T> ImmutableList<T> of(T... elements) {
+    List<T> list = new ArrayList<>();
+    Collections.addAll(list, elements);
+    return new ImmutableList<>(list);
+}
+```
+
 ### Chapi 模型
 
 > [Chapi](https://github.com/modernizing/chapi) is A common language meta information convertor, convert different
