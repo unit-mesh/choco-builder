@@ -10,8 +10,9 @@ include(":cocoa-local-embedding")
 
 include(":dsl:design")
 include(":rag-modules:code-splitter")
-include(":rag-modules:milvus")
-include(":rag-modules:pinecone")
+include(":rag-modules:document")
+include(":rag-modules:store-milvus")
+include(":rag-modules:store-pinecone")
 
 dependencyResolutionManagement {
     repositories {

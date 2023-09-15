@@ -112,6 +112,6 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 
 ## License
 
-RAG module was inspired by LangChain && [Spring AI](https://github.com/spring-projects-experimental/spring-ai) project
+RAG module was inspired by LangChain4j && LangChain && [Spring AI](https://github.com/spring-projects-experimental/spring-ai) project, which is licensed under the Apache License 2.0.
 
 This code is distributed under the MPL 2.0 license. See `LICENSE` in this directory.

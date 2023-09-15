@@ -16,10 +16,13 @@ data class Document(
     )
 
 
-
     companion object {
         fun from(stringValue: String): Document {
             return Document(stringValue)
+        }
+
+        fun from(stringValue: String, metadata: Metadata): Document {
+            return Document(stringValue, metadata)
         }
     }
 
