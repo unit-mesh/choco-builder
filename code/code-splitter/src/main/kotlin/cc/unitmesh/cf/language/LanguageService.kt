@@ -3,6 +3,7 @@ package cc.unitmesh.cf.language
 import kotlinx.serialization.json.Json
 import java.io.File
 import kotlin.experimental.or
+
 class LanguageService {
     private val extensionCache: HashMap<String, String> = hashMapOf()
     private val SHE_BANG: String = "#!"
@@ -10,6 +11,7 @@ class LanguageService {
     private var filenameToLanguage: MutableMap<String, String> = mutableMapOf()
     private var languageFeatures: MutableMap<String, LanguageFeature> = mutableMapOf()
     private var shebangLookup: MutableMap<String, List<String>> = mutableMapOf()
+    private var languageMap: MutableMap<String, Language> = mutableMapOf()
 
     init {
         val fileContent = this.javaClass.classLoader.getResource("languages.json")!!.readText()
@@ -31,12 +33,18 @@ class LanguageService {
 
             processLanguageFeatures(name, lang)
         }
+
+        this.languageMap = languageMap
     }
 
     data class LanguageGuess(
         val name: String,
         val count: Int,
     )
+
+    fun guessLineComment(language: String): String? {
+        return languageMap[language]?.lineComment?.get(0)
+    }
 
     /**
      * DetermineLanguage given a filename, fallback language, possible languages and content make a guess to the type.
@@ -143,11 +151,11 @@ class LanguageService {
                     }
 
                     if (i == content.size - 1) {
-                        candidate1 = String(content.sliceArray(lastSlash+1..i))
+                        candidate1 = String(content.sliceArray(lastSlash + 1..i))
                     }
 
                     if (isWhitespace(content[i])) {
-                        candidate1 = String(content.sliceArray(lastSlash+1 until i))
+                        candidate1 = String(content.sliceArray(lastSlash + 1 until i))
                         state = 2
                     }
                 }
