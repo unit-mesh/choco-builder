@@ -56,9 +56,6 @@ class ElasticsearchEmbeddingStoreImpl(
     private val objectMapper: ObjectMapper
 
     init {
-        val serverUrl = serverUrl
-        val indexName = indexName
-
         val restClientBuilder = RestClient
             .builder(HttpHost.create(serverUrl))
 
@@ -71,6 +68,7 @@ class ElasticsearchEmbeddingStoreImpl(
                 )
             }
         }
+
         if (!apiKey.isNullOrBlank()) {
             restClientBuilder.setDefaultHeaders(
                 arrayOf<Header>(
@@ -78,6 +76,7 @@ class ElasticsearchEmbeddingStoreImpl(
                 )
             )
         }
+
         val transport: ElasticsearchTransport = RestClientTransport(restClientBuilder.build(), JacksonJsonpMapper())
         client = ElasticsearchClient(transport)
         this.indexName = indexName
@@ -103,7 +102,9 @@ class ElasticsearchEmbeddingStoreImpl(
     override fun addAll(embeddings: List<Embedding>): List<String> {
         val ids = embeddings.stream()
             .map { _: Embedding -> IdUtil.uuid() }
-            .collect(Collectors.toList())
+            .toList()
+
+
         addAllInternal(ids, embeddings, null)
         return ids
     }
@@ -111,7 +112,8 @@ class ElasticsearchEmbeddingStoreImpl(
     override fun addAll(embeddings: List<Embedding>, embedded: List<Document>): List<String> {
         val ids = embeddings.stream()
             .map { _: Embedding -> IdUtil.uuid() }
-            .collect(Collectors.toList())
+            .toList()
+
         addAllInternal(ids, embeddings, embedded)
         return ids
     }
@@ -140,9 +142,10 @@ class ElasticsearchEmbeddingStoreImpl(
 
     private fun addInternal(id: String, embedding: Embedding, embedded: Document?) {
         addAllInternal(
-            listOf<String>(id),
-            listOf<Embedding>(embedding),
-            if (embedded == null) null else listOf<Document>(embedded)
+            listOf(id),
+            listOf(embedding),
+
+            if (embedded == null) null else listOf(embedded)
         )
     }
 
@@ -233,7 +236,7 @@ class ElasticsearchEmbeddingStoreImpl(
                 .script { s: Script.Builder ->
                     s.inline(InlineScript.of { i: InlineScript.Builder ->
                         i // The script adds 1.0 to the cosine similarity to prevent the score from being negative.
-                            // divided by 2 to keep score in the range [0, 1]
+                            // divided by 2 to keep the score in the range [0, 1]
                             .source("(cosineSimilarity(params.query_vector, 'vector') + 1.0) / 2")
                             .params("query_vector", queryVector)
                     })
@@ -249,7 +252,7 @@ class ElasticsearchEmbeddingStoreImpl(
     private fun toEmbeddingMatch(response: SearchResponse<Document>): List<EmbeddingMatch<Document>> {
         return response.hits().hits().map { hit ->
             val document = hit.source() ?: return@map null
-            val segmentEmbeddingMatch = if (document.text == null && document.text.isNotEmpty()) {
+            val segmentEmbeddingMatch = if (document.text.isEmpty()) {
                 return@map null
             } else {
                 EmbeddingMatch(hit.score()!!, hit.id(), document.vector, Document(document.text, document.metadata))
