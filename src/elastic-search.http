@@ -1,0 +1,21 @@
+## Localhost
+GET http://localhost:18080/api/code?q="archguard"
+
+
+# curl -X GET "localhost:9200/_search?pretty" -H 'Content-Type: application/json' -d'
+#{
+#  "query": {
+#    "query_string": {
+#      "query": "(new york city) OR (big apple)",
+#      "default_field": "content"
+#    }
+#  }
+#}
+GET localhost:9200/chocolate-code/_search?pretty
+Content-Type: application/json
+
+{
+  "query": { "match_all": {} },
+  "_source": ["id", "text"]
+}
+

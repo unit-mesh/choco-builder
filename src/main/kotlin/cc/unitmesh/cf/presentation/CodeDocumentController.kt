@@ -1,12 +1,14 @@
 package cc.unitmesh.cf.presentation
 
+import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
+import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.store.EmbeddingMatch
+import cc.unitmesh.store.ElasticsearchStore
 import org.archguard.action.checkout.GitCommandManager
 import org.archguard.action.checkout.GitSourceSettings
 import org.archguard.action.checkout.doCheckout
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
@@ -20,8 +22,18 @@ import kotlin.io.path.pathString
 @RestController
 @RequestMapping("/code")
 class CodeDocumentController {
+    val store: ElasticsearchStore = ElasticsearchStore()
+    val embedding = SentenceTransformersEmbedding()
+
     companion object {
         private val log = org.slf4j.LoggerFactory.getLogger(CodeDocumentController::class.java)
+    }
+
+    @GetMapping
+    fun handleQuery(@RequestParam q: String): ResponseEntity<List<EmbeddingMatch<Document>>> {
+        val embed = embedding.embed(q)
+        val list = store.findRelevant(embed, 5)
+        return ResponseEntity.ok(list)
     }
 
     @PostMapping("/clone")

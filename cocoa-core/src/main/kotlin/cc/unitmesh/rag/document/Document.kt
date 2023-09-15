@@ -10,6 +10,7 @@ data class Document(
     var metadata: Metadata = HashMap(),
     var text: String = "",
     @Deprecated("This field is only used for ElasticSearch.")
+    @Transient
     var vector: Embedding = emptyList()
 ) {
     constructor(text: String, metadata: Metadata = HashMap()) : this(
