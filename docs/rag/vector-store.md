@@ -18,3 +18,11 @@ val vectorStoreRetriever = EmbeddingStoreRetriever(vectorStore)
 val similarDocuments: List<EmbeddingMatch<Document>> = vectorStoreRetriever.retrieve(userQuery)
 ```
 
+## Elasticsearch
+
+Elasticsearch 可以提供向量搜索，以及普通的文本搜索，可以作为代码搜索的后端场景。
+
+## pgvector (TODO)
+
+> Open-source vector similarity search for Postgres
+

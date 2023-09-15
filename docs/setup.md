@@ -16,6 +16,10 @@ Tech Stack:
 - [Kotlin Jupyter](https://github.com/Kotlin/kotlin-jupyter)  Kotlin kernel for Jupyter/IPython.
 - [Kotlin Dataframe](https://github.com/Kotlin/dataframe) is typesafe in-memory structured data processing for JVM.
 
+Vector Store:
+
+- ElasticSearch is a distributed, RESTful search and analytics engine.
+
 ## 项目结构
 
 - cocoa-core, 核心模块，包含了核心的流程控制、领域模型、领域流程等

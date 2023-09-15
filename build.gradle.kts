@@ -95,6 +95,10 @@ dependencies {
     // spring dev dependencies
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
+    // clone git repo
+    compileOnly("org.archguard.codedb:action-toolkit:0.1.2")
+    implementation("org.archguard.codedb:checkout:0.1.2")
+
     // llm dependencies
     implementation(libs.azure.openai)
     implementation(libs.bundles.openai)
