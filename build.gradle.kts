@@ -71,8 +71,9 @@ allprojects {
 dependencies {
     implementation(projects.cocoaLocalEmbedding)
     implementation(projects.cocoaCore)
-    implementation(projects.codeInterpreter)
+    implementation(projects.code.interpreter)
     implementation(projects.dsl.design)
+//    implementation(projects.ragModules.elasticSearch)
 
     // kotlin dependencies
     implementation("org.jetbrains.kotlin:kotlin-reflect")
