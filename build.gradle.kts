@@ -31,8 +31,7 @@ repositories {
     }
 }
 
-// allow script to unpack
-// when spring boot start, those packages will unpack to some dir, so we can call it REPL.
+// allow scripts to unpack, when spring boot start, those packages will unpack to some dir, so we can call it REPL.
 tasks.withType<BootJar> {
     requiresUnpack("**/kotlin-compiler-*.jar")
     requiresUnpack("**/kotlin-script-*.jar")
@@ -71,9 +70,10 @@ allprojects {
 dependencies {
     implementation(projects.cocoaLocalEmbedding)
     implementation(projects.cocoaCore)
-    implementation(projects.code.interpreter)
     implementation(projects.dsl.design)
-//    implementation(projects.ragModules.elasticSearch)
+    implementation(projects.code.interpreter)
+    implementation(projects.code.codeSplitter)
+    implementation(projects.ragModules.storeElasticsearch)
 
     // kotlin dependencies
     implementation("org.jetbrains.kotlin:kotlin-reflect")

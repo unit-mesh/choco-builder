@@ -39,20 +39,18 @@ import org.apache.http.message.BasicHeader
 import org.elasticsearch.client.RestClient
 import java.io.IOException
 import java.util.*
-import java.util.stream.Collectors
 
 /**
  * Elastic Embedding Store Implementation
  */
-class ElasticsearchEmbeddingStoreImpl(
-    serverUrl: String,
-    username: String?,
-    password: String?,
-    apiKey: String?,
-    indexName: String,
+class ElasticsearchStore(
+    private val serverUrl: String = "http://localhost:9200",
+    private val indexName: String = "chocolate-code",
+    private val username: String? = null,
+    private val password: String? = null,
+    private val apiKey: String? = null,
 ) : EmbeddingStore<Document> {
     private val client: ElasticsearchClient
-    private val indexName: String?
     private val objectMapper: ObjectMapper
 
     init {
@@ -79,7 +77,6 @@ class ElasticsearchEmbeddingStoreImpl(
 
         val transport: ElasticsearchTransport = RestClientTransport(restClientBuilder.build(), JacksonJsonpMapper())
         client = ElasticsearchClient(transport)
-        this.indexName = indexName
         objectMapper = ObjectMapper()
     }
 
@@ -262,6 +259,6 @@ class ElasticsearchEmbeddingStoreImpl(
     }
 
     companion object {
-        private val log = org.slf4j.LoggerFactory.getLogger(ElasticsearchEmbeddingStoreImpl::class.java)
+        private val log = org.slf4j.LoggerFactory.getLogger(ElasticsearchStore::class.java)
     }
 }
