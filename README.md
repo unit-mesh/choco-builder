@@ -112,6 +112,13 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 
 ## License
 
-RAG module was inspired by LangChain4j && LangChain && [Spring AI](https://github.com/spring-projects-experimental/spring-ai) project, which is licensed under the Apache License 2.0.
+RAG relevant modules were inspired by
+
+- [LangChain4j](https://github.com/langchain4j/langchain4j)
+- [LangChain](https://github.com/hwchase17/langchain)
+- [LlamaIndex](https://github.com/jerryjliu/llama_index)
+- [Spring AI](https://github.com/spring-projects-experimental/spring-ai)
+
+Some RAG modules based on LangChain4j and Spring AI which is licensed under the Apache License 2.0.
 
 This code is distributed under the MPL 2.0 license. See `LICENSE` in this directory.
