@@ -10,6 +10,7 @@ enum class SupportedDomains(@JsonValue val value: String) {
     Testcase("testcase"),
     SQL("sql"),
     Spec("spec"),
+    CodeSemanticSearch("semantic-search"),
     Custom("custom"),
     ;
 }

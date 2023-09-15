@@ -1,14 +1,13 @@
 package cc.unitmesh.cf.domains
 
 import cc.unitmesh.cf.core.flow.DomainDeclaration
-import cc.unitmesh.cf.infrastructure.cache.CachedEmbeddingService
 import org.reflections.Reflections
 import org.reflections.util.ConfigurationBuilder
 import org.springframework.stereotype.Component
 
 
 @Component
-class DomainClassify(private val cachedEmbedding: CachedEmbeddingService) {
+class DomainClassify {
     val cachedDomains: MutableMap<String, DomainDeclaration> = mutableMapOf()
 
     private val packageName = DomainClassify::class.java.`package`.name

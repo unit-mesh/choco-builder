@@ -20,7 +20,7 @@ class DomainClassifyTest {
 
     @Test
     fun should_enable_lookup_domains() {
-        val domainClassify = DomainClassify(cachedEmbedding)
+        val domainClassify = DomainClassify()
         val domain = domainClassify.lookupDomains()
 
         domain.size shouldBeGreaterThanOrEqual   1

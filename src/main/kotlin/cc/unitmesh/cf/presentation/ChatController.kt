@@ -5,8 +5,9 @@ import cc.unitmesh.cf.core.flow.model.Message
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.domains.SupportedDomains
-import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.frontend.FEWorkflow
+import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
+import cc.unitmesh.cf.domains.semantic.CodeSemanticWorkflow
 import cc.unitmesh.cf.domains.spec.SpecWorkflow
 import cc.unitmesh.cf.domains.testcase.TestcaseWorkflow
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -31,6 +32,7 @@ class ChatController(
     val codeFlow: CodeInterpreterWorkflow,
     val testcaseFlow: TestcaseWorkflow,
     val specFlow: SpecWorkflow,
+    val codeSemanticFlow: CodeSemanticWorkflow,
 ) {
     @PostMapping("/chat", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chat(@RequestBody chat: ChatRequest): ResponseEntity<StreamingResponseBody> {
@@ -42,6 +44,7 @@ class ChatController(
             SupportedDomains.Spec -> specFlow
             SupportedDomains.SQL -> TODO()
             SupportedDomains.Custom -> TODO()
+            SupportedDomains.CodeSemanticSearch -> codeSemanticFlow
         }
 
         // 2. searches by stage
