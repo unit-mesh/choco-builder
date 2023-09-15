@@ -3,7 +3,6 @@ package cc.unitmesh.cf.presentation
 import org.archguard.action.checkout.GitCommandManager
 import org.archguard.action.checkout.GitSourceSettings
 import org.archguard.action.checkout.doCheckout
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -35,16 +34,17 @@ class CodeDocumentController {
 
         // clone the git repo
         val workdir = createTempDirectory("chocolate")
+        val repositoryPath = request.gitUrl.substringAfterLast("/")
+        val workingDirectory = File(workdir.pathString, repositoryPath)
 
         log.info("workdir: {}", workdir)
         val settings = GitSourceSettings(
             request.gitUrl,
             branch = request.branch,
             ref = request.ref,
-            workdir = workdir.pathString
+            workdir = workdir.pathString,
         )
 
-        val workingDirectory = File(workdir.pathString, settings.repositoryPath)
         val git = GitCommandManager(workingDirectory.toString())
         doCheckout(git, settings)
     }
