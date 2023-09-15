@@ -1,6 +1,5 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("antlr")
     java
     alias(libs.plugins.jvm)
     alias(libs.plugins.serialization)
