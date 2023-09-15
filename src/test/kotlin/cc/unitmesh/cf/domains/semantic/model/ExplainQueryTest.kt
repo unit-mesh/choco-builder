@@ -12,13 +12,16 @@ class ExplainQueryTest {
         val natureLangQuery = "Retrieve all records from the table"
         val hypotheticalDocument = "document"
 
-        val explainQuery = ExplainQuery(query, natureLangQuery, hypotheticalDocument)
+        val explainQuery = ExplainQuery("get all records", query, natureLangQuery, hypotheticalDocument)
 
         // when
         val content = explainQuery.content
 
         // then
-        assertEquals("""```explain-dsl
+        assertEquals("""
+            |question: get all records
+            |answer:
+            |```explain-dsl
             |query: SELECT * FROM table
             |natureLangQuery: Retrieve all records from the table
             |hypotheticalDocument: document
