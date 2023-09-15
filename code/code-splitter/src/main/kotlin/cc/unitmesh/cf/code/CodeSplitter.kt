@@ -10,10 +10,14 @@ import chapi.domain.core.CodeFunction
  * Also see in: https://github.com/jerryjliu/llama_index/pull/7100
  */
 class CodeSplitter(
+    // the comment string to prepend to each chunk, for better semantic understanding
     private val comment: String = "//",
+    // 1500 characters correspond approximately to 40 lines of code
     private val chunkLines: Int = 40,
-    val chunkLinesOverlap: Int = 15,
+    // the average token to chars ratio for code is ~1:5(300 tokens), and embedding models are capped at 512 tokens.
     private val maxChars: Int = 1500,
+    // TODO: for unsupported languages, we can use the following heuristic to split the code
+    val chunkLinesOverlap: Int = 15,
 ) {
     fun split(ds: CodeDataStruct): List<Document> {
         val canonicalName = "$comment canonicalName: " + ds.Package + "." + ds.NodeName
