@@ -1,6 +1,7 @@
 package cc.unitmesh.rag.document
 
 import cc.unitmesh.cf.core.utils.IdUtil
+import cc.unitmesh.nlp.embedding.Embedding
 import java.util.*
 
 
@@ -8,6 +9,8 @@ data class Document(
     val id: String = IdUtil.uuid(),
     var metadata: Metadata = HashMap(),
     var text: String = "",
+    @Deprecated("This field is only used for ElasticSearch.")
+    var vector: Embedding = emptyList()
 ) {
     constructor(text: String, metadata: Metadata = HashMap()) : this(
         IdUtil.uuid(),
