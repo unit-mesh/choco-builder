@@ -26,9 +26,9 @@ import java.io.InputStream
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 
-class TextDocumentParser @JvmOverloads constructor(
-    val documentType: DocumentType?,
-    val charset: Charset = StandardCharsets.UTF_8,
+class TextDocumentParser(
+    private val documentType: DocumentType?,
+    private val charset: Charset = StandardCharsets.UTF_8,
 ) : DocumentParser {
 
     override fun parse(inputStream: InputStream): Document {

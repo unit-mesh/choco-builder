@@ -30,7 +30,7 @@ import java.io.InputStream
  * This parser supports various file formats, including ppt, pptx, doc, docx, xls, and xlsx.
  * For detailed information on supported formats, please refer to the [official Apache POI website](https://poi.apache.org/).
  */
-class MsOfficeDocumentParser(val documentType: DocumentType) : DocumentParser {
+class MsOfficeDocumentParser(private val documentType: DocumentType) : DocumentParser {
     override fun parse(inputStream: InputStream): Document {
         try {
             ExtractorFactory.createExtractor(inputStream).use { extractor ->
