@@ -11,6 +11,8 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 
+    implementation(libs.chapi.domain)
+
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
 }

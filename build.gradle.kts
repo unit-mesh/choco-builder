@@ -98,6 +98,7 @@ dependencies {
     // clone git repo
     compileOnly("org.archguard.codedb:action-toolkit:0.1.2")
     implementation("org.archguard.codedb:checkout:0.1.2")
+    implementation(libs.chapi.domain)
 
     // llm dependencies
     implementation(libs.azure.openai)

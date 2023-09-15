@@ -1,6 +1,8 @@
 package cc.unitmesh.cf.code
 
-import cc.unitmesh.rag.splitter.TextSplitter
+import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.splitter.Splitter
+import chapi.domain.core.CodeDataStruct
 
 /**
  * SweepAI code splitting solution.
@@ -11,10 +13,13 @@ class CodeSplitter(
     val language: String,
     val chunkLines: Int = 40,
     val chunkLinesOverlap: Int = 15,
-    val maxChars: Int = 1500
-): TextSplitter() {
-    override fun splitText(text: String): List<String> {
-        TODO("Not yet implemented")
+    val maxChars: Int = 1500,
+) : Splitter {
+    override fun apply(docs: List<Document>): List<Document> {
+        return listOf()
     }
 
+    fun split(ds: CodeDataStruct): List<Document> {
+        return listOf()
+    }
 }

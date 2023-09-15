@@ -48,6 +48,11 @@ class CodeDocumentController {
         val git = GitCommandManager(workingDirectory.toString())
         doCheckout(git, settings)
     }
+
+    @PostMapping("/indexing")
+    fun indexing() {
+        // TODO
+    }
 }
 
 data class CloneRequest(
