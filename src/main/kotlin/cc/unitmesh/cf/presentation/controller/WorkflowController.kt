@@ -3,6 +3,7 @@ package cc.unitmesh.cf.presentation.controller
 import cc.unitmesh.cf.core.flow.DomainDeclaration
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.domains.DomainClassify
+import cc.unitmesh.cf.presentation.controller.dto.DomainResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -42,7 +43,3 @@ class WorkflowController(val classify: DomainClassify) {
 }
 
 
-data class DomainResponse(
-    val name: String,
-    val description: String,
-)
