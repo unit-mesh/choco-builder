@@ -2,6 +2,7 @@ import React from 'react'
 
 import { cn } from '@/lib/utils'
 import { ExternalLink } from '@/components/external-link'
+import {Span} from "next/dist/server/lib/trace/tracer";
 
 export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
   return (
@@ -17,6 +18,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
         Chocolate Factory
       </ExternalLink>
       .
+      <ExternalLink href={'https://beian.miit.gov.cn/'}>闽ICP备17004100号</ExternalLink>
     </p>
   )
 }
