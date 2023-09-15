@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.controller
+package cc.unitmesh.cf.presentation
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

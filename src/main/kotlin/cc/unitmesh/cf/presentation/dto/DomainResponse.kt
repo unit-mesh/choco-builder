@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.controller.dto
+package cc.unitmesh.cf.presentation.dto
 
 data class DomainResponse(
     val name: String,

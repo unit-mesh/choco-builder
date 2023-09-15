@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.controller
+package cc.unitmesh.cf.presentation
 
 import cc.unitmesh.cf.domains.DomainClassify
 import org.springframework.web.bind.annotation.*

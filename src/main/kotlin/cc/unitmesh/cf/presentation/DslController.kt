@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.controller
+package cc.unitmesh.cf.presentation
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslCompiler

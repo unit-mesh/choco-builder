@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.presentation.controller
+package cc.unitmesh.cf.presentation
 
 import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import cc.unitmesh.cf.core.flow.model.Message
