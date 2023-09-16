@@ -116,24 +116,8 @@ class FEWorkflow() : Workflow() {
 
                 val answerFlowable: Flowable<Answer> =
                     FESolutionExecutor(contextBuilder, llmProvider, variableResolver).execute(uiPage)
-                Flowable.create({ emitter ->
-                    answerFlowable.subscribe({
-                        val result = WorkflowResult(
-                            currentStage = StageContext.Stage.Execute,
-                            nextStage = StageContext.Stage.Done,
-                            responseMsg = it.values.toString(),
-                            resultType = String::class.java.toString(),
-                            result = "",
-                            isFlowable = true,
-                        )
 
-                        emitter.onNext(result)
-                    }, {
-                        emitter.onError(it)
-                    }, {
-                        emitter.onComplete()
-                    })
-                }, io.reactivex.rxjava3.core.BackpressureStrategy.BUFFER)
+                toFlowableResult(answerFlowable)
             }
 
             else -> {

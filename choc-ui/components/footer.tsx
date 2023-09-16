@@ -18,7 +18,6 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
         Chocolate Factory
       </ExternalLink>
       .
-      <ExternalLink href={'https://beian.miit.gov.cn/'}>闽ICP备17004100号-12</ExternalLink>
     </p>
   )
 }

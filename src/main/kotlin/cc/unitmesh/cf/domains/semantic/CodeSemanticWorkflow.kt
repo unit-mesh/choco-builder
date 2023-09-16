@@ -1,12 +1,18 @@
 package cc.unitmesh.cf.domains.semantic
 
 import cc.unitmesh.cf.core.flow.Workflow
+import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
+import cc.unitmesh.cf.domains.semantic.flow.SemanticProblemAnalyzer
+import cc.unitmesh.cf.domains.semantic.flow.SemanticSolutionExecutor
 import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
+import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
+import cc.unitmesh.store.ElasticsearchStore
 import io.reactivex.rxjava3.core.Flowable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -16,13 +22,25 @@ class CodeSemanticWorkflow : Workflow() {
     @Autowired
     private lateinit var llmProvider: LlmProvider
 
+    val store: ElasticsearchStore = ElasticsearchStore()
+    val embedding = SentenceTransformersEmbedding()
+
     override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
             ANALYSIS.stage to ANALYSIS
         )
 
+    val domainName = SupportedDomains.CodeSemanticSearch.value
+
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
-        TODO("Not yet implemented")
+        val question = chatWebContext.messages.last().content
+        val analyze = SemanticProblemAnalyzer(llmProvider)
+            .analyze(domainName, question)
+
+        val answerFlowable: Flowable<Answer> =
+            SemanticSolutionExecutor(llmProvider, store, embedding).execute(analyze)
+
+        return toFlowableResult(answerFlowable)
     }
 
     companion object {
