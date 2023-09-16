@@ -4,6 +4,10 @@ server:
     context-path: /api
 
 spring:
+  mvc:
+    async:
+      request-timeout: -1
+
   jpa:
     hibernate:
       ddl-auto: update
