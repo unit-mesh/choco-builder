@@ -33,16 +33,14 @@ class CodeSplitterTest {
         val documents = codeSplitter.split(codeDataStruct)
 
         // Then
-        assertThat(documents).hasSize(1)
+        documents.size shouldBe 1
         documents[0].text shouldBe "// canonicalName: com.example.MyClass\n$content"
     }
 
     @Test
-    fun should_splitCodeFunctionIntoDocument() {
+    fun should_split_to_function() {
         // Given
-        val codeFunction = CodeFunction(
-            Content = "fun foo() {\n    println(\"Hello, World!\")\n}",
-        )
+        val codeFunction = CodeFunction(Content = "fun foo() {\n    println(\"Hello, World!\")\n}")
 
         val codeSplitter = CodeSplitter()
 
@@ -50,6 +48,6 @@ class CodeSplitterTest {
         val document = codeSplitter.split(codeFunction, "// canonicalName: com.example.MyClass")
 
         // Then
-        assertThat(document.text).isEqualTo("// canonicalName: com.example.MyClass\nfun foo() {\n    println(\"Hello, World!\")\n}")
+        document.text shouldBe "// canonicalName: com.example.MyClass\nfun foo() {\n    println(\"Hello, World!\")\n}"
     }
 }

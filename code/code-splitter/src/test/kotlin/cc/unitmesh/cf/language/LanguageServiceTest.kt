@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class GuessLineCommentTest {
-    var languageService = LanguageService()
+    private var languageService = LanguageService()
 
     @Test
     fun should_return_line_comment_when_language_exists() {
