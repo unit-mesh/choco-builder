@@ -93,7 +93,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // spring dev dependencies
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+//    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // clone git repo
     compileOnly("org.archguard.codedb:action-toolkit:0.1.2")

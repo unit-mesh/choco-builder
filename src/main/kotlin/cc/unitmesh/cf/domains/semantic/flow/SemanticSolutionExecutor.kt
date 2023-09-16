@@ -10,6 +10,8 @@ import cc.unitmesh.cf.domains.semantic.CodeSemanticWorkflow
 import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
 import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
 import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
+import cc.unitmesh.nlp.embedding.EncodingTokenizer
+import cc.unitmesh.nlp.embedding.OpenAiEncoding
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingStore
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -22,7 +24,9 @@ class SemanticSolutionExecutor(
     val variables: SemanticVariableResolver,
 ) : SolutionExecutor<ExplainQuery> {
     override val interpreters: List<Interpreter> = listOf()
-    val basePrompt = CodeSemanticWorkflow.EXECUTE.format()
+    private val basePrompt = CodeSemanticWorkflow.EXECUTE.format()
+
+    private val encodingTokenizer: EncodingTokenizer = OpenAiEncoding()
 
     override fun execute(solution: ExplainQuery): Flowable<Answer> {
         variables.putQuery(solution)
@@ -30,20 +34,30 @@ class SemanticSolutionExecutor(
         val originQuery = embedding.embed(solution.originLanguageQuery)
         val hypotheticalDocument = embedding.embed(solution.hypotheticalDocument)
 
-        val hydeDocs = store.findRelevant(hypotheticalDocument, 5)
-        val list = store.findRelevant(query, 5)
-        val originLangList = store.findRelevant(originQuery, 3)
+        val hydeDocs = store.findRelevant(hypotheticalDocument, 15, 0.6)
+        val list = store.findRelevant(query, 15, 0.6)
+        val originLangList = store.findRelevant(originQuery, 15, 0.6)
 
         // remove duplicate in hydeDocs, list, originList
         val relevantDocuments = (hydeDocs + list + originLangList)
             .distinctBy { it.embedded.text }
             .sortedByDescending { it.score }
-            .take(5)
 
-        variables.putCode("", relevantDocuments.map { it.embedded.text })
+        var finalPrompt = basePrompt
+        val codes: MutableList<String> = mutableListOf()
+        relevantDocuments.forEach {
+            // todo: add strategy for lost in the middle
+            codes += it.embedded.text
+            variables.putCode("", codes)
+            val prompt = variables.compile(basePrompt)
+            // todo: make 3072 configurable
+            if (encodingTokenizer.encode(prompt).size < 3072) {
+                finalPrompt = prompt
+            }
+        }
 
         val messages = listOf(
-            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, variables.compile(basePrompt)),
+            LlmMsg.ChatMessage(LlmMsg.ChatRole.User, finalPrompt),
         ).filter { it.content.isNotBlank() }
 
         FESolutionExecutor.log.info("Execute messages: {}", messages)
