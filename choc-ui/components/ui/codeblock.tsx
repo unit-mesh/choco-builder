@@ -3,16 +3,18 @@
 
 'use client'
 
-import { FC, memo } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { coldarkDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import {FC, memo, useState} from 'react'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {coldarkDark} from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
-import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
-import { IconCheck, IconCopy, IconDownload } from '@/components/ui/icons'
-import { Button } from '@/components/ui/button'
-import { InterpreterMessage } from '@/components/interpreter/message'
-import { Iframe } from '@/components/interpreter/iframe'
-import { DesignBlock } from '@/components/dsl/design-block'
+import {useCopyToClipboard} from '@/lib/hooks/use-copy-to-clipboard'
+import {IconCheck, IconCopy, IconDownload} from '@/components/ui/icons'
+import {Button} from '@/components/ui/button'
+import {InterpreterMessage} from '@/components/interpreter/message'
+import {Iframe} from '@/components/interpreter/iframe'
+import {DesignBlock} from '@/components/dsl/design-block'
+import * as Collapsible from '@radix-ui/react-collapsible';
+import { RowSpacingIcon, Cross2Icon } from '@radix-ui/react-icons';
 
 interface Props {
   language: string
@@ -60,6 +62,8 @@ export const generateRandomString = (length: number, lowercase = false) => {
 }
 
 const CodeBlock: FC<Props> = memo(({ language, value }) => {
+  const [open, setOpen] = useState(false);
+
   if (language === 'interpreter') {
     // if value is string , convert to json
     if (value && typeof value == 'string') {
@@ -81,6 +85,23 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
 
       return <CodeBlock language={'markdown'} value={msg.resultValue} />
     }
+  }
+
+  if (language === 'debug') {
+    return <Collapsible.Root className="CollapsibleRoot" open={open} onOpenChange={setOpen}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span className="Text" style={{ color: 'black' }}>
+          -------------------------- Show debug information --------------------------
+        </span>
+        <Collapsible.Trigger asChild>
+          <button className="IconButton">{open ? <Cross2Icon /> : <RowSpacingIcon />}</button>
+        </Collapsible.Trigger>
+      </div>
+
+      <Collapsible.Content>
+        <CodeBlock language={'markdown'} value={value} />
+      </Collapsible.Content>
+    </Collapsible.Root>
   }
 
   if (language === 'design') {
