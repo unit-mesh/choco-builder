@@ -34,7 +34,7 @@ class CodeSplitterTest {
 
         // Then
         assertThat(documents).hasSize(1)
-        documents[0].text shouldBe content
+        documents[0].text shouldBe "// canonicalName: com.example.MyClass\n$content"
     }
 
     @Test
