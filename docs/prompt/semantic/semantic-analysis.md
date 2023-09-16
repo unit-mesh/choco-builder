@@ -38,10 +38,11 @@ fun findCountBySystemId(systemId: Long): List<GitPathChangeCount>
 
 Q:What's the Qdrant threshold?
 A:
-###
 englishQuery: Qdrant threshold (point, score, offset)
 originLanguageQuery: Qdrant 阈值 (point, score, offset)
-hypotheticalDocument: ```rust
+hypotheticalDocument:
+
+```rust
 SearchPoints {{
    limit,
    vector: vectors.get(idx).unwrap().clone(),
