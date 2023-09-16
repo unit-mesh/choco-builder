@@ -22,7 +22,11 @@ class CodeSplitter(
     fun split(ds: CodeDataStruct): List<Document> {
         val canonicalName = "$comment canonicalName: " + ds.Package + "." + ds.NodeName
         return ds.Functions.map {
-            split(it, canonicalName)
+            if (ds.Content.length <= maxChars) {
+                Document(ds.Content)
+            } else {
+                split(it, canonicalName)
+            }
         }
     }
 

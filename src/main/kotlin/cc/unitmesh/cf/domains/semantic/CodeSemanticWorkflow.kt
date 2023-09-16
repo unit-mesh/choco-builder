@@ -42,7 +42,7 @@ class CodeSemanticWorkflow : Workflow() {
     val domainName = SupportedDomains.CodeSemanticSearch.value
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
-        val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
+        val store = ElasticsearchStore(elasticsearchUrl)
         val question = chatWebContext.messages.last().content
         val analyze = SemanticProblemAnalyzer(llmProvider)
             .analyze(domainName, question)

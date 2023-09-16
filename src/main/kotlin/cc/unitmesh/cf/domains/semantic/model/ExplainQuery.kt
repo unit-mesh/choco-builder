@@ -5,6 +5,7 @@ import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.cf.core.parser.MarkdownCode
 import cc.unitmesh.cf.core.prompt.QAExample
 import kotlinx.serialization.Serializable
+import org.slf4j.Logger
 
 
 @Serializable
@@ -39,7 +40,7 @@ data class ExplainQuery(
             return ExplainQuery(question, query, natureLangQuery, hypotheticalDocument)
         }
 
-        val log = org.slf4j.LoggerFactory.getLogger(ExplainQuery::class.java)
+        val log: Logger = org.slf4j.LoggerFactory.getLogger(ExplainQuery::class.java)!!
         val EXAMPLES = listOf(
             ExplainQuery(
                 question = "如何通过 ID 查找代码库变更信息?",
