@@ -26,3 +26,25 @@ services:
     ports:
       - "8080:80"
     restart: always
+
+  elasticsearch:
+    image: elasticsearch:7.17.4
+    container_name: elasticsearch
+    restart: always
+    environment:
+      # 开启内存锁定
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      # 指定单节点启动
+      - discovery.type=single-node
+    ulimits:
+      # 取消内存相关限制 用于开启内存锁定
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
+      - ./logs:/usr/share/elasticsearch/logs
+      - ./plugins:/usr/share/elasticsearch/plugins
+    ports:
+      - "9200:9200"
