@@ -87,9 +87,14 @@ class CodeSemanticWorkflow : Workflow() {
                 |  - When referring to code, you must provide an example in a code block
                 |  - Keep number of quoted lines of code to a minimum when possible
                 |  - Basic markdown is allowed
+                |  - If you have enough information, try your best to answer more details.
+                |  - You muse use PlantUML to provide key process of your thinking,
                 | 
                 |相关的代码：
                 |${'$'}{relevantCode} 
+                |
+                |
+                |Take a deep breath, and start to answer the question.
                 |
                 |用户的问题：${'$'}{question}
                 |

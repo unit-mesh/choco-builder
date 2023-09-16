@@ -13,6 +13,7 @@ import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbeddin
 import cc.unitmesh.nlp.embedding.EncodingTokenizer
 import cc.unitmesh.nlp.embedding.OpenAiEncoding
 import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.document.DocumentOrder
 import cc.unitmesh.rag.store.EmbeddingStore
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -42,19 +43,27 @@ class SemanticSolutionExecutor(
         val relevantDocuments = (hydeDocs + list + originLangList)
             .distinctBy { it.embedded.text }
             .sortedByDescending { it.score }
+            .take(10)
 
-        var finalPrompt = basePrompt
-        val codes: MutableList<String> = mutableListOf()
+        var withOutPrompt = basePrompt
+        val codes: MutableList<Pair<Double, String>> = mutableListOf()
         relevantDocuments.forEach {
-            // todo: add strategy for lost in the middle
-            codes += it.embedded.text
-            variables.putCode("", codes)
-            val prompt = variables.compile(basePrompt)
+            codes.add(it.score to it.embedded.text)
+            variables.putCode("", codes.map { it.second })
+            val testPrompt = variables.compile(basePrompt)
             // todo: make 3072 configurable
-            if (encodingTokenizer.encode(prompt).size < 3072) {
-                finalPrompt = prompt
+            if (encodingTokenizer.encode(testPrompt).size >= 2048) {
+                codes.removeAt(codes.size - 1)
+                return@forEach
             }
         }
+
+        val reorderCodes = DocumentOrder.lostInMiddleReorder(codes)
+        variables.putCode("", reorderCodes.map { it.second })
+        val finalPrompt = variables.compile(basePrompt)
+
+        println("codes: ${codes.size}")
+        println("codes: ${finalPrompt.length}")
 
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, finalPrompt),
