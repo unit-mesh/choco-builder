@@ -90,12 +90,12 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
   if (language === 'debug') {
     return <Collapsible.Root className="CollapsibleRoot" open={open} onOpenChange={setOpen}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span className="Text" style={{ color: 'black' }}>
-          -------------------------- Show debug information --------------------------
-        </span>
         <Collapsible.Trigger asChild>
           <button className="IconButton">{open ? <Cross2Icon /> : <RowSpacingIcon />}</button>
         </Collapsible.Trigger>
+        <span className="Text" style={{ color: 'black' }}>
+          -------------------------- Show debug information --------------------------
+        </span>
       </div>
 
       <Collapsible.Content>
