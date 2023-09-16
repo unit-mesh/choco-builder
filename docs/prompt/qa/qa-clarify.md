@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Testcase - Clarify
-parent: Prompt logs
+parent: Prompt Strategy
 nav_order: 11
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Testcase Design
-parent: Prompt logs
+parent: Prompt Strategy
 nav_order: 12
 ---
 

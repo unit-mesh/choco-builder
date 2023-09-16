@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class FEWorkflow() : Workflow() {
+class FEWorkflow : Workflow() {
     @Autowired
     private lateinit var contextBuilder: FEDslContextBuilder
 

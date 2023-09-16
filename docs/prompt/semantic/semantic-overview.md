@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Semantic 搜索：总览
-parent: Prompt logs
+parent: Prompt Strategy
 nav_order: 30
 ---
 
@@ -34,6 +34,7 @@ public class SemanticWorkflow {
 
 代码片段：
 
+```bash
 0.7847863 // canonicalName: cc.unitmesh.cf.domains.semantic.CodeSemanticWorkflowTest
 0.76635444 // canonicalName: cc.unitmesh.cf.domains.semantic.CodeSemanticDecl
 0.74648994 // canonicalName: cc.unitmesh.cf.core.flow.ProblemAnalyzer
@@ -44,6 +45,7 @@ public class SemanticWorkflow {
 0.757218 // canonicalName: cc.unitmesh.cf.core.flow.Workflow
 0.7722022 // canonicalName: cc.unitmesh.cf.domains.semantic.flow.SemanticProblemAnalyzer
 0.807935 // canonicalName: cc.unitmesh.cf.domains.semantic.CodeSemanticWorkflow.execute
+```
 
 ## 输出
 

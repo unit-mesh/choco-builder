@@ -1,7 +1,7 @@
 ---
 layout: default
-title: UI 设计：Clarify 阶段 
-parent: Prompt logs
+title: UI 设计 - Clarify 阶段 
+parent: Prompt Strategy
 nav_order: 1
 ---
 

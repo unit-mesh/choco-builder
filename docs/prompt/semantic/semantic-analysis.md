@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Semantic 搜索：Analyze 阶段
-parent: Prompt logs
+parent: Prompt Strategy
 nav_order: 31
 ---
 
@@ -38,9 +38,9 @@ fun findCountBySystemId(systemId: Long): List<GitPathChangeCount>
 
 Q:What's the Qdrant threshold?
 A:
-englishQuery: Qdrant threshold (point, score, offset)
-originLanguageQuery: Qdrant 阈值 (point, score, offset)
-hypotheticalDocument:
+- englishQuery: Qdrant threshold (point, score, offset)
+- originLanguageQuery: Qdrant 阈值 (point, score, offset)
+- hypotheticalDocument:
 
 ```rust
 SearchPoints {{
@@ -56,9 +56,9 @@ SearchPoints {{
 
 ## Output
 
-englishQuery: How is Semantic Workflow implemented?
-originLanguageQuery: Semantic Workflow 是如何实现的？
-hypotheticalDocument:
+- englishQuery: How is Semantic Workflow implemented?
+- originLanguageQuery: Semantic Workflow 是如何实现的？
+- hypotheticalDocument:
 
 ```java
 public class SemanticWorkflow {

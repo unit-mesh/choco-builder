@@ -5,19 +5,9 @@ nav_order: 109
 permalink: /faq
 ---
 
-## response status: 413
+## 413 Request Entity Too Large
 
-需要配置 Nginx 的 `client_max_body_size` 参数，否则会出现 413 的错误。
-
-示例：
-
-```nginx
-http {
-    ...
-    client_max_body_size 20m;
-    ...
-}
-```
+### 问题
 
 ```bash
 [SCANNER] o.a.s.ctl.client.ArchGuardHttpClient process topic: class-items
@@ -30,3 +20,17 @@ response body: <html>
 </body>
 </html>
 ``` 
+
+### 解决方案
+
+需要配置 Nginx 的 `client_max_body_size` 参数，否则会出现 413 的错误。
+
+示例：
+
+```nginx
+http {
+    ...
+    client_max_body_size 20m;
+    ...
+}
+```

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Semantic 搜索：Execute 阶段
-parent: Prompt logs
+parent: Prompt Strategy
 nav_order: 32
 ---
 
