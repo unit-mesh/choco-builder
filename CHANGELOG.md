@@ -1,4 +1,73 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.0...v) (2023-09-14)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.0...v) (2023-09-16)
+
+
+
+# [0.2.0](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.3...v0.2.0) (2023-09-16)
+
+
+### Bug Fixes
+
+* fix relevant code issue ([103272b](https://github.com/unit-mesh/chocolate-factory/commit/103272b9c8ed090950a6bfdf678f0c8463f027b6))
+* fix sematnic logic ([0a756ae](https://github.com/unit-mesh/chocolate-factory/commit/0a756ae9d1f089ef333fd4676d50c41ff3a069be))
+* fix tests ([9db9317](https://github.com/unit-mesh/chocolate-factory/commit/9db931753aec2457864b696e1e0a8b4792ee9c12))
+* fix tsts ([bd7b3eb](https://github.com/unit-mesh/chocolate-factory/commit/bd7b3eb8d6b0a1589a6c54fbec60c75545e18e3a))
+
+
+### Features
+
+* add debug info ([9e011da](https://github.com/unit-mesh/chocolate-factory/commit/9e011daf54b59ad1cac6fcf5e15c7de07e43ff8b))
+* add lost in the middle ([b41b9a3](https://github.com/unit-mesh/chocolate-factory/commit/b41b9a37c79cfc9a5d158583cbd845912d83a34d))
+* **semantic:** update for document content strategy ([f2dba25](https://github.com/unit-mesh/chocolate-factory/commit/f2dba25ddc283cfadbdf303687a60f890814bd31))
+* **semantic:** update for overview ([a077f56](https://github.com/unit-mesh/chocolate-factory/commit/a077f56f8cb2221600fb95b05903045081221167))
+* **semantic:** update strategry for frontend ([8b33514](https://github.com/unit-mesh/chocolate-factory/commit/8b3351487c971705fa6ead3e266df9d61f47db7c))
+* **semantic:** update strategry for prompt ([9ffe204](https://github.com/unit-mesh/chocolate-factory/commit/9ffe204ee0039b3bfefe45762f78a949df36f500))
+* update debug info ([0f6a6a3](https://github.com/unit-mesh/chocolate-factory/commit/0f6a6a3a2685a44ae0f73ffb656bb087f4947410))
+* update releveant code example ([10a7e77](https://github.com/unit-mesh/chocolate-factory/commit/10a7e771812c68a9fc0552c54182c291ed482a01))
+
+
+
+## [0.1.3](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.2...v0.1.3) (2023-09-16)
+
+
+
+## [0.1.2](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.1...v0.1.2) (2023-09-16)
+
+
+### Bug Fixes
+
+* fix chat broken issue ([bdc6239](https://github.com/unit-mesh/chocolate-factory/commit/bdc6239f1dd86539e9541383abf472eb1eb1ddd9))
+* fix job issues ([d26d1c9](https://github.com/unit-mesh/chocolate-factory/commit/d26d1c9a17fa530fea4fe9403c352adf540d62e3))
+* fix typos ([b4260b4](https://github.com/unit-mesh/chocolate-factory/commit/b4260b446cf503a818fa673d8ac42a03b344a159))
+* fix typos ([f108aad](https://github.com/unit-mesh/chocolate-factory/commit/f108aad66b9579b31b26ecdedc26a5916e806270))
+* fix typos ([db66ca4](https://github.com/unit-mesh/chocolate-factory/commit/db66ca4f4beb03485616d306c74219a2b64d919f))
+
+
+### Features
+
+* add basic for code controller ([4005fc0](https://github.com/unit-mesh/chocolate-factory/commit/4005fc038d6d3e81d8346441295d6f3af9eb7653))
+* add fix for sentence transfromer embeded more than 512 ([c111a19](https://github.com/unit-mesh/chocolate-factory/commit/c111a19c29cda0e91bb21ff481d3214b59ddb22f))
+* **code:** init basic structure for code demo ([829c97e](https://github.com/unit-mesh/chocolate-factory/commit/829c97e2caf630a8ed06d2c1b207ac682cd164af))
+* **es:** init basic code for testing ([2190739](https://github.com/unit-mesh/chocolate-factory/commit/2190739ddb261081019cc917ee83d3641c17df58))
+* init indexing APIs ([c93dd38](https://github.com/unit-mesh/chocolate-factory/commit/c93dd3815fca7434efed29d426a7c7653fa6e4d9))
+* init pdf render parser ([29e03d8](https://github.com/unit-mesh/chocolate-factory/commit/29e03d82e5ab17f92fa9e2927c8f87b611207473))
+* init scan controller ([0c04bef](https://github.com/unit-mesh/chocolate-factory/commit/0c04bef469006824479953ab3f056d08c277f608))
+* **semantic:** add for basic flow ([97c3dd4](https://github.com/unit-mesh/chocolate-factory/commit/97c3dd4cedba3d8f2c027783c56f276fcacb20fc))
+* **semantic:** add for explain query ([3a61d47](https://github.com/unit-mesh/chocolate-factory/commit/3a61d47b9aa6ecefb1e19cbb8a9678a26b4bd271))
+* **semantic:** init basic flow for result ([fd1652f](https://github.com/unit-mesh/chocolate-factory/commit/fd1652f4ba8ac3a751442611a5647f5eab45411d))
+* **semantic:** init basic for result ([f3ea8e5](https://github.com/unit-mesh/chocolate-factory/commit/f3ea8e5009b456f51a0222a8d2c1956c222ec3fa))
+* **semantic:** init for code lang ([ed61130](https://github.com/unit-mesh/chocolate-factory/commit/ed611304a18a62df8ac16c2967af6e3ed6c63fd4))
+* **semantic:** init query dsl ([6bc54a3](https://github.com/unit-mesh/chocolate-factory/commit/6bc54a3691d60467577d11db3c82113b7e781ad8))
+* **semantic:** integration with frontend ([8910027](https://github.com/unit-mesh/chocolate-factory/commit/8910027fcb2f5668677dff0004f622d32daeac5b))
+* **tool:** init ([01f8898](https://github.com/unit-mesh/chocolate-factory/commit/01f8898e5acbd59f7eff4404442998ead6d96522))
+
+
+
+## [0.1.1](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.0...v0.1.1) (2023-09-14)
+
+
+### Bug Fixes
+
+* add basic error ctach for frontend stream ([410bdb7](https://github.com/unit-mesh/chocolate-factory/commit/410bdb766a1edd2e73cfb0a60e499ddcc86ccacc))
 
 
 
