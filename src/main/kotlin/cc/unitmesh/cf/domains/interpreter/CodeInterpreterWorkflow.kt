@@ -21,7 +21,7 @@ class CodeInterpreterWorkflow : Workflow() {
     @Autowired
     private lateinit var codeInterpreter: CodeInterpreter
 
-    override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
+    override val stages: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
             StageContext.Stage.Execute to EXECUTE
         )

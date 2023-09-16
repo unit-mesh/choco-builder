@@ -32,7 +32,7 @@ class TestcaseWorkflow : Workflow() {
      */
     private var cachedCreative: MutableMap<String, String> = mutableMapOf()
 
-    override val prompts: LinkedHashMap<StageContext.Stage, StageContext> = linkedMapOf(
+    override val stages: LinkedHashMap<StageContext.Stage, StageContext> = linkedMapOf(
         ANALYZE.stage to ANALYZE,
         DESIGN.stage to DESIGN,
         REVIEW.stage to REVIEW

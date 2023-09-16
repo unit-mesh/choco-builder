@@ -48,7 +48,7 @@ class ChatController(
         }
 
         // 2. searches by stage
-        val prompt = workflow.prompts[chat.stage]
+        val prompt = workflow.stages[chat.stage]
             ?: throw RuntimeException("prompt not found!")
 
         // 3. execute stage with prompt

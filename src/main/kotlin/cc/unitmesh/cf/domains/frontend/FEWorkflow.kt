@@ -33,7 +33,7 @@ class FEWorkflow() : Workflow() {
     @Autowired
     private lateinit var llmProvider: LlmProvider
 
-    override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
+    override val stages: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
             CLARIFY.stage to CLARIFY,
             DESIGN.stage to DESIGN,

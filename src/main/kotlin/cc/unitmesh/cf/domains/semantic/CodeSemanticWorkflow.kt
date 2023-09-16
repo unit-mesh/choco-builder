@@ -14,6 +14,7 @@ import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
 import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
 import cc.unitmesh.store.ElasticsearchStore
 import io.reactivex.rxjava3.core.Flowable
+import org.slf4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -25,9 +26,10 @@ class CodeSemanticWorkflow : Workflow() {
     val store: ElasticsearchStore = ElasticsearchStore()
     val embedding = SentenceTransformersEmbedding()
 
-    override val prompts: LinkedHashMap<StageContext.Stage, StageContext>
+    override val stages: LinkedHashMap<StageContext.Stage, StageContext>
         get() = linkedMapOf(
-            ANALYSIS.stage to ANALYSIS
+            ANALYSIS.stage to ANALYSIS,
+            EXECUTE.stage to EXECUTE,
         )
 
     val domainName = SupportedDomains.CodeSemanticSearch.value
@@ -44,9 +46,9 @@ class CodeSemanticWorkflow : Workflow() {
     }
 
     companion object {
-        val log = org.slf4j.LoggerFactory.getLogger(CodeInterpreterWorkflow::class.java)
+        val log: Logger = org.slf4j.LoggerFactory.getLogger(CodeInterpreterWorkflow::class.java)
         val ANALYSIS: StageContext = StageContext(
-            id = "FrontendExecute",
+            id = "SemanticAnalyze",
             stage = StageContext.Stage.Analyze,
             systemPrompt = """Your are a senior software developer, your job is to transpile user's question relative to codebase.
                 |
@@ -60,5 +62,10 @@ class CodeSemanticWorkflow : Workflow() {
                 |""".trimMargin(),
             examples = ExplainQuery.QAExamples,
         )
+        val EXECUTE: StageContext = StageContext(
+            id = "SemanticExecute",
+            stage = StageContext.Stage.Execute,
+            systemPrompt = """""",
+        );
     }
 }

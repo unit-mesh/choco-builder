@@ -27,7 +27,7 @@ class WorkflowController(val classify: DomainClassify) {
         }
         val workflow = domain.workflow(domainName)
 
-        return workflow.prompts.map {
+        return workflow.stages.map {
             it.value
         }
     }
