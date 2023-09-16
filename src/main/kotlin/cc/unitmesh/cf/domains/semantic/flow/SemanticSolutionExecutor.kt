@@ -59,24 +59,11 @@ class SemanticSolutionExecutor(
             }
         }
 
-        val queryFlowable: Flowable<Answer> = Flowable.just(solution).map {
-            Answer(this.javaClass.name, """
-        |englishQuery: ${solution.englishQuery}
-        |originLanguageQuery: ${solution.originLanguageQuery}
-        |hypotheticalDocument:
-        |```
-        |${solution.hypotheticalDocument}
-        |```
-        |""".trimMargin()
-            )
-        }
 
         val reorderCodes = DocumentOrder.lostInMiddleReorder(codes)
         variables.putCode("", reorderCodes.map { it.second })
         val finalPrompt = variables.compile(basePrompt)
 
-        val firstLines = relevantDocuments.map { it.embedded.text.lines().first() }.joinToString("\n")
-        val codeSnapshot = Flowable.just(Answer(this.javaClass.name, "代码片段首行信息: \n```\n$firstLines\n```\n"))
 
         val messages = listOf(
             LlmMsg.ChatMessage(LlmMsg.ChatRole.User, finalPrompt),
@@ -85,9 +72,24 @@ class SemanticSolutionExecutor(
         log.info("Execute messages: {}", messages)
         val completion: Flowable<String> = completion.streamCompletion(messages)
 
-        return Flowable.just(Answer(this.javaClass.name, "转换后的查询: \n"))
-            .concatWith(queryFlowable)
-            .concatWith(codeSnapshot)
+        val debugInfo = """
+            |```debug
+            |查询条件：
+            |
+            |question: ${solution.question}
+            |englishQuery: ${solution.englishQuery}
+            |originLanguageQuery: ${solution.originLanguageQuery}
+            |hypotheticalDocument:
+            |${solution.hypotheticalDocument}
+            |
+            |代码片段：
+            |
+            |${reorderCodes.joinToString("\n") { "${it.first} ${it.second.split("\n").first()}" }}
+            |
+            |```
+            |""".trimMargin()
+
+        return Flowable.just(Answer(this.javaClass.name, debugInfo))
             .concatWith(completion.map { Answer(this.javaClass.name, it) })
     }
 }

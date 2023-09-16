@@ -2,7 +2,7 @@
 layout: default
 title: Semantic 搜索：Analyze 阶段
 parent: Prompt logs
-nav_order: 30
+nav_order: 31
 ---
 
 ## Input

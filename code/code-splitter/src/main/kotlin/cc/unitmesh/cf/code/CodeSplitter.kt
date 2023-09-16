@@ -20,15 +20,16 @@ class CodeSplitter(
     val chunkLinesOverlap: Int = 15,
 ) {
     fun split(ds: CodeDataStruct): List<Document> {
-        val canonicalName = "$comment canonicalName: " + ds.Package + "." + ds.NodeName
+        var canonicalName = "$comment canonicalName: " + ds.Package + "." + ds.NodeName
         if (ds.Content.length <= maxChars) {
-            return listOf(Document(ds.Content))
+            return listOf(Document(canonicalName + "\n" + ds.Content))
         }
 
         return ds.Functions.map {
             if (it.Name == "PrimaryConstructor") {
                 return@map null
             }
+            canonicalName += "." + it.Name
             split(it, canonicalName)
         }.filterNotNull()
     }
