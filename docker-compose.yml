@@ -8,6 +8,7 @@ services:
     environment:
       - OPENAI_API_KEY=xxxx
       - OPENAI_API_HOST=https://api.openai.com/
+      - ELASTICSEARCH_URL=elasticsearch:9200
 
   frontend:
     image: "unitmesh/chocolate-factory-frontend:latest"

@@ -17,17 +17,22 @@ import cc.unitmesh.store.ElasticsearchStore
 import io.reactivex.rxjava3.core.Flowable
 import org.slf4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class CodeSemanticWorkflow : Workflow() {
+class CodeSemanticWorkflow(
+    @Value("\${elasticsearch.uris}")
+    private var elasticsearchUrl: String
+) : Workflow() {
     @Autowired
     private lateinit var llmProvider: LlmProvider
 
     @Autowired
     private lateinit var variableResolver: SemanticVariableResolver
 
-    val store: ElasticsearchStore = ElasticsearchStore()
+    val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
+
     val embedding = SentenceTransformersEmbedding()
 
     override val stages: LinkedHashMap<StageContext.Stage, StageContext>

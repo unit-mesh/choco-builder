@@ -7,6 +7,7 @@ import cc.unitmesh.store.ElasticsearchStore
 import org.archguard.action.checkout.GitCommandManager
 import org.archguard.action.checkout.GitSourceSettings
 import org.archguard.action.checkout.doCheckout
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.io.File
@@ -21,8 +22,11 @@ import kotlin.io.path.pathString
  */
 @RestController
 @RequestMapping("/code")
-class CodeDocumentController {
-    val store: ElasticsearchStore = ElasticsearchStore()
+class CodeDocumentController(
+    @Value("\${elasticsearch.uris}")
+    private var elasticsearchUrl: String,
+) {
+    val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
     val embedding = SentenceTransformersEmbedding()
 
     companion object {

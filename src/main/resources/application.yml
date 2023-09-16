@@ -12,12 +12,5 @@ spring:
     hikari:
       connection-timeout: 50000
 
-
-# vector store config
-store:
-  pinecone:
-    api-key: sk-xxx
-    environment: dev
-    project-id: xxx
-    index: xxx
-    name-space: xxx
+elasticsearch:
+  uris: "localhost:9200"

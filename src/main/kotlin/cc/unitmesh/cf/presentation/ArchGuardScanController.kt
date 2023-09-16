@@ -4,6 +4,7 @@ import cc.unitmesh.cf.code.CodeSplitter
 import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
 import cc.unitmesh.store.ElasticsearchStore
 import chapi.domain.core.CodeDataStruct
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/scanner/{systemId}/reporting")
-class ArchGuardScanController {
+class ArchGuardScanController(
+    @Value("\${elasticsearch.uris}")
+    private var elasticsearchUrl: String
+) {
     // todo: add for custom api keys
-    val store: ElasticsearchStore = ElasticsearchStore()
+    val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
+
     val splitter: CodeSplitter = CodeSplitter()
     val embedding = SentenceTransformersEmbedding()
 
