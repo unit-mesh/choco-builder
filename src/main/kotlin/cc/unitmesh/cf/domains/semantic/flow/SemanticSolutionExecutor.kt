@@ -5,6 +5,9 @@ import cc.unitmesh.cf.core.flow.SolutionExecutor
 import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.cf.core.parser.MarkdownCode
+import cc.unitmesh.cf.domains.interpreter.flow.CodeInput
+import cc.unitmesh.cf.domains.interpreter.flow.CodeSolutionExecutor
 import cc.unitmesh.cf.domains.semantic.CodeSemanticWorkflow
 import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
 import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
@@ -14,7 +17,10 @@ import cc.unitmesh.nlp.embedding.OpenAiEncoding
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.document.DocumentOrder
 import cc.unitmesh.rag.store.EmbeddingStore
+import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class SemanticSolutionExecutor(
     val completion: LlmProvider,
@@ -52,13 +58,12 @@ class SemanticSolutionExecutor(
             codes.add(it.score to it.embedded.text)
             variables.putCode("", codes.map { it.second })
             val testPrompt = variables.compile(basePrompt)
-            // todo: make 3072 configurable
+            // todo: make 2048 configurable
             if (encodingTokenizer.encode(testPrompt).size >= 2048) {
                 codes.removeAt(codes.size - 1)
                 return@forEach
             }
         }
-
 
         val reorderCodes = DocumentOrder.lostInMiddleReorder(codes)
         variables.putCode("", reorderCodes.map { it.second })
@@ -89,7 +94,20 @@ class SemanticSolutionExecutor(
             |```
             |""".trimMargin()
 
-        return Flowable.just(Answer(this.javaClass.name, debugInfo))
-            .concatWith(completion.map { Answer(this.javaClass.name, it) })
+        return Flowable.create({ emitter ->
+            emitter.onNext(Answer(this.javaClass.name, debugInfo))
+            completion
+                .subscribe(
+                    { result ->
+                        val answer = Answer(this.javaClass.name, result)
+                        emitter.onNext(answer)
+                    },
+                    { throwable: Throwable ->
+                        emitter.tryOnError(throwable)
+                    })
+                {
+                    emitter.onComplete()
+                }
+        }, BackpressureStrategy.BUFFER)
     }
 }

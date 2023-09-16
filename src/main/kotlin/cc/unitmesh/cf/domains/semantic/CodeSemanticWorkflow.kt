@@ -88,7 +88,7 @@ class CodeSemanticWorkflow : Workflow() {
                 |  - Keep number of quoted lines of code to a minimum when possible
                 |  - Basic markdown is allowed
                 |  - If you have enough information, try your best to answer more details.
-                |  - You muse use PlantUML to provide key process of your thinking,
+                |  - You MUST provide key process of your thinking,
                 | 
                 |相关的代码：
                 |${'$'}{relevantCode} 
