@@ -50,7 +50,32 @@ See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see i
 
 ![Frontend](https://unitmesh.cc/cf/chocolate-factory-fe-demo-1.png)
 
-### Examples 2: Code Interpreter
+### Example 2: 语义化代码搜索
+
+- 步骤 1：ProblemAnalyzer 分析用户的需求，转为成多个语义化的查询
+    - 中文、英文、HyDE 模式
+- 步骤 2：SolutionExecutor：根据用户的需求，从数据库中检索出最相关的代码片段，由 ChatGPT 做总结
+
+示例输入：Semantic Workflow 是如何实现的？
+
+最终输出：
+
+![Semantic](https://unitmesh.cc/cf/semantic-query-example.png)
+
+### Example 3: Testcase Generator
+
+- 步骤 1：ProblemAnalyzer 分析用户的需求，确认是否是一个测试用例生成的需求
+    - [x] 多 Temperature 模式：TemperatureMode.Default, TemperatureMode.Creative
+- 步骤 2：SolutionDesigner 设计测试用例生成的方案
+- 步骤 3：SolutionReviewer 确认方案是否符合用户的需求
+
+示例输入：用户发表文章
+
+最终输出：
+
+![Testcases](https://unitmesh.cc/cf/chocolate-factory-demo-3.png)
+
+### Examples 4: Code Interpreter
 
 - 步骤 1：SolutionExecutor
 
@@ -96,19 +121,6 @@ letsPlot(incomeData) { x = "x"; y = "y" } +
 最终输出：
 
 ![Frontend](https://unitmesh.cc/cf/chocolate-factory-demo-2.png)
-
-### Example 3: Testcase Generator
-
-- 步骤 1：ProblemAnalyzer 分析用户的需求，确认是否是一个测试用例生成的需求
-    - [x] 多 Temperature 模式：TemperatureMode.Default, TemperatureMode.Creative
-- 步骤 2：SolutionDesigner 设计测试用例生成的方案
-- 步骤 3：SolutionReviewer 确认方案是否符合用户的需求
-
-示例输入：用户发表文章
-
-最终输出：
-
-![Testcases](https://unitmesh.cc/cf/chocolate-factory-demo-3.png)
 
 ## License
 
