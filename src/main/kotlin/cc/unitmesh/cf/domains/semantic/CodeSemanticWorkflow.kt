@@ -84,6 +84,11 @@ class CodeSemanticWorkflow : Workflow() {
                 |  - Keep number of quoted lines of code to a minimum when possible
                 |  - Basic markdown is allowed
                 | 
+                |相关的代码：
+                |${'$'}{relevantCode} 
+                |
+                |用户的问题：${'$'}{question}
+                |
                 |""".trimMargin()
         );
     }

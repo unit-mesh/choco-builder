@@ -24,8 +24,14 @@ export const domains: DomainFormItem[] = [
     ]
   },
   {
-    label: 'OpenAPI (Todo)',
-    value: 'openapi'
+    label: '语义化代码解释',
+    value: 'semantic-search',
+    examples: [
+      {
+        title: 'SpecWorkflow 是如何执行的？',
+        content: 'SpecWorkflow 是如何执行的？'
+      }
+    ]
   },
   {
     label: 'Code Interpreter (Kotlin)',

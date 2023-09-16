@@ -48,8 +48,11 @@ class ChatController(
         }
 
         // 2. searches by stage
-        val prompt = workflow.stages[chat.stage]
-            ?: throw RuntimeException("prompt not found!")
+        var prompt = workflow.stages[chat.stage]
+        if (prompt == null) {
+            log.error("prompt not found! chat: {}", chat)
+            prompt = workflow.stages.values.first()
+        }
 
         // 3. execute stage with prompt
         val chatWebContext = chat.toContext()

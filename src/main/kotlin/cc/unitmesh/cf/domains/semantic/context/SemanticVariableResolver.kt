@@ -27,7 +27,7 @@ class SemanticVariableResolver() : VariableResolver<SemanticVariables> {
     fun putCode(lang: String, code: List<String>) {
         velocityContext.put("relevantCode", code.map {
             "```$lang\n$it\n```\n"
-        })
+        }.joinToString("\n"))
     }
 
     override fun compile(input: String): String {
