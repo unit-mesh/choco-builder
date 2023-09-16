@@ -8,6 +8,7 @@ import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
+import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
 import cc.unitmesh.cf.domains.semantic.flow.SemanticProblemAnalyzer
 import cc.unitmesh.cf.domains.semantic.flow.SemanticSolutionExecutor
 import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
@@ -22,6 +23,9 @@ import org.springframework.stereotype.Component
 class CodeSemanticWorkflow : Workflow() {
     @Autowired
     private lateinit var llmProvider: LlmProvider
+
+    @Autowired
+    private lateinit var variableResolver: SemanticVariableResolver
 
     val store: ElasticsearchStore = ElasticsearchStore()
     val embedding = SentenceTransformersEmbedding()
@@ -39,8 +43,12 @@ class CodeSemanticWorkflow : Workflow() {
         val analyze = SemanticProblemAnalyzer(llmProvider)
             .analyze(domainName, question)
 
+        // todo: send to local
+
+        log.info("Semantic analyze: {}", analyze)
+
         val answerFlowable: Flowable<Answer> =
-            SemanticSolutionExecutor(llmProvider, store, embedding).execute(analyze)
+            SemanticSolutionExecutor(llmProvider, store, embedding, variableResolver).execute(analyze)
 
         return toFlowableResult(answerFlowable)
     }
@@ -54,8 +62,10 @@ class CodeSemanticWorkflow : Workflow() {
                 |
                 |1. YOU MUST follow the DSL format.
                 |2. You MUST translate user's question into a DSL query.
-                |3. `query` is a reference to the document that you think is the answer to the question.
-                |4. `hypothetical_document` is a example of the document that you think is the answer to the question.
+                |3. `englishQuery` is a reference to the document that you think is the answer to the question.
+                |4. `originLanguageQuery` 是从用户的问题中提取出来的自然语言查询，以用于查询用户的问题。
+                |5. `hypotheticalDocument` ia a code snippet that could hypothetically be returned by a code search engine as the answer.
+                |5.
                 | 
                 |For examples:
                 |
@@ -65,7 +75,16 @@ class CodeSemanticWorkflow : Workflow() {
         val EXECUTE: StageContext = StageContext(
             id = "SemanticExecute",
             stage = StageContext.Stage.Execute,
-            systemPrompt = """""",
+            systemPrompt = """Your job is to answer a query about a codebase using the information above.
+                |
+                |You must use the following formatting rules at all times:
+                |  - Provide only as much information and code as is necessary to answer the query and be concise
+                |  - If you do not have enough information needed to answer the query, do not make up an answer
+                |  - When referring to code, you must provide an example in a code block
+                |  - Keep number of quoted lines of code to a minimum when possible
+                |  - Basic markdown is allowed
+                | 
+                |""".trimMargin()
         );
     }
 }

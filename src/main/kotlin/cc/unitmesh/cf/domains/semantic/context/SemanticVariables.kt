@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.domains.semantic.model
+package cc.unitmesh.cf.domains.semantic.context
 
 class SemanticVariables(
     var englishQuery: String,
