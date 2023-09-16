@@ -29,7 +29,7 @@ class ArchGuardScanController(
         @RequestParam path: String,
         @RequestBody input: List<CodeDataStruct>,
     ): ResponseEntity<String> {
-        val documents = input.map(splitter::split).flatten();
+        val documents = input.map(splitter::split).flatten()
         val embeddings = documents.map { embedding.embed(it.text) }
         store.addAll(embeddings, documents)
 
