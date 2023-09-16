@@ -79,7 +79,8 @@ data class ExplainQuery(
                 it.question, """###
                 |englishQuery: ${it.englishQuery}
                 |originLanguageQuery: ${it.originLanguageQuery}
-                |hypotheticalDocument: ${it.hypotheticalDocument}
+                |hypotheticalDocument: 
+                |${it.hypotheticalDocument}
                 |###
                 |""".trimMargin()
             )

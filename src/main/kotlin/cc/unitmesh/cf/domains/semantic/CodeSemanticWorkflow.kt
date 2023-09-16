@@ -21,17 +21,15 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class CodeSemanticWorkflow(
+class CodeSemanticWorkflow : Workflow() {
     @Value("\${elasticsearch.uris}")
-    private var elasticsearchUrl: String
-) : Workflow() {
+    private lateinit var elasticsearchUrl: String
+
     @Autowired
     private lateinit var llmProvider: LlmProvider
 
     @Autowired
     private lateinit var variableResolver: SemanticVariableResolver
-
-    val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
 
     val embedding = SentenceTransformersEmbedding()
 
@@ -44,6 +42,7 @@ class CodeSemanticWorkflow(
     val domainName = SupportedDomains.CodeSemanticSearch.value
 
     override fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult> {
+        val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
         val question = chatWebContext.messages.last().content
         val analyze = SemanticProblemAnalyzer(llmProvider)
             .analyze(domainName, question)
