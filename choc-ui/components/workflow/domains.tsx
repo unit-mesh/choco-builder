@@ -28,8 +28,8 @@ export const domains: DomainFormItem[] = [
     value: 'semantic-search',
     examples: [
       {
-        title: 'SpecWorkflow 是如何执行的？',
-        content: 'SpecWorkflow 是如何执行的？'
+        title: 'Semantic Workflow 是如何实现的？',
+        content: 'Semantic Workflow 是如何实现的？'
       }
     ]
   },

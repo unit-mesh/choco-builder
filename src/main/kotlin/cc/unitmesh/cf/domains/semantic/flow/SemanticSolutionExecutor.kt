@@ -28,12 +28,14 @@ class SemanticSolutionExecutor(
         variables.putQuery(solution)
         val query = embedding.embed(solution.englishQuery)
         val originQuery = embedding.embed(solution.originLanguageQuery)
+        val hypotheticalDocument = embedding.embed(solution.hypotheticalDocument)
 
-        val list = store.findRelevant(query, 2)
-        val originList = store.findRelevant(originQuery, 2)
+        val hydeDocs = store.findRelevant(hypotheticalDocument, 3)
+        val list = store.findRelevant(query, 1)
+        val originList = store.findRelevant(originQuery, 1)
 
-        // remove duplicate in list
-        val relevantDocuments = list.filter { !originList.contains(it) } + originList
+        // remove duplicate in hydeDocs, list, originList
+        val relevantDocuments = (hydeDocs + list + originList).distinctBy { it.embedded.text }
 
         variables.putCode("", relevantDocuments.map { it.embedded.text })
 
