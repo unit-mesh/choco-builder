@@ -8,7 +8,19 @@ permalink: /docs/code-splitter
 
 参考内容：[https://docs.sweep.dev/blogs/chunking-2m-files](https://docs.sweep.dev/blogs/chunking-2m-files)
 
+## 基础知识
+
 Code Splitter 模块是一个代码分割模块，用于将代码分割成多个片段，以便进行各种代码相关任务，如代码相似度计算、代码分类、代码聚类等。
+
+### 拆分策略
+
+根据《[Chunking 2M+ files a day for Code Search using Syntax Trees](https://docs.sweep.dev/blogs/chunking-2m-files)》 的建议：
+
+1. 代码的平均 Token 到字符比例约为1:5（300 个 Token），而嵌入模型的 Token 上限为 512 个。
+2. 1500 个字符大约对应于 40 行，大致相当于一个小到中等大小的函数或类。
+3. 挑战在于尽可能接近 1500 个字符，同时确保分块在语义上相似且相关上下文连接在一起。
+
+### 拆分分工
 
 多种不同方式：
 
@@ -18,18 +30,17 @@ Code Splitter 模块是一个代码分割模块，用于将代码分割成多个
 - 基于规则 DSL的语法分析：LlamaIndex
     - TreeSitter: [https://tree-sitter.github.io/tree-sitter/](https://tree-sitter.github.io/tree-sitter/)
 
-根据《[Chunking 2M+ files a day for Code Search using Syntax Trees](https://docs.sweep.dev/blogs/chunking-2m-files)》 的建议：
-
-1. 代码的平均 Token 到字符比例约为1:5（300 个 Token），而嵌入模型的 Token 上限为 512 个。
-2. 1500 个字符大约对应于 40 行，大致相当于一个小到中等大小的函数或类。
-3. 挑战在于尽可能接近 1500 个字符，同时确保分块在语义上相似且相关上下文连接在一起。
-
 ## Chocolate Factory 实现
 
-Chunk 格式
+Chunk/Document 拆分策略
 
-1. 代码块的第一部分是上下文相关的注释，诸如包名、类名等。
-2. 代码块的第三部分是代码块的内容。
+1. 如果代码类少于 1500 个字符，则将整个代码类作为一个代码块。
+2. 如果代码类大于 1500 个字符，则将代码类分成多个函数代码块。
+
+代码块逻辑
+
+1. 代码块的第一部分是上下文相关的注释，诸如包名、类名等。 
+2. 代码块的第二部分是代码块的内容。
 
 示例：
 
