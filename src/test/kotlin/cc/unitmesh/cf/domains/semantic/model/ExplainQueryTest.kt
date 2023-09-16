@@ -21,8 +21,8 @@ class ExplainQueryTest {
         assertEquals("""
             |question: get all records
             |answer:
-            |query: SELECT * FROM table
-            |natureLangQuery: Retrieve all records from the table
+            |englishQuery: SELECT * FROM table
+            |originLanguageQuery: Retrieve all records from the table
             |hypotheticalDocument: document
             |""".trimMargin(), content)
     }
@@ -30,8 +30,8 @@ class ExplainQueryTest {
     @Test
     fun should_parse_from_answer() {
         val query = ExplainQuery.parse("get all records", """
-            |query: SELECT * FROM table
-            |natureLangQuery: Retrieve all records from the table
+            |englishQuery: SELECT * FROM table
+            |originLanguageQuery: Retrieve all records from the table
             |hypotheticalDocument: 
             |```
             |document
@@ -39,8 +39,8 @@ class ExplainQueryTest {
             |""".trimMargin())
 
         assertEquals("get all records", query.question)
-        assertEquals("SELECT * FROM table", query.query)
-        assertEquals("Retrieve all records from the table", query.natureLangQuery)
+        assertEquals("SELECT * FROM table", query.englishQuery)
+        assertEquals("Retrieve all records from the table", query.originLanguageQuery)
         assertEquals("document", query.hypotheticalDocument)
     }
 }

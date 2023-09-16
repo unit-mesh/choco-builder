@@ -10,8 +10,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ExplainQuery(
     val question: String,
-    val query: String,
-    val natureLangQuery: String,
+    val englishQuery: String,
+    val originLanguageQuery: String,
     val hypotheticalDocument: String,
 ) : Dsl {
     override var domain: String = "semantic-search"
@@ -19,8 +19,8 @@ data class ExplainQuery(
     override val content: String
         get() = """question: $question
         |answer:
-        |query: $query
-        |natureLangQuery: $natureLangQuery
+        |englishQuery: $englishQuery
+        |originLanguageQuery: $originLanguageQuery
         |hypotheticalDocument: $hypotheticalDocument
         |""".trimMargin()
 
@@ -28,8 +28,8 @@ data class ExplainQuery(
         fun parse(question: String, completion: String): ExplainQuery {
             val code = MarkdownCode.parse(completion)
 
-            val query = completion.substringAfter("query: ").substringBefore("\n")
-            val natureLangQuery = completion.substringAfter("natureLangQuery: ").substringBefore("\n")
+            val query = completion.substringAfter("englishQuery: ").substringBefore("\n")
+            val natureLangQuery = completion.substringAfter("originLanguageQuery: ").substringBefore("\n")
             var hypotheticalDocument = code.text
 
             if (hypotheticalDocument.isBlank()) {
@@ -43,8 +43,8 @@ data class ExplainQuery(
         val EXAMPLES = listOf(
             ExplainQuery(
                 question = "如何通过 ID 查找代码库变更信息?",
-                query = "query git path change count by system id",
-                natureLangQuery = "通过 ID 查找 Git 代码库路径变更统计信息",
+                englishQuery = "query git path change count by system id",
+                originLanguageQuery = "通过 ID 查找 Git 代码库路径变更统计信息",
                 hypotheticalDocument = """
                     |```kotlin
                     |   @SqlQuery(
@@ -57,8 +57,8 @@ data class ExplainQuery(
             ),
             ExplainQuery(
                 question = "What's the Qdrant threshold?",
-                query = "Qdrant threshold (point, score, offset)",
-                natureLangQuery = "Qdrant 阈值 (point, score, offset)",
+                englishQuery = "Qdrant threshold (point, score, offset)",
+                originLanguageQuery = "Qdrant 阈值 (point, score, offset)",
                 hypotheticalDocument = """
                     |```rust
                     |SearchPoints {{
@@ -77,8 +77,8 @@ data class ExplainQuery(
         val QAExamples = EXAMPLES.map {
             QAExample(
                 it.question, """###
-                |query: ${it.query}
-                |natureLangQuery: ${it.natureLangQuery}
+                |englishQuery: ${it.englishQuery}
+                |originLanguageQuery: ${it.originLanguageQuery}
                 |hypotheticalDocument: ${it.hypotheticalDocument}
                 |###
                 |""".trimMargin()

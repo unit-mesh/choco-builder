@@ -7,6 +7,9 @@ import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import io.reactivex.rxjava3.core.Flowable
 
 abstract class Workflow {
+    /**
+     * ChatWebContext is a context from GUI
+     */
     val chatWebContext: ChatWebContext? = null
 
     /**
@@ -15,6 +18,9 @@ abstract class Workflow {
      */
     open val stages: LinkedHashMap<StageContext.Stage, StageContext> = linkedMapOf()
 
+    /**
+     * execute the stages of workflow
+     */
     abstract fun execute(prompt: StageContext, chatWebContext: ChatWebContext): Flowable<WorkflowResult>
 
     fun toFlowableResult(answerFlowable: Flowable<Answer>): Flowable<WorkflowResult> {
