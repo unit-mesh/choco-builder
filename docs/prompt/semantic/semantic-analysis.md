@@ -25,7 +25,6 @@ A:
 englishQuery: query git path change count by system id
 originLanguageQuery: 通过 ID 查找 Git 代码库路径变更统计信息
 hypotheticalDocument: 
-
 ```kotlin
 @SqlQuery(
   "select system_id as systemId, line_count as lineCount, path, changes" +
