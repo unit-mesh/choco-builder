@@ -3,7 +3,7 @@ layout: default
 title: ExplainQuery Semantic DSL
 parent: Domain Specific Language
 nav_order: 2
-permalink: /dsl/design
+permalink: /dsl/semantic-query
 ---
 
 Semantic DSL 基于 [CoUnit](https://github.com/unit-mesh/co-unit) 中的 DSL 所创建的：
