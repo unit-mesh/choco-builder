@@ -1,32 +1,55 @@
 package cc.unitmesh.cf.language;
 
-import org.assertj.core.api.Assertions.assertThat
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class GuessLineCommentTest {
-    private var languageService = LanguageService()
+class LanguageServiceTest {
+    private val lang = LanguageService()
 
     @Test
-    fun should_return_line_comment_when_language_exists() {
-        // given
-        val language = "Java"
-
-        // when
-        val lineComment = languageService.guessLineComment(language)
-
-        // then
-        assertThat(lineComment).isEqualTo("//")
+    fun determine_language() {
+        lang.determineLanguage("", listOf("Coq", "SystemVerilog"), "Require Hypothesis Inductive".toByteArray()) shouldBe "Coq"
+        lang.determineLanguage("", listOf("Coq", "SystemVerilog"), "endmodule posedge edge always wire".toByteArray()) shouldBe "SystemVerilog"
+        lang.determineLanguage("Java", listOf(), "endmodule posedge edge always wire".toByteArray()) shouldBe "Java"
     }
 
     @Test
-    fun should_return_null_when_language_does_not_exist() {
-        // given
-        val language = "Python"
+    fun determine_language_with_content() {
+        val possibleLanguages = lang.detectLanguages(".travis.yml");
+        lang.determineLanguage(possibleLanguages[0], possibleLanguages, """Resources:
+  MyEC2Instance: #An inline comment
+    Type: "AWS::EC2::Instance"""".toByteArray()) shouldBe "CloudFormation (YAML)"
+    }
 
-        // when
-        val lineComment = languageService.guessLineComment(language)
+    @Test
+    fun scan_shebang() {
+        lang.scanForSheBang("#!  /usr/bin/env   perl   -w".toByteArray()) shouldBe "perl"
+    }
 
-        // then
-        assertThat(lineComment).isEqualTo("#")
+    @Test
+    fun determine_language_with_shebang() {
+        val cases = listOf(
+            "#!/usr/bin/perl",
+            "#!  /usr/bin/perl",
+            "#!/usr/bin/perl -w",
+            "#!/usr/bin/env perl",
+            "#!  /usr/bin/env   perl",
+            "#!/usr/bin/env perl -w",
+            "#!  /usr/bin/env   perl   -w",
+            "#!/opt/local/bin/perl",
+            "#!/usr/bin/perl5",
+        )
+
+        for (case in cases) {
+            lang.detectSheBang(case) shouldBe "Perl"
+        }
+    }
+
+    @Test
+    fun match_csharp() {
+        val feature = lang.getLanguageFeature("C#")
+        val trieMatch = feature?.tokens?.match("for ".toByteArray())!!
+
+        trieMatch.tokenType shouldBe TokenType.TComplexity
     }
 }

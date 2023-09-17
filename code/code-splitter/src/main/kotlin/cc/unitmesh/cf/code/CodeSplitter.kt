@@ -26,6 +26,7 @@ class CodeSplitter(
         }
 
         return ds.Functions.map {
+            // Kotlin primary constructor is not a function
             if (it.Name == "PrimaryConstructor") {
                 return@map null
             }
