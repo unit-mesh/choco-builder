@@ -53,8 +53,7 @@ data class ExplainQuery(
                     |       " from scm_path_change_count where system_id = :systemId"
                     |   )
                     |   fun findCountBySystemId(systemId: Long): List<GitPathChangeCount>
-                    |```
-                    |""".trimMargin()
+                    |```""".trimMargin()
             ),
             ExplainQuery(
                 question = "What's the Qdrant threshold?",
@@ -71,13 +70,12 @@ data class ExplainQuery(
                     |   with_payload: Some(WithPayloadSelector {{
                     |   selector_options: Some(with_payload_selector::SelectorOptions::Enable(true)),
                     |   }})
-                    |```
-                    |""".trimMargin()
+                    |```""".trimMargin()
             )
         )
         val QAExamples = EXAMPLES.map {
             QAExample(
-                it.question, """###
+                it.question, """
                 |englishQuery: ${it.englishQuery}
                 |originLanguageQuery: ${it.originLanguageQuery}
                 |hypotheticalCode: 
