@@ -14,7 +14,7 @@ Your are a senior software developer, your job is to transpile user's question r
 2. You MUST translate user's question into a DSL query.
 3. `englishQuery` is a reference to the document that you think is the answer to the question.
 4. `originLanguageQuery` 是从用户的问题中提取出来的自然语言查询，以用于查询用户的问题。
-5. `hypotheticalDocument` ia a code snippet that could hypothetically be returned by a code search engine as the answer.
+5. `hypotheticalCode` ia a code snippet that could hypothetically be returned by a code search engine as the answer.
 5.
 
 For examples:
@@ -24,7 +24,7 @@ Q:如何通过 ID 查找代码库变更信息?
 A:
 englishQuery: query git path change count by system id
 originLanguageQuery: 通过 ID 查找 Git 代码库路径变更统计信息
-hypotheticalDocument: 
+hypotheticalCode: 
 ```kotlin
 @SqlQuery(
   "select system_id as systemId, line_count as lineCount, path, changes" +
@@ -39,7 +39,7 @@ Q:What's the Qdrant threshold?
 A:
 - englishQuery: Qdrant threshold (point, score, offset)
 - originLanguageQuery: Qdrant 阈值 (point, score, offset)
-- hypotheticalDocument:
+- hypotheticalCode:
 
 ```rust
 SearchPoints {{
@@ -57,7 +57,7 @@ SearchPoints {{
 
 - englishQuery: How is Semantic Workflow implemented?
 - originLanguageQuery: Semantic Workflow 是如何实现的？
-- hypotheticalDocument:
+- hypotheticalCode:
 
 ```java
 public class SemanticWorkflow {

@@ -5,9 +5,6 @@ import cc.unitmesh.cf.core.flow.SolutionExecutor
 import cc.unitmesh.cf.core.flow.model.Answer
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
-import cc.unitmesh.cf.core.parser.MarkdownCode
-import cc.unitmesh.cf.domains.interpreter.flow.CodeInput
-import cc.unitmesh.cf.domains.interpreter.flow.CodeSolutionExecutor
 import cc.unitmesh.cf.domains.semantic.CodeSemanticWorkflow
 import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
 import cc.unitmesh.cf.domains.semantic.model.ExplainQuery
@@ -19,14 +16,12 @@ import cc.unitmesh.rag.document.DocumentOrder
 import cc.unitmesh.rag.store.EmbeddingStore
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class SemanticSolutionExecutor(
-    val completion: LlmProvider,
-    val store: EmbeddingStore<Document>,
-    val embedding: SentenceTransformersEmbedding,
-    val variables: SemanticVariableResolver,
+    private val completion: LlmProvider,
+    private val store: EmbeddingStore<Document>,
+    private val embedding: SentenceTransformersEmbedding,
+    private val variables: SemanticVariableResolver,
 ) : SolutionExecutor<ExplainQuery> {
     companion object {
         val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(SemanticSolutionExecutor::class.java)!!
@@ -41,9 +36,9 @@ class SemanticSolutionExecutor(
         variables.putQuery(solution)
         val query = embedding.embed(solution.englishQuery)
         val originQuery = embedding.embed(solution.originLanguageQuery)
-        val hypotheticalDocument = embedding.embed(solution.hypotheticalDocument)
+        val hypotheticalCode = embedding.embed(solution.hypotheticalCode)
 
-        val hydeDocs = store.findRelevant(hypotheticalDocument, 15, 0.6)
+        val hydeDocs = store.findRelevant(hypotheticalCode, 15, 0.6)
         val list = store.findRelevant(query, 15, 0.6)
         val originLangList = store.findRelevant(originQuery, 15, 0.6)
 
@@ -51,7 +46,7 @@ class SemanticSolutionExecutor(
         val relevantDocuments = (hydeDocs + list + originLangList)
             .distinctBy { it.embedded.text }
             .sortedByDescending { it.score }
-            .take(10)
+            .take(15)
 
         val codes: MutableList<Pair<Double, String>> = mutableListOf()
         relevantDocuments.forEach {
@@ -59,7 +54,7 @@ class SemanticSolutionExecutor(
             variables.putCode("", codes.map { it.second })
             val testPrompt = variables.compile(basePrompt)
             // todo: make 2048 configurable
-            if (encodingTokenizer.encode(testPrompt).size >= 2048) {
+            if (encodingTokenizer.encode(testPrompt).size >= 2560) {
                 codes.removeAt(codes.size - 1)
                 return@forEach
             }
@@ -84,8 +79,8 @@ class SemanticSolutionExecutor(
             |question: ${solution.question}
             |englishQuery: ${solution.englishQuery}
             |originLanguageQuery: ${solution.originLanguageQuery}
-            |hypotheticalDocument:
-            |${solution.hypotheticalDocument}
+            |hypotheticalCode:
+            |${solution.hypotheticalCode}
             |
             |代码片段：
             |

@@ -13,7 +13,7 @@ class SemanticVariableResolver() : VariableResolver<SemanticVariables> {
     override var variables: SemanticVariables? = SemanticVariables(
         englishQuery = "",
         originLanguageQuery = "",
-        hypotheticalDocument = "",
+        hypotheticalCode = "",
         relevantCode = listOf(),
     )
 
@@ -21,7 +21,7 @@ class SemanticVariableResolver() : VariableResolver<SemanticVariables> {
         velocityContext.put("question", query.question)
         velocityContext.put("englishQuery", query.englishQuery)
         velocityContext.put("originLanguageQuery", query.originLanguageQuery)
-        velocityContext.put("hypotheticalDocument", query.hypotheticalDocument)
+        velocityContext.put("hypotheticalCode", query.hypotheticalCode)
     }
 
     fun putCode(lang: String, code: List<String>) {

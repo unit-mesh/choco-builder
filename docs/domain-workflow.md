@@ -78,6 +78,11 @@ data class UiPage(
 
 ## 4. 创建执行器
 
-```kotlin
 
+
+```kotlin
+interface SolutionExecutor<in T: Dsl> {
+    val interpreters: List<Interpreter>
+    fun execute(solution: T): Flowable<Answer>
+}
 ```

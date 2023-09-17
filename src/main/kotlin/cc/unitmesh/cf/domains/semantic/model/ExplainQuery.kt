@@ -13,7 +13,7 @@ data class ExplainQuery(
     val question: String,
     val englishQuery: String,
     val originLanguageQuery: String,
-    val hypotheticalDocument: String,
+    val hypotheticalCode: String,
 ) : Dsl {
     override var domain: String = "semantic-search"
     override var interpreters: List<DslInterpreter> = listOf()
@@ -22,7 +22,7 @@ data class ExplainQuery(
         |answer:
         |englishQuery: $englishQuery
         |originLanguageQuery: $originLanguageQuery
-        |hypotheticalDocument: $hypotheticalDocument
+        |hypotheticalCode: $hypotheticalCode
         |""".trimMargin()
 
     companion object {
@@ -31,13 +31,13 @@ data class ExplainQuery(
 
             val query = completion.substringAfter("englishQuery: ").substringBefore("\n")
             val natureLangQuery = completion.substringAfter("originLanguageQuery: ").substringBefore("\n")
-            var hypotheticalDocument = code.text
+            var hypotheticalCode = code.text
 
-            if (hypotheticalDocument.isBlank()) {
-                hypotheticalDocument = completion.substringAfter("hypotheticalDocument: ")
+            if (hypotheticalCode.isBlank()) {
+                hypotheticalCode = completion.substringAfter("hypotheticalCode: ")
             }
 
-            return ExplainQuery(question, query, natureLangQuery, hypotheticalDocument)
+            return ExplainQuery(question, query, natureLangQuery, hypotheticalCode)
         }
 
         val log: Logger = org.slf4j.LoggerFactory.getLogger(ExplainQuery::class.java)!!
@@ -45,8 +45,8 @@ data class ExplainQuery(
             ExplainQuery(
                 question = "如何通过 ID 查找代码库变更信息?",
                 englishQuery = "query git path change count by system id",
-                originLanguageQuery = "通过 ID 查找 Git 代码库路径变更统计信息",
-                hypotheticalDocument = """
+                originLanguageQuery = "// 通过 id 查找 Git 代码库路径变更统计信息",
+                hypotheticalCode = """
                     |```kotlin
                     |   @SqlQuery(
                     |       "select system_id as systemId, line_count as lineCount, path, changes" +
@@ -59,8 +59,8 @@ data class ExplainQuery(
             ExplainQuery(
                 question = "What's the Qdrant threshold?",
                 englishQuery = "Qdrant threshold (point, score, offset)",
-                originLanguageQuery = "Qdrant 阈值 (point, score, offset)",
-                hypotheticalDocument = """
+                originLanguageQuery = "// Threshold 结构体用于定义搜索点的筛选条件和参数",
+                hypotheticalCode = """
                     |```rust
                     |SearchPoints {{
                     |   limit,
@@ -80,8 +80,8 @@ data class ExplainQuery(
                 it.question, """###
                 |englishQuery: ${it.englishQuery}
                 |originLanguageQuery: ${it.originLanguageQuery}
-                |hypotheticalDocument: 
-                |${it.hypotheticalDocument}
+                |hypotheticalCode: 
+                |${it.hypotheticalCode}
                 |###
                 |""".trimMargin()
             )

@@ -6,6 +6,7 @@ import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.cf.core.llms.TemperatureMode
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
@@ -67,9 +68,9 @@ class CodeSemanticWorkflow : Workflow() {
                 |- YOU MUST follow the DSL format.
                 |- You MUST translate user's question into a DSL query.
                 |- `englishQuery` is a reference to the document that you think is the answer to the question.
-                |- `originLanguageQuery` 是从用户的问题中提取出来的自然语言查询，以用于查询用户的问题。
-                |- `hypotheticalDocument` is a code snippet that could hypothetically be returned by a code search engine as the answer.
-                |- `hypotheticalDocument` code snippet should be between 5 and 10 lines long
+                |- `originLanguageQuery` 是从用户的问题中提取出的关键信息，以用于搜索引擎检索。
+                |- `hypotheticalCode` is a code snippet that could hypothetically be returned by a code search engine as the answer.
+                |- `hypotheticalCode` code snippet should be between 5 and 10 lines long
                 | 
                 |For examples:
                 |

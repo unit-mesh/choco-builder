@@ -10,9 +10,9 @@ class ExplainQueryTest {
         // given
         val query = "SELECT * FROM table"
         val natureLangQuery = "Retrieve all records from the table"
-        val hypotheticalDocument = "document"
+        val hypotheticalCode = "document"
 
-        val explainQuery = ExplainQuery("get all records", query, natureLangQuery, hypotheticalDocument)
+        val explainQuery = ExplainQuery("get all records", query, natureLangQuery, hypotheticalCode)
 
         // when
         val content = explainQuery.content
@@ -23,7 +23,7 @@ class ExplainQueryTest {
             |answer:
             |englishQuery: SELECT * FROM table
             |originLanguageQuery: Retrieve all records from the table
-            |hypotheticalDocument: document
+            |hypotheticalCode: document
             |""".trimMargin(), content)
     }
 
@@ -32,7 +32,7 @@ class ExplainQueryTest {
         val query = ExplainQuery.parse("get all records", """
             |englishQuery: SELECT * FROM table
             |originLanguageQuery: Retrieve all records from the table
-            |hypotheticalDocument: 
+            |hypotheticalCode: 
             |```
             |document
             |```
@@ -41,6 +41,6 @@ class ExplainQueryTest {
         assertEquals("get all records", query.question)
         assertEquals("SELECT * FROM table", query.englishQuery)
         assertEquals("Retrieve all records from the table", query.originLanguageQuery)
-        assertEquals("document", query.hypotheticalDocument)
+        assertEquals("document", query.hypotheticalCode)
     }
 }
