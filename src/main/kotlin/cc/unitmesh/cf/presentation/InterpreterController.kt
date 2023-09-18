@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/interpreter")
-class InterpreterController() {
+class InterpreterController {
     val interpreter = KotlinInterpreter()
 
     @PostMapping("/eval")
     fun eval(@RequestBody request: CodeRequest): Message {
         return interpreter.eval(
-            InterpreterRequest(
-                code = request.code
-            )
+            InterpreterRequest(code = request.code)
         )
     }
 }

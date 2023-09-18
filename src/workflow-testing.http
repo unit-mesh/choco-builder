@@ -28,5 +28,5 @@ POST http://localhost:18080/api/interpreter/eval
 Content-Type: application/json
 
 {
-  "code": "val x = 3; y*2"
+  "code": "System.getenv()"
 }
