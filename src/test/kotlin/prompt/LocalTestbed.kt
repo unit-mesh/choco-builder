@@ -15,8 +15,8 @@ open class LocalTestbed {
             val dotenv = dotenv()
 
             OpenAiConfiguration().apply {
-                apiKey = dotenv["OPENAI_KEY"] ?: ""
-                apiHost = dotenv["OPENAI_SERVER_ADDRESS"]
+                apiKey = dotenv["OPENAI_API_KEY"] ?: ""
+                apiHost = dotenv["OPENAI_API_HOST"]
             }.let {
                 completion = OpenAiProvider(it)
             }
