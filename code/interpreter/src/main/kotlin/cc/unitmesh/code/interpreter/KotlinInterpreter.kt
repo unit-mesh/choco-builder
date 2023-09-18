@@ -6,7 +6,6 @@ import cc.unitmesh.code.messaging.Message
 import cc.unitmesh.code.messaging.MessageType
 import cc.unitmesh.code.interpreter.compiler.KotlinReplWrapper
 import cc.unitmesh.code.messaging.HtmlContent
-import jupyter.kotlin.ScriptTemplateWithDisplayHelpers
 import org.jetbrains.kotlinx.jupyter.api.toJson
 import org.jetbrains.kotlinx.jupyter.repl.EvalResultEx
 import org.jetbrains.letsPlot.commons.geometry.DoubleVector
@@ -23,13 +22,7 @@ class KotlinInterpreter {
     private val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
     fun eval(request: InterpreterRequest): Message {
-        if (request.code.contains("OPENAI_API_HOST") || request.code.contains("OPENAI_API_KEY")) {
-            throw Exception("Invalid code")
-        }
-
-        if (request.code.contains("System.getenv")) {
-            throw Exception("Invalid code")
-        }
+        handleForErrorCode(request.code)
 
         return try {
             val resultEx = compiler.eval(request.code, request.id, request.history)
@@ -41,9 +34,21 @@ class KotlinInterpreter {
         }
     }
 
+    private fun handleForErrorCode(value: String) {
+        if (value.contains("OPENAI_API_HOST") || value.contains("OPENAI_API_KEY")) {
+            throw Exception("Dangerous code")
+        }
+
+        if (value.contains("System.getenv")) {
+            throw Exception("Dangerous code")
+        }
+    }
+
     private fun convertResult(result: EvalResultEx, id: Int): Message {
         val resultValue = result.rawValue
         val className: String = resultValue?.javaClass?.name.orEmpty()
+
+        handleForErrorCode(resultValue.toString())
 
         when (resultValue) {
             // for Lets Plot

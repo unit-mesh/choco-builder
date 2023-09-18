@@ -15,9 +15,24 @@ class InterpreterController {
 
     @PostMapping("/eval")
     fun eval(@RequestBody request: CodeRequest): Message {
-        return interpreter.eval(
-            InterpreterRequest(code = request.code)
-        )
+        try {
+            interpreter.eval(
+                InterpreterRequest(code = request.code)
+            ).let {
+                return it
+            }
+        } catch (e: Exception) {
+            return Message(
+                resultValue = e.stackTraceToString(),
+                displayValue = e.stackTraceToString(),
+                className = "",
+                msgType = cc.unitmesh.code.messaging.MessageType.ERROR,
+                content = cc.unitmesh.code.messaging.ErrorContent(
+                    e.javaClass.name,
+                    e.toString()
+                )
+            )
+        }
     }
 }
 
