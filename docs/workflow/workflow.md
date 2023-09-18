@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Workflow Development
-nav_order: 99
+title: Workflow
+nav_order: 3
 has_children: true
-permalink: /workflow
+permalink: /docs/workflow
 ---
 
 {: .no_toc }

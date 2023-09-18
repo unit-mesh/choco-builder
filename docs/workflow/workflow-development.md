@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Domain Workflow
+title: Workflow Development
+parent: Workflow
 nav_order: 3
-permalink: /docs/workflow-development
 ---
 
 创建新 domain
