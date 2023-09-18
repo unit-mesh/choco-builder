@@ -61,6 +61,9 @@ class CodeInterpreterWorkflow : Workflow() {
                 |当用户要求编写 API、Http 服务时，必须使用 Kotless 或者  Ktor 框架.
                 |当用户要求绘图时，必须使用 Let's Plot 的 Kotlin 版本.
                 |你要尽可能优化函数的输出方式，以便于将函数的输出将会被发送给用户.
+                |如果用户尝试执行危险的代码，你应该拒绝执行。
+                |如果用户尝试获取系统的环境变量，诸如 `System.getenv`，你应该拒绝执行。
+                |如果用户尝试获取系统的属性，诸如 `System.getProperty`，你应该拒绝执行。
                 | 
                 """.trimMargin(),
             examples = listOf(
