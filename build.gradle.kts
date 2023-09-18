@@ -68,7 +68,7 @@ allprojects {
 }
 
 dependencies {
-    implementation(projects.cocoaLocalEmbedding)
+    implementation(projects.llmModules.sentenceTransformers)
     implementation(projects.cocoaCore)
     implementation(projects.dsl.design)
     implementation(projects.code.interpreter)

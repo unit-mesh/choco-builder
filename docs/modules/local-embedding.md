@@ -6,7 +6,11 @@ nav_order: 2
 permalink: /docs/local-embedding
 ---
 
-Local Embedding 模块是一个本地矢量化模块，用于将文本句子嵌入到一个高维向量空间中，以便进行各种文本相关任务，如文本相似度计算、
+Local Embedding 模块是一个本地矢量化模块，用于将文本句子嵌入到一个高维向量空间中，以便进行各种文本相关任务，如文本相似度计算等。其中包含了：
+
+- [Sentence Transformers](#sentence-transformers)
+  - [Embedding 示例](#embedding-示例)
+  - [Decode 和 Encode 示例](#decode-和-encode-示例)
 
 ## Sentence Transformers
 

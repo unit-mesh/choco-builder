@@ -6,6 +6,8 @@ nav_order: 2
 permalink: /docs/code-splitter
 ---
 
+# Code Splitter
+
 参考内容：[https://docs.sweep.dev/blogs/chunking-2m-files](https://docs.sweep.dev/blogs/chunking-2m-files)
 
 ## 基础知识
