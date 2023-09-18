@@ -14,6 +14,7 @@ class EmbeddingConverter : AttributeConverter<Embedding, String> {
         if (dbData == null) {
             return null
         }
+
         val array = dbData.split(",").filter { it.isNotEmpty() }.toTypedArray()
         return array.map { it.toDouble() }
     }

@@ -4,10 +4,7 @@ import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.cf.core.utils.Constants
 import cc.unitmesh.cf.core.utils.IdUtil
 import cc.unitmesh.cf.infrastructure.cache.utils.EmbeddingConverter
-import jakarta.persistence.Column
-import jakarta.persistence.Convert
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 public class EmbeddingCache(
