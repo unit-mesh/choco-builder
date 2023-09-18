@@ -6,7 +6,6 @@ import cc.unitmesh.cf.core.flow.model.ChatWebContext
 import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.core.llms.LlmProvider
-import cc.unitmesh.cf.core.llms.TemperatureMode
 import cc.unitmesh.cf.domains.SupportedDomains
 import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
