@@ -1,12 +1,40 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.0...v) (2023-09-16)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.3...v) (2023-09-18)
 
 
 
-# [0.2.0](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.3...v0.2.0) (2023-09-16)
+## [0.2.3](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.2...v0.2.3) (2023-09-18)
 
 
 ### Bug Fixes
 
+* add error handling code ([9bf8e94](https://github.com/unit-mesh/chocolate-factory/commit/9bf8e94b9bbf250aed8a08b83cbc8a641d9d8dfc))
+* add lost securiry prompt ([a026c66](https://github.com/unit-mesh/chocolate-factory/commit/a026c660044dfd1b65f7b0c474dca4d02551dacc))
+
+
+
+## [0.2.2](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.1...v0.2.2) (2023-09-18)
+
+
+### Bug Fixes
+
+* add simple env catch ([3ead6d8](https://github.com/unit-mesh/chocolate-factory/commit/3ead6d868c4504f945a6e8b85a56fb8ffe767702))
+* fix format ([b3ec043](https://github.com/unit-mesh/chocolate-factory/commit/b3ec043648cf22292f82b9dff22e340b1bad0892))
+* fix key issue ([58476c8](https://github.com/unit-mesh/chocolate-factory/commit/58476c8f395e22413e01bb0cce1f79399d755eb2))
+* fix links ([a0f987c](https://github.com/unit-mesh/chocolate-factory/commit/a0f987c8e77e7eec0c802998efcd355c1a9e5665))
+
+
+### Features
+
+* init eval api ([b8c4b21](https://github.com/unit-mesh/chocolate-factory/commit/b8c4b2166ce963659cb1daffcfede6df929d3111))
+
+
+
+## [0.2.1](https://github.com/unit-mesh/chocolate-factory/compare/v0.1.3...v0.2.1) (2023-09-17)
+
+
+### Bug Fixes
+
+* fix github link issue ([53050d8](https://github.com/unit-mesh/chocolate-factory/commit/53050d8a3205225d248190b9014504b0684b5d33))
 * fix relevant code issue ([103272b](https://github.com/unit-mesh/chocolate-factory/commit/103272b9c8ed090950a6bfdf678f0c8463f027b6))
 * fix sematnic logic ([0a756ae](https://github.com/unit-mesh/chocolate-factory/commit/0a756ae9d1f089ef333fd4676d50c41ff3a069be))
 * fix tests ([9db9317](https://github.com/unit-mesh/chocolate-factory/commit/9db931753aec2457864b696e1e0a8b4792ee9c12))
