@@ -19,4 +19,21 @@ class KotlinInterpreterTest {
         val res = compiler.eval("x*2")
         res.rawValue shouldBe 6
     }
+
+    @Test
+    internal fun multiple_table() {
+        compiler.eval("""fun generateMultiplicationTable(): String {
+    val sb = StringBuilder()
+    for (i in 1..9) {
+        for (j in 1..9) {
+            sb.append("'${'$'}{i * j}\t")
+        }
+        sb.append("\n")
+    }
+    return sb.toString()
+}
+
+val multiplicationTable = generateMultiplicationTable()
+multiplicationTable""");
+    }
 }
