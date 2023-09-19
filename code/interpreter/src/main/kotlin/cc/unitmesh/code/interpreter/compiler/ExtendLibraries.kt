@@ -121,9 +121,7 @@ val letPlotDef = SimpleLibraryDefinition(
 )
 
 fun extendLibraries(): LibraryResolver {
-    val kotless = "kotless" to Json.encodeToString(KotlessLibDef)
-    val ktor = "ktor" to Json.encodeToString(ktorLibDef)
     val letsPlot = "lets-plot" to Json.encodeToString(letPlotDef)
 
-    return listOf(kotless, ktor, letsPlot).toLibraries()
+    return listOf(letsPlot).toLibraries()
 }

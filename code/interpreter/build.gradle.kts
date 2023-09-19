@@ -11,19 +11,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlin-jupyter-api:0.12.0-56")
     implementation("org.jetbrains.kotlinx:kotlin-jupyter-kernel:0.12.0-56")
 
-    // Serverless Kotlin Language Binding
-    implementation(libs.kotless.lang)
-    implementation(libs.kotless.lang.local)
-
-    // Serverless Kotlin Spring
-    implementation(libs.kotless.spring.boot.lang)
-    implementation(libs.kotless.spring.boot.lang.local)
-    implementation(libs.kotless.spring.lang.parser)
-
-    // Serverless Kotlin Ktor
-    implementation(libs.kotless.ktor.lang)
-    implementation(libs.kotless.ktor.lang.local)
-
     implementation(libs.bundles.letsPlot)
 
     // tips: don't add follow deps to project will cause issues
