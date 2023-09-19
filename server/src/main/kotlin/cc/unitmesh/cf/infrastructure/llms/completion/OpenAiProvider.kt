@@ -1,8 +1,8 @@
 package cc.unitmesh.cf.infrastructure.llms.completion
 
-import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.cf.infrastructure.llms.configuration.OpenAiConfiguration
 import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionChoice
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
@@ -10,7 +10,6 @@ import com.theokanning.openai.service.OpenAiService
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

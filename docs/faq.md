@@ -34,3 +34,10 @@ http {
     ...
 }
 ```
+
+## Server 模块包体积过大
+
+模块比较大的模块：
+
+- SentenceTransformers，需要使用 OnnxRuntime 和 Tokenizer 模块，体积：80M+
+- Code Interpreters，需要使用 Kotlin 编译器，体积： ~70M+
