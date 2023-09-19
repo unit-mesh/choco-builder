@@ -25,6 +25,7 @@ import org.apache.poi.extractor.ExtractorFactory
 import org.apache.poi.xslf.usermodel.XMLSlideShow
 import org.apache.poi.xslf.usermodel.XSLFSlide
 import org.apache.poi.xslf.usermodel.XSLFTextShape
+import org.apache.poi.xwpf.usermodel.XWPFDocument
 import java.io.InputStream
 
 
@@ -37,7 +38,6 @@ open class MsOfficeDocumentParser(private val documentType: DocumentType) : Docu
     override fun parse(inputStream: InputStream): List<Document> {
         val documents: MutableList<Document> = mutableListOf()
         try {
-            // parseSlides(inputStream, documents)
             when (documentType) {
                 DocumentType.PPT -> parseSlides(inputStream, documents)
                 else -> {

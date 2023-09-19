@@ -12,4 +12,12 @@ class MsOfficeDocumentParserTest {
         assert(documents[0].text.contains("代码库问答"))
         assert(documents[1].text.contains("智能数据问答场景"))
     }
+
+    @Test
+    fun should_convert_word_to_markdown_text() {
+        val inputStream = this.javaClass.getResourceAsStream("/ChocolateFactory.docx")!!
+        val documents = MsOfficeDocumentParser(DocumentType.DOC).parse(inputStream)
+
+        assert(documents[0].text.contains("Chocolate Factory"))
+    }
 }
