@@ -3,10 +3,10 @@ package cc.unitmesh.document.parser;
 import cc.unitmesh.rag.document.DocumentType
 import org.junit.jupiter.api.Test
 
-class MsOfficeDocumentParserTest  {
+class MsOfficeDocumentParserTest {
     @Test
     fun should_parse_pptx_file() {
-        val inputStream = this.javaClass.getResourceAsStream("/sample.pptx")
+        val inputStream = this.javaClass.getResourceAsStream("/sample.pptx")!!
         val documents = MsOfficeDocumentParser(DocumentType.PPT).parse(inputStream)
 
         assert(documents[0].text.contains("代码库问答"))

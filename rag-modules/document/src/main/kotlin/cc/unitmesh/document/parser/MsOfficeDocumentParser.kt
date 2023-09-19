@@ -21,6 +21,7 @@ package cc.unitmesh.document.parser
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.document.DocumentParser
 import cc.unitmesh.rag.document.DocumentType
+import org.apache.poi.extractor.ExtractorFactory
 import org.apache.poi.xslf.usermodel.XMLSlideShow
 import org.apache.poi.xslf.usermodel.XSLFSlide
 import org.apache.poi.xslf.usermodel.XSLFTextShape
@@ -36,22 +37,39 @@ open class MsOfficeDocumentParser(private val documentType: DocumentType) : Docu
     override fun parse(inputStream: InputStream): List<Document> {
         val documents: MutableList<Document> = mutableListOf()
         try {
-            val ppt = XMLSlideShow(inputStream)
-
-            // 遍历每一张幻灯片
-            for (slide in ppt.slides) {
-                // 获取幻灯片的文本内容
-                val slideText = slide.title ?: ""
-                val content = getTexts(slide)
-                val metadata = hashMapOf("documentType" to documentType.toString(), "title" to slideText)
-                documents += Document.from(content, metadata)
+            // parseSlides(inputStream, documents)
+            when (documentType) {
+                DocumentType.PPT -> parseSlides(inputStream, documents)
+                else -> {
+                    documents += ExtractorFactory.createExtractor(inputStream).use { extractor ->
+                        val text = extractor.text
+                        Document.from(text, hashMapOf("documentType" to documentType.toString()))
+                    }
+                }
             }
-            ppt.close()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
         return documents
+    }
+
+    private fun parseSlides(
+        inputStream: InputStream,
+        documents: MutableList<Document>,
+    ) {
+        val ppt = XMLSlideShow(inputStream)
+
+        // 遍历每一张幻灯片
+        for (slide in ppt.slides) {
+            // 获取幻灯片的文本内容
+            val slideText = slide.title ?: ""
+            val content = getTexts(slide)
+            val metadata = hashMapOf("documentType" to documentType.toString(), "title" to slideText)
+            documents += Document.from(content, metadata)
+        }
+        ppt.close()
     }
 
     private fun getTexts(slide: XSLFSlide): String {
