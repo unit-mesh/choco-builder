@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation(libs.kotlin.reflect)
+    implementation(libs.coroutines.core)
 
     implementation("org.jetbrains.kotlinx:kotlin-jupyter-api:0.12.0-56")
     implementation("org.jetbrains.kotlinx:kotlin-jupyter-kernel:0.12.0-56")
