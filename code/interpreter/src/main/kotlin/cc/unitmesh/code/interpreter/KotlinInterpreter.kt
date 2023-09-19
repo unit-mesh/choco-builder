@@ -16,8 +16,10 @@ import org.jetbrains.letsPlot.intern.Plot
 import org.jetbrains.letsPlot.intern.toSpec
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.lang.reflect.Field
+import java.util.*
 
-class KotlinInterpreter {
+open class KotlinInterpreter {
     private var compiler: KotlinReplWrapper = KotlinReplWrapper()
     private val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -53,8 +55,9 @@ class KotlinInterpreter {
         when (resultValue) {
             // for Lets Plot
             is Plot -> {
+                val scriptUrl = PlotHtmlHelper.scriptUrl(VersionChecker.letsPlotJsVersion)
                 val content = PlotHtmlExport.buildHtmlFromRawSpecs(resultValue.toSpec(),
-                    PlotHtmlHelper.scriptUrl(VersionChecker.letsPlotJsVersion),
+                    scriptUrl = scriptUrl,
                     plotSize = DoubleVector(600.0, 400.0)
                 )
 

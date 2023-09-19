@@ -10,6 +10,8 @@ permalink: /docs/code-interpreter
 - 注意：Code Interpreter 会带来额外的安全风险，建议仅在内网环境下使用。
 - 注意：Code Interpreter 会带来额外的安全风险，建议仅在内网环境下使用。
 
+参考 issue：[https://github.com/Kotlin/kotlin-jupyter/issues/429](https://github.com/Kotlin/kotlin-jupyter/issues/429)
+
 # Code Interpreter
 
 Code Interpreter module based on Kotlin Jupyter Kernel: [https://github.com/Kotlin/kotlin-jupyter](https://github.com/Kotlin/kotlin-jupyter)

@@ -1,14 +1,17 @@
 package cc.unitmesh.code.interpreter.compiler
 
-import org.jetbrains.kotlinx.jupyter.*
+import org.jetbrains.kotlinx.jupyter.EvalRequestData
+import org.jetbrains.kotlinx.jupyter.ReplForJupyter
+import org.jetbrains.kotlinx.jupyter.RuntimeKernelProperties
 import org.jetbrains.kotlinx.jupyter.api.Code
-import org.jetbrains.kotlinx.jupyter.api.KotlinKernelVersion
+import org.jetbrains.kotlinx.jupyter.defaultRepositoriesCoordinates
 import org.jetbrains.kotlinx.jupyter.libraries.EmptyResolutionInfoProvider
 import org.jetbrains.kotlinx.jupyter.messaging.NoOpDisplayHandler
 import org.jetbrains.kotlinx.jupyter.repl.creating.createRepl
 import org.slf4j.LoggerFactory
 import java.io.File
 import kotlin.script.experimental.jvm.util.KotlinJars
+
 
 class KotlinReplWrapper {
     private val logger = LoggerFactory.getLogger(this.javaClass)
