@@ -9,6 +9,7 @@ include(":server")
 include(":cocoa-core")
 
 include(":dsl:design")
+include(":dsl:apply")
 
 include(":rag-modules:document")
 include(":rag-modules:store-milvus")
