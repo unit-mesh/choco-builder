@@ -23,6 +23,8 @@ permalink: /
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
+## Quick Start
+
 本地部署
 
 ```bash
@@ -30,6 +32,24 @@ git clone https://github.com/unit-mesh/chocolate-factory
 # modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
 docker-compose up
 ```
+
+集成到 JVM 项目中
+
+模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
+
+```groovy
+dependencies {
+    // 核心模块
+    implementation 'cc.unitmesh:cocoa-core:0.2.3'
+    // Pinecone
+    implementation 'cc.unitmesh:store-pinecone:0.2.3'
+    // ElasticSearch
+    implementation 'cc.unitmesh:store-elasticsearch:0.2.3'
+    //...其它模块
+}
+```
+
+示例见：[examples/](https://github.com/unit-mesh/chocolate-factor-examples)
 
 ## 设计理念：领域驱动的问题求解
 

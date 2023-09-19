@@ -71,7 +71,7 @@ configure(
                 pom {
                     name.set("ChocolateFactory")
                     description.set("Chocolate Factory is a cutting-edge LLM application engine designed to empower you in creating your very own AI assistant.")
-                    url.set("https://framework.unitmesh.cc//")
+                    url.set("https://framework.unitmesh.cc/")
                     licenses {
                         license {
                             name.set("MPL-2.0")
