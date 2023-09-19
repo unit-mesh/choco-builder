@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         assets:
-          - build/libs/server-*.jar
+          - server/build/libs/server-*.jar
 
     permissions:
       contents: write
