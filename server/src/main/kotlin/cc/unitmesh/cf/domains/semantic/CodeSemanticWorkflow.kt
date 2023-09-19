@@ -7,7 +7,6 @@ import cc.unitmesh.cf.core.flow.model.StageContext
 import cc.unitmesh.cf.core.flow.model.WorkflowResult
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.domains.SupportedDomains
-import cc.unitmesh.cf.domains.interpreter.CodeInterpreterWorkflow
 import cc.unitmesh.cf.domains.semantic.context.SemanticVariableResolver
 import cc.unitmesh.cf.domains.semantic.flow.SemanticProblemAnalyzer
 import cc.unitmesh.cf.domains.semantic.flow.SemanticSolutionExecutor
@@ -58,7 +57,7 @@ class CodeSemanticWorkflow : Workflow() {
     }
 
     companion object {
-        val log: Logger = org.slf4j.LoggerFactory.getLogger(CodeInterpreterWorkflow::class.java)
+        val log: Logger = org.slf4j.LoggerFactory.getLogger(CodeSemanticWorkflow::class.java)
         val ANALYSIS: StageContext = StageContext(
             id = "SemanticAnalyze",
             stage = StageContext.Stage.Analyze,
