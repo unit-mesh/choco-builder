@@ -7,7 +7,7 @@
 <img src="https://img.shields.io/github/stars/unit-mesh/chocolate-factory" alt="stars">
 <a href="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml"><img src="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
 <a href="https://hub.docker.com/r/unitmesh"><img src="https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest" alt="Docker Image Version (latest semver)" /></a>
-<a href="https://search.maven.org/artifact/cc.unitmesh/cocoa-core"><img src="https://img.shields.io/maven-central/v/cc.unitmesh/cocoa-core" / ></a>
+<a href="https://central.sonatype.com/namespace/cc.unitmesh"><img src="//img.shields.io/maven-central/v/cc.unitmesh/cocoa-core"  alt="Maven"/></a>
 </p>
 
 [Read the docs →](https://framework.unitmesh.cc/)

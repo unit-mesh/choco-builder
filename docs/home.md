@@ -15,14 +15,13 @@ permalink: /
 <img src="https://img.shields.io/github/stars/unit-mesh/chocolate-factory" alt="stars">
 <a href="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml"><img src="https://github.com/unit-mesh/chocolate-factory/actions/workflows/build.yml/badge.svg" alt="CI" /></a>
 <a href="https://hub.docker.com/r/unitmesh"><img src="https://img.shields.io/docker/v/unitmesh/chocolate-factory/latest" alt="Docker Image Version (latest semver)" /></a>
+<a href="https://central.sonatype.com/namespace/cc.unitmesh"><img src="//img.shields.io/maven-central/v/cc.unitmesh/cocoa-core"  alt="Maven"/></a>
 </p>
 
 # What is Chocolate Factory?
 
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
-
-在线体验：[http://ai.dts.plus](http://ai.dts.plus)
 
 本地部署
 
