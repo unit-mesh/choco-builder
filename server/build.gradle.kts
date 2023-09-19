@@ -9,7 +9,6 @@ plugins {
 
     id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
-    id("org.jetbrains.kotlinx.dataframe") version "0.11.1"
 
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
@@ -21,10 +20,8 @@ tasks.withType<BootJar> {
     requiresUnpack("**/kotlin-scripting-*.jar")
     requiresUnpack("**/kotlin-jupyter-*.jar")
     requiresUnpack("**/lets-plot-*.jar")
-    requiresUnpack("**/dataframe-*.jar")
     requiresUnpack("**/kotlinx-*.jar")
 }
-
 
 dependencies {
     implementation(projects.llmModules.sentenceTransformers)
@@ -70,7 +67,6 @@ dependencies {
     // data convert
     implementation(kotlin("reflect"))
     implementation(libs.reflections)
-    implementation(libs.dataframe)
 
     // database dependencies
     runtimeOnly("com.h2database:h2")

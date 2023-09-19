@@ -15,7 +15,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -89,7 +88,7 @@ class ChatController(
 data class MessageResponse(
     val id: String,
     val result: WorkflowResult?,
-    val created: Long = DateTime.now().millis,
+    val created: Long = System.currentTimeMillis(),
     val isFlowable: Boolean = false,
     val messages: List<Message> = emptyList(),
 ) {
