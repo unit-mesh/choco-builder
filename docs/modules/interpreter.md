@@ -6,6 +6,10 @@ nav_order: 1
 permalink: /docs/code-interpreter
 ---
 
+- 注意：Code Interpreter 会带来额外的安全风险，建议仅在内网环境下使用。
+- 注意：Code Interpreter 会带来额外的安全风险，建议仅在内网环境下使用。
+- 注意：Code Interpreter 会带来额外的安全风险，建议仅在内网环境下使用。
+
 # Code Interpreter
 
 Code Interpreter module based on Kotlin Jupyter Kernel: [https://github.com/Kotlin/kotlin-jupyter](https://github.com/Kotlin/kotlin-jupyter)
