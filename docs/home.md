@@ -49,7 +49,7 @@ dependencies {
 }
 ```
 
-示例见：[examples/](https://github.com/unit-mesh/chocolate-factor-examples)
+示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
 
 ## 设计理念：领域驱动的问题求解
 
