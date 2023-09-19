@@ -31,8 +31,9 @@ class TextDocumentParser(
     private val charset: Charset = StandardCharsets.UTF_8,
 ) : DocumentParser {
 
-    override fun parse(inputStream: InputStream): Document {
-        return try {
+    override fun parse(inputStream: InputStream): List<Document> {
+        val documents: MutableList<Document> = mutableListOf()
+        try {
             val buffer = ByteArrayOutputStream()
             var nRead: Int
             val data = ByteArray(1024)
@@ -41,9 +42,11 @@ class TextDocumentParser(
             }
             buffer.flush()
             val text = String(buffer.toByteArray(), charset)
-            Document.from(text, hashMapOf("documentType" to documentType.toString()))
+            documents += Document.from(text, hashMapOf("documentType" to documentType.toString()))
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
+
+        return documents
     }
 }

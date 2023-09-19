@@ -7,8 +7,9 @@ class MsOfficeDocumentParserTest  {
     @Test
     fun should_parse_pptx_file() {
         val inputStream = this.javaClass.getResourceAsStream("/sample.pptx")
-        val document = MsOfficeDocumentParser(DocumentType.PPT).parse(inputStream)
+        val documents = MsOfficeDocumentParser(DocumentType.PPT).parse(inputStream)
 
-        assert(document.text.contains("代码库问答"))
+        assert(documents[0].text.contains("代码库问答"))
+        assert(documents[1].text.contains("智能数据问答场景"))
     }
 }
