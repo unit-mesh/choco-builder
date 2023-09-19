@@ -5,7 +5,7 @@ parent: Workflow
 nav_order: 3
 ---
 
-创建新 domain
+# 创建新 domain
 
 ## 1. 声明 Domain
 

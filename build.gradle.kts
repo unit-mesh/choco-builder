@@ -49,7 +49,12 @@ allprojects {
 }
 
 configure(
-    allprojects - project(":server")
+    allprojects
+            - project(":server")
+            - project(":rag-modules")
+            - project(":llm-modules")
+            - project(":code")
+            - project(":dsl")
 ) {
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
