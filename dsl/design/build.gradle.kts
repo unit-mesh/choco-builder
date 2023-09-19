@@ -33,6 +33,10 @@ tasks.withType<AntlrTask> {
 
 }
 
+tasks.withType<Jar>().configureEach {
+    dependsOn(tasks.withType<AntlrTask>())
+}
+
 tasks.named("compileKotlin") {
     dependsOn(tasks.withType<AntlrTask>())
 }
