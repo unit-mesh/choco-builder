@@ -1,14 +1,26 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.3...v) (2023-09-18)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.4...v) (2023-09-19)
 
 
 
-## [0.2.3](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.2...v0.2.3) (2023-09-18)
+## [0.2.4](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.2...v0.2.4) (2023-09-19)
 
 
 ### Bug Fixes
 
-* add error handling code ([9bf8e94](https://github.com/unit-mesh/chocolate-factory/commit/9bf8e94b9bbf250aed8a08b83cbc8a641d9d8dfc))
+* add error handling code ([59db3c6](https://github.com/unit-mesh/chocolate-factory/commit/59db3c6e6153ac5a677b0d905cd6406bf8b86efd))
 * add lost securiry prompt ([a026c66](https://github.com/unit-mesh/chocolate-factory/commit/a026c660044dfd1b65f7b0c474dca4d02551dacc))
+* fix compile issue ([fb191a1](https://github.com/unit-mesh/chocolate-factory/commit/fb191a156b562fdfde2bf33ec3c538075e271292))
+* fix link typo ([21fbbaf](https://github.com/unit-mesh/chocolate-factory/commit/21fbbaf4477e2d0e36e7c654cbc6cae497f61e75))
+* fix typos ([f033e61](https://github.com/unit-mesh/chocolate-factory/commit/f033e6115ab88627c5c6db28d4b6bc3dbf75de0b))
+* fix typos ([e66363d](https://github.com/unit-mesh/chocolate-factory/commit/e66363d002ed871c9798fdf64c2c4781a261ffd0))
+* fix typos ([84c0e65](https://github.com/unit-mesh/chocolate-factory/commit/84c0e65b8091b9849c45e5765e28d4e1a4853bd9))
+* remove debug API ([3106283](https://github.com/unit-mesh/chocolate-factory/commit/31062831543fdad51a064425f381b22dcfd4dc0a))
+
+
+### Features
+
+* add simple rules for split by content ([87b07f4](https://github.com/unit-mesh/chocolate-factory/commit/87b07f4666c0f407b2919f870ef04e2bd0dc8747))
+* enable parse for documents ([2b264fe](https://github.com/unit-mesh/chocolate-factory/commit/2b264fe015a7ff8a76e819ffb22db42da7b55a3b))
 
 
 
