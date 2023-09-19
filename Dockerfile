@@ -6,7 +6,7 @@ RUN ./gradlew build --no-daemon
 
 FROM openjdk:17-jdk
 WORKDIR /app
-COPY --from=build /app/build/libs/chocolate-factory-*.jar app.jar
+COPY --from=build /app/server/build/libs/server-*.jar app.jar
 RUN ls -la
 ENV OPENAI_HOST "https://api.openai.com/"
 ENV OPENAI_API_KEY ""

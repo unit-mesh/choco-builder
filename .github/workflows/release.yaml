@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         assets:
-          - build/libs/chocolate-factory-*.jar
+          - build/libs/server-*.jar
 
     permissions:
       contents: write
