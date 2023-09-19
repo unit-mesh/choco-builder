@@ -4,6 +4,8 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "chocolate-factory"
 
+include(":server")
+
 include(":cocoa-core")
 
 include(":dsl:design")
