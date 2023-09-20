@@ -7,12 +7,12 @@ import cc.unitmesh.rag.document.Document
 import chapi.domain.core.CodeDataStruct
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import java.io.File
 import kotlin.test.Ignore
 
 class WorkflowTest {
 
     @Test
-    @Ignore
     fun index_and_query() {
         apply("code") {
             connection = Connection(ConnectionType.OpenAI)
@@ -23,8 +23,18 @@ class WorkflowTest {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
                 val file = Http.download(cliUrl)
 
-                val outputFile = Exec().runJar(file).also {
-                    println(it.absolutePath)
+                var outputFile = File("0_codes.json");
+                if (!outputFile.exists()) {
+                    outputFile = Exec().runJar(
+                        file, args = listOf(
+                            "--language", "Kotlin",
+                            "--output", "json",
+                            "--path", ".",
+                            "--with-function-code"
+                        )
+                    ).also {
+                        File("0_codes.json")
+                    }
                 }
 
                 // todo: use dataframe to parse json
