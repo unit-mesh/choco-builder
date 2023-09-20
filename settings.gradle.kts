@@ -9,7 +9,7 @@ include(":server")
 include(":cocoa-core")
 
 include(":dsl:design")
-include(":prompt-script")
+include(":rag-script")
 
 include(":rag-modules:document")
 include(":rag-modules:store-milvus")
