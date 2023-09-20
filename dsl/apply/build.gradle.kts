@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 
+    implementation(libs.huggingface.tokenizers)
     implementation(libs.dataframe)
 
     implementation("io.ktor:ktor-client-logging:2.3.4")

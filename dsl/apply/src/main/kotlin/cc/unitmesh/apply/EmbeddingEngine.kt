@@ -3,9 +3,6 @@ package cc.unitmesh.apply
 import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
-import cc.unitmesh.nlp.embedding.EncodingTokenizer
-import cc.unitmesh.rag.document.Document
-import cc.unitmesh.rag.store.EmbeddingMatch
 
 enum class EngineType {
     SentenceTransformers,

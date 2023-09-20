@@ -6,11 +6,13 @@ import cc.unitmesh.cf.core.dsl.DslInterpreter
 import cc.unitmesh.rag.document.Document
 import chapi.domain.core.CodeDataStruct
 import kotlinx.serialization.json.Json
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 
 class WorkflowTest {
 
     @Test
+    @Ignore
     fun index_and_query() {
         apply("code") {
             connection = Connection(ConnectionType.OpenAI)
@@ -21,7 +23,9 @@ class WorkflowTest {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
                 val file = Http.download(cliUrl)
 
-                val outputFile = Exec("java -jar ${file.absolutePath} -h").run()
+                val outputFile = Exec("java -jar ${file.absolutePath} -h").run()?.also {
+                    println(it.absolutePath)
+                } ?: throw Exception("Cannot run the command")
 
                 // todo: use dataframe to parse json
                 val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(outputFile.readText()).map {
