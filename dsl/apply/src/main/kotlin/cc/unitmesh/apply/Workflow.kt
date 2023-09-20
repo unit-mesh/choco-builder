@@ -2,22 +2,18 @@ package cc.unitmesh.apply
 
 import cc.unitmesh.apply.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
-import cc.unitmesh.cf.core.llms.LlmMsg
-import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.rag.document.Document
-import cc.unitmesh.rag.store.EmbeddingStore
-import cc.unitmesh.rag.store.VectorStore
+import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.store.ElasticsearchStore
-import io.reactivex.rxjava3.core.Flowable
 
 /**
  * Apply is a DSL for invoking a function in a template.
  */
 @ApplyDsl
 class Workflow(val name: String) {
-    var connection: LlmProvider? = null
-    var store: VectorStore<Document>? = null
-    var embedding: EmbeddingStore<Document>? = null
+    var connection: Connection = Connection(ConnectionType.OpenAI)
+    var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
+    var vectorStore: VectorStore = VectorStore(StoreType.Elasticsearch)
 
     var dsl: Dsl? = null;
 
@@ -29,6 +25,10 @@ class Workflow(val name: String) {
         return EmbeddingEngine(engineType)
     }
 
+    fun vectorStore(storeType: StoreType = StoreType.Elasticsearch): VectorStore {
+        return VectorStore(storeType)
+    }
+
     fun document(file: String): DocumentDsl {
         return DocumentDsl(file)
     }
@@ -36,17 +36,23 @@ class Workflow(val name: String) {
     /**
      * Prepare is a function for preparing data for the workflow. You don't need to call it as block.
      */
-    fun prepare(function: () -> Unit) { function() }
+    fun prepare(function: () -> Unit) {
+        function()
+    }
 
     /**
      * Indexing is a function for indexing data for the workflow. You don't need to call it as block.
      */
-    fun indexing(function: () -> Unit) { function() }
+    fun indexing(function: () -> Unit) {
+        function()
+    }
 
     /**
      * Querying is a function for querying data for the workflow. You don't need to call it as block.
      */
-    fun querying(function: () -> Unit) { function() }
+    fun querying(function: () -> Unit) {
+        function()
+    }
 
     /**
      * Problem space is a function for defining the problem.
@@ -70,33 +76,24 @@ class Workflow(val name: String) {
     }
 }
 
-/**
- * for create LlmProvider
- */
-fun Connection(connectorName: String): LlmProvider {
-    return object: LlmProvider {
-        override var temperature: Double = 0.0
+class VectorStore(storeType: StoreType) {
+    val store: ElasticsearchStore = when (storeType) {
+        StoreType.Elasticsearch -> ElasticsearchStore()
+    }
 
-        override fun completion(messages: List<LlmMsg.ChatMessage>): String {
-            TODO("Not yet implemented")
-        }
+    fun query(input: String): List<EmbeddingMatch<Document>> {
+//        return store.findRelevant(input, 20)
+        return listOf()
+    }
 
-        override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
-            TODO("Not yet implemented")
-        }
-
+    fun indexing(chunks: List<Document>): Boolean {
+//        val addAll = store.addAll(chunks)
+        return true
     }
 }
 
-fun Embedding(storeName: String): EmbeddingStore<Document> {
-    return when(storeName.lowercase()) {
-        "elasticsearch" -> {
-            ElasticsearchStore()
-        }
-        else -> {
-            throw Exception("store $storeName is not supported")
-        }
-    }
+enum class StoreType {
+    Elasticsearch
 }
 
 fun apply(name: String, init: Workflow.() -> Unit): Workflow {
