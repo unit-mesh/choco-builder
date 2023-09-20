@@ -5,6 +5,31 @@ import cc.unitmesh.cf.core.dsl.DslInterpreter
 import kotlin.test.Test
 
 class WorkflowTest {
+
+    @Test
+    fun index_and_query() {
+        apply("code") {
+            connection = Connection("openai")
+            embedding = Embedding("elasticsearch")
+
+            indexing {
+                val file = Http.download("https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar") {
+
+                }
+
+                val output = Exec("java -jar ${file.absolutePath} -h").output { it }
+                // to json
+                val chunks = document("filename").split()
+                embedding().indexing(chunks)
+            }
+
+            querying {
+                val results = embedding().query("")
+                val sorted = results
+                    .lowInMiddle()
+            }
+        }
+    }
     @Test
     fun hello_apply() {
         apply("code") {

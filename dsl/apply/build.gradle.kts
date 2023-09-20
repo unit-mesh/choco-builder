@@ -10,6 +10,8 @@ plugins {
 
 dependencies {
     implementation(projects.cocoaCore)
+    implementation(projects.ragModules.storeElasticsearch)
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 

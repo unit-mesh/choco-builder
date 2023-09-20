@@ -4,6 +4,10 @@ import cc.unitmesh.apply.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.store.EmbeddingStore
+import cc.unitmesh.rag.store.VectorStore
+import cc.unitmesh.store.ElasticsearchStore
 import io.reactivex.rxjava3.core.Flowable
 
 /**
@@ -12,6 +16,9 @@ import io.reactivex.rxjava3.core.Flowable
 @ApplyDsl
 class Workflow(val name: String) {
     var connection: LlmProvider? = null
+    var store: VectorStore<Document>? = null
+    var embedding: EmbeddingStore<Document>? = null
+
     var dsl: Dsl? = null;
 
     fun llm(prompt: String): Llm {
@@ -29,9 +36,17 @@ class Workflow(val name: String) {
     /**
      * Prepare is a function for preparing data for the workflow. You don't need to call it as block.
      */
-    fun prepare(function: () -> Unit) {
-        function()
-    }
+    fun prepare(function: () -> Unit) { function() }
+
+    /**
+     * Indexing is a function for indexing data for the workflow. You don't need to call it as block.
+     */
+    fun indexing(function: () -> Unit) { function() }
+
+    /**
+     * Querying is a function for querying data for the workflow. You don't need to call it as block.
+     */
+    fun querying(function: () -> Unit) { function() }
 
     /**
      * Problem space is a function for defining the problem.
@@ -70,6 +85,17 @@ fun Connection(connectorName: String): LlmProvider {
             TODO("Not yet implemented")
         }
 
+    }
+}
+
+fun Embedding(storeName: String): EmbeddingStore<Document> {
+    return when(storeName.lowercase()) {
+        "elasticsearch" -> {
+            ElasticsearchStore()
+        }
+        else -> {
+            throw Exception("store $storeName is not supported")
+        }
     }
 }
 
