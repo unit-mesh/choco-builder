@@ -1,5 +1,12 @@
 package cc.unitmesh.apply
 
+
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 class HttpDsl() {
@@ -20,7 +27,25 @@ object Http {
     }
 
     fun download(url: String): File {
-        val tempFile = File.createTempFile("download", "tmp")
-        return tempFile
+        val client = HttpClient()
+
+        val fileName = url.substringAfterLast("/")
+        val file = File("temp", fileName)
+
+        if (!File("temp").exists()) {
+            File("temp").mkdir()
+        }
+
+        if (file.exists()) {
+            return file
+        }
+
+        runBlocking {
+            val httpResponse: HttpResponse = client.get(url) {}
+            val responseBody: ByteArray = httpResponse.body()
+            file.writeBytes(responseBody)
+        }
+
+        return file
     }
 }

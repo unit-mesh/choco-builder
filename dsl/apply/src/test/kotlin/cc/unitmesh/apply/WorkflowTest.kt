@@ -23,9 +23,9 @@ class WorkflowTest {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
                 val file = Http.download(cliUrl)
 
-                val outputFile = Exec("java -jar ${file.absolutePath} -h").run()?.also {
+                val outputFile = Exec().runJar(file).also {
                     println(it.absolutePath)
-                } ?: throw Exception("Cannot run the command")
+                }
 
                 // todo: use dataframe to parse json
                 val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(outputFile.readText()).map {
@@ -57,12 +57,6 @@ class WorkflowTest {
             connection = Connection(ConnectionType.OpenAI)
 
             prepare {
-                val file =
-                    Http.download("https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar") {
-
-                    }
-
-                val output = Exec("java -jar ${file.absolutePath} -h").run()
                 // to json
                 val chunks = document("filename").split()
                 vectorStore().indexing(chunks)
