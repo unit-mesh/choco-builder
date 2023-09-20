@@ -2,18 +2,20 @@ package cc.unitmesh.apply
 
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
-import cc.unitmesh.rag.store.EmbeddingMatch
 import kotlin.test.Test
 
 class WorkflowTest {
     @Test
     fun hello_apply() {
         apply("code") {
+            connection = Connection("openai")
+
             prepare {
-                val data: Any = http.get("https://www.baidu.com") {
-                    println("hello")
+                val file = Http.download("https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar") {
+
                 }
 
+                val output = Exec("java -jar ${file.absolutePath} -h").output { it }
                 // to json
                 val chunks = document("filename").split()
                 embedding().indexing(chunks)
@@ -41,20 +43,4 @@ class WorkflowTest {
             }
         }
     }
-}
-
-// TODO: add order by score value
-private fun <T> Iterable<EmbeddingMatch<T>>.lowInMiddle(): List<EmbeddingMatch<T>> {
-    val reversedDocuments = this.reversed()
-    val reorderedResult = mutableListOf<EmbeddingMatch<T>>()
-
-    for ((index, value) in reversedDocuments.withIndex()) {
-        if (index % 2 == 1) {
-            reorderedResult.add(value)
-        } else {
-            reorderedResult.add(0, value)
-        }
-    }
-
-    return reorderedResult
 }

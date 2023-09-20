@@ -3,41 +3,6 @@ package cc.unitmesh.apply
 import cc.unitmesh.apply.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.llms.LlmProvider
-import cc.unitmesh.rag.document.Document
-import cc.unitmesh.rag.store.EmbeddingMatch
-
-
-class Llm(val prompt: String) {
-    fun run() {
-        println("llm $prompt")
-    }
-
-    fun request(function: () -> String) {
-        function()
-    }
-}
-
-enum class EngineType {
-    SentenceTransformers,
-    TextEmbeddingAda,
-}
-
-class EmbeddingEngine(val engine: EngineType = EngineType.SentenceTransformers) {
-    fun query(input: String) : List<EmbeddingMatch<Document>> {
-        return listOf()
-    }
-
-    fun indexing(chunks: List<Document>): Boolean {
-        return true
-    }
-}
-
-class DocumentDsl(val file: String) {
-    fun split() : List<Document> {
-        return listOf()
-    }
-
-}
 
 /**
  * Apply is a DSL for invoking a function in a template.
@@ -59,17 +24,40 @@ class Workflow(val name: String) {
         return DocumentDsl(file)
     }
 
+    /**
+     * Prepare is a function for preparing data for the workflow. You don't need to call it as block.
+     */
     fun prepare(function: () -> Unit) {
         function()
     }
 
+    /**
+     * Problem space is a function for defining the problem.
+     */
     fun problem(function: () -> Dsl) {
         dsl = function()
     }
 
+    /**
+     * Solution space is a function for defining the solution.
+     */
     fun solution(function: (dsl: Dsl) -> Unit) {
         function(dsl!!)
     }
+
+    /**
+     * Step is for tagging function block only.
+     */
+    fun step(name: String, function: () -> Unit) {
+        function()
+    }
+}
+
+/**
+ * for create LlmProvider
+ */
+fun Connection(connectorName: String): LlmProvider {
+    TODO("Not yet implemented")
 }
 
 fun apply(name: String, init: Workflow.() -> Unit): Workflow {
