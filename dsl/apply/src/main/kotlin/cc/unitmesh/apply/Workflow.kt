@@ -1,9 +1,9 @@
 package cc.unitmesh.apply
 
 import cc.unitmesh.apply.base.ApplyDsl
+import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.rag.document.Document
-import cc.unitmesh.rag.document.DocumentOrder
 import cc.unitmesh.rag.store.EmbeddingMatch
 
 
@@ -12,8 +12,8 @@ class Llm(val prompt: String) {
         println("llm $prompt")
     }
 
-    fun request(function: () -> Unit) {
-
+    fun request(function: () -> String) {
+        function()
     }
 }
 
@@ -45,6 +45,7 @@ class DocumentDsl(val file: String) {
 @ApplyDsl
 class Workflow(val name: String) {
     var connection: LlmProvider? = null
+    var dsl: Dsl? = null;
 
     fun llm(prompt: String): Llm {
         return Llm(prompt)
@@ -56,6 +57,18 @@ class Workflow(val name: String) {
 
     fun document(file: String): DocumentDsl {
         return DocumentDsl(file)
+    }
+
+    fun prepare(function: () -> Unit) {
+        function()
+    }
+
+    fun problem(function: () -> Dsl) {
+        dsl = function()
+    }
+
+    fun solution(function: (dsl: Dsl) -> Unit) {
+        function(dsl!!)
     }
 }
 
