@@ -1,7 +1,10 @@
 package cc.unitmesh.apply
 
 import cc.unitmesh.apply.base.ApplyDsl
+import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.document.DocumentOrder
+import cc.unitmesh.rag.store.EmbeddingMatch
 
 
 class Llm(val prompt: String) {
@@ -16,12 +19,16 @@ class Llm(val prompt: String) {
 
 enum class EngineType {
     SentenceTransformers,
-    Ada,
+    TextEmbeddingAda,
 }
 
-class EmbeddingEngine(val input: String, val engine: EngineType = EngineType.SentenceTransformers) {
-    fun search() {
+class EmbeddingEngine(val engine: EngineType = EngineType.SentenceTransformers) {
+    fun query(input: String) : List<EmbeddingMatch<Document>> {
+        return listOf()
+    }
 
+    fun indexing(chunks: List<Document>): Boolean {
+        return true
     }
 }
 
@@ -37,18 +44,19 @@ class DocumentDsl(val file: String) {
  */
 @ApplyDsl
 class Workflow(val name: String) {
+    var connection: LlmProvider? = null
+
     fun llm(prompt: String): Llm {
         return Llm(prompt)
     }
 
-    fun embedding(input: String, engineType: EngineType = EngineType.SentenceTransformers): EmbeddingEngine {
-        return EmbeddingEngine(input, engineType)
+    fun embedding(engineType: EngineType = EngineType.SentenceTransformers): EmbeddingEngine {
+        return EmbeddingEngine(engineType)
     }
 
     fun document(file: String): DocumentDsl {
         return DocumentDsl(file)
     }
-
 }
 
 fun apply(name: String, init: Workflow.() -> Unit): Workflow {
