@@ -14,6 +14,8 @@ dependencies {
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.llmModules.sentenceTransformers)
 
+    implementation(libs.chapi.domain)
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 

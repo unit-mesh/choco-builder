@@ -18,4 +18,9 @@ object Http {
         function()
         return tempFile
     }
+
+    fun download(url: String): File {
+        val tempFile = File.createTempFile("download", "tmp")
+        return tempFile
+    }
 }

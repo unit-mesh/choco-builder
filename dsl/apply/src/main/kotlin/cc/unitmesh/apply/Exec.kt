@@ -14,7 +14,7 @@ class Exec(filename: String, function: () -> Unit) {
         function()
     }
 
-    fun output(function: (output: File) -> File): File {
-        return function(output)
+    fun run(): File {
+        return output
     }
 }

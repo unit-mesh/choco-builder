@@ -3,7 +3,6 @@ package cc.unitmesh.cf.code;
 import chapi.domain.core.CodeDataStruct
 import chapi.domain.core.CodeFunction
 import io.kotest.matchers.shouldBe
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CodeSplitterTest {

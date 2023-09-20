@@ -1,7 +1,11 @@
 package cc.unitmesh.apply
 
+import cc.unitmesh.cf.code.CodeSplitter
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.cf.core.dsl.DslInterpreter
+import cc.unitmesh.rag.document.Document
+import chapi.domain.core.CodeDataStruct
+import kotlinx.serialization.json.Json
 import kotlin.test.Test
 
 class WorkflowTest {
@@ -15,14 +19,15 @@ class WorkflowTest {
 
             indexing {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
-                val file = Http.download(cliUrl) {
+                val file = Http.download(cliUrl)
 
-                }
+                val outputFile = Exec("java -jar ${file.absolutePath} -h").run()
 
-                val output = Exec("java -jar ${file.absolutePath} -h").output { it }
-                // to json
+                // todo: use dataframe to parse json
+                val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(outputFile.readText()).map {
+                    CodeSplitter().split(it)
+                }.flatten()
 
-                val chunks = document("filename").split()
                 vectorStore.indexing(chunks)
             }
 
@@ -32,7 +37,9 @@ class WorkflowTest {
                     .lowInMiddle()
 
                 connection.prompt {
-                    """Some prompt in Here"""
+                    """Some prompt in Here
+                        |${sorted.joinToString("\n") { it.embedded.text }}
+                    """.trimMargin()
                 }.also {
                     println(it)
                 }
@@ -51,7 +58,7 @@ class WorkflowTest {
 
                     }
 
-                val output = Exec("java -jar ${file.absolutePath} -h").output { it }
+                val output = Exec("java -jar ${file.absolutePath} -h").run()
                 // to json
                 val chunks = document("filename").split()
                 vectorStore().indexing(chunks)
