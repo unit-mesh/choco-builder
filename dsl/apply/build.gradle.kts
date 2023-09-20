@@ -9,6 +9,7 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.cocoaCore)
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 
