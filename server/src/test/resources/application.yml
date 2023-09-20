@@ -1,0 +1,10 @@
+openai:
+  api-host: https://api.openai.com/
+  api-key: sk-xxxxxx
+
+elasticsearch:
+  uris: "localhost:9200"
+
+similarity:
+  max-result: 15
+  min-score: 0.65

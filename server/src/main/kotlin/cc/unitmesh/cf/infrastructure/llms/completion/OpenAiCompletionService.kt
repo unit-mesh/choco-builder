@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Flowable
 import org.springframework.stereotype.Component
 
 @Component
-class OpenAiCompletionService(final val config: OpenAiConfiguration) : LlmProvider {
+class OpenAiCompletionService(val config: OpenAiConfiguration) : LlmProvider {
     val provider = OpenAiProvider(config.apiKey, config.apiHost)
     override var temperature: Double = 0.0
 
