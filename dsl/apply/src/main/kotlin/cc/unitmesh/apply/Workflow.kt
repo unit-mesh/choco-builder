@@ -2,7 +2,9 @@ package cc.unitmesh.apply
 
 import cc.unitmesh.apply.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
+import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
+import io.reactivex.rxjava3.core.Flowable
 
 /**
  * Apply is a DSL for invoking a function in a template.
@@ -57,7 +59,18 @@ class Workflow(val name: String) {
  * for create LlmProvider
  */
 fun Connection(connectorName: String): LlmProvider {
-    TODO("Not yet implemented")
+    return object: LlmProvider {
+        override var temperature: Double = 0.0
+
+        override fun completion(messages: List<LlmMsg.ChatMessage>): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
+            TODO("Not yet implemented")
+        }
+
+    }
 }
 
 fun apply(name: String, init: Workflow.() -> Unit): Workflow {
