@@ -112,7 +112,7 @@ enum class StoreType {
     Elasticsearch
 }
 
-fun apply(name: String, init: Workflow.() -> Unit): Workflow {
+fun scripting(name: String, init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow(name)
     workflow.init()
     return workflow
