@@ -24,6 +24,7 @@ tasks.withType<BootJar> {
 }
 
 dependencies {
+    implementation(projects.llmModules.openai)
     implementation(projects.llmModules.sentenceTransformers)
     implementation(projects.cocoaCore)
     implementation(projects.dsl.design)

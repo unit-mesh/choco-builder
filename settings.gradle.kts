@@ -17,6 +17,7 @@ include(":rag-modules:store-pinecone")
 include(":rag-modules:store-elasticsearch")
 
 include(":llm-modules:sentence-transformers")
+include(":llm-modules:openai")
 
 include(":code:interpreter")
 include(":code:code-splitter")
