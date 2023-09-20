@@ -13,8 +13,11 @@ class WorkflowTest {
     @Test
     @Ignore
     fun index_and_query() {
-        scripting("code") {
-            connection = Connection(ConnectionType.OpenAI)
+        scripting {
+            val apiKey = env?.get("OPENAI_API_KEY") ?: ""
+            val apiHost = env?.get("OPENAI_API_HOST") ?: ""
+
+            connection = Connection(ConnectionType.OpenAI, apiKey, apiHost)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
             vectorStore = VectorStore(StoreType.Elasticsearch)
 

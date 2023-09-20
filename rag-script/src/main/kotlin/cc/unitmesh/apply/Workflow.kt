@@ -6,12 +6,22 @@ import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.store.ElasticsearchStore
+import io.github.cdimascio.dotenv.Dotenv
+
+
+
 
 /**
  * Apply is a DSL for invoking a function in a template.
  */
 @ApplyDsl
 class Workflow(val name: String) {
+    var env = try {
+        Dotenv.load()
+    } catch (e: Exception) {
+        null
+    }
+
     var connection: Connection = Connection(ConnectionType.OpenAI, "", "")
     var vectorStore: VectorStore = VectorStore(StoreType.Elasticsearch)
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
@@ -114,6 +124,11 @@ enum class StoreType {
 
 fun scripting(name: String, init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow(name)
+    workflow.init()
+    return workflow
+}
+fun scripting(init: Workflow.() -> Unit): Workflow {
+    val workflow = Workflow("scripting")
     workflow.init()
     return workflow
 }

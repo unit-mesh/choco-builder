@@ -24,6 +24,8 @@ dependencies {
     implementation(libs.huggingface.tokenizers)
     implementation(libs.dataframe)
 
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+
     implementation("io.ktor:ktor-client-logging:2.3.4")
     implementation("io.ktor:ktor-client-core:2.3.4")
     implementation("io.ktor:ktor-client-cio:2.3.4")

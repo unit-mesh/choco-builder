@@ -37,8 +37,8 @@ class Connection(val connectionType: ConnectionType, val apiKey: String, val api
         return completion(function())
     }
 
-    fun streamCompletion(msg: String): Flowable<String> {
-        return provider.streamCompletion(listOf(LlmMsg.ChatMessage(LlmMsg.ChatRole.User, msg)))
+    fun streamCompletion(function: () -> String): Flowable<String> {
+        return provider.streamCompletion(listOf(LlmMsg.ChatMessage(LlmMsg.ChatRole.User, function())))
     }
 }
 
