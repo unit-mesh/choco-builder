@@ -4,6 +4,10 @@ Apply 用于 Debug prompt，可以获取远程的数据，解析，并用在 pro
 
 ## Usage
 
+```
+@file:DependsOn("cc.unitmesh:apply-runtime:0.2.2")
+```
+
 ```groovy
 val data = get("").header().to()
 val relevant = semantic("").search().to()
