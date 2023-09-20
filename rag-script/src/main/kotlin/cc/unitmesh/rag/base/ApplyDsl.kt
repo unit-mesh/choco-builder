@@ -1,4 +1,4 @@
-package cc.unitmesh.apply.base
+package cc.unitmesh.rag.base
 
 @DslMarker
 annotation class ApplyDsl

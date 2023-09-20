@@ -1,4 +1,4 @@
-package cc.unitmesh.apply
+package cc.unitmesh.rag
 
 import cc.unitmesh.cf.code.CodeSplitter
 import cc.unitmesh.rag.document.Document

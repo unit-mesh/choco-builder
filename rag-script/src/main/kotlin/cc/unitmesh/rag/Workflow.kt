@@ -1,6 +1,6 @@
-package cc.unitmesh.apply
+package cc.unitmesh.rag
 
-import cc.unitmesh.apply.base.ApplyDsl
+import cc.unitmesh.rag.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.rag.document.Document

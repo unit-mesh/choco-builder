@@ -1,4 +1,4 @@
-package cc.unitmesh.apply
+package cc.unitmesh.rag
 
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch

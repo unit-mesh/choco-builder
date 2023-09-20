@@ -1,4 +1,4 @@
-package cc.unitmesh.apply
+package cc.unitmesh.rag
 
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider

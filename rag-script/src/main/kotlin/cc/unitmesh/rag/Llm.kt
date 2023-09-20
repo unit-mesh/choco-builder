@@ -1,4 +1,4 @@
-package cc.unitmesh.apply
+package cc.unitmesh.rag
 
 class Llm(val prompt: String) {
     fun run() {

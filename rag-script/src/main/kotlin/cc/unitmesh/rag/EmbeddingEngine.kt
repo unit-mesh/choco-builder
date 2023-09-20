@@ -1,4 +1,4 @@
-package cc.unitmesh.apply
+package cc.unitmesh.rag
 
 import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
