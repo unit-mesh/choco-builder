@@ -51,46 +51,14 @@ class WorkflowTest {
                 val sorted = results
                     .lowInMiddle()
 
-                connection.prompt {
-                    """Some prompt in Here
+                connection.completion {
+                    """根据用户的问题，总结如下的代码
                         |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
+                        |
+                        |用户的问题是：如何设计一个 DSL 的 workflow
                     """.trimMargin()
                 }.also {
                     println(it)
-                }
-            }
-        }
-    }
-
-    @Test
-    fun hello_apply() {
-        apply("code") {
-            connection = Connection(ConnectionType.OpenAI)
-
-            prepare {
-                // to json
-                val chunks = document("filename").split()
-                vectorStore().indexing(chunks)
-            }
-            problem {
-                val dsl = {
-                    // json schema ?
-                }
-
-                return@problem object : Dsl {
-                    override var domain: String = ""
-                    override val content: String = ""
-                    override var interpreters: List<DslInterpreter> = listOf()
-                }
-            }
-            solution {
-                val results = vectorStore().query("")
-                val sorted = results
-                    .lowInMiddle()
-
-                llm("openai").request {
-                    // add prompt it here
-                    """a"""
                 }
             }
         }

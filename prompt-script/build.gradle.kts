@@ -11,8 +11,10 @@ plugins {
 dependencies {
     implementation(projects.cocoaCore)
     implementation(projects.code.codeSplitter)
+    implementation(projects.ragModules.document)
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.llmModules.sentenceTransformers)
+    implementation(projects.llmModules.openai)
 
     implementation(libs.chapi.domain)
 

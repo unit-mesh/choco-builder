@@ -12,7 +12,7 @@ import cc.unitmesh.store.ElasticsearchStore
  */
 @ApplyDsl
 class Workflow(val name: String) {
-    var connection: Connection = Connection(ConnectionType.OpenAI)
+    var connection: Connection = Connection(ConnectionType.OpenAI, "", "")
     var vectorStore: VectorStore = VectorStore(StoreType.Elasticsearch)
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
         get() = field
