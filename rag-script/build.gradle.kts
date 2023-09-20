@@ -26,7 +26,7 @@ dependencies {
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 
-    implementation(libs.slf4j.simple)
+    implementation(libs.slf4j.api)
 
     implementation("io.ktor:ktor-client-logging:2.3.4")
     implementation("io.ktor:ktor-client-core:2.3.4")

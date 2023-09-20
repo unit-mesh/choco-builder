@@ -103,7 +103,8 @@ dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.4.1"
 velocity-engine = "org.apache.velocity:velocity-engine-core:2.3"
 
 # log
-slf4j-simple = "org.slf4j:slf4j-simple:2.0.9"
+slf4j-simple = "org.slf4j:slf4j-simple:2.0.7"
+slf4j-api = "org.slf4j:slf4j-api:2.0.7"
 
 onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.1"
 huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.23.0"

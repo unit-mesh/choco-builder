@@ -12,7 +12,7 @@ dependencies {
 
     implementation("co.elastic.clients:elasticsearch-java:8.10.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
-    implementation(libs.slf4j.simple)
+    implementation(libs.slf4j.api)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
