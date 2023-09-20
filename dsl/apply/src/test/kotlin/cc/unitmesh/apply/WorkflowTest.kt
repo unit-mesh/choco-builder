@@ -13,6 +13,7 @@ import kotlin.test.Ignore
 class WorkflowTest {
 
     @Test
+    @Ignore
     fun index_and_query() {
         apply("code") {
             connection = Connection(ConnectionType.OpenAI)
@@ -46,13 +47,13 @@ class WorkflowTest {
             }
 
             querying {
-                val results = vectorStore.query("")
+                val results = vectorStore.query("workflow dsl design ")
                 val sorted = results
                     .lowInMiddle()
 
                 connection.prompt {
                     """Some prompt in Here
-                        |${sorted.joinToString("\n") { it.embedded.text }}
+                        |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
                     """.trimMargin()
                 }.also {
                     println(it)

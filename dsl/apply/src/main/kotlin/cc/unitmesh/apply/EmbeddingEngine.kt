@@ -10,19 +10,14 @@ enum class EngineType {
 }
 
 class EmbeddingEngine(val engine: EngineType = EngineType.SentenceTransformers) {
-    var embeddingStore: EmbeddingProvider = when (engine) {
+    var provider: EmbeddingProvider = when (engine) {
         EngineType.SentenceTransformers -> SentenceTransformersEmbedding()
         EngineType.TextEmbeddingAda -> TODO()
-    }
-
-    fun embedded(input: String): Embedding {
-        return embeddingStore.embed(input)
     }
 }
 
 class SentenceTransformersEmbedding : EmbeddingProvider {
     val semantic = STSemantic.create()
-    val tokenizer = semantic.getTokenizer()
 
     override fun embed(texts: List<String>): List<Embedding> {
         return texts.map {

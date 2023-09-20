@@ -2,6 +2,7 @@ package cc.unitmesh.apply
 
 import cc.unitmesh.apply.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
+import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.store.ElasticsearchStore
@@ -12,8 +13,13 @@ import cc.unitmesh.store.ElasticsearchStore
 @ApplyDsl
 class Workflow(val name: String) {
     var connection: Connection = Connection(ConnectionType.OpenAI)
-    var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
     var vectorStore: VectorStore = VectorStore(StoreType.Elasticsearch)
+    var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
+        get() = field
+        set(value) {
+            field = value
+            vectorStore.updateEmbedding(value.provider)
+        }
 
     var dsl: Dsl? = null;
 
@@ -77,18 +83,28 @@ class Workflow(val name: String) {
 }
 
 class VectorStore(storeType: StoreType) {
+    private var embedding: EmbeddingProvider? = SentenceTransformersEmbedding()
+
     val store: ElasticsearchStore = when (storeType) {
         StoreType.Elasticsearch -> ElasticsearchStore()
     }
 
     fun query(input: String): List<EmbeddingMatch<Document>> {
-//        return store.findRelevant(input, 20)
-        return listOf()
+        val embedded = embedding!!.embed(input)
+        return store.findRelevant(embedded, 20)
     }
 
     fun indexing(chunks: List<Document>): Boolean {
-//        val addAll = store.addAll(chunks)
+        val embeddings = chunks.map {
+            embedding!!.embed(it.text)
+        }
+
+        store.addAll(embeddings, chunks)
         return true
+    }
+
+    fun updateEmbedding(value: EmbeddingProvider) {
+        this.embedding = value
     }
 }
 
