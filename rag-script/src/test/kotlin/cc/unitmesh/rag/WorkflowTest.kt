@@ -111,6 +111,7 @@ class WorkflowTest {
     }
 
     @Test
+    @Ignore
     fun document_handle() {
         rag("code") {
             // 使用 OpenAI 作为 LLM 引擎
