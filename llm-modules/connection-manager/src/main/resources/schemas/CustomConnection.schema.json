@@ -1,68 +1,68 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "CustomConnectionSchema": {
-            "properties": {
-                "configs": {
-                    "title": "configs",
-                    "type": "object",
-                    "additionalProperties": {
-                        "title": "configs",
-                        "type": "string"
-                    }
-                },
-                "created_date": {
-                    "title": "created_date",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "expiry_time": {
-                    "title": "expiry_time",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "last_modified_date": {
-                    "title": "last_modified_date",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "module": {
-                    "title": "module",
-                    "type": "string",
-                    "default": "promptflow.connections"
-                },
-                "name": {
-                    "title": "name",
-                    "type": "string"
-                },
-                "$schema": {
-                    "title": "$schema",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "secrets": {
-                    "title": "secrets",
-                    "type": "object",
-                    "additionalProperties": {
-                        "title": "secrets",
-                        "type": "string"
-                    }
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "custom"
-                    ],
-                    "title": "type"
-                }
-            },
-            "required": [
-                "secrets",
-                "type"
-            ],
-            "type": "object",
-            "additionalProperties": false
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CustomConnectionSchema": {
+      "properties": {
+        "configs": {
+          "title": "configs",
+          "type": "object",
+          "additionalProperties": {
+            "title": "configs",
+            "type": "string"
+          }
+        },
+        "created_date": {
+          "title": "created_date",
+          "type": "string",
+          "readOnly": true
+        },
+        "expiry_time": {
+          "title": "expiry_time",
+          "type": "string",
+          "readOnly": true
+        },
+        "last_modified_date": {
+          "title": "last_modified_date",
+          "type": "string",
+          "readOnly": true
+        },
+        "module": {
+          "title": "module",
+          "type": "string",
+          "default": "promptflow.connections"
+        },
+        "name": {
+          "title": "name",
+          "type": "string"
+        },
+        "$schema": {
+          "title": "$schema",
+          "type": "string",
+          "readOnly": true
+        },
+        "secrets": {
+          "title": "secrets",
+          "type": "object",
+          "additionalProperties": {
+            "title": "secrets",
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "custom"
+          ],
+          "title": "type"
         }
-    },
-    "$ref": "#/definitions/CustomConnectionSchema"
+      },
+      "required": [
+        "secrets",
+        "type"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/definitions/CustomConnectionSchema"
 }

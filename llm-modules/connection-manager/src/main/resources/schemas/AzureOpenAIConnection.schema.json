@@ -1,71 +1,71 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "AzureOpenAIConnectionSchema": {
-            "properties": {
-                "api_base": {
-                    "title": "api_base",
-                    "type": "string"
-                },
-                "api_key": {
-                    "title": "api_key",
-                    "type": "string"
-                },
-                "api_type": {
-                    "title": "api_type",
-                    "type": "string",
-                    "default": "azure"
-                },
-                "api_version": {
-                    "title": "api_version",
-                    "type": "string",
-                    "default": "2023-07-01-preview"
-                },
-                "created_date": {
-                    "title": "created_date",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "expiry_time": {
-                    "title": "expiry_time",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "last_modified_date": {
-                    "title": "last_modified_date",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "module": {
-                    "title": "module",
-                    "type": "string",
-                    "default": "promptflow.connections"
-                },
-                "name": {
-                    "title": "name",
-                    "type": "string"
-                },
-                "$schema": {
-                    "title": "$schema",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "azure_open_ai"
-                    ],
-                    "title": "type"
-                }
-            },
-            "required": [
-                "api_base",
-                "api_key",
-                "type"
-            ],
-            "type": "object",
-            "additionalProperties": false
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AzureOpenAIConnectionSchema": {
+      "properties": {
+        "api_base": {
+          "title": "api_base",
+          "type": "string"
+        },
+        "api_key": {
+          "title": "api_key",
+          "type": "string"
+        },
+        "api_type": {
+          "title": "api_type",
+          "type": "string",
+          "default": "azure"
+        },
+        "api_version": {
+          "title": "api_version",
+          "type": "string",
+          "default": "2023-07-01-preview"
+        },
+        "created_date": {
+          "title": "created_date",
+          "type": "string",
+          "readOnly": true
+        },
+        "expiry_time": {
+          "title": "expiry_time",
+          "type": "string",
+          "readOnly": true
+        },
+        "last_modified_date": {
+          "title": "last_modified_date",
+          "type": "string",
+          "readOnly": true
+        },
+        "module": {
+          "title": "module",
+          "type": "string",
+          "default": "promptflow.connections"
+        },
+        "name": {
+          "title": "name",
+          "type": "string"
+        },
+        "$schema": {
+          "title": "$schema",
+          "type": "string",
+          "readOnly": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "azure_open_ai"
+          ],
+          "title": "type"
         }
-    },
-    "$ref": "#/definitions/AzureOpenAIConnectionSchema"
+      },
+      "required": [
+        "api_base",
+        "api_key",
+        "type"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/definitions/AzureOpenAIConnectionSchema"
 }
