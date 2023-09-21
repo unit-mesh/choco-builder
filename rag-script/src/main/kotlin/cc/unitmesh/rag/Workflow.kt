@@ -1,8 +1,8 @@
 package cc.unitmesh.rag
 
-import cc.unitmesh.rag.base.ApplyDsl
 import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
+import cc.unitmesh.rag.base.ApplyDsl
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
@@ -11,21 +11,33 @@ import cc.unitmesh.store.ElasticsearchStore
 import io.github.cdimascio.dotenv.Dotenv
 
 
-
-
 /**
  * Apply is a DSL for invoking a function in a template.
  */
 @ApplyDsl
 class Workflow(val name: String) {
+    /**
+     * env will load `.env` file in the root directory.
+     */
     var env = try {
         Dotenv.load()
     } catch (e: Exception) {
         null
     }
 
+    /**
+     * Provider for LLM, like OpenAI, Azure OpenAI, etc.
+     */
     var llm: LlmConnector = LlmConnector(LlmType.OpenAI, "", "")
+
+    /**
+     * Provider for vector store, like Elasticsearch, Memory, etc.
+     */
     var store: Store = Store(StoreType.Elasticsearch)
+
+    /**
+     * Provider for embedding, like SentenceTransformers, etc.
+     */
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
         get() = field
         set(value) {
@@ -33,19 +45,8 @@ class Workflow(val name: String) {
             store.updateEmbedding(value.provider)
         }
 
-    var dsl: Dsl? = null;
+    private var dsl: Dsl? = null;
 
-    fun llm(prompt: String): Llm {
-        return Llm(prompt)
-    }
-
-    fun embedding(engineType: EngineType = EngineType.SentenceTransformers): EmbeddingEngine {
-        return EmbeddingEngine(engineType)
-    }
-
-    fun vectorStore(storeType: StoreType = StoreType.Elasticsearch): Store {
-        return Store(storeType)
-    }
 
     fun document(file: String): DocumentDsl {
         return DocumentDsl(file)
