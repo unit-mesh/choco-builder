@@ -127,12 +127,12 @@ enum class StoreType {
     Memory
 }
 
-fun scripting(name: String, init: Workflow.() -> Unit): Workflow {
+fun rag(name: String, init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow(name)
     workflow.init()
     return workflow
 }
-fun scripting(init: Workflow.() -> Unit): Workflow {
+fun rag(init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow("scripting")
     workflow.init()
     return workflow
