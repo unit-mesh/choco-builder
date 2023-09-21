@@ -2,7 +2,7 @@
 
 import cc.unitmesh.rag.*
 
-scripting("code") {
+rag("code") {
     // 使用 OpenAI 作为 LLM 引擎
     llm = LlmConnector(LlmType.OpenAI)
     // 使用 SentenceTransformers 作为 Embedding 引擎

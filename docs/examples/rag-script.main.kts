@@ -7,7 +7,7 @@ import chapi.domain.core.CodeDataStruct
 import cc.unitmesh.rag.*
 import kotlinx.serialization.json.Json
 
-scripting {
+rag {
     val apiKey = env?.get("OPENAI_API_KEY") ?: ""
     val apiHost = env?.get("OPENAI_API_HOST") ?: ""
 
