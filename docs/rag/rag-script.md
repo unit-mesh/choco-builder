@@ -45,3 +45,64 @@ rag {
     }
 }
 ```
+
+## 相似性搜索代码示例
+
+```kotlin
+@file:DependsOn("cc.unitmesh:rag-script:0.3.2")
+
+import java.io.File
+import cc.unitmesh.cf.code.CodeSplitter
+import cc.unitmesh.rag.document.Document
+import chapi.domain.core.CodeDataStruct
+import cc.unitmesh.rag.*
+import kotlinx.serialization.json.Json
+
+rag {
+    val apiKey = env?.get("OPENAI_API_KEY") ?: ""
+    val apiHost = env?.get("OPENAI_API_HOST") ?: ""
+
+    llm = LlmConnector(LlmType.OpenAI, apiKey, apiHost)
+    embedding = EmbeddingEngine(EngineType.SentenceTransformers)
+    store = Store(StoreType.Elasticsearch)
+
+    indexing {
+        // Data Loader
+        val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
+        val file = Http.download(cliUrl)
+        Exec().runJar(
+            file, args = listOf(
+                "--language", "Kotlin",
+                "--output", "json",
+                "--path", ".",
+                "--with-function-code"
+            )
+        )
+
+        // Code Splitter
+        val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(File("0_codes.json").readText()).map {
+            CodeSplitter().split(it)
+        }.flatten()
+
+        store.indexing(chunks)
+    }
+
+    querying {
+        val results = store.findRelevant("workflow dsl design ")
+        val sorted = results
+            .lowInMiddle()
+
+        llm.completion {
+            """Your job is to answer a query about a codebase using the information above.
+            |...
+            |相关的代码如下：
+            |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
+            |
+            |用户的问题是：如何设计一个 DSL 的 workflow
+            |""".trimMargin()
+        }.also {
+            println(it)
+        }
+    }
+}
+```
