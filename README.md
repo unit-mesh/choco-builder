@@ -17,6 +17,60 @@
 > Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
+## QuickStart
+
+方式 1：本地部署
+
+```bash
+git clone https://github.com/unit-mesh/chocolate-factory
+# modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
+docker-compose up
+```
+
+方式 2：使用 RAGScript
+
+```kotlin
+@file:DependsOn("cc.unitmesh:rag-script:0.3.2")
+import cc.unitmesh.rag.*
+
+rag {
+    indexing {
+        val chunks = document("README.md").split()
+        store.indexing(chunks)
+    }
+
+    querying {
+        store.findRelevant("workflow dsl design ").also {
+            println(it)
+        }
+    }
+}
+```
+
+方式 3：集成到 JVM 项目中
+
+模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
+
+```groovy
+dependencies {
+    // 核心模块
+    implementation 'cc.unitmesh:cocoa-core:0.2.3'
+    // Pinecone
+    implementation 'cc.unitmesh:store-pinecone:0.2.3'
+    // ElasticSearch
+    implementation 'cc.unitmesh:store-elasticsearch:0.2.3'
+    //...其它模块
+}
+```
+
+更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
+
+## Development
+
+See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see in [documents](./docs)
+
+## Design Philosophy: Domain Driven Problem Solving
+
 The key concepts of Chocolate Factory are:
 
 ![Chocolate Factory Concepts](docs/images/chocolate-factory.svg)
@@ -31,12 +85,6 @@ A user's problem is processed by the following steps:
 3. [SolutionDesigner.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionDesigner.kt)
 4. [SolutionReviewer.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionReviewer.kt)
 5. [SolutionExecutor.kt](cocoa-core/src/main/kotlin/cc/unitmesh/cf/core/flow/SolutionExecutor.kt)
-
-## Development
-
-See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see in [documents](./docs)
-
-## Examples
 
 - Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
 - Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.com/video/BV1T14y1C7p2)

@@ -25,7 +25,7 @@ permalink: /
 
 ## Quick Start
 
-本地部署
+方式 1：本地部署
 
 ```bash
 git clone https://github.com/unit-mesh/chocolate-factory
@@ -33,7 +33,27 @@ git clone https://github.com/unit-mesh/chocolate-factory
 docker-compose up
 ```
 
-集成到 JVM 项目中
+方式 2：使用 RAGScript
+
+```kotlin
+@file:DependsOn("cc.unitmesh:rag-script:0.3.2")
+import cc.unitmesh.rag.*
+
+rag {
+    indexing {
+        val chunks = document("README.md").split()
+        store.indexing(chunks)
+    }
+
+    querying {
+        store.findRelevant("workflow dsl design ").also {
+            println(it)
+        }
+    }
+}
+```
+
+方式 3：集成到 JVM 项目中
 
 模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
 
@@ -49,7 +69,7 @@ dependencies {
 }
 ```
 
-示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
+更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
 
 ## 设计理念：领域驱动的问题求解
 
