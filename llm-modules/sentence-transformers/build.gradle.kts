@@ -9,7 +9,9 @@ dependencies {
     implementation(libs.coroutines.core)
 
     implementation(libs.onnxruntime)
-    implementation(libs.huggingface.tokenizers)
+    implementation(libs.huggingface.tokenizers) {
+        exclude(group = "org.slf4j", module = "slf4j-api")
+    }
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
