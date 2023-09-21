@@ -17,7 +17,7 @@ class EmbeddingEngine(val engine: EngineType = EngineType.SentenceTransformers) 
 }
 
 class SentenceTransformersEmbedding : EmbeddingProvider {
-    val semantic = STSemantic.create()
+    private val semantic = STSemantic.create()
     override fun embed(texts: List<String>): List<Embedding> {
         return texts.map {
             semantic.embed(it).toList()

@@ -1,19 +1,19 @@
-@file:DependsOn("cc.unitmesh:rag-script:0.3.0")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.1")
 
 import java.io.File
 import cc.unitmesh.cf.code.CodeSplitter
 import cc.unitmesh.rag.document.Document
 import chapi.domain.core.CodeDataStruct
-import cc.unitmesh.apply.*
+import cc.unitmesh.rag.*
 import kotlinx.serialization.json.Json
 
 scripting {
     val apiKey = env?.get("OPENAI_API_KEY") ?: ""
     val apiHost = env?.get("OPENAI_API_HOST") ?: ""
 
-    connection = Connection(ConnectionType.OpenAI, apiKey, apiHost)
+    llm = LlmConnector(LlmType.OpenAI, apiKey, apiHost)
     embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-    vectorStore = VectorStore(StoreType.Elasticsearch)
+    store = Store(StoreType.Elasticsearch)
 
     indexing {
         val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
@@ -38,15 +38,15 @@ scripting {
             CodeSplitter().split(it)
         }.flatten()
 
-        vectorStore.indexing(chunks)
+        store.indexing(chunks)
     }
 
     querying {
-        val results = vectorStore.query("workflow dsl design ")
+        val results = store.findRelevant("workflow dsl design ")
         val sorted = results
             .lowInMiddle()
 
-        connection.completion {
+        llm.completion {
             """根据用户的问题，总结如下的代码
                         |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
                         |

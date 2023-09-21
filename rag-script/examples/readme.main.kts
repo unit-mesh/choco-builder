@@ -1,4 +1,4 @@
-@file:DependsOn("./build/libs/rag-script-0.3.0.jar")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.1")
 
 import cc.unitmesh.rag.*
 
