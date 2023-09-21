@@ -17,9 +17,9 @@ class WorkflowTest {
             val apiKey = env?.get("OPENAI_API_KEY") ?: ""
             val apiHost = env?.get("OPENAI_API_HOST") ?: ""
 
-            connection = Connection(ConnectionType.OpenAI, apiKey, apiHost)
+            llmConnector = LlmConnector(LlmType.OpenAI, apiKey, apiHost)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-            vectorStore = VectorStore(StoreType.Elasticsearch)
+            retriever = Retriever(StoreType.Elasticsearch)
 
             indexing {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
@@ -44,15 +44,15 @@ class WorkflowTest {
                     CodeSplitter().split(it)
                 }.flatten()
 
-                vectorStore.indexing(chunks)
+                retriever.add(chunks)
             }
 
             querying {
-                val results = vectorStore.query("workflow dsl design ")
+                val results = retriever.findRelevant("workflow dsl design ")
                 val sorted = results
                     .lowInMiddle()
 
-                connection.completion {
+                llmConnector.completion {
                     """根据用户的问题，总结如下的代码
                         |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
                         |
@@ -69,9 +69,9 @@ class WorkflowTest {
     @Ignore
     fun index_and_query_simple() {
         scripting("code") {
-            connection = Connection(ConnectionType.OpenAI)
+            llmConnector = LlmConnector(LlmType.OpenAI)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-            vectorStore = VectorStore(StoreType.Elasticsearch)
+            retriever = Retriever(StoreType.Elasticsearch)
 
             indexing {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
@@ -90,14 +90,14 @@ class WorkflowTest {
                             CodeSplitter().split(it)
                         }.flatten()
 
-                vectorStore.indexing(chunks)
+                retriever.add(chunks)
             }
 
             querying {
-                val results = vectorStore.query("workflow dsl design ")
+                val results = retriever.findRelevant("workflow dsl design ")
                 val sorted = results.lowInMiddle()
 
-                connection.completion {
+                llmConnector.completion {
                     """根据用户的问题，总结如下的代码
                         |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
                         |

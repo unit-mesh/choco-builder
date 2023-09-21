@@ -5,6 +5,8 @@ import cc.unitmesh.cf.core.dsl.Dsl
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
+import cc.unitmesh.rag.store.EmbeddingStore
+import cc.unitmesh.rag.store.InMemoryEmbeddingStore
 import cc.unitmesh.store.ElasticsearchStore
 import io.github.cdimascio.dotenv.Dotenv
 
@@ -22,13 +24,13 @@ class Workflow(val name: String) {
         null
     }
 
-    var connection: Connection = Connection(ConnectionType.OpenAI, "", "")
-    var vectorStore: VectorStore = VectorStore(StoreType.Elasticsearch)
+    var llmConnector: LlmConnector = LlmConnector(LlmType.OpenAI, "", "")
+    var retriever: Retriever = Retriever(StoreType.Elasticsearch)
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
         get() = field
         set(value) {
             field = value
-            vectorStore.updateEmbedding(value.provider)
+            retriever.updateEmbedding(value.provider)
         }
 
     var dsl: Dsl? = null;
@@ -41,8 +43,8 @@ class Workflow(val name: String) {
         return EmbeddingEngine(engineType)
     }
 
-    fun vectorStore(storeType: StoreType = StoreType.Elasticsearch): VectorStore {
-        return VectorStore(storeType)
+    fun vectorStore(storeType: StoreType = StoreType.Elasticsearch): Retriever {
+        return Retriever(storeType)
     }
 
     fun document(file: String): DocumentDsl {
@@ -92,19 +94,20 @@ class Workflow(val name: String) {
     }
 }
 
-class VectorStore(storeType: StoreType) {
+class Retriever(storeType: StoreType) {
     private var embedding: EmbeddingProvider? = SentenceTransformersEmbedding()
 
-    val store: ElasticsearchStore = when (storeType) {
+    val store: EmbeddingStore<Document> = when (storeType) {
         StoreType.Elasticsearch -> ElasticsearchStore()
+        StoreType.Memory -> InMemoryEmbeddingStore()
     }
 
-    fun query(input: String): List<EmbeddingMatch<Document>> {
+    fun findRelevant(input: String): List<EmbeddingMatch<Document>> {
         val embedded = embedding!!.embed(input)
         return store.findRelevant(embedded, 20)
     }
 
-    fun indexing(chunks: List<Document>): Boolean {
+    fun add(chunks: List<Document>): Boolean {
         val embeddings = chunks.map {
             embedding!!.embed(it.text)
         }
@@ -119,7 +122,8 @@ class VectorStore(storeType: StoreType) {
 }
 
 enum class StoreType {
-    Elasticsearch
+    Elasticsearch,
+    Memory
 }
 
 fun scripting(name: String, init: Workflow.() -> Unit): Workflow {

@@ -8,12 +8,13 @@ import io.reactivex.rxjava3.core.Flowable
 /**
  * for create LlmProvider
  */
-class Connection(val connectionType: ConnectionType, val apiKey: String, val apiHost: String? = null) : LlmProvider {
-    val provider: LlmProvider = when (connectionType) {
-        ConnectionType.OpenAI -> OpenAiProvider(apiKey, apiHost)
+class LlmConnector(val llmType: LlmType, val apiKey: String, val apiHost: String? = null) :
+    LlmProvider {
+    private val provider: LlmProvider = when (llmType) {
+        LlmType.OpenAI -> OpenAiProvider(apiKey, apiHost)
     }
 
-    constructor(openAI: ConnectionType) : this(
+    constructor(openAI: LlmType) : this(
         openAI,
         "",
         ""
@@ -42,6 +43,6 @@ class Connection(val connectionType: ConnectionType, val apiKey: String, val api
     }
 }
 
-enum class ConnectionType {
+enum class LlmType {
     OpenAI
 }
