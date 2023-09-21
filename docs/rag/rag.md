@@ -8,8 +8,6 @@ permalink: /docs/rag
 
 # RAG
 
-{: .no_toc }
-
 检索增强（Retrieval Augmented Generation）生成将从源数据（DataSource）中提取信息并将其分成（Splitter）较小的单元，每个单元都在模型的
 令牌限制内（Tiktoken）。然后， 这些片段（Chunk）被存储 在数据库（VectorStore）中。 当用户发出请求时， 从数据库中检索（Retriever）出
 最相关（Relevant） 的文档片段（Document）， 以丰富提示词（prompt），以提高 AI 模型的响应准确性。
@@ -46,4 +44,33 @@ graph LR
     KnowledgeBase --> Retriever;
     Retriever --> QueryEngine;
     Retriever --> Agents;
+```
+
+## RAGScript 最简示例：
+
+```kotlin
+rag {
+    // 使用 OpenAI 作为 LLM 引擎
+    llm = LlmConnector(LlmType.OpenAI)
+    // 使用 SentenceTransformers 作为 Embedding 引擎
+    embedding = EmbeddingEngine(EngineType.SentenceTransformers)
+    // 使用 Memory 作为 Retriever
+    store = Store(StoreType.Memory)
+
+    indexing {
+        // 从文件中读取文档
+        val document = document("filename.txt")
+        // 将文档切割成 chunk
+        val chunks = document.split()
+        // 建立索引
+        store.indexing(chunks)
+    }
+
+    querying {
+        // 查询
+        store.findRelevant("workflow dsl design ").also {
+            println(it)
+        }
+    }
+}
 ```
