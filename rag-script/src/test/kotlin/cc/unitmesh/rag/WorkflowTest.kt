@@ -138,4 +138,13 @@ class WorkflowTest {
             }
         }
     }
+
+    @Test
+    fun template_example() {
+        rag {
+            prompt {
+
+            }
+        }
+    }
 }

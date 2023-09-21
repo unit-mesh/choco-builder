@@ -8,7 +8,6 @@ import cc.unitmesh.rag.document.DocumentParser
 import cc.unitmesh.rag.document.DocumentType
 import cc.unitmesh.rag.store.EmbeddingMatch
 import java.io.File
-import java.io.InputStream
 
 class DocumentDsl(val file: String) {
     private val documentParser: DocumentParser

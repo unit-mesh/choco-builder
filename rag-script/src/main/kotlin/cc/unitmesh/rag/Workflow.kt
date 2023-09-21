@@ -1,13 +1,7 @@
 package cc.unitmesh.rag
 
 import cc.unitmesh.cf.core.dsl.Dsl
-import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.rag.base.ApplyDsl
-import cc.unitmesh.rag.document.Document
-import cc.unitmesh.rag.store.EmbeddingMatch
-import cc.unitmesh.rag.store.EmbeddingStore
-import cc.unitmesh.rag.store.InMemoryEmbeddingStore
-import cc.unitmesh.store.ElasticsearchStore
 import io.github.cdimascio.dotenv.Dotenv
 
 
@@ -92,38 +86,10 @@ class Workflow(val name: String) {
     fun step(name: String, function: () -> Unit) {
         function()
     }
-}
 
-class Store(storeType: StoreType) {
-    private var embedding: EmbeddingProvider? = SentenceTransformersEmbedding()
+    fun prompt(function: () -> Unit) {
 
-    private val store: EmbeddingStore<Document> = when (storeType) {
-        StoreType.Elasticsearch -> ElasticsearchStore()
-        StoreType.Memory -> InMemoryEmbeddingStore()
     }
-
-    fun findRelevant(input: String): List<EmbeddingMatch<Document>> {
-        val embedded = embedding!!.embed(input)
-        return store.findRelevant(embedded, 20)
-    }
-
-    fun indexing(chunks: List<Document>): Boolean {
-        val embeddings = chunks.map {
-            embedding!!.embed(it.text)
-        }
-
-        store.addAll(embeddings, chunks)
-        return true
-    }
-
-    fun updateEmbedding(value: EmbeddingProvider) {
-        this.embedding = value
-    }
-}
-
-enum class StoreType {
-    Elasticsearch,
-    Memory
 }
 
 fun rag(name: String, init: Workflow.() -> Unit): Workflow {
