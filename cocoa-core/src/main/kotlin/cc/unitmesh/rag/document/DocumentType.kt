@@ -32,7 +32,7 @@ enum class DocumentType(vararg supportedExtensions: String) {
     private val supportedExtensions: Iterable<String>
 
     init {
-        this.supportedExtensions = Arrays.asList(*supportedExtensions)
+        this.supportedExtensions = listOf(*supportedExtensions)
     }
 
     companion object {
@@ -44,6 +44,7 @@ enum class DocumentType(vararg supportedExtensions: String) {
                     }
                 }
             }
+
             throw UnsupportedDocumentTypeException(fileName)
         }
     }

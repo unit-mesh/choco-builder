@@ -109,4 +109,25 @@ class WorkflowTest {
             }
         }
     }
+
+    @Test
+    fun document_handle() {
+        scripting("code") {
+            llm = LlmConnector(LlmType.OpenAI)
+            embedding = EmbeddingEngine(EngineType.SentenceTransformers)
+            retriever = Retriever(StoreType.Memory)
+
+            indexing {
+                document("filename.txt").split().also {
+                    retriever.indexing(it)
+                }
+            }
+
+            querying {
+                retriever.findRelevant("workflow dsl design ").also {
+                    println(it)
+                }
+            }
+        }
+    }
 }

@@ -1,11 +1,30 @@
 package cc.unitmesh.rag
 
+import cc.unitmesh.document.parser.MsOfficeDocumentParser
+import cc.unitmesh.document.parser.PdfDocumentParser
+import cc.unitmesh.document.parser.TextDocumentParser
 import cc.unitmesh.rag.document.Document
+import cc.unitmesh.rag.document.DocumentParser
+import cc.unitmesh.rag.document.DocumentType
 import cc.unitmesh.rag.store.EmbeddingMatch
 
 class DocumentDsl(val file: String) {
+    private val documentParser: DocumentParser
+    init {
+        val extension = file.substringAfterLast(".")
+        val documentType = DocumentType.of(extension)
+        documentParser = when(documentType) {
+            DocumentType.TXT -> TextDocumentParser(documentType)
+            DocumentType.PDF -> PdfDocumentParser()
+            DocumentType.HTML -> TextDocumentParser(documentType)
+            DocumentType.DOC -> MsOfficeDocumentParser(documentType)
+            DocumentType.XLS -> MsOfficeDocumentParser(documentType)
+            DocumentType.PPT -> MsOfficeDocumentParser(documentType)
+        }
+    }
+
     fun split() : List<Document> {
-        return listOf()
+        return documentParser.parse(file.byteInputStream())
     }
 
 }
