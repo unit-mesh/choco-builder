@@ -7,13 +7,16 @@ import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.document.DocumentParser
 import cc.unitmesh.rag.document.DocumentType
 import cc.unitmesh.rag.store.EmbeddingMatch
+import java.io.File
+import java.io.InputStream
 
 class DocumentDsl(val file: String) {
     private val documentParser: DocumentParser
+
     init {
         val extension = file.substringAfterLast(".")
         val documentType = DocumentType.of(extension)
-        documentParser = when(documentType) {
+        documentParser = when (documentType) {
             DocumentType.TXT -> TextDocumentParser(documentType)
             DocumentType.PDF -> PdfDocumentParser()
             DocumentType.HTML -> TextDocumentParser(documentType)
@@ -23,10 +26,10 @@ class DocumentDsl(val file: String) {
         }
     }
 
-    fun split() : List<Document> {
-        return documentParser.parse(file.byteInputStream())
+    private val inputStream = File(file).inputStream()
+    fun split(): List<Document> {
+        return documentParser.parse(inputStream)
     }
-
 }
 
 
