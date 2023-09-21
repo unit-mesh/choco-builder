@@ -87,8 +87,10 @@ class Workflow(val name: String) {
         function()
     }
 
-    fun prompt(function: () -> Unit) {
-
+    fun prompt(init: PromptScript.() -> Unit): PromptScript {
+        val prompt = PromptScript()
+        prompt.init()
+        return prompt
     }
 }
 
@@ -97,6 +99,7 @@ fun rag(name: String, init: Workflow.() -> Unit): Workflow {
     workflow.init()
     return workflow
 }
+
 fun rag(init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow("scripting")
     workflow.init()

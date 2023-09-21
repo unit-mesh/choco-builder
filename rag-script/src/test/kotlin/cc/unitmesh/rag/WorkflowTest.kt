@@ -143,7 +143,13 @@ class WorkflowTest {
     fun template_example() {
         rag {
             prompt {
-
+                paragraph("Hello World")
+                codeblock("kotlin") {
+                    "println(\"Hello World\")"
+                }
+                list("unordered") {
+                    listOf("Hello", "World")
+                }
             }
         }
     }
