@@ -24,7 +24,7 @@ class Workflow(val name: String) {
         null
     }
 
-    var llmConnector: LlmConnector = LlmConnector(LlmType.OpenAI, "", "")
+    var llm: LlmConnector = LlmConnector(LlmType.OpenAI, "", "")
     var retriever: Retriever = Retriever(StoreType.Elasticsearch)
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
         get() = field
@@ -107,7 +107,7 @@ class Retriever(storeType: StoreType) {
         return store.findRelevant(embedded, 20)
     }
 
-    fun add(chunks: List<Document>): Boolean {
+    fun indexing(chunks: List<Document>): Boolean {
         val embeddings = chunks.map {
             embedding!!.embed(it.text)
         }

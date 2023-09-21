@@ -17,7 +17,7 @@ class WorkflowTest {
             val apiKey = env?.get("OPENAI_API_KEY") ?: ""
             val apiHost = env?.get("OPENAI_API_HOST") ?: ""
 
-            llmConnector = LlmConnector(LlmType.OpenAI, apiKey, apiHost)
+            llm = LlmConnector(LlmType.OpenAI, apiKey, apiHost)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
             retriever = Retriever(StoreType.Elasticsearch)
 
@@ -40,11 +40,11 @@ class WorkflowTest {
                 }
 
                 // todo: use dataframe to parse json
-                val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(outputFile.readText()).map {
-                    CodeSplitter().split(it)
-                }.flatten()
+                val splitter = CodeSplitter()
+                val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(outputFile.readText())
+                    .map(splitter::split).flatten()
 
-                retriever.add(chunks)
+                retriever.indexing(chunks)
             }
 
             querying {
@@ -52,7 +52,7 @@ class WorkflowTest {
                 val sorted = results
                     .lowInMiddle()
 
-                llmConnector.completion {
+                llm.completion {
                     """根据用户的问题，总结如下的代码
                         |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
                         |
@@ -69,7 +69,7 @@ class WorkflowTest {
     @Ignore
     fun index_and_query_simple() {
         scripting("code") {
-            llmConnector = LlmConnector(LlmType.OpenAI)
+            llm = LlmConnector(LlmType.OpenAI)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
             retriever = Retriever(StoreType.Elasticsearch)
 
@@ -90,14 +90,14 @@ class WorkflowTest {
                             CodeSplitter().split(it)
                         }.flatten()
 
-                retriever.add(chunks)
+                retriever.indexing(chunks)
             }
 
             querying {
                 val results = retriever.findRelevant("workflow dsl design ")
                 val sorted = results.lowInMiddle()
 
-                llmConnector.completion {
+                llm.completion {
                     """根据用户的问题，总结如下的代码
                         |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
                         |
