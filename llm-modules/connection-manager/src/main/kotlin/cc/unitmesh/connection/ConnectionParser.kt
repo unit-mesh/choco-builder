@@ -2,18 +2,19 @@ package cc.unitmesh.connection
 
 import io.vertx.core.json.JsonObject
 import io.vertx.json.schema.JsonSchema
-import io.vertx.json.schema.JsonSchemaOptions
-import io.vertx.json.schema.SchemaRepository
+import io.vertx.json.schema.impl.JsonRef
 import java.io.File
 
 
 class ConnectionParser {
-    fun loadSchemaByType() {
+    fun loadSchemaByType(): JsonObject? {
         val context = File(loadResource()).readText()
         val obj = JsonObject(context)
-        val schema: JsonSchema = JsonSchema.of(obj)
 
-        schema
+        val resolved = JsonRef.resolve(obj)
+        val ref = resolved.getJsonObject("definitions")
+
+        return ref
     }
 
 
