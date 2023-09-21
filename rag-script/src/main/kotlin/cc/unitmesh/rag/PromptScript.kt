@@ -2,9 +2,13 @@ package cc.unitmesh.rag
 
 /**
  * PromptScript is a DSL for writing a prompt, will generate Markdown text.
+ * - codeblock, will generate a codeblock starts with ```language
+ * - paragraph, will generate a paragraph
+ * - list, will generate a list
+ * - linebreak, will generate a linebreak
  */
 class PromptScript {
-    val sb = StringBuilder()
+    private val sb = StringBuilder()
     fun codeblock(language: String, function: () -> String): String {
         val sb = StringBuilder()
         sb.append("```")
@@ -16,10 +20,6 @@ class PromptScript {
         sb.append("\n")
 
         this.sb.append(sb)
-        return sb.toString()
-    }
-
-    fun build(): String {
         return sb.toString()
     }
 
@@ -40,11 +40,36 @@ class PromptScript {
     /**
      * type can be unordered, ordered, or checked
      */
-    fun list(type: String, function: () -> Unit) {
-        function()
+    fun list(type: ListType, function: () -> List<String>): String {
+        val sb = StringBuilder()
+        val prefix = when (type) {
+            ListType.Unordered -> "* "
+            ListType.Ordered -> "1. "
+            ListType.Checked -> "- [ ] "
+        }
+
+        function().forEach {
+            sb.append(prefix)
+            sb.append(it)
+            sb.append("\n")
+        }
+
+        this.sb.append(sb)
+        return sb.toString()
     }
 
-    fun item(item: String): String {
-        return item
+    fun linebreak(): String {
+        this.sb.append("\n")
+        return "\n"
     }
+
+    override fun toString(): String {
+        return sb.toString()
+    }
+}
+
+enum class ListType {
+    Unordered,
+    Ordered,
+    Checked
 }

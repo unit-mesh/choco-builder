@@ -3,6 +3,7 @@ package cc.unitmesh.rag
 import cc.unitmesh.cf.code.CodeSplitter
 import cc.unitmesh.rag.document.Document
 import chapi.domain.core.CodeDataStruct
+import io.kotest.matchers.shouldBe
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -141,16 +142,22 @@ class WorkflowTest {
 
     @Test
     fun template_example() {
-        rag {
-            prompt {
-                paragraph("Hello World")
-                codeblock("kotlin") {
-                    "println(\"Hello World\")"
-                }
-                list("unordered") {
-                    listOf("Hello", "World")
-                }
+        val promptText = prompt {
+            paragraph("Hello World")
+            codeblock("kotlin") {
+                "println(\"Hello World\")"
+            }
+            list(ListType.Unordered) {
+                listOf("Hello", "World")
             }
         }
+
+        promptText.toString() shouldBe """Hello World
+            |```kotlin
+            |println("Hello World")
+            |```
+            |* Hello
+            |* World
+            |""".trimMargin()
     }
 }

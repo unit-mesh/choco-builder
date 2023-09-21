@@ -105,3 +105,9 @@ fun rag(init: Workflow.() -> Unit): Workflow {
     workflow.init()
     return workflow
 }
+
+fun prompt(init: PromptScript.() -> Unit): PromptScript {
+    val prompt = PromptScript()
+    prompt.init()
+    return prompt
+}
