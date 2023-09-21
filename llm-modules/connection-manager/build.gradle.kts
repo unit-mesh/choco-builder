@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation("net.pwall.json:json-kotlin-schema:0.41")
+    implementation("io.vertx:vertx-json-schema:4.4.5")
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
