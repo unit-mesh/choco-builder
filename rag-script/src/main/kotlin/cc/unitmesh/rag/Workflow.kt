@@ -39,7 +39,6 @@ class Workflow(val name: String) {
      * Provider for embedding, like SentenceTransformers, etc.
      */
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
-        get() = field
         set(value) {
             field = value
             store.updateEmbedding(value.provider)

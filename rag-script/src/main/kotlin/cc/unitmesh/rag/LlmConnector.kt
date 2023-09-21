@@ -14,8 +14,8 @@ class LlmConnector(val llmType: LlmType, val apiKey: String, val apiHost: String
         LlmType.OpenAI -> OpenAiProvider(apiKey, apiHost)
     }
 
-    constructor(openAI: LlmType) : this(
-        openAI,
+    constructor(type: LlmType) : this(
+        type,
         "",
         ""
     )
