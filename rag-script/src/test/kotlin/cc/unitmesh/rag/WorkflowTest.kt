@@ -19,7 +19,7 @@ class WorkflowTest {
 
             llm = LlmConnector(LlmType.OpenAI, apiKey, apiHost)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-            retriever = Retriever(StoreType.Elasticsearch)
+            store = Store(StoreType.Elasticsearch)
 
             indexing {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
@@ -44,11 +44,11 @@ class WorkflowTest {
                 val chunks: List<Document> = Json.decodeFromString<List<CodeDataStruct>>(outputFile.readText())
                     .map(splitter::split).flatten()
 
-                retriever.indexing(chunks)
+                store.indexing(chunks)
             }
 
             querying {
-                val results = retriever.findRelevant("workflow dsl design ")
+                val results = store.findRelevant("workflow dsl design ")
                 val sorted = results
                     .lowInMiddle()
 
@@ -71,7 +71,7 @@ class WorkflowTest {
         scripting("code") {
             llm = LlmConnector(LlmType.OpenAI)
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-            retriever = Retriever(StoreType.Elasticsearch)
+            store = Store(StoreType.Elasticsearch)
 
             indexing {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
@@ -90,11 +90,11 @@ class WorkflowTest {
                             CodeSplitter().split(it)
                         }.flatten()
 
-                retriever.indexing(chunks)
+                store.indexing(chunks)
             }
 
             querying {
-                val results = retriever.findRelevant("workflow dsl design ")
+                val results = store.findRelevant("workflow dsl design ")
                 val sorted = results.lowInMiddle()
 
                 llm.completion {
@@ -113,18 +113,25 @@ class WorkflowTest {
     @Test
     fun document_handle() {
         scripting("code") {
+            // 使用 OpenAI 作为 LLM 引擎
             llm = LlmConnector(LlmType.OpenAI)
+            // 使用 SentenceTransformers 作为 Embedding 引擎
             embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-            retriever = Retriever(StoreType.Memory)
+            // 使用 Memory 作为 Retriever
+            store = Store(StoreType.Memory)
 
             indexing {
-                document("filename.txt").split().also {
-                    retriever.indexing(it)
-                }
+                // 从文件中读取文档
+                val document = document("filename.txt")
+                // 将文档切割成 chunk
+                val chunks = document.split()
+                // 建立索引
+                store.indexing(chunks)
             }
 
             querying {
-                retriever.findRelevant("workflow dsl design ").also {
+                // 查询
+                store.findRelevant("workflow dsl design ").also {
                     println(it)
                 }
             }

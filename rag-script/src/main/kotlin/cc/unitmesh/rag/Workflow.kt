@@ -25,12 +25,12 @@ class Workflow(val name: String) {
     }
 
     var llm: LlmConnector = LlmConnector(LlmType.OpenAI, "", "")
-    var retriever: Retriever = Retriever(StoreType.Elasticsearch)
+    var store: Store = Store(StoreType.Elasticsearch)
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
         get() = field
         set(value) {
             field = value
-            retriever.updateEmbedding(value.provider)
+            store.updateEmbedding(value.provider)
         }
 
     var dsl: Dsl? = null;
@@ -43,8 +43,8 @@ class Workflow(val name: String) {
         return EmbeddingEngine(engineType)
     }
 
-    fun vectorStore(storeType: StoreType = StoreType.Elasticsearch): Retriever {
-        return Retriever(storeType)
+    fun vectorStore(storeType: StoreType = StoreType.Elasticsearch): Store {
+        return Store(storeType)
     }
 
     fun document(file: String): DocumentDsl {
@@ -94,10 +94,10 @@ class Workflow(val name: String) {
     }
 }
 
-class Retriever(storeType: StoreType) {
+class Store(storeType: StoreType) {
     private var embedding: EmbeddingProvider? = SentenceTransformersEmbedding()
 
-    val store: EmbeddingStore<Document> = when (storeType) {
+    private val store: EmbeddingStore<Document> = when (storeType) {
         StoreType.Elasticsearch -> ElasticsearchStore()
         StoreType.Memory -> InMemoryEmbeddingStore()
     }
