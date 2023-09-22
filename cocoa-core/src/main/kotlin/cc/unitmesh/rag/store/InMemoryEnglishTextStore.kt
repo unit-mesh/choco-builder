@@ -6,7 +6,10 @@ import cc.unitmesh.nlp.similarity.JaccardSimilarity
 import cc.unitmesh.nlp.similarity.RelevanceScore
 import java.util.*
 
-class InMemoryTextStore<Embedded> : EmbeddingStore<Embedded> {
+/**
+ * A simple in-memory English implementation of [EmbeddingStore].
+ */
+class InMemoryEnglishTextStore<Embedded> : EmbeddingStore<Embedded> {
     private val entries: MutableList<Entry<Embedded>> = ArrayList()
     override fun add(embedding: Embedding): String {
         val id: String = IdUtil.uuid()

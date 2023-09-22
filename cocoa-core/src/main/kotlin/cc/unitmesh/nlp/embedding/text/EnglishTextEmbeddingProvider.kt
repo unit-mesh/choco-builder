@@ -3,7 +3,7 @@ package cc.unitmesh.nlp.embedding.text
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 
-class TextEmbeddingProvider : EmbeddingProvider {
+class EnglishTextEmbeddingProvider : EmbeddingProvider {
     override fun embed(texts: List<String>): List<Embedding> {
         return texts.map { text ->
             val tokens = tokenize(text)
