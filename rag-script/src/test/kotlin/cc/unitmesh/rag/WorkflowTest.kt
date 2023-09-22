@@ -164,10 +164,6 @@ class WorkflowTest {
     @Test
     fun english_text_example() {
         rag {
-            llm = LlmConnector(LlmType.OpenAI)
-            store = Store(StoreType.MemoryEnglish)
-            embedding = EmbeddingEngine(EngineType.EnglishTextEmbedding)
-
             indexing {
                 val chunks = text("fun main(args: Array<String>) {\n    println(\"Hello, World!\")\n}").split()
                 store.indexing(chunks)

@@ -27,12 +27,12 @@ class Workflow(val name: String) {
     /**
      * Provider for vector store, like Elasticsearch, Memory, etc.
      */
-    var store: Store = Store(StoreType.Elasticsearch)
+    var store: Store = Store(StoreType.MemoryEnglish)
 
     /**
      * Provider for embedding, like SentenceTransformers, etc.
      */
-    var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.SentenceTransformers)
+    var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.EnglishTextEmbedding)
         set(value) {
             field = value
             store.updateEmbedding(value.provider)
