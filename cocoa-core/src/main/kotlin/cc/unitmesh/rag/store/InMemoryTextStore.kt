@@ -2,7 +2,6 @@ package cc.unitmesh.rag.store
 
 import cc.unitmesh.cf.core.utils.IdUtil
 import cc.unitmesh.nlp.embedding.Embedding
-import cc.unitmesh.nlp.similarity.CosineSimilarity
 import cc.unitmesh.nlp.similarity.JaccardSimilarity
 import cc.unitmesh.nlp.similarity.RelevanceScore
 import java.util.*
