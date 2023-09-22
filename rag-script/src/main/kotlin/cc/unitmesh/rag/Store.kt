@@ -5,14 +5,16 @@ import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
 import cc.unitmesh.rag.store.InMemoryEmbeddingStore
+import cc.unitmesh.rag.store.InMemoryEnglishTextStore
 import cc.unitmesh.store.ElasticsearchStore
 
 class Store(storeType: StoreType) {
-    private var embedding: EmbeddingProvider? = SentenceTransformersEmbedding()
+    private var embedding: EmbeddingProvider? = null
 
     private val store: EmbeddingStore<Document> = when (storeType) {
         StoreType.Elasticsearch -> ElasticsearchStore()
         StoreType.Memory -> InMemoryEmbeddingStore()
+        StoreType.MemoryEnglish -> InMemoryEnglishTextStore()
     }
 
     fun findRelevant(input: String): List<EmbeddingMatch<Document>> {
@@ -36,5 +38,6 @@ class Store(storeType: StoreType) {
 
 enum class StoreType {
     Elasticsearch,
-    Memory
+    Memory,
+    MemoryEnglish,
 }

@@ -3,15 +3,18 @@ package cc.unitmesh.rag
 import cc.unitmesh.cf.STSemantic
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
+import cc.unitmesh.nlp.embedding.text.EnglishTextEmbeddingProvider
 
 enum class EngineType {
+    EnglishTextEmbedding,
     SentenceTransformers,
     TextEmbeddingAda,
 }
 
-class EmbeddingEngine(val engine: EngineType = EngineType.SentenceTransformers) {
+class EmbeddingEngine(private val engine: EngineType = EngineType.SentenceTransformers) {
     var provider: EmbeddingProvider = when (engine) {
         EngineType.SentenceTransformers -> SentenceTransformersEmbedding()
+        EngineType.EnglishTextEmbedding -> EnglishTextEmbeddingProvider()
         EngineType.TextEmbeddingAda -> TODO()
     }
 }
