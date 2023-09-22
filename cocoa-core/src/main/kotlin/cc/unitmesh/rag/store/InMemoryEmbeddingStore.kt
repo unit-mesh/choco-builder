@@ -85,39 +85,4 @@ class InMemoryEmbeddingStore<Embedded> : EmbeddingStore<Embedded> {
         result.reverse()
         return result
     }
-
-    private fun serializeToJson(): String {
-        return Gson().toJson(this)
-    }
-
-    private fun serializeToFile(filePath: Path?) {
-        try {
-            val json = serializeToJson()
-            Files.write(filePath, json.toByteArray(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
-        } catch (e: IOException) {
-            throw RuntimeException(e)
-        }
-    }
-
-    fun serializeToFile(filePath: String) {
-        serializeToFile(Paths.get(filePath))
-    }
-
-    private fun fromJson(json: String): InMemoryEmbeddingStore<Document> {
-        val type: Type = object : TypeToken<InMemoryEmbeddingStore<Document>>() {}.type
-        return Gson().fromJson(json, type)
-    }
-
-    private fun fromFile(filePath: Path?): InMemoryEmbeddingStore<Document> {
-        return try {
-            val json = String(Files.readAllBytes(filePath))
-            fromJson(json)
-        } catch (e: IOException) {
-            throw RuntimeException(e)
-        }
-    }
-
-    fun fromFile(filePath: String): InMemoryEmbeddingStore<Document> {
-        return fromFile(Paths.get(filePath))
-    }
 }
