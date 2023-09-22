@@ -3,7 +3,7 @@ package cc.unitmesh.rag
 import java.io.File
 import java.io.IOException
 
-class ExecuteDsl {
+class Exec {
     fun runJar(fileName: File, args: List<String>): File {
         try {
             val processBuilder = ProcessBuilder("java", "-jar", fileName.absolutePath)

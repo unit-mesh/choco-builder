@@ -28,7 +28,7 @@ class WorkflowTest {
 
                 var outputFile = File("0_codes.json");
                 if (!outputFile.exists()) {
-                    outputFile = ExecuteDsl().runJar(
+                    outputFile = Exec().runJar(
                         file, args = listOf(
                             "--language", "Kotlin",
                             "--output", "json",
@@ -76,7 +76,7 @@ class WorkflowTest {
 
             indexing {
                 val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
-                ExecuteDsl().runJar(
+                Exec().runJar(
                     Http.download(cliUrl), args = listOf(
                         "--language", "Kotlin",
                         "--output", "json",

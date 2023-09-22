@@ -56,14 +56,16 @@ rag {
 
 模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
 
+latest version: <a href="https://central.sonatype.com/namespace/cc.unitmesh"><img src="https://img.shields.io/maven-central/v/cc.unitmesh/cocoa-core"  alt="Maven"/></a>
+
 ```groovy
 dependencies {
     // 核心模块
-    implementation 'cc.unitmesh:cocoa-core:0.2.3'
+    implementation 'cc.unitmesh:cocoa-core:0.3.3'
     // Pinecone
-    implementation 'cc.unitmesh:store-pinecone:0.2.3'
+    implementation 'cc.unitmesh:store-pinecone:0.3.3'
     // ElasticSearch
-    implementation 'cc.unitmesh:store-elasticsearch:0.2.3'
+    implementation 'cc.unitmesh:store-elasticsearch:0.3.3'
     //...其它模块
 }
 ```

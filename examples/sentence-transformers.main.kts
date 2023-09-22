@@ -8,7 +8,7 @@ rag("code") {
     store = Store(StoreType.Memory)
 
     indexing {
-        document("filename.txt").split().also {
+        text("filename.txt").split().also {
             store.indexing(it)
         }
     }
