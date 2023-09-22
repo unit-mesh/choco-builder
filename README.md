@@ -30,7 +30,7 @@ docker-compose up
 方式 2：使用 RAGScript
 
 ```kotlin
-@file:DependsOn("cc.unitmesh:rag-script:0.3.2")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.3")
 import cc.unitmesh.rag.*
 
 rag {

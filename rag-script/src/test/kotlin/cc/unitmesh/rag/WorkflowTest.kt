@@ -176,4 +176,20 @@ class WorkflowTest {
             }
         }
     }
+
+    @Test
+    fun chinese_text_example() {
+        rag {
+            indexing {
+                val chunks = text("fun main(args: Array<String>) {\n    println(\"Hello, World!\")\n}").split()
+                store.indexing(chunks)
+            }
+
+            querying {
+                store.findRelevant("你好世界").also {
+                    println(it)
+                }
+            }
+        }
+    }
 }

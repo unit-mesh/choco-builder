@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Home
-description: " Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端 API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。 "
+description: "Chocolate Factory 是一款开源的 AI Agent 应用引擎/应用框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端 API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。 "
 nav_order: 1
 permalink: /
 ---
@@ -36,19 +36,18 @@ docker-compose up
 方式 2：使用 RAGScript
 
 ```kotlin
-@file:DependsOn("cc.unitmesh:rag-script:0.3.2")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.3")
+
 import cc.unitmesh.rag.*
 
 rag {
     indexing {
-        val chunks = document("README.md").split()
+        val chunks = text("fun main(args: Array<String>) {\n    println(\"Hello, World!\")\n}").split()
         store.indexing(chunks)
     }
 
     querying {
-        store.findRelevant("workflow dsl design ").also {
-            println(it)
-        }
+        store.findRelevant("Hello World")
     }
 }
 ```

@@ -1,4 +1,4 @@
-@file:DependsOn("cc.unitmesh:rag-script:0.3.2")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.3")
 
 import java.io.File
 import cc.unitmesh.cf.code.CodeSplitter
