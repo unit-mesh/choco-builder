@@ -1,7 +1,6 @@
 package cc.unitmesh.connection
 
 import io.vertx.core.json.JsonObject
-import io.vertx.json.schema.JsonSchema
 import io.vertx.json.schema.impl.JsonRef
 import java.io.File
 
