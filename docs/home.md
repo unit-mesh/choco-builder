@@ -52,6 +52,8 @@ rag {
 }
 ```
 
+更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory/tree/master/examples/ragscripts)
+
 方式 3：集成到 JVM 项目中
 
 模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
