@@ -1,4 +1,4 @@
-@file:DependsOn("cc.unitmesh:rag-script:0.3.3")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.4")
 
 import cc.unitmesh.rag.*
 
@@ -9,6 +9,8 @@ rag {
     }
 
     querying {
-        store.findRelevant("Hello World")
+        store.findRelevant("Hello World").also {
+            println(it)
+        }
     }
 }
