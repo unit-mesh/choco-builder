@@ -30,7 +30,7 @@ docker-compose up
 方式 2：使用 RAGScript
 
 ```kotlin
-@file:DependsOn("cc.unitmesh:rag-script:0.3.3")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.4")
 import cc.unitmesh.rag.*
 
 rag {
@@ -54,11 +54,11 @@ rag {
 ```groovy
 dependencies {
     // 核心模块
-    implementation 'cc.unitmesh:cocoa-core:0.2.3'
+    implementation 'cc.unitmesh:cocoa-core:0.3.4'
     // Pinecone
-    implementation 'cc.unitmesh:store-pinecone:0.2.3'
+    implementation 'cc.unitmesh:store-pinecone:0.3.4'
     // ElasticSearch
-    implementation 'cc.unitmesh:store-elasticsearch:0.2.3'
+    implementation 'cc.unitmesh:store-elasticsearch:0.3.4'
     //...其它模块
 }
 ```
