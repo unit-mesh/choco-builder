@@ -23,6 +23,8 @@ include(":llm-modules:connection-manager")
 include(":code:interpreter")
 include(":code:code-splitter")
 
+include(":tools:web-tools")
+
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
