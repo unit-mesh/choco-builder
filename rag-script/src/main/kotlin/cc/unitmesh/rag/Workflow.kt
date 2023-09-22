@@ -45,6 +45,10 @@ class Workflow(val name: String) {
         return DocumentDsl(file)
     }
 
+    fun text(text: String): TextDsl {
+        return TextDsl(text)
+    }
+
     /**
      * Prepare is a function for preparing data for the workflow. You don't need to call it as block.
      */
@@ -56,6 +60,8 @@ class Workflow(val name: String) {
      * Indexing is a function for indexing data for the workflow. You don't need to call it as block.
      */
     fun indexing(function: () -> Unit) {
+        // make sure embedding is updated
+        store.updateEmbedding(embedding.provider)
         function()
     }
 

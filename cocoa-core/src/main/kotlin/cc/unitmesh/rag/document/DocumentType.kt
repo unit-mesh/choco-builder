@@ -18,8 +18,6 @@
 
 package cc.unitmesh.rag.document
 
-import java.util.*
-
 
 enum class DocumentType(vararg supportedExtensions: String) {
     TXT("txt"),

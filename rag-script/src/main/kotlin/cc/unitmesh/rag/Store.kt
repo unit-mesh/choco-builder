@@ -1,6 +1,7 @@
 package cc.unitmesh.rag
 
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
+import cc.unitmesh.nlp.embedding.text.EnglishTextEmbeddingProvider
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
@@ -9,7 +10,7 @@ import cc.unitmesh.rag.store.InMemoryEnglishTextStore
 import cc.unitmesh.store.ElasticsearchStore
 
 class Store(storeType: StoreType) {
-    private var embedding: EmbeddingProvider? = null
+    private var embedding: EmbeddingProvider? = EnglishTextEmbeddingProvider()
 
     private val store: EmbeddingStore<Document> = when (storeType) {
         StoreType.Elasticsearch -> ElasticsearchStore()
