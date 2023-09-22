@@ -1,8 +1,30 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.4...v) (2023-09-19)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.4...v) (2023-09-22)
 
 
 
-## [0.2.4](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.2...v0.2.4) (2023-09-19)
+## [0.3.4](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.0...v0.3.4) (2023-09-22)
+
+
+### Bug Fixes
+
+* fix for tsting ([99c49a8](https://github.com/unit-mesh/chocolate-factory/commit/99c49a83240a9362062b087d28d3a81c8a7ee630))
+* fix input stream ([f8d3ff1](https://github.com/unit-mesh/chocolate-factory/commit/f8d3ff11f8c81f1b444c2c2393b2df3d17ca0be0))
+* fix sl4j issue ([eab04c3](https://github.com/unit-mesh/chocolate-factory/commit/eab04c3ec455e3a20905721d5d237c5b108f328f))
+* fix version issues ([e647b37](https://github.com/unit-mesh/chocolate-factory/commit/e647b37738dff5d94cc65fa7f10f9c0943497f4b))
+
+
+### Features
+
+* add simplify text embedding for tesxint ([92d35d8](https://github.com/unit-mesh/chocolate-factory/commit/92d35d8032ee5e985d5e9d8074051a5789f3d5c6))
+* init first scripts ([a843020](https://github.com/unit-mesh/chocolate-factory/commit/a8430208ec839c7e0c21b67de247c352df08bffe))
+* init webtools for demos ([00b2ed6](https://github.com/unit-mesh/chocolate-factory/commit/00b2ed618e40dddf056007bae102d4cf3020f2bf))
+* make text embdding ([2b4531e](https://github.com/unit-mesh/chocolate-factory/commit/2b4531eb204c22b82a64730ee3fd4c7b1af8e186))
+* **script:** add workflow template ([a8adff1](https://github.com/unit-mesh/chocolate-factory/commit/a8adff16ba8b86a32c79e9ab7ad5d13c19be8f8e))
+* simplify for connection manager ([f63fba5](https://github.com/unit-mesh/chocolate-factory/commit/f63fba52b0647128411321182134414ba229808c))
+
+
+
+# [0.3.0](https://github.com/unit-mesh/chocolate-factory/compare/v0.2.2...v0.3.0) (2023-09-20)
 
 
 ### Bug Fixes
@@ -11,16 +33,24 @@
 * add lost securiry prompt ([a026c66](https://github.com/unit-mesh/chocolate-factory/commit/a026c660044dfd1b65f7b0c474dca4d02551dacc))
 * fix compile issue ([fb191a1](https://github.com/unit-mesh/chocolate-factory/commit/fb191a156b562fdfde2bf33ec3c538075e271292))
 * fix link typo ([21fbbaf](https://github.com/unit-mesh/chocolate-factory/commit/21fbbaf4477e2d0e36e7c654cbc6cae497f61e75))
+* fix tests ([04bd7f7](https://github.com/unit-mesh/chocolate-factory/commit/04bd7f76aee792068bfb699d84cf400dc63e4a79))
+* fix tests ([03cd1e3](https://github.com/unit-mesh/chocolate-factory/commit/03cd1e3139f3533f0947f224beb2033c56d14830))
 * fix typos ([f033e61](https://github.com/unit-mesh/chocolate-factory/commit/f033e6115ab88627c5c6db28d4b6bc3dbf75de0b))
 * fix typos ([e66363d](https://github.com/unit-mesh/chocolate-factory/commit/e66363d002ed871c9798fdf64c2c4781a261ffd0))
 * fix typos ([84c0e65](https://github.com/unit-mesh/chocolate-factory/commit/84c0e65b8091b9849c45e5765e28d4e1a4853bd9))
+* make download ([f2491cf](https://github.com/unit-mesh/chocolate-factory/commit/f2491cf2475a653d979dcd195c6e2585c3749569))
 * remove debug API ([3106283](https://github.com/unit-mesh/chocolate-factory/commit/31062831543fdad51a064425f381b22dcfd4dc0a))
 
 
 ### Features
 
 * add simple rules for split by content ([87b07f4](https://github.com/unit-mesh/chocolate-factory/commit/87b07f4666c0f407b2919f870ef04e2bd0dc8747))
+* **dsl:** init first debug flow ([b2cd8a2](https://github.com/unit-mesh/chocolate-factory/commit/b2cd8a270727df4b1742fe101aa06718acee9a06))
 * enable parse for documents ([2b264fe](https://github.com/unit-mesh/chocolate-factory/commit/2b264fe015a7ff8a76e819ffb22db42da7b55a3b))
+* enable to download files ([c810bf8](https://github.com/unit-mesh/chocolate-factory/commit/c810bf83503f1cb6e6d4f86451b7824d067747db))
+* init first version DSL ([984aeef](https://github.com/unit-mesh/chocolate-factory/commit/984aeefb15fd387a0984c497b455d4e1e9f2a0c3))
+* inti firsr version workflow ([60fec45](https://github.com/unit-mesh/chocolate-factory/commit/60fec459f6018e173d24766a6a5b55e2ebce6a86))
+* make workflow examples ([0c316da](https://github.com/unit-mesh/chocolate-factory/commit/0c316da87b7a9bdc05a4e101609f8a650853c3e6))
 
 
 
