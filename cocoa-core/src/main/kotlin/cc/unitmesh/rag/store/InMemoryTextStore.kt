@@ -3,16 +3,11 @@ package cc.unitmesh.rag.store
 import cc.unitmesh.cf.core.utils.IdUtil
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.similarity.CosineSimilarity
+import cc.unitmesh.nlp.similarity.JaccardSimilarity
 import cc.unitmesh.nlp.similarity.RelevanceScore
 import java.util.*
 
-data class Entry<Embedded>(
-    var id: String,
-    var embedding: Embedding,
-    var embedded: Embedded?,
-)
-
-class InMemoryEmbeddingStore<Embedded> : EmbeddingStore<Embedded> {
+class InMemoryTextStore<Embedded> : EmbeddingStore<Embedded> {
     private val entries: MutableList<Entry<Embedded>> = ArrayList()
     override fun add(embedding: Embedding): String {
         val id: String = IdUtil.uuid()
@@ -60,7 +55,7 @@ class InMemoryEmbeddingStore<Embedded> : EmbeddingStore<Embedded> {
         val matches = PriorityQueue(comparator)
 
         for (entry in entries) {
-            val cosineSimilarity = CosineSimilarity.between(entry.embedding, referenceEmbedding)
+            val cosineSimilarity = JaccardSimilarity.between(entry.embedding, referenceEmbedding)
             val score = RelevanceScore.fromCosineSimilarity(cosineSimilarity)
             if (score >= minScore) {
                 matches.add(EmbeddingMatch(score, entry.id, entry.embedding, entry.embedded!!))

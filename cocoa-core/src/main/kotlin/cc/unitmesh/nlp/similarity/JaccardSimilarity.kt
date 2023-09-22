@@ -12,4 +12,10 @@ class JaccardSimilarity : Similarity {
         val unionSize: Int = (set1 union set2).size
         return intersectionSize.toDouble() / unionSize.toDouble()
     }
+
+    companion object {
+        fun between(embedding: List<Double>, referenceEmbedding: List<Double>): Double {
+            return JaccardSimilarity().similarityScore(embedding, referenceEmbedding)
+        }
+    }
 }
