@@ -9,9 +9,8 @@ dependencies {
     implementation(libs.serialization.json)
     implementation(libs.jtokkit)
 
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("io.reactivex.rxjava3:rxjava:3.1.7")
-    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+    implementation(libs.gson)
+    implementation(libs.rxjava3)
 
     implementation(kotlin("reflect"))
     implementation(libs.reflections)

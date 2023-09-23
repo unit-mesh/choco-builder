@@ -24,13 +24,13 @@ dependencies {
     implementation(libs.huggingface.tokenizers)
     implementation(libs.dataframe)
 
-    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    implementation(libs.dotenv.kotlin)
 
-    implementation("io.ktor:ktor-client-logging:2.3.4")
-    implementation("io.ktor:ktor-client-core:2.3.4")
-    implementation("io.ktor:ktor-client-cio:2.3.4")
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
 
-    implementation("io.reactivex.rxjava3:rxjava:3.1.7")
+    implementation(libs.rxjava3)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)

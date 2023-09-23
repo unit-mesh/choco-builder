@@ -1,15 +1,15 @@
 plugins {
     alias(libs.plugins.jvm)
     alias(libs.plugins.serialization)
-    id("org.jetbrains.kotlin.jupyter.api") version "0.12.0-56"
+    alias(libs.plugins.jupyter)
 }
 
 dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.coroutines.core)
 
-    implementation("org.jetbrains.kotlinx:kotlin-jupyter-api:0.12.0-56")
-    implementation("org.jetbrains.kotlinx:kotlin-jupyter-kernel:0.12.0-56")
+    implementation(libs.jupyter.api)
+    implementation(libs.jupyter.kernel)
 
     implementation(libs.bundles.letsPlot)
 

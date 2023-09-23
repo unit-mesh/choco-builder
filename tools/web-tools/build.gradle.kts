@@ -10,7 +10,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 
-    implementation("org.jsoup:jsoup:1.16.1")
+    implementation(libs.jsoup)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)

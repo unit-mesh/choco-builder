@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(projects.cocoaCore)
-    implementation("io.reactivex.rxjava3:rxjava:3.1.7")
+    implementation(libs.rxjava3)
 
     implementation(libs.bundles.openai)
     implementation(libs.bundles.jackson)

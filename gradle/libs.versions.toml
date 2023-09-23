@@ -4,7 +4,7 @@ kotlin = "1.9.10"
 kotlinxCoroutines = "1.7.3"
 kotlinxSerialization = "1.6.0"
 
-jupyterApi = "0.11.0-398"
+jupyterApi = "0.12.0-56"
 
 junit = "5.9.1"
 kotlinTest = "5.5.4"
@@ -95,6 +95,7 @@ azure-openai = "com.azure:azure-ai-openai:1.0.0-beta.3"
 jackson-module-kotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2"
 jackson-module-jsonSchema = "com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2"
 jackson-dataformat-yaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2"
+jackson-databind = "com.fasterxml.jackson.core:jackson-databind:2.14.2"
 
 dotenv = "io.github.cdimascio:dotenv-java:3.0.0"
 # "io.github.cdimascio:dotenv-kotlin:6.4.1"
@@ -127,10 +128,21 @@ lets-plot-kernel = "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.2"
 lets-plot-image-export = "org.jetbrains.lets-plot:lets-plot-image-export:4.0.0"
 lets-plot-common = "org.jetbrains.lets-plot:lets-plot-common:4.0.0"
 
+# implementation("io.reactivex.rxjava3:rxjava:3.1.7")
+rxjava3 = "io.reactivex.rxjava3:rxjava:3.1.7"
+
+#jsoup
+jsoup = "org.jsoup:jsoup:1.16.1"
+
+ktor-client-logging = "io.ktor:ktor-client-logging:2.3.4"
+ktor-client-core = "io.ktor:ktor-client-core:2.3.4"
+ktor-client-cio = "io.ktor:ktor-client-cio:2.3.4"
+
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jupyter = { id = "org.jetbrains.kotlin.jupyter.api", version.ref = "jupyterApi" }
 
 [bundles]
 test = ["test-junit-params", "kotlin-test", "test-kotlintest-assertions", "test-mockk", "test-assertj"]

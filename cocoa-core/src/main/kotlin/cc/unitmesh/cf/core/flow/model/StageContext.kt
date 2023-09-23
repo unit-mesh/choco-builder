@@ -6,11 +6,9 @@ import cc.unitmesh.cf.core.prompt.StringTemplate
 import cc.unitmesh.cf.core.llms.TemperatureMode
 import cc.unitmesh.cf.core.utils.IdUtil
 import com.fasterxml.jackson.annotation.JsonValue
-import jakarta.persistence.Id
 import kotlinx.serialization.Serializable
 
 data class StageContext(
-    @Id
     val id: String = IdUtil.uuid(),
     val stage: Stage,
     /**
