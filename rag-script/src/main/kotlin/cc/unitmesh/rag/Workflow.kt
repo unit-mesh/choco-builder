@@ -45,6 +45,10 @@ class Workflow(val name: String) {
         return DocumentDsl(file)
     }
 
+    fun code(file: String, language: String = "Kotlin"): CodeDsl {
+        return CodeDsl(file)
+    }
+
     fun text(text: String): TextDsl {
         return TextDsl(text)
     }
