@@ -133,7 +133,7 @@ class WorkflowTest {
 
             querying {
                 // 查询
-                store.findRelevant("workflow dsl design ").also {
+                store.findRelevant("workflow dsl design ").lowInMiddle().also {
                     println(it)
                 }
             }
