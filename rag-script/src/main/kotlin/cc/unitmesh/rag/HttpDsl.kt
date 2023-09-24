@@ -16,8 +16,17 @@ class HttpDsl() {
 }
 
 object Http {
-    fun get(url: String = "", init: HttpDsl.() -> Unit) {
+    private val client = HttpClient()
 
+    /**
+     * @param url
+     */
+    fun get(url: String = "", init: () -> Unit) {
+        runBlocking {
+            client.get(url) {
+                init()
+            }
+        }
     }
 
     fun download(url: String, function: () -> Unit): File {
@@ -27,8 +36,6 @@ object Http {
     }
 
     fun download(url: String): File {
-        val client = HttpClient()
-
         val fileName = url.substringAfterLast("/")
         val file = File("temp", fileName)
 
