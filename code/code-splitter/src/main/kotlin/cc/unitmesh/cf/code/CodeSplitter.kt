@@ -3,6 +3,7 @@ package cc.unitmesh.cf.code
 import cc.unitmesh.rag.document.Document
 import chapi.domain.core.CodeDataStruct
 import chapi.domain.core.CodeFunction
+import org.jetbrains.annotations.TestOnly
 
 /**
  * SweepAI code splitting solution.
@@ -35,6 +36,7 @@ class CodeSplitter(
         }.filterNotNull()
     }
 
+    @TestOnly
     fun split(it: CodeFunction, canonicalName: String): Document {
         var content = it.Content
         val lines = content.split("\n")
