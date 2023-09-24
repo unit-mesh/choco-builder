@@ -4,8 +4,26 @@ import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.store.EmbeddingMatch
 import cc.unitmesh.rag.store.EmbeddingStore
+import io.milvus.client.MilvusServiceClient
+import io.milvus.param.ConnectParam
 
-class MilvusEmbeddingStore : EmbeddingStore<Document> {
+class MilvusEmbeddingStore(
+    private val host: String = "localhost",
+    private val port: Int = 19530,
+    private val indexName: String = "chocolate-code",
+) : EmbeddingStore<Document> {
+    private var client: MilvusServiceClient
+
+    init {
+        val param = ConnectParam.newBuilder()
+            .withHost("localhost")
+            .withPort(19530)
+            .build()
+
+        client = MilvusServiceClient(param)
+
+
+    }
     override fun add(embedding: Embedding): String {
         TODO("Not yet implemented")
     }
