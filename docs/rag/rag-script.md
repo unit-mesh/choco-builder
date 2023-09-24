@@ -2,7 +2,7 @@
 layout: default
 title: RAGScript
 parent: Retrieval Augmented Generation
-nav_order: 3
+nav_order: 99
 ---
 
 RAGScript 是一个使用 Kotlin DSL 的脚本语言，以用于快速使用、构建 RAG （检索增强，Retrieval Augmented Generation）应用的 PoC。
