@@ -5,9 +5,23 @@ parent: Retrieval Augmented Generation
 nav_order: 2
 ---
 
+主要的实现是基于 [Langchain4j](https://github.com/langchain4j/langchain4j) 的实现。
+
+## Document Parser
+
+变化点：返回由 Document 组成的 List，而不是单个 Document。
+
+支持的类型，参考：[DocumentType](https://github.com/unit-mesh/chocolate-factory/blob/master/cocoa-core/src/main/kotlin/cc/unitmesh/rag/document/DocumentType.kt) :
+
+对应的三个解解析类：
+
+- MsOfficeDocumentParser
+- PdfDocumentParser
+- TextDocumentParser
+
 ## PDF
 
-### Adobe PDF extract API
+### Adobe PDF extract API [To Spike]
 
 Docs: [https://developer.adobe.com/document-services/docs/overview/pdf-extract-api/](https://developer.adobe.com/document-services/docs/overview/pdf-extract-api/)
 
