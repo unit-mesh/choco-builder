@@ -1,5 +1,8 @@
 package cc.unitmesh.prompt
 
-class PromptManager {
 
+class PromptManager {
+    fun engine() {
+
+    }
 }
