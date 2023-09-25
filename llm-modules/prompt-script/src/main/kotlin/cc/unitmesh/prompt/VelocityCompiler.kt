@@ -1,33 +1,37 @@
 package cc.unitmesh.prompt
 
-import org.apache.velocity.Template
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import org.apache.velocity.VelocityContext
-import org.apache.velocity.app.VelocityEngine
-import org.apache.velocity.app.event.implement.IncludeRelativePath
-import org.apache.velocity.runtime.RuntimeConstants
+import org.apache.velocity.app.Velocity
+import java.io.File
 import java.io.StringWriter
 
 
 class VelocityCompiler : PromptCompiler {
-    private val velocityEngine = VelocityEngine()
+    private val velocityContext = VelocityContext()
 
-    init {
-        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
-        velocityEngine.setProperty(
-            "classpath.resource.loader.class",
-            "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"
-        )
-        velocityEngine.setProperty(RuntimeConstants.EVENTHANDLER_INCLUDE, IncludeRelativePath::class.java.getName())
-        velocityEngine.init()
+    private fun loadData(fileName: String): JsonObject? {
+        return try {
+            val fileContent = File(fileName).readText()
+            val jsonObject = JsonParser.parseString(fileContent)?.getAsJsonObject()
+            jsonObject
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
-    override fun compile(templatePath: String, map: Map<String, Any>): String {
-        val template: Template = velocityEngine.getTemplate(templatePath)
+    override fun compile(templatePath: String, dataPath: String): String {
+        val obj = loadData(dataPath)!!
+        val template = File(templatePath).readText()
 
-        val velocityContext = VelocityContext()
+        obj.asMap().forEach { (key, u) ->
+            velocityContext.put(key, u)
+        }
 
         val sw = StringWriter()
-        template.merge(velocityContext, sw);
+        Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, template)
         return sw.toString()
     }
 }

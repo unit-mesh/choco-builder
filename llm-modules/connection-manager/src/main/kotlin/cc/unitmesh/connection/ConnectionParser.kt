@@ -18,6 +18,6 @@ class ConnectionParser {
 
 
     private fun loadResource(): String {
-        return this.javaClass.getResource("/schemas/AzureOpenAIConnection.schema.json").file
+        return this.javaClass.getResource("/schemas/AzureOpenAIConnection.schema.json")!!.file
     }
 }

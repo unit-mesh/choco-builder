@@ -1,33 +1,28 @@
 package cc.unitmesh.prompt;
 
-import org.apache.velocity.VelocityContext
-import org.apache.velocity.app.Velocity
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import java.io.StringWriter
-
-data class ChatItem(val question: String, val answer: String)
 
 class PromptManagerTests {
-    val manager = PromptManager();
+    private val manager = PromptManager()
 
     @Test
     fun should_return_prompt_when_getPrompt_called() {
-        // load simple.vm from resources
-        val template = this::class.java.getResource("/ui-clarify.open_ai.vm")!!.readText()
-        //
-        val path = this::class.java.getResource("/testdata/sample.json")!!.path
-        val obj = manager.loadFile(path)!!
+        val data = javaClass.getResource("/testdata/sample.json")!!.toURI()
+        val template = javaClass.getResource("/ui-clarify.open_ai.vm")!!.toURI()
 
-        // use velocity to render the template
-        val context = VelocityContext()
-        obj.asMap().forEach { (key, u) ->
-            context.put(key, u)
-        }
+        val output = manager.compile(template.path, data.path)
 
-        val sw = StringWriter()
-        Velocity.evaluate(context, sw, "#" + this.javaClass.name, template)
-        val output = sw.toString()
-
-        println(output)
+        output shouldBe """system:
+            |You are a helpful assistant.
+            |
+            |user:
+            |中国的首都是哪里？
+            |assistant:
+            |北京
+            |
+            |user:
+            |中国的首都是哪里？
+            |""".trimMargin()
     }
 }

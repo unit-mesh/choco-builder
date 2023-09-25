@@ -1,14 +1,14 @@
 {
-  "question": "What is the capital of the United States?",
+  "question": "中国的首都是哪里？",
   "chat_history": [
     {
       "inputs": {
         "role": "user",
-        "question": "What is the capital of the United States?"
+        "question": "中国的首都是哪里？"
       },
       "outputs": {
         "role": "assistant",
-        "answer": "Washington, D.C."
+        "answer": "北京"
       }
     }
   ]
