@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Long Context Reorder
+title: 长上下文优化，提升检索质量
 parent: Patterns
-nav_order: 1
+nav_order: 3
 ---
 
 ## 模式：Lost in the Middle

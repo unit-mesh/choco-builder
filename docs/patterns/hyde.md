@@ -2,7 +2,7 @@
 layout: default
 title: HyDE 提升文档检索
 parent: Patterns
-nav_order: 1
+nav_order: 2
 ---
 
 ![HyDE Approach](https://github.com/texttron/hyde/raw/main/approach.png)

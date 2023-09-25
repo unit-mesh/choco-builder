@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Query Expansion
+title: 查询改写，提升匹配度
 parent: Patterns
 nav_order: 1
 ---
