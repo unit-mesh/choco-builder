@@ -9,7 +9,7 @@ nav_order: 100
 
 PromptFlow use [Jinja2](https://jinja.palletsprojects.com/en/3.0.x/) as template engine.
 
-```jinja2
+```vtl
 system:
 You are a helpful assistant.
 
