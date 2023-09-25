@@ -14,7 +14,7 @@ nav_order: 1
 
 ![向量召回技术架构](https://p0.meituan.net/travelcube/b6700fc88dc24dff9dd22009f46b165a256306.png)
 
-## 
+## 其它示例
 
 TODOS:
 
