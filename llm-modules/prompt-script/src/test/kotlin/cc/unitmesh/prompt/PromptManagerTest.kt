@@ -8,22 +8,21 @@ import java.io.StringWriter
 data class ChatItem(val question: String, val answer: String)
 
 class PromptManagerTests {
+    val manager = PromptManager();
 
     @Test
     fun should_return_prompt_when_getPrompt_called() {
         // load simple.vm from resources
-        val template = PromptManager::class.java.getResource("/simple.vm")!!.readText()
+        val template = this::class.java.getResource("/ui-clarify.open_ai.vm")!!.readText()
+        //
+        val path = this::class.java.getResource("/testdata/sample.json")!!.path
+        val obj = manager.loadFile(path)!!
+
         // use velocity to render the template
         val context = VelocityContext()
-        // Given
-        val chatHistory = listOf(
-            ChatItem("What is your name?", "My name is Assistant."),
-            ChatItem("How old are you?", "I am 25 years old.")
-        )
-        val question = "What is the capital of France?"
-
-        context.put("question", question)
-        context.put("chat_history", chatHistory)
+        obj.asMap().forEach { (key, u) ->
+            context.put(key, u)
+        }
 
         val sw = StringWriter()
         Velocity.evaluate(context, sw, "#" + this.javaClass.name, template)

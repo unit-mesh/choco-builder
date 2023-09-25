@@ -1,0 +1,15 @@
+{
+  "question": "What is the capital of the United States?",
+  "chat_history": [
+    {
+      "inputs": {
+        "role": "user",
+        "question": "What is the capital of the United States?"
+      },
+      "outputs": {
+        "role": "assistant",
+        "answer": "Washington, D.C."
+      }
+    }
+  ]
+}

@@ -3,9 +3,9 @@ You are a helpful assistant.
 
 #foreach ($item in $chat_history)
 user:
-${item.question}
+${item.inputs.question}
 assistant:
-${item.answer}
+${item.outputs.answer}
 #end
 
 user:

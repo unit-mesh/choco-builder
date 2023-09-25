@@ -8,7 +8,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
 
     implementation(libs.velocity.engine)
-    implementation(libs.dataframe)
+    implementation(libs.gson)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
