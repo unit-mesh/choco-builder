@@ -29,10 +29,4 @@ class SemanticVariableResolver() : VariableResolver<SemanticVariables> {
             "```$lang\n$it\n```\n"
         }.joinToString("\n"))
     }
-
-    override fun compile(input: String): String {
-        val sw = StringWriter()
-        Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, input)
-        return sw.toString()
-    }
 }

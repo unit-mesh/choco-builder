@@ -18,12 +18,6 @@ class TestcaseVariableResolver : VariableResolver<TestcaseVariables> {
         // TODO("Not yet implemented")
     }
 
-    override fun compile(input: String): String {
-        val sw = StringWriter()
-        Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, input)
-        return sw.toString()
-    }
-
     fun updateQuestion(question: String) {
         variables = variables!!.copy(question = question)
     }

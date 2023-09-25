@@ -1,0 +1,12 @@
+system:
+You are a helpful assistant.
+
+#foreach ($item in $chat_history)
+user:
+    ${item.inputs.question}
+assistant:
+    ${item.outputs.answer}
+#end
+
+user:
+${question}
