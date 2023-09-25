@@ -1,7 +1,7 @@
 ---
 layout: default
 title: HyDE 提升文档检索
-parent: RAG Patterns
+parent: Patterns
 nav_order: 1
 ---
 
