@@ -18,10 +18,10 @@ Local Embedding
 > Sentence Transformers 是一个自然语言处理工具，用于将文本句子嵌入到一个高维向量空间中，以便进行各种文本相关任务，如文本相似度计算、
 > 文本分类、聚类等。它是通过预训练的深度学习模型实现的，通常使用诸如BERT、RoBERTa、DistilBERT等预训练模型作为其基础架构。
 
-SentenceTransformers 在体积上只有 22M，因此被 Bloop、GitHub Copilot 作为本地向量化模型，也因此是 Chocolate Factory
-的默认的本地矢量化模块。
+在这里，我们使用的 SentenceTransformers 模型是：[sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)， 
+在体积上只有 22M，因此被 Bloop、GitHub Copilot 作为本地向量化模型，也因此是 Chocolate Factory 的默认的本地矢量化模块。
 
-在这里，我们使用的 SentenceTransformers 模型是：[sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+- all-MiniLM-L6-v2 支持转为 384 维稠密向量空间（dimensional dense vector space），即 384 
 
 ### Embedding 示例
 

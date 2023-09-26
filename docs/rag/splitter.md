@@ -20,7 +20,8 @@ java -jar scanner_cli-2.0.5-all.jar --language=Kotlin --output=http --server-url
 
 ## Markdown Splitter
 
-在使用本地的 Sentence Transformers，由于受输出是 384 的长度影响，需要控制好 token 的长度。因此，需要对文档进行**二次分割**。
+在使用本地的 Sentence Transformers 的 all-MiniLM-L6-v2 模型，由于受输出是 384 的长度影响，需要控制好 token 的长度。
+因此，需要对文档进行**二次分割**。
 
 示例：
 

@@ -43,7 +43,7 @@ class STSemantic(
         val outputTensor: OnnxTensor = result.get(0) as OnnxTensor
 
         val floatArray = outputTensor.floatBuffer.array()
-        // floatArray is a inputIds.size * 384 array, we need to mean it to 384 * 1
+        // floatArray is an inputIds.size * 384 array, we need to mean it to 384 * 1
         val meanArray = FloatArray(384)
         for (i in 0 until 384) {
             var sum = 0f
