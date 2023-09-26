@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets
 
 @Tool(name = "wikimedia", value = ["wikimedia"])
 class Wikimedia {
-    val headers = mapOf(
+    private val headers = mapOf(
         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " +
                 "Chrome/117.0.0.0 Safari/537.36 Edg/113.0.1774.35"
     )
