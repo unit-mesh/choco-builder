@@ -15,12 +15,16 @@ PromptScript主要用于评估prompt的效果，而不是用于多种不同的�
 
 ## Design
 
-### Flow Format
+### Flow File Format
 
-1. file name with type in middle, like `prompt.<type>.vm`
-2. prompt config for connection, like `prompt-connection.yaml`
+1. file name with type in middle, like `<flow-name>.<type>.vm`
+2. prompt config for connection, like `connections.yml`, for LLM/AI, Tool, Embedding, Store, etc.
+3. flow config：``
 
-### Template with data loader
+### Prompt Parameter Range
 
-1. try auto load from dataframe, and feed to template
+for example:
+
+1. temperature range: 0.0~1.0
+2. repeat range: 1,000,000,000
 
