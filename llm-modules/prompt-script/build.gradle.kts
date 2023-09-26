@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     implementation(libs.kotlin.stdlib)
+    implementation(projects.llmModules.connectionManager)
 
     implementation(libs.velocity.engine)
     implementation(libs.gson)

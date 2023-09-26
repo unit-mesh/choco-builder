@@ -48,6 +48,8 @@ graph LR
 
 ## RAGScript 示例
 
+详细见注释：
+
 ```kotlin
 rag {
     indexing {

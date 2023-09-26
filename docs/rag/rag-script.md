@@ -48,6 +48,17 @@ rag {
 
 ## 相似性搜索代码示例
 
+在 indexing 阶段：
+
+- 下载和使用 ArchGuard Scanner CLI 工具，扫描代码库，生成 JSON 格式的代码数据结构
+- 使用 CodeSplitter 将代码数据结构切割成文档
+- 使用 Elasticsearch 建立向量化索引
+
+在 querying 阶段：
+
+- 结合 Elasticsearch 进行向量化搜索
+- 生成问题，并使用 LLM 生成答案
+
 ```kotlin
 @file:DependsOn("cc.unitmesh:rag-script:0.3.3")
 
