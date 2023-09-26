@@ -1,4 +1,4 @@
-package cc.unitmesh.prompt
+package cc.unitmesh.prompt.compiler
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -24,11 +24,11 @@ class VelocityCompiler : PromptCompiler {
 
     override fun compile(templatePath: String, dataPath: String): String {
         val obj = loadData(dataPath)!!
-        val template = File(templatePath).readText()
-
         obj.asMap().forEach { (key, u) ->
             velocityContext.put(key, u)
         }
+
+        val template = File(templatePath).readText()
 
         val sw = StringWriter()
         Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, template)

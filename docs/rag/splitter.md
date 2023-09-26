@@ -5,7 +5,7 @@ parent: Retrieval Augmented Generation
 nav_order: 2
 ---
 
-分块 Chunking(参考来源：[主流应用RAG的介绍](http://luxiangdong.com/2023/09/25/ragone/) 是将文档切割成多个块，以便于进行向量化。通常来说，会用如下的几种方式：
+分块 Chunking(参考来源：[主流应用RAG的介绍](https://www.luxiangdong.com/2023/09/25/ragone/) 是将文档切割成多个块，以便于进行向量化。通常来说，会用如下的几种方式：
 
 *   固定大小的分块方式：一般是256/384/512个tokens，取决于embedding模型的情况。但是这种方式的弊端是会损失很多语义，比如“我们今天晚上应该去吃个大餐庆祝一下”，很有可能就会被分在两个chunk里面——“我们今天晚上应该”、“去吃个大餐庆祝一下”。这样对于检索是非常不友好的，解决方法是增加冗余量，比如512tokens的，实际保存480tokens，一头一尾去保存相邻的chunk头尾的tokens内容；
 *   基于意图的分块方式：
