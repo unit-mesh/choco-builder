@@ -21,6 +21,8 @@ Local Embedding
 SentenceTransformers 在体积上只有 22M，因此被 Bloop、GitHub Copilot 作为本地向量化模型，也因此是 Chocolate Factory
 的默认的本地矢量化模块。
 
+在这里，我们使用的 SentenceTransformers 模型是：[sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+
 ### Embedding 示例
 
 ```kotlin
@@ -41,3 +43,23 @@ embedding.attentionMask shouldBe listOf(1L, 1L, 1L)
 val text = semantic.getTokenizer().decode(embedding.ids)
 text shouldBe "[CLS] blog [SEP]"
 ```
+
+## 其它 Sentence Transformers 模型
+
+### M3E  （中文支持好）
+
+M3E 是 Moka Massive Mixed Embedding 的缩写
+
+- Moka，此模型由 MokaAI 训练，开源和评测，训练脚本使用 [uniem](https://github.com/wangyuxinwhy/uniem/blob/main/scripts/train_m3e.py) ，评测 BenchMark 使用 [MTEB-zh](https://github.com/wangyuxinwhy/uniem/tree/main/mteb-zh)
+- Massive，此模型通过**千万级** (2200w+) 的中文句对数据集进行训练
+- Mixed，此模型支持中英双语的同质文本相似度计算，异质文本检索等功能，未来还会支持代码检索
+- Embedding，此模型是文本嵌入模型，可以将自然语言转换成稠密的向量
+
+[M3E](https://huggingface.co/moka-ai/m3e-base) 分为 small 和 base
+
+M3E 对应的 Tips
+
+- 使用场景主要是中文，少量英文的情况，建议使用 m3e 系列的模型
+- 多语言使用场景，并且不介意数据隐私的话，我建议使用 text-embedding-ada-002
+- 代码检索场景，推荐使用 text-embedding-ada-002
+- 文本检索场景，请使用具备文本检索能力的模型，只在 S2S 上训练的文本嵌入模型，没有办法完成文本检索任务

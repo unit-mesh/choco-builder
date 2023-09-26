@@ -5,6 +5,8 @@ parent: Retrieval Augmented Generation
 nav_order: 3
 ---
 
+向量数据库的核心在于相似性搜索(Similarity Search)，即在向量空间中搜索与查询向量最相似的向量。
+
 ## InMemoryEmbeddingStore
 
 ```kotlin
