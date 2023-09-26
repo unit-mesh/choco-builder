@@ -1,4 +1,4 @@
-$schema: https://azuremlschemas.azureedge.net/promptflow/latest/CustomConnection.schema.json
+$schema: schemas/CustomConnection.schema.json
 name: custom_connection
 type: custom
 configs:
