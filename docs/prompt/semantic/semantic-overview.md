@@ -10,9 +10,10 @@ nav_order: 30
 查询条件：
 
 question: Semantic Workflow 是如何实现的？
-englishQuery: How is Semantic Workflow implemented?
-originLanguageQuery: Semantic Workflow 是如何实现的？
-hypotheticalCode:
+
+- englishQuery: How is Semantic Workflow implemented?
+- originLanguageQuery: Semantic Workflow 是如何实现的？
+- hypotheticalCode:
 ```kotlin
 public class SemanticWorkflow {
    private WorkflowEngine engine;
