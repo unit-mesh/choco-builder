@@ -19,8 +19,8 @@ PromptScript主要用于测试和评估 Prompt 的效果，而不是用于多种
 ### Flow File Format
 
 1. file name with type in middle, like `<flow-name>.<type>.vm`
-2. prompt config for connection, like `connections.yml`, for LLM/AI, Tool, Embedding, Store, etc.
-3. flow config：``
+2. prompt config for connection, like `connections.yml`, for LLM/AI, Tool, Embedding, Database, etc.
+3. flow config：`flow.script.yml`
 
 ### Prompt Parameter Range
 

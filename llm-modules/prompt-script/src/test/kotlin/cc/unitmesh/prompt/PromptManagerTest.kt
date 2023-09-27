@@ -9,7 +9,7 @@ class PromptManagerTests {
     @Test
     fun should_return_prompt_when_getPrompt_called() {
         val data = javaClass.getResource("/testdata/sample.json")!!.toURI()
-        val template = javaClass.getResource("/ui-clarify.open_ai.vm")!!.toURI()
+        val template = javaClass.getResource("/testdata/ui-clarify.open_ai.vm")!!.toURI()
 
         val output = manager.compile(template.path, data.path)
         output shouldContain "中国的首都是哪里"
