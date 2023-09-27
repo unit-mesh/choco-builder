@@ -5,11 +5,11 @@ parent: Retrieval Augmented Generation
 nav_order: 2
 ---
 
-分块 Chunking(参考来源：[主流应用RAG的介绍](https://www.luxiangdong.com/2023/09/25/ragone/)
+分块 Chunking (参考来源：[主流应用RAG的介绍](https://www.luxiangdong.com/2023/09/25/ragone/)
 是将文档切割成多个块，以便于进行向量化。通常来说，会用如下的几种方式：
 
 - 固定大小的分块方式：一般是 256/384/512 个 tokens，取决于 embedding
-模型的情况。但是这种方式的弊端是会损失很多语义，比如“我们今天晚上应该去吃个大餐庆祝一下”，很有可能就会被分在两个chunk里面——“我们今天晚上应该”、“去吃个大餐庆祝一下”。这样对于检索是非常不友好的，解决方法是增加冗余量，比如512tokens的，实际保存480tokens，一头一尾去保存相邻的chunk头尾的tokens内容；
+模型的情况。但是这种方式的弊端是会损失很多语义，比如“我们今天晚上应该去吃个大餐庆祝一下”，很有可能就会被分在两个 chunk 里面——“我们今天晚上应该”、“去吃个大餐庆祝一下”。这样对于检索是非常不友好的，解决方法是增加冗余量，比如 512 tokens 的，实际保存 480 tokens，一头一尾去保存相邻的 chunk 头尾的 tokens 内容；
 - 基于意图的分块方式：
     - 句分割：最简单的是通过句号和换行来做切分。当然也有通过专业的意图包来切分的，常用的意图包有基于 NLP 的 NLTK 和 spaCy；
     - 递归分割：通过分治的方法，用递归切分到最小单元的一种方式；
@@ -35,6 +35,16 @@ nav_order: 2
 ```
 java -jar scanner_cli-2.0.5-all.jar --language=Kotlin --output=http --server-url=http://localhost:18080 --path=/Volumes/source/ai/chocolate-factory
 ```
+
+### 示例
+
+诸如
+
+- Interface 在长度少于 384 token 的情况下，会变为一个单独的 chunk。
+- Class 在长度少于 384 token 的情况下，会变为一个单独的 chunk。
+- Class 在长度大于 384 token 的情况下，会变为多个基于 Function 的 chunk。
+- Function 在长度少于 384 token 的情况下，会变为一个单独的 chunk。
+- Function 在长度大于 384 token 的情况下，会被切割为一个长度为 384 的 chunk。
 
 ## Markdown Splitter
 
