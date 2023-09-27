@@ -11,9 +11,11 @@ class ConnectionParser {
         val obj = JsonObject(context)
 
         val resolved = JsonRef.resolve(obj)
-        val ref = resolved.getJsonObject("definitions")
 
-        return ref
+        val properties = resolved.getJsonObject("properties")
+        val required = resolved.getJsonArray("required")
+
+        return resolved
     }
 
 

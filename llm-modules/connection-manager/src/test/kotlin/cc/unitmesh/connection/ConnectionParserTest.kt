@@ -2,7 +2,7 @@ package cc.unitmesh.connection;
 
 import org.junit.jupiter.api.Test
 
-class SchemaLoaderTest {
+class ConnectionParserTest {
 
     @Test
     fun shouldLoadSchemaByType() {
@@ -12,6 +12,7 @@ class SchemaLoaderTest {
         // when
         val result = schemaLoader.loadSchemaByType()
 
+        println(result)
         // then
         // Add assertions here to verify the result
     }
