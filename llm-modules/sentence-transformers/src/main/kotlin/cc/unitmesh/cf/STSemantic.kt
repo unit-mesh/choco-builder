@@ -59,6 +59,11 @@ class STSemantic(
 
 
     companion object {
+        /**
+         * Create a new instance of [STSemantic] with default model.
+         * We use official model: [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+         * We can use [optimum](https://github.com/huggingface/optimum) to transform the model to onnx.
+         */
         fun create(): STSemantic {
             val classLoader = Thread.currentThread().getContextClassLoader()
 

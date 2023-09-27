@@ -23,6 +23,8 @@ Local Embedding
 
 - all-MiniLM-L6-v2 支持转为 384 维稠密向量空间（dimensional dense vector space），即 384 
 
+可以使用 [optimum](https://github.com/huggingface/optimum) 优化模型，将模型转换为 ONNX 格式，以便于在本地进行推理。
+
 ### Embedding 示例
 
 ```kotlin
