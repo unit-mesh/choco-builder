@@ -24,6 +24,10 @@ class ExpressionTest {
         AssertExpr.eval("hello world", "output startsWith \"hello\"") shouldBe true
         // equal
         AssertExpr.eval("hello world", "output == \"hello world\"") shouldBe true
+    }
 
+    @Test
+    fun int_and_float_eval() {
+        AssertExpr.eval("1.0", "output == 1") shouldBe true
     }
 }
