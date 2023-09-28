@@ -31,6 +31,14 @@ RangeType: Int, Float, Boolean
 1. temperature range: 0.0~1.0
 2. repeat range: 1,000,000,000
 
+### Validate Function Design
+
+- Json Validate
+- Jsonpath Validate
+- Regex Validate
+- String Compare / String Length compare / String token Length
+- Extension tool validate with ProcessBuilder, like PlantUML
+
 ### Assert Refs
 
 [Promptfoo](https://github.com/promptfoo/promptfoo) can test your prompts. Evaluate and compare LLM outputs, catch

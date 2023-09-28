@@ -2,10 +2,10 @@ package cc.unitmesh.prompt.validate
 
 import com.google.gson.JsonParser
 
-class JsonValidator(private val jsonString: String) : Validator {
+class JsonValidator(override val input: String) : Validator {
     override fun validate(): Boolean {
         return try {
-            val json = JsonParser.parseString(jsonString)
+            val json = JsonParser.parseString(input)
             true
         } catch (e: Exception) {
             false

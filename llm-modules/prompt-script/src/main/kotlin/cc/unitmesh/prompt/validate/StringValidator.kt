@@ -100,7 +100,7 @@ data class ComparisonExpression(
  * @right the right value of the expression
  * @negate whether the expression should be negated
  */
-class AssertValidator(val expression: String, val input: String) : Validator {
+class StringValidator(val expression: String, override val input: String) : Validator {
     override fun validate(): Boolean {
         val tokens = tokenizeExpression(expression).toMutableList()
         if (tokens[0] == "output") {
