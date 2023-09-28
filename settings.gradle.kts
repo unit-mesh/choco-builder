@@ -24,7 +24,9 @@ include(":llm-modules:prompt-script")
 include(":code:interpreter")
 include(":code:code-splitter")
 
-include(":tools:web-tools")
+include(":llm-tools:web-tools")
+
+include(":client:prompt-script-cli")
 
 dependencyResolutionManagement {
     repositories {
