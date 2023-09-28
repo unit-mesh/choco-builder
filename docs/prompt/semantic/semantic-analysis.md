@@ -56,7 +56,7 @@ SearchPoints {{
 ## Output
 
 - englishQuery: How is Semantic Workflow implemented?
-- originLanguageQuery: Semantic Workflow 是如何实现的？
+- originLanguageQuery: // Semantic Workflow 实现方式
 - hypotheticalCode:
 
 ```java
