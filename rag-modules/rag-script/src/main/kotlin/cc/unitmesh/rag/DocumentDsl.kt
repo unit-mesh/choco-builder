@@ -9,22 +9,37 @@ import cc.unitmesh.rag.document.DocumentType
 import cc.unitmesh.rag.store.EmbeddingMatch
 import java.io.File
 
-class DocumentDsl(val file: String) {
-    private val documentParser: DocumentParser
-
-    init {
-        val extension = file.substringAfterLast(".")
-        val parser = Companion.parserByExt(extension)
-
-        documentParser = parser
-    }
-
-    private val inputStream = File(file).inputStream()
+class DocumentDsl(val path: String, val isDir: Boolean) {
     fun split(): List<Document> {
-        return documentParser.parse(inputStream)
+        val file = File(path)
+        if (file.isFile) {
+            val parser = parserByExt(file.extension)
+            return parser.parse(file.inputStream())
+        }
+
+        if (file.isDirectory) {
+            return file.walk()
+                .filter { it.isFile }
+                .map {
+                    val parser = parserByExt(it.extension)
+                    parser.parse(it.inputStream())
+                }
+                .flatten()
+                .toList()
+        }
+
+        return emptyList()
     }
 
     companion object {
+        fun byFile(file: String): DocumentDsl {
+            return DocumentDsl(file, true)
+        }
+
+        fun byDir(directory: String): DocumentDsl {
+            return DocumentDsl(directory, isDir = true)
+        }
+
         fun parserByExt(extension: String): DocumentParser {
             val documentType = DocumentType.of(extension)
             val parser = when (documentType) {

@@ -42,7 +42,14 @@ class Workflow(val name: String) {
 
 
     fun document(file: String): DocumentDsl {
-        return DocumentDsl(file)
+        return DocumentDsl.byFile(file)
+    }
+
+    /**
+     * Directory is a function for indexing data for the workflow.
+     */
+    fun directory(directory: String): DocumentDsl {
+        return DocumentDsl.byDir(directory)
     }
 
     fun code(file: String, language: String = "Kotlin"): CodeDsl {
@@ -51,13 +58,6 @@ class Workflow(val name: String) {
 
     fun text(text: String): TextDsl {
         return TextDsl(text)
-    }
-
-    /**
-     * Directory is a function for indexing data for the workflow.
-     */
-    fun directory(directory: String): DocumentDirDsl {
-        return DocumentDirDsl(directory)
     }
 
     /**
