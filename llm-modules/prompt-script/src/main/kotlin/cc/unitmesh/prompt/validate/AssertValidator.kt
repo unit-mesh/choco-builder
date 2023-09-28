@@ -92,7 +92,7 @@ data class ComparisonExpression(
 
 
 /**
- * A assert expression will be evaluated to a boolean value. And it will be used to determine whether the following
+ * An assert expression will be evaluated to a boolean value. And it will be used to determine whether the following
  * statements should be executed.
  *
  * @type the assert expression type, like equals, contains, etc.
@@ -100,28 +100,62 @@ data class ComparisonExpression(
  * @right the right value of the expression
  * @negate whether the expression should be negated
  */
-class AssertExpr {
+class AssertValidator(val input: String, val expression: String) : Validator {
+    override fun validate(): Boolean {
+        val tokens = tokenizeExpression(expression).toMutableList()
+        if (tokens[0] == "output") {
+            tokens[0] = input
+        }
 
-    fun tokenizeExpression(expression: String): List<String> {
-        // 使用正则表达式将表达式字符串拆分为标记（tokens）
+        return when (val parsedExpression = parseExpression(tokens.toMutableList())) {
+            is AndExpression -> parsedExpression.left.evaluate(input) && parsedExpression.right.evaluate(input)
+            is OrExpression -> parsedExpression.left.evaluate(input) || parsedExpression.right.evaluate(input)
+            is NotExpression -> !parsedExpression.expression.evaluate(input)
+            is ComparisonExpression -> parsedExpression.evaluate(input)
+        }
+    }
+
+    /**
+     * Should convert an expression string to three tokens
+     */
+    private fun tokenizeExpression(expression: String): List<String> {
         val pattern = Pattern.compile("""(\|\||&&|\(|\)|!=|!|<=|>=|==|<|>|[a-zA-Z]+|\d+)""")
         val matcher = pattern.matcher(expression)
         val tokens = mutableListOf<String>()
 
+        // Loop through the matches and add them to tokens
         while (matcher.find()) {
             tokens.add(matcher.group())
+
+            // Check if we have collected three tokens
+            if (tokens.size == 2) {
+                break // Exit the loop once we have three tokens
+            }
+        }
+
+        // If we only have two tokens, join the remaining string into the third token
+        if (tokens.size == 2) {
+            val remainingString = expression.substring(matcher.end())
+            tokens.add(remainingString.trim().removeSurrounding("\""))
+        }
+
+        // Ensure tokens contains exactly three elements
+        if (tokens.size != 3) {
+            // Handle the case where there are not enough tokens
+            throw IllegalArgumentException("Invalid expression: $expression")
         }
 
         return tokens
     }
 
+
     // 在这里实现递归解析表达式的代码
     // 你可以使用递归下降解析器或其他方法来实现解析
-    fun parseExpression(tokens: MutableList<String>): Expression {
+    private fun parseExpression(tokens: MutableList<String>): Expression {
         return parseOrExpression(tokens)
     }
 
-    fun parseOrExpression(tokens: MutableList<String>): Expression {
+    private fun parseOrExpression(tokens: MutableList<String>): Expression {
         var left = parseAndExpression(tokens)
 
         while (tokens.isNotEmpty() && tokens[0] == "||") {
@@ -133,7 +167,7 @@ class AssertExpr {
         return left
     }
 
-    fun parseAndExpression(tokens: MutableList<String>): Expression {
+    private fun parseAndExpression(tokens: MutableList<String>): Expression {
         var left = parseComparisonExpression(tokens)
 
         while (tokens.isNotEmpty() && tokens[0] == "&&") {
@@ -145,7 +179,7 @@ class AssertExpr {
         return left
     }
 
-    fun parseComparisonExpression(tokens: MutableList<String>): Expression {
+    private fun parseComparisonExpression(tokens: MutableList<String>): Expression {
         if (tokens.isNotEmpty() && tokens[0] == "!") {
             tokens.removeAt(0)
             val expression = parseComparisonExpression(tokens)
@@ -171,24 +205,5 @@ class AssertExpr {
         }
 
         return ComparisonExpression(leftOperand, compareType, rightOperand)
-    }
-
-    companion object {
-        fun eval(output: String, expression: String): Boolean {
-            val assertExpr = AssertExpr()
-            val tokens = assertExpr.tokenizeExpression(expression).toMutableList()
-            if (tokens[0] == "output") {
-                tokens[0] = output
-            }
-
-            val parsedExpression = assertExpr.parseExpression(tokens.toMutableList())
-
-            return when (parsedExpression) {
-                is AndExpression -> parsedExpression.left.evaluate(output) && parsedExpression.right.evaluate(output)
-                is OrExpression -> parsedExpression.left.evaluate(output) || parsedExpression.right.evaluate(output)
-                is NotExpression -> !parsedExpression.expression.evaluate(output)
-                is ComparisonExpression -> parsedExpression.evaluate(output)
-            }
-        }
     }
 }
