@@ -9,9 +9,9 @@ include(":server")
 include(":cocoa-core")
 
 include(":dsl:design")
-include(":rag-script")
 
 include(":rag-modules:document")
+include(":rag-modules:rag-script")
 include(":rag-modules:store-milvus")
 include(":rag-modules:store-pinecone")
 include(":rag-modules:store-elasticsearch")
