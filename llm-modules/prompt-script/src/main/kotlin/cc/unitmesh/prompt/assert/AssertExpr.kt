@@ -2,6 +2,66 @@ package cc.unitmesh.prompt.assert
 
 import java.util.regex.Pattern
 
+
+sealed class Expression {
+    abstract fun evaluate(output: String): Boolean
+}
+
+data class AndExpression(val left: Expression, val right: Expression) : Expression() {
+    override fun evaluate(output: String): Boolean {
+        return left.evaluate(output) && right.evaluate(output)
+    }
+}
+
+data class OrExpression(val left: Expression, val right: Expression) : Expression() {
+    override fun evaluate(output: String): Boolean {
+        return left.evaluate(output) || right.evaluate(output)
+    }
+}
+
+data class NotExpression(val expression: Expression) : Expression() {
+    override fun evaluate(output: String): Boolean {
+        return !expression.evaluate(output)
+    }
+}
+
+enum class CompareType {
+    ENDS_WITH,
+    STARTS_WITH,
+    CONTAINS,
+    EQUAL
+}
+
+data class ComparisonExpression(
+    var left: String,
+    val compareType: CompareType,
+    val right: String,
+    var equal: Boolean = true,
+) : Expression() {
+    override fun evaluate(output: String): Boolean {
+        val result = when (compareType) {
+            CompareType.ENDS_WITH -> {
+                left.endsWith(right)
+            }
+
+            CompareType.STARTS_WITH -> {
+                left.startsWith(right)
+            }
+
+            CompareType.CONTAINS -> {
+                left.contains(right)
+            }
+
+            CompareType.EQUAL -> {
+                right == left
+            }
+        }
+
+        return if (equal) result else !result
+    }
+}
+
+
 /**
  * A assert expression will be evaluated to a boolean value. And it will be used to determine whether the following
  * statements should be executed.
@@ -11,60 +71,7 @@ import java.util.regex.Pattern
  * @right the right value of the expression
  * @negate whether the expression should be negated
  */
-data class AssertExpr(
-    val type: String,
-    val left: String,
-    val right: String,
-    val negate: Boolean,
-) {
-    fun evaluateExpression(output: String, expression: String): Boolean {
-        val tokens = tokenizeExpression(expression)
-        val parsedExpression = parseExpression(tokens)
-
-        return when (parsedExpression) {
-            is AndExpression -> parsedExpression.left.evaluate(output) && parsedExpression.right.evaluate(output)
-            is OrExpression -> parsedExpression.left.evaluate(output) || parsedExpression.right.evaluate(output)
-            is NotExpression -> !parsedExpression.expression.evaluate(output)
-            is ComparisonExpression -> parsedExpression.evaluate(output)
-            else -> throw IllegalArgumentException("Invalid expression: $expression")
-        }
-    }
-
-    sealed class Expression {
-        abstract fun evaluate(output: String): Boolean
-    }
-
-    data class AndExpression(val left: Expression, val right: Expression) : Expression() {
-        override fun evaluate(output: String): Boolean {
-            return left.evaluate(output) && right.evaluate(output)
-        }
-    }
-
-    data class OrExpression(val left: Expression, val right: Expression) : Expression() {
-        override fun evaluate(output: String): Boolean {
-            return left.evaluate(output) || right.evaluate(output)
-        }
-    }
-
-    data class NotExpression(val expression: Expression) : Expression() {
-        override fun evaluate(output: String): Boolean {
-            return !expression.evaluate(output)
-        }
-    }
-
-    data class ComparisonExpression(val left: String, val operator: String, val right: String) : Expression() {
-        override fun evaluate(output: String): Boolean {
-            return when (operator) {
-                "==" -> output == right
-                "!=" -> output != right
-                "<" -> output.toInt() < right.toInt()
-                ">" -> output.toInt() > right.toInt()
-                "<=" -> output.toInt() <= right.toInt()
-                ">=" -> output.toInt() >= right.toInt()
-                else -> throw IllegalArgumentException("Invalid operator: $operator")
-            }
-        }
-    }
+class AssertExpr {
 
     fun tokenizeExpression(expression: String): List<String> {
         // 使用正则表达式将表达式字符串拆分为标记（tokens）
@@ -79,11 +86,76 @@ data class AssertExpr(
         return tokens
     }
 
-    fun parseExpression(tokens: List<String>): Expression {
-        // 在这里实现递归解析表达式的代码
-        // 你可以使用递归下降解析器或其他方法来实现解析
-        // 这里的示例是一个简单的实现
-        TODO()
+    // 在这里实现递归解析表达式的代码
+    // 你可以使用递归下降解析器或其他方法来实现解析
+    fun parseExpression(tokens: MutableList<String>): Expression {
+        return parseOrExpression(tokens)
     }
 
+    fun parseOrExpression(tokens: MutableList<String>): Expression {
+        var left = parseAndExpression(tokens)
+
+        while (tokens.isNotEmpty() && tokens[0] == "||") {
+            tokens.removeAt(0)
+            val right = parseAndExpression(tokens)
+            left = OrExpression(left, right)
+        }
+
+        return left
+    }
+
+    fun parseAndExpression(tokens: MutableList<String>): Expression {
+        var left = parseComparisonExpression(tokens)
+
+        while (tokens.isNotEmpty() && tokens[0] == "&&") {
+            tokens.removeAt(0)
+            val right = parseComparisonExpression(tokens)
+            left = AndExpression(left, right)
+        }
+
+        return left
+    }
+
+    fun parseComparisonExpression(tokens: MutableList<String>): Expression {
+        if (tokens.isNotEmpty() && tokens[0] == "!") {
+            tokens.removeAt(0)
+            val expression = parseComparisonExpression(tokens)
+            return NotExpression(expression)
+        }
+
+        val leftOperand = tokens.removeAt(0)
+        val operator = tokens.removeAt(0)
+        val rightOperand = tokens.removeAt(0)
+
+        val compareType = when (operator) {
+            "==" -> CompareType.CONTAINS
+            "!=" -> CompareType.CONTAINS // You can modify this to handle different comparison operators
+            "&&" -> CompareType.EQUAL
+            "contains" -> CompareType.CONTAINS
+            "startsWith" -> CompareType.STARTS_WITH
+            "endsWith" -> CompareType.ENDS_WITH
+            else -> throw IllegalArgumentException("Unsupported operator: $operator")
+        }
+
+        return ComparisonExpression(leftOperand, compareType, rightOperand)
+    }
+
+    companion object {
+        fun eval(output: String, expression: String): Boolean {
+            val assertExpr = AssertExpr()
+            val tokens = assertExpr.tokenizeExpression(expression).toMutableList()
+            if (tokens[0] == "output") {
+                tokens[0] = output
+            }
+
+            val parsedExpression = assertExpr.parseExpression(tokens.toMutableList())
+
+            return when (parsedExpression) {
+                is AndExpression -> parsedExpression.left.evaluate(output) && parsedExpression.right.evaluate(output)
+                is OrExpression -> parsedExpression.left.evaluate(output) || parsedExpression.right.evaluate(output)
+                is NotExpression -> !parsedExpression.expression.evaluate(output)
+                is ComparisonExpression -> parsedExpression.evaluate(output)
+            }
+        }
+    }
 }
