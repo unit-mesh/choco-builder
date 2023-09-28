@@ -31,3 +31,66 @@ RangeType: Int, Float, Boolean
 1. temperature range: 0.0~1.0
 2. repeat range: 1,000,000,000
 
+### Assert Refs
+
+[Promptfoo](https://github.com/promptfoo/promptfoo) can test your prompts. Evaluate and compare LLM outputs, catch
+regressions, and improve prompt quality.
+
+- 系统地测试预定义的测试用例中的提示和模型
+- 通过将 LLM 输出进行对比来评估质量并捕捉回归问题
+- 利用缓存和并发加速评估过程
+- 通过定义测试用例自动评分输出
+- 作为命令行工具、库或在CI/CD中使用
+
+使用 OpenAI、Anthropic、Azure、Google、Llama 等开源模型，或集成自定义 API 提供者用于任何 LLM API。
+
+```yaml
+prompts: [ prompt1.txt, prompt2.txt ]
+providers: [ openai:gpt-3.5-turbo, ollama:llama2:70b ]
+tests:
+  - description: 'Test translation to French'
+    vars:
+      language: French
+      input: Hello world
+    assert:
+      - type: contains-json
+      - type: javascript
+        value: output.length < 100
+
+  - description: 'Test translation to German'
+    vars:
+      language: German
+      input: How's it going?
+    assert:
+      - type: model-graded-closedqa
+        value: does not describe self as an AI, model, or chatbot
+      - type: similar
+        value: was geht
+        threshold: 0.6 # cosine similarity
+```
+
+## Our Version
+
+```yaml
+name: "Open AI Verifier"
+description: "Verify Open AI's LLM"
+
+jobs:
+  prompt-evaluate: # job name
+    description: "Evaluate prompt with different parameters"
+    template: prompt-evaluate.vm # auto choice template by extension
+    defaults:
+      connection: openai:gpt-3.5-turbo # canonical name model
+    connection-vars:
+      temperature:
+        type: float
+        range: 0.0~1.0
+        step: 0.1
+    vars: # some file or map
+      name: "Phodal Huang"
+
+    assert: # optional
+      - type: contains-json
+      - type: javascript # json path ?
+        value: output.length < 100
+```
