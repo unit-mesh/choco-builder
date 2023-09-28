@@ -5,8 +5,10 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib)
+    implementation(projects.cocoaCore)
     implementation(projects.llmModules.connectionManager)
+
+    implementation(libs.kotlin.stdlib)
 
     implementation(libs.velocity.engine)
     implementation(libs.gson)

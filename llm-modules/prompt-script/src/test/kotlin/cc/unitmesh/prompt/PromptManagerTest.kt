@@ -3,8 +3,8 @@ package cc.unitmesh.prompt;
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 
-class PromptManagerTests {
-    private val manager = PromptManager()
+class TemplateCompilerFactoryTests {
+    private val manager = TemplateCompilerFactory()
 
     @Test
     fun should_return_prompt_when_getPrompt_called() {

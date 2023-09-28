@@ -1,11 +1,11 @@
 package cc.unitmesh.prompt
 
-import cc.unitmesh.prompt.compiler.PromptCompiler
-import cc.unitmesh.prompt.compiler.PromptType
-import cc.unitmesh.prompt.compiler.VelocityCompiler
+import cc.unitmesh.prompt.template.PromptCompiler
+import cc.unitmesh.prompt.template.PromptType
+import cc.unitmesh.prompt.template.VelocityCompiler
 
 
-class PromptManager(private val type: PromptType = PromptType.VELOCITY) {
+class TemplateCompilerFactory(private val type: PromptType = PromptType.VELOCITY) {
     private val compiler: PromptCompiler = when (type) {
         PromptType.VELOCITY -> {
             VelocityCompiler()
