@@ -122,13 +122,16 @@ class StringValidator(val expression: String, override val input: String) : Vali
         val tokens = mutableListOf<String>()
         val sb = StringBuilder()
         for (c in chars) {
-            if (c == '.') {
-                if (sb.isNotEmpty()) {
-                    tokens.add(sb.toString())
-                    sb.clear()
+            when (c) {
+                '.' -> {
+                    if (sb.isNotEmpty()) {
+                        tokens.add(sb.toString())
+                        sb.clear()
+                    }
                 }
-            } else {
-                sb.append(c)
+                else -> {
+                    sb.append(c)
+                }
             }
         }
 
