@@ -1,6 +1,25 @@
 package cc.unitmesh.prompt.validate
 
-data class CompareExpr(val left: String, val operator: String, val right: String)
+data class CompareExpr(val left: String, val operator: CompareType, val right: String)
+
+enum class CompareType {
+    EQUALS,
+    NOT_EQUALS,
+    CONTAINS,
+    STARTS_WITH,
+    ENDS_WITH,
+    GREATER_THAN,
+    LESS_THAN,
+    PROPERTY_ACCESS,
+}
+
+data class PropertyAccess(val propertyName: String, val operator: AccessType, val value: String)
+
+enum class AccessType {
+    LENGTH,
+    UPPER_CASE,
+    LOWER_CASE,
+}
 
 /**
  * This class represents a string validation expression that evaluates to a boolean value, determining whether subsequent
@@ -18,67 +37,113 @@ data class CompareExpr(val left: String, val operator: String, val right: String
  * StringValidator("output.length > 5", "hello, world").validate() shouldBe true
  * ```
  */
-class StringValidator(val expression: String, val input: String) {
-    fun validate(): Boolean {
-        // tokenize string and convert to a Compare data class (left = input, type, right)
-        val compareExpr = parseExpression(expression)
-        val left = if (compareExpr.left == "output") input else compareExpr.left
-        return when (compareExpr.operator) {
-            "==" -> left == compareExpr.right
-            "!=" -> left != compareExpr.right
-            "contains" -> left.contains(compareExpr.right)
-            "startsWith" -> left.startsWith(compareExpr.right)
-            "endsWith" -> left.endsWith(compareExpr.right)
-            ">" -> {
-                val lengthComparison = compareExpr.right.toIntOrNull() ?: throw IllegalArgumentException("Invalid length comparison value: ${compareExpr.right}")
-                left.length > lengthComparison
+class StringValidator(val expression: String, override val input: String) : Validator {
+    override fun validate(): Boolean {
+        val expr = parseExpression(expression)
+        val left = expr.left
+        val right = expr.right
+        val operator = expr.operator
+
+        return when (operator) {
+            CompareType.EQUALS -> input == right
+            CompareType.NOT_EQUALS -> input != right
+            CompareType.CONTAINS -> input.contains(right)
+            CompareType.STARTS_WITH -> input.startsWith(right)
+            CompareType.ENDS_WITH -> input.endsWith(right)
+            CompareType.GREATER_THAN -> input.length > right.toInt()
+            CompareType.LESS_THAN -> input.length < right.toInt()
+            CompareType.PROPERTY_ACCESS -> {
+                val propertyAccess = parsePropertyAccess(left)
+                when (propertyAccess.operator) {
+                    AccessType.LENGTH -> input.length == right.toInt()
+                    AccessType.UPPER_CASE -> input.uppercase() == right
+                    AccessType.LOWER_CASE -> input.lowercase() == right
+                }
             }
-            "<" -> {
-                val lengthComparison = compareExpr.right.toIntOrNull() ?: throw IllegalArgumentException("Invalid length comparison value: ${compareExpr.right}")
-                left.length < lengthComparison
-            }
-            else -> throw IllegalArgumentException("Unsupported operator: ${compareExpr.operator}")
         }
     }
 
     private fun parseExpression(expression: String): CompareExpr {
-        val length = expression.length
-        var currentIndex = 0
-
-        // 解析左操作数
-        val leftBuilder = StringBuilder()
-        while (currentIndex < length && !expression[currentIndex].isWhitespace()) {
-            leftBuilder.append(expression[currentIndex])
-            currentIndex++
-        }
-        val left = leftBuilder.toString()
-
-        // 跳过空格和点号
-        while (currentIndex < length && (expression[currentIndex].isWhitespace())) {
-            currentIndex++
-        }
-
-        // 解析操作符
-        val operatorBuilder = StringBuilder()
-        while (currentIndex < length && !expression[currentIndex].isWhitespace()) {
-            operatorBuilder.append(expression[currentIndex])
-            currentIndex++
-        }
-        val operator = operatorBuilder.toString()
-
-        // 跳过空格
-        while (currentIndex < length && expression[currentIndex].isWhitespace()) {
-            currentIndex++
+        // split expression to char and convert
+        val chars = expression.toCharArray()
+        val tokens = mutableListOf<String>()
+        val sb = StringBuilder()
+        var isInQuote = false
+        for (c in chars) {
+            when {
+                c == '"' -> {
+                    isInQuote = !isInQuote
+                }
+                isInQuote -> {
+                    sb.append(c)
+                    continue
+                }
+                c == ' ' -> {
+                    if (sb.isNotEmpty()) {
+                        tokens.add(sb.toString())
+                        sb.clear()
+                    }
+                }
+                else -> {
+                    sb.append(c)
+                }
+            }
         }
 
-        // 解析右操作数
-        val rightBuilder = StringBuilder()
-        while (currentIndex < length) {
-            rightBuilder.append(expression[currentIndex])
-            currentIndex++
+        if (sb.isNotEmpty()) {
+            tokens.add(sb.toString())
         }
-        val right = rightBuilder.toString().trim('\"')
+
+        val left = tokens[0]
+        val operator = when (tokens[1]) {
+            "==" -> CompareType.EQUALS
+            "!=" -> CompareType.NOT_EQUALS
+            "contains" -> CompareType.CONTAINS
+            "startsWith" -> CompareType.STARTS_WITH
+            "endsWith" -> CompareType.ENDS_WITH
+            "length" -> CompareType.PROPERTY_ACCESS
+            "uppercase" -> CompareType.PROPERTY_ACCESS
+            "lowercase" -> CompareType.PROPERTY_ACCESS
+            ">" -> CompareType.GREATER_THAN
+            "<" -> CompareType.LESS_THAN
+            else -> throw Exception("Unsupported operator ${tokens[1]}")
+        }
+        val right = tokens[2]
+        // if right is String, remove double quote
+        if (right.startsWith("\"") && right.endsWith("\"")) {
+            return CompareExpr(left, operator, right.substring(1, right.length - 1))
+        }
 
         return CompareExpr(left, operator, right)
+    }
+
+    private fun parsePropertyAccess(expression: String): PropertyAccess {
+        val chars = expression.toCharArray()
+        val tokens = mutableListOf<String>()
+        val sb = StringBuilder()
+        for (c in chars) {
+            if (c == '.') {
+                if (sb.isNotEmpty()) {
+                    tokens.add(sb.toString())
+                    sb.clear()
+                }
+            } else {
+                sb.append(c)
+            }
+        }
+
+        if (sb.isNotEmpty()) {
+            tokens.add(sb.toString())
+        }
+
+        val propertyName = tokens[0]
+        val operator = when (tokens[1]) {
+            "length" -> AccessType.LENGTH
+            "uppercase" -> AccessType.UPPER_CASE
+            "lowercase" -> AccessType.LOWER_CASE
+            else -> throw Exception("Unsupported operator ${tokens[1]}")
+        }
+        val value = tokens[2]
+        return PropertyAccess(propertyName, operator, value)
     }
 }
