@@ -14,20 +14,29 @@ class DocumentDsl(val file: String) {
 
     init {
         val extension = file.substringAfterLast(".")
-        val documentType = DocumentType.of(extension)
-        documentParser = when (documentType) {
-            DocumentType.TXT -> TextDocumentParser(documentType)
-            DocumentType.PDF -> PdfDocumentParser()
-            DocumentType.HTML -> TextDocumentParser(documentType)
-            DocumentType.DOC -> MsOfficeDocumentParser(documentType)
-            DocumentType.XLS -> MsOfficeDocumentParser(documentType)
-            DocumentType.PPT -> MsOfficeDocumentParser(documentType)
-        }
+        val parser = Companion.parserByExt(extension)
+
+        documentParser = parser
     }
 
     private val inputStream = File(file).inputStream()
     fun split(): List<Document> {
         return documentParser.parse(inputStream)
+    }
+
+    companion object {
+        fun parserByExt(extension: String): DocumentParser {
+            val documentType = DocumentType.of(extension)
+            val parser = when (documentType) {
+                DocumentType.TXT -> TextDocumentParser(documentType)
+                DocumentType.PDF -> PdfDocumentParser()
+                DocumentType.HTML -> TextDocumentParser(documentType)
+                DocumentType.DOC -> MsOfficeDocumentParser(documentType)
+                DocumentType.XLS -> MsOfficeDocumentParser(documentType)
+                DocumentType.PPT -> MsOfficeDocumentParser(documentType)
+            }
+            return parser
+        }
     }
 }
 

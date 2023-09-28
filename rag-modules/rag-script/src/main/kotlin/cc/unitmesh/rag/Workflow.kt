@@ -54,6 +54,13 @@ class Workflow(val name: String) {
     }
 
     /**
+     * Directory is a function for indexing data for the workflow.
+     */
+    fun directory(directory: String): DocumentDirDsl {
+        return DocumentDirDsl(directory)
+    }
+
+    /**
      * Prepare is a function for preparing data for the workflow. You don't need to call it as block.
      */
     fun prepare(function: () -> Unit) {
