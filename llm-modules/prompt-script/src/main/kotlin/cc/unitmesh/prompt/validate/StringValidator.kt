@@ -71,7 +71,7 @@ class StringValidator(val expression: String, override val input: String) : Vali
         var isInQuote = false
         for (c in chars) {
             when {
-                c == '"' -> {
+                c == '"' || c == '\'' -> {
                     isInQuote = !isInQuote
                 }
                 isInQuote -> {

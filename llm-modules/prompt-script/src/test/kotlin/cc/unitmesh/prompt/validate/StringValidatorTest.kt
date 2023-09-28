@@ -11,6 +11,7 @@ class StringValidatorTest {
         StringValidator("output endsWith \"world\"", "hello world").validate() shouldBe true
         StringValidator("output startsWith \"hello\"", "hello world").validate() shouldBe true
         StringValidator("output == \"hello world\"", "hello world").validate() shouldBe true
+        StringValidator("output == 'hello world'", "hello world").validate() shouldBe true
 
         // length
         StringValidator("output.length > 5", "fafadf").validate() shouldBe true
