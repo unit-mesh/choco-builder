@@ -1,4 +1,4 @@
-package cc.unitmesh.prompt.assert
+package cc.unitmesh.prompt.validate
 
 import java.util.regex.Pattern
 

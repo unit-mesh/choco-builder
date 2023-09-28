@@ -1,5 +1,6 @@
 package cc.unitmesh.prompt.assert;
 
+import cc.unitmesh.prompt.validate.AssertExpr
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore

@@ -9,6 +9,7 @@ dependencies {
     implementation(projects.llmModules.connectionManager)
 
     implementation(libs.kotlin.stdlib)
+    implementation(libs.jsonpath)
 
     implementation(libs.velocity.engine)
     implementation(libs.gson)

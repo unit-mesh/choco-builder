@@ -97,6 +97,9 @@ jackson-module-jsonSchema = "com.fasterxml.jackson.module:jackson-module-jsonSch
 jackson-dataformat-yaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2"
 jackson-databind = "com.fasterxml.jackson.core:jackson-databind:2.14.2"
 
+# implementation("com.jayway.jsonpath:json-path:2.8.0")
+jsonpath = "com.jayway.jsonpath:json-path:2.8.0"
+
 dotenv = "io.github.cdimascio:dotenv-java:3.0.0"
 # "io.github.cdimascio:dotenv-kotlin:6.4.1"
 dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.4.1"
