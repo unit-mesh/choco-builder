@@ -46,7 +46,7 @@ regressions, and improve prompt quality.
 
 ```yaml
 prompts: [ prompt1.txt, prompt2.txt ]
-providers: [ openai:gpt-3.5-turbo, ollama:llama2:70b ]
+providers: [ openai:gpt-3.5-turbo, llama:llama2:70b ]
 tests:
   - description: 'Test translation to French'
     vars:
