@@ -29,7 +29,12 @@ enum class CompareType {
     ENDS_WITH,
     STARTS_WITH,
     CONTAINS,
-    EQUAL
+    EQUAL,
+    NOT_EQUAL,
+    LESS_THAN,
+    GREATER_THAN,
+    LESS_THAN_OR_EQUAL,
+    GREATER_THAN_OR_EQUAL,
 }
 
 data class ComparisonExpression(
@@ -53,7 +58,31 @@ data class ComparisonExpression(
             }
 
             CompareType.EQUAL -> {
-                right == left
+                try {
+                    right.toDouble() == left.toDouble()
+                } catch (e: Exception) {
+                    right == left
+                }
+            }
+
+            CompareType.NOT_EQUAL -> {
+                right.toDouble() != left.toDouble()
+            }
+
+            CompareType.LESS_THAN -> {
+                left.toDouble() < right.toDouble()
+            }
+
+            CompareType.GREATER_THAN -> {
+                left.toDouble() > right.toDouble()
+            }
+
+            CompareType.LESS_THAN_OR_EQUAL -> {
+                left.toDouble() <= right.toDouble()
+            }
+
+            CompareType.GREATER_THAN_OR_EQUAL -> {
+                left.toDouble() >= right.toDouble()
             }
         }
 
@@ -75,7 +104,7 @@ class AssertExpr {
 
     fun tokenizeExpression(expression: String): List<String> {
         // 使用正则表达式将表达式字符串拆分为标记（tokens）
-        val pattern = Pattern.compile("""(\|\||&&|\(|\)|!|==|!=|<|>|[a-zA-Z]+|\d+)""")
+        val pattern = Pattern.compile("""(\|\||&&|\(|\)|!=|!|<=|>=|==|<|>|[a-zA-Z]+|\d+)""")
         val matcher = pattern.matcher(expression)
         val tokens = mutableListOf<String>()
 
@@ -128,12 +157,16 @@ class AssertExpr {
         val rightOperand = tokens.removeAt(0)
 
         val compareType = when (operator) {
-            "==" -> CompareType.CONTAINS
-            "!=" -> CompareType.CONTAINS // You can modify this to handle different comparison operators
+            "==" -> CompareType.EQUAL
+            "!=" -> CompareType.NOT_EQUAL
             "&&" -> CompareType.EQUAL
             "contains" -> CompareType.CONTAINS
             "startsWith" -> CompareType.STARTS_WITH
             "endsWith" -> CompareType.ENDS_WITH
+            "<" -> CompareType.LESS_THAN
+            ">" -> CompareType.GREATER_THAN
+            "<=" -> CompareType.LESS_THAN_OR_EQUAL
+            ">=" -> CompareType.GREATER_THAN_OR_EQUAL
             else -> throw IllegalArgumentException("Unsupported operator: $operator")
         }
 
