@@ -54,9 +54,10 @@ class ScriptExecutor(
 
     private fun createConnection(job: Job): BaseConnection {
         val connectionFile: File = File(job.connection.file)
-        val connection = connectionFile.readBytes().toString(Charsets.UTF_8)
+        val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
-        return Yaml(configuration = configuration).decodeFromString<BaseConnection>(connection)
+        val connection = Yaml(configuration = configuration).decodeFromString<BaseConnection>(text)
+        return connection.convert()
     }
 }
