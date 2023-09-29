@@ -1,4 +1,4 @@
-package cc.unitmesh.prompt.config
+package cc.unitmesh.prompt.model
 
 import kotlinx.serialization.Serializable
 

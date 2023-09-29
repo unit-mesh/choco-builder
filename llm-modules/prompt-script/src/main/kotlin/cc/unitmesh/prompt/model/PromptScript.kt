@@ -1,4 +1,4 @@
-package cc.unitmesh.prompt.config
+package cc.unitmesh.prompt.model
 
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
