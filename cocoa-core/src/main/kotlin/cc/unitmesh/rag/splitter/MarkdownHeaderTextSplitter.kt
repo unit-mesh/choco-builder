@@ -93,7 +93,7 @@ class MarkdownHeaderTextSplitter(
         // Split the input text by newline character ("\n").
         val lines = text.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         for (line in lines) {
-            val strippedLine = line.strip()
+            val strippedLine = line.trim()
             // Check each line against each of the header types (e.g., #, ##)
             val foundHeader = processLine(
                 strippedLine, linesWithMetadata, currentContent, currentMetadata,
@@ -133,7 +133,7 @@ class MarkdownHeaderTextSplitter(
                     // Get the current header level
                     val currentHeaderLevel: Int = sep.count { it == '#' }
                     // Pop out headers of lower or same level from the stack
-                    while (!headerStack.isEmpty()
+                    while (headerStack.isNotEmpty()
                         && headerStack[headerStack.size - 1].level >= currentHeaderLevel
                     ) {
                         // We have encountered a new header at the same or higher level
@@ -142,7 +142,7 @@ class MarkdownHeaderTextSplitter(
                         initialMetadata.remove(poppedHeader.name)
                     }
                     // Push the current header to the stack
-                    val header = HeaderType(currentHeaderLevel, name, strippedLine.substring(sep.length).strip())
+                    val header = HeaderType(currentHeaderLevel, name, strippedLine.substring(sep.length).trim())
                     headerStack.add(header)
                     // Update initialMetadata with the current header
                     initialMetadata[name] = header.data
