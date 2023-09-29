@@ -1,26 +1,5 @@
 package cc.unitmesh.prompt.validate
 
-data class CompareExpr(val left: String, val operator: CompareType, val right: String)
-
-enum class CompareType {
-    EQUALS,
-    NOT_EQUALS,
-    CONTAINS,
-    STARTS_WITH,
-    ENDS_WITH,
-    GREATER_THAN,
-    LESS_THAN,
-    PROPERTY_ACCESS,
-}
-
-data class PropertyAccess(val propertyName: String, val operator: AccessType, val value: String)
-
-enum class AccessType {
-    LENGTH,
-    UPPER_CASE,
-    LOWER_CASE,
-}
-
 /**
  * This class represents a string validation expression that evaluates to a boolean value, determining whether subsequent
  * statements should be executed or not.
@@ -149,4 +128,25 @@ class StringValidator(val expression: String, override val input: String) : Vali
         val value = tokens[2]
         return PropertyAccess(propertyName, operator, value)
     }
+}
+
+data class CompareExpr(val left: String, val operator: CompareType, val right: String)
+
+enum class CompareType {
+    EQUALS,
+    NOT_EQUALS,
+    CONTAINS,
+    STARTS_WITH,
+    ENDS_WITH,
+    GREATER_THAN,
+    LESS_THAN,
+    PROPERTY_ACCESS,
+}
+
+data class PropertyAccess(val propertyName: String, val operator: AccessType, val value: String)
+
+enum class AccessType {
+    LENGTH,
+    UPPER_CASE,
+    LOWER_CASE,
 }

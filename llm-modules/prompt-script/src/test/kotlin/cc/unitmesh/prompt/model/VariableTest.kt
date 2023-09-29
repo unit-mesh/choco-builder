@@ -6,14 +6,9 @@ import org.junit.jupiter.api.Test
 class VariableTest {
 
     @Test
-    fun `should return range with integer step`() {
-        // given
+    fun should_return_range_with_integer_step() {
         val range = Variable.Range("key", "0~100", "1")
-
-        // when
         val result = range.toRange()
-
-        // then
         assertEquals(0.0..100.0, result)
     }
 }

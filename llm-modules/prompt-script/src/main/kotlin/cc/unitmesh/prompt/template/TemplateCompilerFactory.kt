@@ -1,9 +1,9 @@
 package cc.unitmesh.prompt.template
 
 
-class TemplateCompilerFactory(private val type: PromptType = PromptType.VELOCITY) {
+class TemplateCompilerFactory(private val type: TemplateEngineType = TemplateEngineType.VELOCITY) {
     private val compiler: PromptCompiler = when (type) {
-        PromptType.VELOCITY -> {
+        TemplateEngineType.VELOCITY -> {
             VelocityCompiler()
         }
     }
