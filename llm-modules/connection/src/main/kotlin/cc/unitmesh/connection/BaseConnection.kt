@@ -7,17 +7,20 @@ import kotlinx.serialization.Serializable
  *
  * @param name Connection name
  * @param type Possible values include: "OpenAI", "AzureOpenAI", "Custom".
- * @param configs The configs kv pairs.
- * @param secrets The secrets kv pairs.
+ * @param configs The configs kv pairs, like api_host, api_base, etc.
+ * @param secrets The secrets kv pairs, like api_key.
  */
 @Serializable
-open class Connection(
+open class BaseConnection(
     val name: String,
     val type: ConnectionType,
     private val configs: Map<String, String> = mapOf(),
+    /**
+     * TODO: Secrets should had some different handle in future
+     */
     private val secrets: Map<String, String> = mapOf(),
 ) {
-    fun convert(): Connection {
+    fun convert(): BaseConnection {
         return when (type) {
             ConnectionType.OpenAI -> {
                 val host = configs.getOrDefault("api-host", "")
@@ -26,7 +29,8 @@ open class Connection(
             }
 
             ConnectionType.AzureOpenAI -> TODO()
-            ConnectionType.Custom -> TODO()
+            ConnectionType.CustomLlm -> TODO()
+            ConnectionType.ExtTool -> TODO()
         }
     }
 }
