@@ -92,6 +92,8 @@ openai-gpt3 = "com.theokanning.openai-gpt3-java:service:0.14.0"
 retrofit2-converter-jackson = "com.squareup.retrofit2:converter-jackson:2.9.0"
 azure-openai = "com.azure:azure-ai-openai:1.0.0-beta.3"
 
+kaml = "com.charleskorn.kaml:kaml:0.55.0"
+
 jackson-module-kotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2"
 jackson-module-jsonSchema = "com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2"
 jackson-dataformat-yaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2"

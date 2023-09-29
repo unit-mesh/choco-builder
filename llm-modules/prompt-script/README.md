@@ -80,25 +80,25 @@ tests:
 ## Our Version
 
 ```yaml
+
 name: "Open AI Verifier"
 description: "Verify Open AI's LLM"
 
 jobs:
-  prompt-evaluate: # job name
+  prompt-evaluate: # job name should be unique for each job
     description: "Evaluate prompt with different parameters"
     template: prompt-evaluate.vm # auto choice template by extension
-    defaults:
-      connection: openai:gpt-3.5-turbo # canonical name model
-    connection-vars:
-      temperature:
-        type: float
-        range: 0.0~1.0
-        step: 0.1
+    connection: # default values for all jobs
+      type: openai # like azure-openai, bard, llama, etc.
+      vars:
+        model: gpt-3.5-turbo
+        temperature: 0.0~1.0, 0.1
     vars: # some file or map
       name: "Phodal Huang"
 
-    assert: # optional
-      - type: contains-json
-      - type: javascript # json path ?
+    validate: # optional
+      - type: json-path
+        value: ${'$'}.output.id
+      - type: string
         value: output.length < 100
 ```
