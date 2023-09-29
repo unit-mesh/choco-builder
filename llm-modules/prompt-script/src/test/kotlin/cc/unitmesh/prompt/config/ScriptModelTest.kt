@@ -8,22 +8,6 @@ import kotlin.test.Ignore
 
 class ConfigurationTest {
     @Test
-    fun should_convert_connection() {
-        val example = """
-type: openai # like azure-openai, bard, llama, etc.
-vars:
-  model: gpt-3.5-turbo
-  temperature: 0.0~1.0, 0.1
-"""
-
-        val connection: Connection = Yaml.default.decodeFromString(example)
-
-        // then
-        assertNotNull(connection)
-        assertEquals("gpt-3.5-turbo", connection.vars["model"]!!)
-    }
-
-    @Test
     fun should_convert_from_string() {
         val example = """
 name: "Open AI Verifier"
@@ -36,7 +20,10 @@ jobs:
     connection: # default values for all jobs
       file: connections.yml
       vars:
-        temperature: 0.0~1.0, 0.1
+        - type: range
+          key: temperature
+          range: 0.0~1.0, 0.1
+          step: 0.1
 
     vars: # some file or map
       name: "Phodal Huang"

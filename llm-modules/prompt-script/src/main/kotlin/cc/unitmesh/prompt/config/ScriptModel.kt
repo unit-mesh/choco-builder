@@ -1,27 +1,27 @@
 package cc.unitmesh.prompt.config
 
+import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
-import kotlinx.serialization.Contextual
+import com.charleskorn.kaml.YamlConfiguration
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Connection(
     val file: String = "connections.yml",
-    @Contextual
-    val vars: Map<String, String>,
+    val vars: List<Variable> = listOf(),
 )
-//
-//@Serializable
-//sealed class Variable {
-//    @Serializable
-//    class ModelVariable(val value: String) : Variable()
-//
-//    @Serializable
-//    data class RangeVariable(val type: String, val range: String, val step: String) : Variable()
-//
-//    @Serializable
-//    data class FloatRangeVariable(val type: String, val range: ClosedRange<Float>, val step: Float) : Variable()
-//}
+
+@Serializable
+sealed class Variable {
+    @SerialName("key-value")
+    @Serializable
+    data class KeyValue(val key: String, val value: String) : Variable()
+
+    @SerialName("range")
+    @Serializable
+    data class Range(val key: String, val range: String, val step: String) : Variable()
+}
 
 @Serializable
 data class ValidateItem(
@@ -48,7 +48,10 @@ data class Configuration(
 
         fun fromString(yamlString: String): Configuration? {
             return try {
-                Yaml.default.decodeFromString(serializer(), yamlString)
+                val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
+                Yaml(
+                    configuration = configuration,
+                ).decodeFromString(serializer(), yamlString)
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
