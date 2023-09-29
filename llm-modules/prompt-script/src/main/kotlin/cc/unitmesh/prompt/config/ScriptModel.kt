@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Connection(
-    val type: String,
+    val file: String = "connections.yml",
     @Contextual
     val vars: Map<String, String>,
 )

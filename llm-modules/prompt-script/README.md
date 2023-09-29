@@ -37,7 +37,7 @@ RangeType: Int, Float, Boolean
 - Jsonpath Validate
 - Regex Validate
 - String Compare / String Length compare / String token Length
-- Extension tool validate with ProcessBuilder, like PlantUML
+- Extension tool validates with ProcessBuilder, like PlantUML
 
 ### Assert Refs
 
@@ -80,7 +80,6 @@ tests:
 ## Our Version
 
 ```yaml
-
 name: "Open AI Verifier"
 description: "Verify Open AI's LLM"
 

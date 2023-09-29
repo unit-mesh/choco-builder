@@ -32,12 +32,12 @@ description: "Verify Open AI's LLM"
 jobs:
   prompt-evaluate: # job name should be unique for each job
     description: "Evaluate prompt with different parameters"
-    template: prompt-evaluate.vm # auto choice template by extension
+    template: code-complete.open-ai.vm # auto choice template by extension
     connection: # default values for all jobs
-      type: openai # like azure-openai, bard, llama, etc.
+      file: connections.yml
       vars:
-        model: gpt-3.5-turbo
         temperature: 0.0~1.0, 0.1
+
     vars: # some file or map
       name: "Phodal Huang"
 
