@@ -1,15 +1,22 @@
-package cc.unitmesh.prompt.role
+package cc.unitmesh.prompt.executor
 
-class RoleSplitter {
+class TemplateRoleSplitter {
     /**
-     * for example:
+     *
+     * A template role is a string that contains multiple sections.
+     * Each section is a string that starts with "###" and ends with "###".
+     * The section name is the string between "###" and "###", then will be used as the key of the section.
+     * The content of the section is the string between the section name and the next section name.
+     *
+     * For example:
+     *
      * ###system###
      * You are a helpful assistant.
      *
      * ###user###
      * ${question}
      *
-     * will be split to:
+     * Will be split to:
      * mapOf(
      *    "system" to "You are a helpful assistant.",
      *    "user" to "${question}"

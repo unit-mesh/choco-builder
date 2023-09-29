@@ -1,9 +1,10 @@
 package cc.unitmesh.prompt.role;
 
+import cc.unitmesh.prompt.executor.TemplateRoleSplitter
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 
-class RoleSplitterTest {
+class TemplateRoleSplitterTest {
 
     @Test
     fun should_splitInputIntoSections() {
@@ -15,7 +16,7 @@ class RoleSplitterTest {
         )
 
         // when
-        val sections = RoleSplitter().split(input)
+        val sections = TemplateRoleSplitter().split(input)
 
         // then
         assertEquals(expectedSections, sections)
@@ -31,7 +32,7 @@ class RoleSplitterTest {
         )
 
         // when
-        val sections = RoleSplitter().split(input)
+        val sections = TemplateRoleSplitter().split(input)
 
         // then
         assertEquals(expectedSections, sections)
@@ -44,7 +45,7 @@ class RoleSplitterTest {
         val expectedSections = emptyMap<String, String>()
 
         // when
-        val sections = RoleSplitter().split(input)
+        val sections = TemplateRoleSplitter().split(input)
 
         // then
         assertEquals(expectedSections, sections)

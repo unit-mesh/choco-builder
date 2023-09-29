@@ -19,7 +19,7 @@ jobs:
       vars:
         - type: range
           key: temperature
-          range: 0.0~1.0, 0.1
+          range: 0.0~1.0
           step: 0.1
 
     vars: # some file or map
