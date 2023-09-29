@@ -1,8 +1,4 @@
-package cc.unitmesh.prompt
-
-import cc.unitmesh.prompt.template.PromptCompiler
-import cc.unitmesh.prompt.template.PromptType
-import cc.unitmesh.prompt.template.VelocityCompiler
+package cc.unitmesh.prompt.template
 
 
 class TemplateCompilerFactory(private val type: PromptType = PromptType.VELOCITY) {

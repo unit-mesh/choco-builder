@@ -1,9 +1,9 @@
-package cc.unitmesh.prompt.split;
+package cc.unitmesh.prompt.role;
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 
-class TemplateParserTest {
+class RoleSplitterTest {
 
     @Test
     fun should_splitInputIntoSections() {
@@ -15,7 +15,7 @@ class TemplateParserTest {
         )
 
         // when
-        val sections = TemplateParser().split(input)
+        val sections = RoleSplitter().split(input)
 
         // then
         assertEquals(expectedSections, sections)
@@ -31,7 +31,7 @@ class TemplateParserTest {
         )
 
         // when
-        val sections = TemplateParser().split(input)
+        val sections = RoleSplitter().split(input)
 
         // then
         assertEquals(expectedSections, sections)
@@ -44,7 +44,7 @@ class TemplateParserTest {
         val expectedSections = emptyMap<String, String>()
 
         // when
-        val sections = TemplateParser().split(input)
+        val sections = RoleSplitter().split(input)
 
         // then
         assertEquals(expectedSections, sections)

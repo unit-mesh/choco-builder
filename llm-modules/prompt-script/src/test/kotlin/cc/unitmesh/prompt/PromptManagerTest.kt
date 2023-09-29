@@ -1,5 +1,6 @@
 package cc.unitmesh.prompt;
 
+import cc.unitmesh.prompt.template.TemplateCompilerFactory
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 

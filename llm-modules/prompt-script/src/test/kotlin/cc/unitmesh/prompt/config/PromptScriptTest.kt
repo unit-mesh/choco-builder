@@ -1,12 +1,9 @@
 package cc.unitmesh.prompt.config;
 
-import com.charleskorn.kaml.Yaml
-import kotlinx.serialization.decodeFromString
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import kotlin.test.Ignore
 
-class ConfigurationTest {
+class PromptScriptTest {
     @Test
     fun should_convert_from_string() {
         val example = """
@@ -34,13 +31,13 @@ jobs:
       - type: string
         value: output.length < 100
 """
-        val configuration = Configuration.fromString(example)
+        val promptScript = PromptScript.fromString(example)
 
         // then
-        assertNotNull(configuration)
-        assertEquals("Open AI Verifier", configuration!!.name)
-        assertEquals("Verify Open AI's LLM", configuration.description)
-        assertEquals(1, configuration.jobs.size)
-        assertEquals("Evaluate prompt with different parameters", configuration.jobs["prompt-evaluate"]!!.description)
+        assertNotNull(promptScript)
+        assertEquals("Open AI Verifier", promptScript!!.name)
+        assertEquals("Verify Open AI's LLM", promptScript.description)
+        assertEquals(1, promptScript.jobs.size)
+        assertEquals("Evaluate prompt with different parameters", promptScript.jobs["prompt-evaluate"]!!.description)
     }
 }

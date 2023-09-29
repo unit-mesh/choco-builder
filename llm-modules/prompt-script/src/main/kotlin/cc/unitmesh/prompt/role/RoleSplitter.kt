@@ -1,6 +1,6 @@
-package cc.unitmesh.prompt.split
+package cc.unitmesh.prompt.role
 
-class TemplateParser {
+class RoleSplitter {
     /**
      * for example:
      * ###system###
