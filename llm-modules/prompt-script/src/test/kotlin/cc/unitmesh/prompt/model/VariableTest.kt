@@ -3,7 +3,7 @@ package cc.unitmesh.prompt.model;
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class RangeTest {
+class VariableTest {
 
     @Test
     fun `should return range with integer step`() {

@@ -40,4 +40,12 @@ jobs:
         assertEquals(1, promptScript.jobs.size)
         assertEquals("Evaluate prompt with different parameters", promptScript.jobs["prompt-evaluate"]!!.description)
     }
+
+    @Test
+    fun should_load_from_file() {
+        val input = this.javaClass.getResource("/prompt.unit-mesh.yml")!!.readText()
+        val promptScript = PromptScript.fromString(input)
+
+        assertNotNull(promptScript)
+    }
 }

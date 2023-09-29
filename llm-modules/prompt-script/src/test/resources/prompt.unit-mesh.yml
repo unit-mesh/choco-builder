@@ -18,6 +18,6 @@ jobs:
 
     validate: # optional
       - type: json-path
-        value: ${'$'}.output.id
+        value: $.output.id
       - type: string
-        value: output.length < 100
+        value: output.length < 300
