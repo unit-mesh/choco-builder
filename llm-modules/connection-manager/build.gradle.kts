@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation("io.vertx:vertx-json-schema:4.4.5")
+    implementation(libs.openai.gpt3)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
