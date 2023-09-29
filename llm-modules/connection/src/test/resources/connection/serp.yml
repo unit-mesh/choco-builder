@@ -1,4 +1,5 @@
 $schema: schemas/SerpConnection.schema.json
 name: serp_connection
 type: serp
-api_key: "<to-be-replaced>"
+secrets:
+  api-key: "<to-be-replaced>"

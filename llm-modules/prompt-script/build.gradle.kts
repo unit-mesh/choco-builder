@@ -6,7 +6,8 @@ plugins {
 
 dependencies {
     implementation(projects.cocoaCore)
-    implementation(projects.llmModules.connectionManager)
+    implementation(projects.llmModules.connection)
+    implementation(projects.llmModules.openai)
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)

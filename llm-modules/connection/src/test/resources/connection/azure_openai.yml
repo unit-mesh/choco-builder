@@ -1,0 +1,8 @@
+$schema: schemas/AzureOpenAIConnection.schema.json
+name: open_ai_connection
+type: AzureOpenAI
+configs:
+  api-base: "aoai-api-endpoint"
+secrets:
+  api-key: "<user-input>"
+  api-type: "azure"

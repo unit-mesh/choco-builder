@@ -18,7 +18,7 @@ include(":rag-modules:store-elasticsearch")
 
 include(":llm-modules:sentence-transformers")
 include(":llm-modules:openai")
-include(":llm-modules:connection-manager")
+include(":llm-modules:connection")
 include(":llm-modules:prompt-script")
 
 include(":code:interpreter")

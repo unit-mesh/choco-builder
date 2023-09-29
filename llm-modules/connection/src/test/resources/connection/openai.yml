@@ -1,0 +1,9 @@
+$schema: schemas/OpenAIConnection.schema.json
+name: open_ai_connection
+type: OpenAI
+configs:
+  api-host: "aoai-api-endpoint.phodal.com"
+  organization: "" # optional
+secrets:
+  api-key: "<user-input>"
+  api-type: "azure"

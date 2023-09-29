@@ -1,7 +1,7 @@
 $schema: schemas/CustomConnection.schema.json
 name: custom_connection
 type: custom
+secrets: # required
+  api-key: "<to-be-replaced>"
 configs:
   key1: "test1"
-secrets:  # required
-  api-key: "<to-be-replaced>"
