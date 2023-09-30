@@ -17,7 +17,16 @@ import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import java.io.File
 
-class ScriptExecutor(val content: String) {
+class ScriptExecutor {
+    private val content: String
+
+    constructor(content: String) {
+        this.content = content
+    }
+
+    constructor(file: File) : this(file.readText(Charsets.UTF_8))
+    constructor(inputStream: java.io.InputStream) : this(inputStream.readBytes().toString(Charsets.UTF_8))
+
     fun execute() {
         val script: PromptScript = PromptScript.fromString(content) ?: return
 
