@@ -29,7 +29,7 @@ class TemplateRoleSplitter {
         val contentBuilder = StringBuilder()
 
         for (line in lines) {
-            if (line.startsWith("###") && line.endsWith("###")) {
+            if (line.startsWith("```") && line.endsWith("```")) {
                 // Found a section header
                 if (currentSection.isNotEmpty()) {
                     sections[currentSection] = contentBuilder.toString()

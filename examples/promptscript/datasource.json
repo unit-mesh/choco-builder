@@ -1,5 +1,5 @@
 {
-  "question": "中国的首都是哪里？",
+  "question": "最流行的前端框架是？",
   "chat_history": [
     {
       "inputs": {
@@ -8,7 +8,7 @@
       },
       "outputs": {
         "role": "assistant",
-        "answer": "北京"
+        "answer": "{\"text\":\"北京\"}"
       }
     }
   ]

@@ -22,6 +22,6 @@ jobs:
 
     validate: # optional
       - type: json-path
-        value: $.output.id
+        value: $.id
       - type: string
-        value: output.length < 300
+        value: output.length > 300

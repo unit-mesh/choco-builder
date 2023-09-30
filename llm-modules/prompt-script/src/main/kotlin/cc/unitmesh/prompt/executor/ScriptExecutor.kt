@@ -22,6 +22,10 @@ class ScriptExecutor {
     private val content: String
     private var basePath: Path = Path.of(".")
 
+    companion object {
+        val log = org.slf4j.LoggerFactory.getLogger(ScriptExecutor::class.java)
+    }
+
     private constructor(content: String) {
         this.content = content
     }
@@ -39,8 +43,14 @@ class ScriptExecutor {
             val result = runJob(name, job)
 
             val validators = job.buildValidtors(result)
-            val validateResult = validators.map { it.validate() }
-            println("validate result: $validateResult")
+            validators.forEach {
+                val isSuccess = it.validate()
+                if (!isSuccess) {
+                    log.error("${it.javaClass} validate failed: ${it.input}")
+                } else {
+                    log.info("${it.javaClass} validate success: ${it.input}")
+                }
+            }
 
             // write to output
             val resultFileName = createFileName(name, job)
@@ -106,7 +116,7 @@ class ScriptExecutor {
 private fun toMessages(msgs: Map<String, String>): List<LlmMsg.ChatMessage> {
     return msgs.map {
         LlmMsg.ChatMessage(
-            role = LlmMsg.ChatRole.valueOf(it.key),
+            role = LlmMsg.ChatRole.from(it.key),
             content = it.value,
         )
     }

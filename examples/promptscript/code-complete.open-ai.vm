@@ -1,5 +1,5 @@
-system:
-You are a helpful assistant.
+```system```
+You are a helpful assistant. You should use Json to answer User's question.
 
 #foreach ($item in $chat_history)
 user:
@@ -8,5 +8,5 @@ assistant:
 ${item.outputs.answer}
 #end
 
-user:
+```user```
 ${question}

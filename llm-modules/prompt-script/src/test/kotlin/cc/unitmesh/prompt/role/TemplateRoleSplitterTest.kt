@@ -9,7 +9,7 @@ class TemplateRoleSplitterTest {
     @Test
     fun should_splitInputIntoSections() {
         // given
-        val input = "###system###\nYou are a helpful assistant.\n\n###user###\n${'$'}{question}\n"
+        val input = "```system```\nYou are a helpful assistant.\n\n```user```\n${'$'}{question}\n"
         val expectedSections = mapOf(
             "system" to "You are a helpful assistant.\n\n",
             "user" to "${'$'}{question}\n\n"
@@ -25,7 +25,7 @@ class TemplateRoleSplitterTest {
     @Test
     fun should_handleRemainingContentAfterLastSection() {
         // given
-        val input = "###system###\nYou are a helpful assistant.\n\n###user###\n${'$'}{question}\nRemaining content"
+        val input = "```system```\nYou are a helpful assistant.\n\n```user```\n${'$'}{question}\nRemaining content"
         val expectedSections = mapOf(
             "system" to "You are a helpful assistant.\n\n",
             "user" to "${'$'}{question}\nRemaining content\n"

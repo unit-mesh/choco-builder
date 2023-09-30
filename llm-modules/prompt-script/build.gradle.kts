@@ -17,6 +17,8 @@ dependencies {
     implementation(libs.jsonpath)
     implementation(libs.rxjava3)
 
+    implementation(libs.logging.logback.classic)
+
     implementation(libs.kaml)
 
     implementation(libs.kotlinx.datetime)

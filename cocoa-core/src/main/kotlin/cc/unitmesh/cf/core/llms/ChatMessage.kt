@@ -30,6 +30,16 @@ class LlmMsg {
         Function("function"),
         ;
 
-        companion object
+        companion object {
+            fun from(key: String): ChatRole {
+                return when (key) {
+                    "system" -> System
+                    "user" -> User
+                    "assistant" -> Assistant
+                    "function" -> Function
+                    else -> throw IllegalArgumentException("Unknown chat role: $key")
+                }
+            }
+        }
     }
 }
