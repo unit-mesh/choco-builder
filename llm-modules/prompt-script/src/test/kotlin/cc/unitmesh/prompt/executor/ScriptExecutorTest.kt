@@ -1,7 +1,5 @@
 package cc.unitmesh.prompt.executor;
 
-import cc.unitmesh.connection.OpenAiConnection
-import cc.unitmesh.openai.OpenAiProvider
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,9 +19,9 @@ class ScriptExecutorTest {
         mockkStatic(File::readText)
         mockkStatic(File::writeText)
 
-        val scriptContent = this::class.java.getResource("/prompt.unit-mesh.yml")!!.readText()
+        val scriptPath = this::class.java.getResource("/prompt.unit-mesh.yml")!!.toURI().path
 
-        val scriptExecutor = ScriptExecutor(scriptContent)
+        val scriptExecutor = ScriptExecutor(File(scriptPath))
 
         val slot = slot<File>()
 

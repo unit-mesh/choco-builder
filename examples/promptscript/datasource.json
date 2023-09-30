@@ -1,0 +1,15 @@
+{
+  "question": "中国的首都是哪里？",
+  "chat_history": [
+    {
+      "inputs": {
+        "role": "user",
+        "question": "中国的首都是哪里？"
+      },
+      "outputs": {
+        "role": "assistant",
+        "answer": "北京"
+      }
+    }
+  ]
+}

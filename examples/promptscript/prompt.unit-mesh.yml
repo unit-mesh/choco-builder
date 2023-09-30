@@ -1,0 +1,27 @@
+name: "Open AI Verifier"
+description: "Verify Open AI's LLM"
+
+jobs:
+  prompt-evaluate: # job name should be unique for each job
+    description: "Evaluate prompt with different parameters"
+    connection: connection.yml
+    template: code-complete.open-ai.vm # auto choice template by extension
+    template-datasource:
+      - type: file
+        value: datasource.json
+
+    strategy:
+      - type: connection
+        value:
+          - type: range
+            key: temperature
+            range: 0.0~1.0
+            step: 0.1
+      - type: repeat
+        value: 1000
+
+    validate: # optional
+      - type: json-path
+        value: $.output.id
+      - type: string
+        value: output.length < 300

@@ -1,6 +1,7 @@
 package cc.unitmesh.prompt.template
 
 import cc.unitmesh.prompt.model.TemplateDatasource
+import java.nio.file.Path
 
 
 class TemplateCompilerFactory(private val type: TemplateEngineType = TemplateEngineType.VELOCITY) {
@@ -16,15 +17,12 @@ class TemplateCompilerFactory(private val type: TemplateEngineType = TemplateEng
         return compiler.compile(templatePath, dataPath)
     }
 
-    fun compile(templatePath: String, data: Map<String, Any>): String {
-        return compiler.compile(templatePath, data)
-    }
-
-    fun compile(template: String, templateDatasource: List<TemplateDatasource>): String {
+    fun compile(template: String, templateDatasource: List<TemplateDatasource>, basePath: Path): String {
         templateDatasource.forEach {
             when (it) {
                 is TemplateDatasource.File -> {
-                    return compiler.compile(template, it.value)
+                    val dataPath = basePath.resolve(it.value).toString()
+                    return compiler.compile(template, dataPath)
                 }
             }
         }

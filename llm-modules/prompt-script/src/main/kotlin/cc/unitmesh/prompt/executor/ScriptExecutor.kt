@@ -16,16 +16,19 @@ import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import java.io.File
+import java.nio.file.Path
 
 class ScriptExecutor {
     private val content: String
+    private var basePath: Path = Path.of(".")
 
-    constructor(content: String) {
+    private constructor(content: String) {
         this.content = content
     }
 
-    constructor(file: File) : this(file.readText(Charsets.UTF_8))
-    constructor(inputStream: java.io.InputStream) : this(inputStream.readBytes().toString(Charsets.UTF_8))
+    constructor(file: File) : this(file.readText(Charsets.UTF_8)) {
+        this.basePath = file.toPath().parent
+    }
 
     fun execute() {
         val script: PromptScript = PromptScript.fromString(content) ?: return
@@ -41,7 +44,7 @@ class ScriptExecutor {
 
             // write to output
             val resultFileName = createFileName(name, job)
-            val resultFile = File(resultFileName)
+            val resultFile = this.basePath.resolve(resultFileName).toFile()
             resultFile.writeText(result)
         }
     }
@@ -77,7 +80,8 @@ class ScriptExecutor {
         return when (ext) {
             "vm", "vsl", "ft" -> {
                 val factory = TemplateCompilerFactory(type = TemplateEngineType.VELOCITY)
-                factory.compile(job.template, job.templateDatasource)
+                val templatePath = this.basePath.resolve(job.template).toString()
+                factory.compile(templatePath, job.templateDatasource, this.basePath)
             }
 
             else -> throw Exception("unsupported template type: $ext")
@@ -85,7 +89,8 @@ class ScriptExecutor {
     }
 
     private fun createConnection(job: Job): BaseConnection {
-        val connectionFile: File = File(job.connection)
+        val connectionFile = this.basePath.resolve(job.connection).toFile()
+        println("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)

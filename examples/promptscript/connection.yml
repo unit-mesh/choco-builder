@@ -1,0 +1,9 @@
+$schema: schemas/OpenAIConnection.schema.json
+name: open_ai_connection
+type: MockLlm
+configs:
+  api-host: "http://mock.unitmesh.cc"
+  organization: "" # optional
+secrets:
+  api-key: "some keys"
+  api-type: "azure"
