@@ -12,6 +12,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 open class BaseConnection(
+    val `$schema`: String = "",
     val name: String,
     val type: ConnectionType,
     private val configs: Map<String, String> = mapOf(),
@@ -31,6 +32,7 @@ open class BaseConnection(
             ConnectionType.AzureOpenAI -> TODO()
             ConnectionType.CustomLlm -> TODO()
             ConnectionType.ExtTool -> TODO()
+            ConnectionType.MockLlm -> MockLlmConnection()
         }
     }
 }

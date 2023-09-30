@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
     implementation(libs.jsonpath)
+    implementation(libs.rxjava3)
 
     implementation(libs.kaml)
 

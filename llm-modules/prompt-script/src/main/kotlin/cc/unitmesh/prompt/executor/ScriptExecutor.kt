@@ -1,7 +1,9 @@
 package cc.unitmesh.prompt.executor
 
 import cc.unitmesh.cf.core.llms.LlmMsg
+import cc.unitmesh.cf.core.llms.MockLlmProvider
 import cc.unitmesh.connection.BaseConnection
+import cc.unitmesh.connection.MockLlmConnection
 import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.openai.OpenAiProvider
 import cc.unitmesh.prompt.model.Job
@@ -14,25 +16,27 @@ import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import java.io.File
-import java.io.InputStream
 
-class ScriptExecutor(val scriptFile: InputStream) {
+class ScriptExecutor(val content: String) {
     fun execute() {
-        // load script file and parse to PromptScript
-        val context = scriptFile.readBytes().toString(Charsets.UTF_8)
-        val script: PromptScript = PromptScript.fromString(context) ?: return
+        val script: PromptScript = PromptScript.fromString(content) ?: return
 
         // execute script
         script.jobs.forEach { (name, job) ->
             println("execute job: $name")
-            runJob(name, job)
+            val result = runJob(name, job)
+
+            val resultFileName = createFileName(name, job)
+            val resultFile = File(resultFileName)
+            resultFile.writeText(result)
         }
     }
 
-    private fun runJob(name: String, job: Job) {
+    private fun runJob(name: String, job: Job): String {
         val connection = createConnection(job)
         val llmProvider = when (connection) {
             is OpenAiConnection -> OpenAiProvider(connection.apiKey, connection.apiHost)
+            is MockLlmConnection -> MockLlmProvider()
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
 
@@ -42,11 +46,7 @@ class ScriptExecutor(val scriptFile: InputStream) {
         val msgs = TemplateRoleSplitter().split(prompt)
         val messages = toMessages(msgs)
 
-        val result = llmProvider.completion(messages)
-        val resultFileName = createFileName(name, job)
-
-        val resultFile = File(resultFileName)
-        resultFile.writeText(result)
+        return llmProvider.completion(messages)
     }
 
     private fun createFileName(name: String, job: Job): String {
