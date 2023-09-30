@@ -1,5 +1,6 @@
 package cc.unitmesh.prompt.executor
 
+import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.connection.BaseConnection
 import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.openai.OpenAiProvider
@@ -10,14 +11,12 @@ import cc.unitmesh.prompt.template.TemplateEngineType
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
+import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
-import org.jetbrains.annotations.TestOnly
 import java.io.File
 import java.io.InputStream
 
-class ScriptExecutor(
-    val scriptFile: InputStream,
-) {
+class ScriptExecutor(val scriptFile: InputStream) {
     fun execute() {
         // load script file and parse to PromptScript
         val context = scriptFile.readBytes().toString(Charsets.UTF_8)
@@ -26,19 +25,37 @@ class ScriptExecutor(
         // execute script
         script.jobs.forEach { (name, job) ->
             println("execute job: $name")
-            runJob(job)
+            runJob(name, job)
         }
     }
 
-    private fun runJob(job: Job) {
+    private fun runJob(name: String, job: Job) {
         val connection = createConnection(job)
         val llmProvider = when (connection) {
             is OpenAiConnection -> OpenAiProvider(connection.apiKey, connection.apiHost)
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
 
-        val prompt = createTemplate(job)
+        // todo: handle repeat here
 
+        val prompt = createTemplate(job)
+        val msgs = TemplateRoleSplitter().split(prompt)
+        val messages = toMessages(msgs)
+
+        val result = llmProvider.completion(messages)
+        val resultFileName = createFileName(name, job)
+
+        val resultFile = File(resultFileName)
+        resultFile.writeText(result)
+    }
+
+    private fun createFileName(name: String, job: Job): String {
+        val currentMoment: Instant = Clock.System.now()
+        val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
+        val timeStr = datetimeInUtc.toString().replace(":", "-")
+        val jobName = name.replace(" ", "-")
+
+        return "${jobName}-${timeStr}.txt"
     }
 
     private fun createTemplate(job: Job): String {
@@ -60,5 +77,14 @@ class ScriptExecutor(
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
         val connection = Yaml(configuration = configuration).decodeFromString<BaseConnection>(text)
         return connection.convert()
+    }
+}
+
+private fun toMessages(msgs: Map<String, String>): List<LlmMsg.ChatMessage> {
+    return msgs.map {
+        LlmMsg.ChatMessage(
+            role = LlmMsg.ChatRole.valueOf(it.key),
+            content = it.value,
+        )
     }
 }

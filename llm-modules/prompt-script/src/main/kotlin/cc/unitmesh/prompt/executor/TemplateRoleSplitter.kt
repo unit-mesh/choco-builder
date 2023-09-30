@@ -1,27 +1,27 @@
 package cc.unitmesh.prompt.executor
 
+/**
+ *
+ * A template role is a string that contains multiple sections.
+ * Each section is a string that starts with "###" and ends with "###".
+ * The section name is the string between "###" and "###", then will be used as the key of the section.
+ * The content of the section is the string between the section name and the next section name.
+ *
+ * For example:
+ *
+ * ###system###
+ * You are a helpful assistant.
+ *
+ * ###user###
+ * ${question}
+ *
+ * Will be split to:
+ * mapOf(
+ *    "system" to "You are a helpful assistant.",
+ *    "user" to "${question}"
+ * )
+ */
 class TemplateRoleSplitter {
-    /**
-     *
-     * A template role is a string that contains multiple sections.
-     * Each section is a string that starts with "###" and ends with "###".
-     * The section name is the string between "###" and "###", then will be used as the key of the section.
-     * The content of the section is the string between the section name and the next section name.
-     *
-     * For example:
-     *
-     * ###system###
-     * You are a helpful assistant.
-     *
-     * ###user###
-     * ${question}
-     *
-     * Will be split to:
-     * mapOf(
-     *    "system" to "You are a helpful assistant.",
-     *    "user" to "${question}"
-     * )
-     */
     fun split(input: String): Map<String, String> {
         val sections = mutableMapOf<String, String>()
         val lines = input.lines()

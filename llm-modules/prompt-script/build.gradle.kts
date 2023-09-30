@@ -15,6 +15,8 @@ dependencies {
 
     implementation(libs.kaml)
 
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+
     implementation(libs.velocity.engine)
     implementation(libs.gson)
 
