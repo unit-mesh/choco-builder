@@ -15,7 +15,8 @@ data class Job(
     /**
      * Connection is a file that will be serialized to [cc.unitmesh.connection.BaseConnection] class
      */
-    val connection: Connection,
+    val connection: String = "connections.yml",
     val vars: Map<String, String> = mapOf(),
+    val strategy: List<StrategyItem> = listOf(),
     val validate: List<ValidateItem> = listOf(),
 )

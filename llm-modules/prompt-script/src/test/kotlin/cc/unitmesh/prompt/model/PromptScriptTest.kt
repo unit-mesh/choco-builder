@@ -13,17 +13,19 @@ description: "Verify Open AI's LLM"
 jobs:
   prompt-evaluate: # job name should be unique for each job
     description: "Evaluate prompt with different parameters"
+    connection: connections.yml
     template: code-complete.open-ai.vm # auto choice template by extension
-    connection: # default values for all jobs
-      file: connections.yml
-      vars:
-        - type: range
-          key: temperature
-          range: 0.0~1.0
-          step: 0.1
+    template-datasource:
+      - type: file
+        value: testdata/sample.json
 
-    vars: # some file or map
-      name: "Phodal Huang"
+    strategy:
+      - type: connection
+        value:
+          - type: range
+            key: temperature
+            range: 0.0~1.0
+            step: 0.1
 
     validate: # optional
       - type: json-path
