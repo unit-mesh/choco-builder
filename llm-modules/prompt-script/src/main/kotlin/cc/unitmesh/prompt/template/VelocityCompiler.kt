@@ -31,6 +31,18 @@ class VelocityCompiler : PromptCompiler {
             velocityContext.put(key, u)
         }
 
+        return compileToString(templatePath)
+    }
+
+    override fun compile(templatePath: String, dataPath: Map<String, Any>): String {
+        dataPath.forEach { (key, u) ->
+            velocityContext.put(key, u)
+        }
+
+        return compileToString(templatePath)
+    }
+
+    private fun compileToString(templatePath: String): String {
         val template = File(templatePath).readText()
 
         val sw = StringWriter()

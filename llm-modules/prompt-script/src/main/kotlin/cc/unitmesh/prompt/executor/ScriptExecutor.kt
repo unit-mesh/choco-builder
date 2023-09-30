@@ -11,6 +11,7 @@ import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.decodeFromString
+import org.jetbrains.annotations.TestOnly
 import java.io.File
 import java.io.InputStream
 
@@ -40,12 +41,11 @@ class ScriptExecutor(
     }
 
     private fun createTemplate(job: Job): String {
-        // get ext from job.template, and select the right template engine
         val ext = job.template.substringAfterLast(".")
         return when (ext) {
-            "vm" -> {
+            "vm", "vsl", "ft" -> {
                 val factory = TemplateCompilerFactory(type = TemplateEngineType.VELOCITY)
-                factory.compile(job.template, job.data!!)
+                factory.compile(job.template, job.templateDatasource)
             }
 
             else -> throw Exception("unsupported template type: $ext")
