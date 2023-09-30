@@ -136,6 +136,9 @@ lets-plot-common = "org.jetbrains.lets-plot:lets-plot-common:4.0.0"
 # implementation("io.reactivex.rxjava3:rxjava:3.1.7")
 rxjava3 = "io.reactivex.rxjava3:rxjava:3.1.7"
 
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
+clikt = "com.github.ajalt.clikt:clikt:4.2.0"
+
 #jsoup
 jsoup = "org.jsoup:jsoup:1.16.1"
 

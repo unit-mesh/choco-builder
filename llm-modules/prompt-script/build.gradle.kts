@@ -1,5 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+    application
     alias(libs.plugins.jvm)
     alias(libs.plugins.serialization)
 }
@@ -16,11 +17,16 @@ dependencies {
 
     implementation(libs.kaml)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.clikt)
 
     implementation(libs.velocity.engine)
     implementation(libs.gson)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
+}
+
+application {
+    mainClass.set("cc.unitmesh.prompt.MainKt")
 }
