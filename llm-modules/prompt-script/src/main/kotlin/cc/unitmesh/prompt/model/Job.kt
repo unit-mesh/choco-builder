@@ -1,5 +1,6 @@
 package cc.unitmesh.prompt.model
 
+import cc.unitmesh.prompt.validate.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,4 +20,37 @@ data class Job(
     val vars: Map<String, String> = mapOf(),
     val strategy: List<StrategyItem> = listOf(),
     val validate: List<ValidateItem> = listOf(),
-)
+) {
+    fun validators(input: String): List<Validator> {
+        val validators: List<Validator> = validate.map {
+            when (it) {
+                is ValidateItem.ExtToolItem -> {
+                    ExtToolValidator(it.value, input)
+                }
+
+                is ValidateItem.JsonItem -> {
+                    JsonValidator(input)
+                }
+
+                is ValidateItem.JsonPathItem -> {
+                    JsonPathValidator(it.value, input)
+                }
+
+                is ValidateItem.MarkdownCodeBlockItem -> {
+                    MarkdownCodeBlockValidator(input)
+                }
+
+                is ValidateItem.RegexItem -> {
+                    RegexValidator(it.value, input)
+                }
+
+                is ValidateItem.StringItem -> {
+                    StringValidator(it.value, input)
+                }
+            }
+        }
+
+
+        return validators
+    }
+}

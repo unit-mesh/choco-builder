@@ -26,6 +26,9 @@ class ScriptExecutor(val content: String) {
             println("execute job: $name")
             val result = runJob(name, job)
 
+            job.validators(result)
+
+            // write to output
             val resultFileName = createFileName(name, job)
             val resultFile = File(resultFileName)
             resultFile.writeText(result)

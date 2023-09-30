@@ -11,7 +11,7 @@ class JsonPathValidatorTest {
         val path = "$.name"
 
         // when
-        val validator = JsonPathValidator(json, path)
+        val validator = JsonPathValidator(path, json)
         val result = validator.validate()
 
         // then
@@ -25,7 +25,7 @@ class JsonPathValidatorTest {
         val path = "$.address"
 
         // when
-        val validator = JsonPathValidator(json, path)
+        val validator = JsonPathValidator(path, json)
         val result = validator.validate()
 
         // then
