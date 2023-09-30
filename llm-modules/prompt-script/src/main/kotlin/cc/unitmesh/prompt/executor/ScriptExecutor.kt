@@ -63,6 +63,10 @@ class ScriptExecutor {
         val msgs = TemplateRoleSplitter().split(prompt)
         val messages = toMessages(msgs)
 
+        if (messages.isEmpty()) {
+            throw Exception("no messages found in template")
+        }
+
         return llmProvider.completion(messages)
     }
 

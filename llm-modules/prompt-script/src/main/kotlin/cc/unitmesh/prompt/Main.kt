@@ -5,9 +5,9 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 
 
-class PromptScriptCommand : CliktCommand(
-    help = """Run custom prompt script for AI Workflow PoC""".trimIndent()
-) {
+val HELP_TEXT = """Run custom prompt script for AI Workflow PoC""".trimIndent()
+
+class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
     /**
      * Input file should be a yaml file.
      */
