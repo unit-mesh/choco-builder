@@ -12,6 +12,7 @@ jobs:
       matrix:
         assets:
           - server/build/libs/server-*.jar
+          - llm-modules/prompt-script/build/libs/prompt-script-*-all.jar
 
     permissions:
       contents: write
