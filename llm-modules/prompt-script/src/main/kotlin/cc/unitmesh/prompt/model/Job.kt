@@ -16,13 +16,6 @@ data class Job(
      * Connection is a file that will be serialized to [cc.unitmesh.connection.BaseConnection] class
      */
     val connection: Connection,
-    val vars: Map<String, String>,
-    val validate: List<ValidateItem>?,
+    val vars: Map<String, String> = mapOf(),
+    val validate: List<ValidateItem> = listOf(),
 )
-
-@Serializable
-sealed class TemplateDatasource {
-    @Serializable
-    @SerialName("file")
-    data class File(val value: String) : TemplateDatasource()
-}

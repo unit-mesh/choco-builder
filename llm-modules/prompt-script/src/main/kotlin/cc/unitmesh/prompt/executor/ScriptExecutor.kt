@@ -37,7 +37,8 @@ class ScriptExecutor(
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
 
-        val template = createTemplate(job)
+        val prompt = createTemplate(job)
+
     }
 
     private fun createTemplate(job: Job): String {
