@@ -21,7 +21,7 @@ data class Job(
     val strategy: List<StrategyItem> = listOf(),
     val validate: List<ValidateItem> = listOf(),
 ) {
-    fun validators(input: String): List<Validator> {
+    fun buildValidtors(input: String): List<Validator> {
         val validators: List<Validator> = validate.map {
             when (it) {
                 is ValidateItem.ExtToolItem -> {

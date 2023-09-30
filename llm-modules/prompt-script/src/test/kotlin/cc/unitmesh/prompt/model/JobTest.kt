@@ -1,7 +1,5 @@
 package cc.unitmesh.prompt.model;
 
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -22,7 +20,7 @@ class JobTest {
         )
 
         // when
-        val result = job.validators(input)
+        val result = job.buildValidtors(input)
 
         // then
         assertEquals(1, result.size)
@@ -44,7 +42,7 @@ class JobTest {
         )
 
         // when
-        val result = job.validators(input).map { it.validate() }
+        val result = job.buildValidtors(input).map { it.validate() }
 
         // then
         assertEquals(2, result.size)
