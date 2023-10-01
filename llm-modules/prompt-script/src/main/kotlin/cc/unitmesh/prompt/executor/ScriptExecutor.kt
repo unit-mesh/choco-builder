@@ -39,15 +39,14 @@ class ScriptExecutor {
 
         // execute script
         script.jobs.forEach { (name, job) ->
-            runJob(name, job)
+            val llmResult = execSingleJob(name, job)
+            handleSingleJobResult(name, job, llmResult)
         }
     }
 
-    private fun runJob(name: String, job: Job) {
+    private fun handleSingleJobResult(name: String, job: Job, llmResult: String) {
         log.debug("execute job: $name")
-        val result = createJob(name, job)
-
-        val validators = job.buildValidators(result)
+        val validators = job.buildValidators(llmResult)
         validators.forEach {
             val isSuccess = it.validate()
             val simpleName = it.javaClass.simpleName
@@ -60,14 +59,15 @@ class ScriptExecutor {
 
         // write to output
         val resultFileName = createFileName(name, job)
+
         val resultFile = this.basePath.resolve(resultFileName).toFile()
         val relativePath = this.basePath.relativize(resultFile.toPath())
         log.info("write result to file: $relativePath")
-        resultFile.writeText(result)
+        resultFile.writeText(llmResult)
     }
 
-    private fun createJob(name: String, job: Job): String {
-        val connection = createConnection(job)
+    private fun execSingleJob(name: String, job: Job): String {
+        val connection = initConnectionConfig(job)
         val llmProvider = when (connection) {
             is OpenAiConnection -> OpenAiProvider(connection.apiKey, connection.apiHost)
             is MockLlmConnection -> MockLlmProvider()
@@ -107,7 +107,7 @@ class ScriptExecutor {
         }
     }
 
-    private fun createConnection(job: Job): BaseConnection {
+    private fun initConnectionConfig(job: Job): BaseConnection {
         val connectionFile = this.basePath.resolve(job.connection).toFile()
         log.info("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
