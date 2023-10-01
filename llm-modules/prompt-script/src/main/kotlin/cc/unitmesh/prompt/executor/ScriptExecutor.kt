@@ -39,23 +39,24 @@ class ScriptExecutor {
 
         // execute script
         script.jobs.forEach { (name, job) ->
-            log.info("execute job: $name")
+            log.debug("execute job: $name")
             val result = runJob(name, job)
 
             val validators = job.buildValidtors(result)
             validators.forEach {
                 val isSuccess = it.validate()
                 if (!isSuccess) {
-                    log.error("${it.javaClass} validate failed: ${it.input}")
+                    log.error("${it.javaClass.simpleName} validate failed: ${it.input}")
                 } else {
-                    log.info("${it.javaClass} validate success: ${it.input}")
+                    log.debug("${it.javaClass.simpleName} validate success: ${it.input}")
                 }
             }
 
             // write to output
             val resultFileName = createFileName(name, job)
             val resultFile = this.basePath.resolve(resultFileName).toFile()
-            log.info("write result to file: ${resultFile.absolutePath}")
+            val relativePath = this.basePath.relativize(resultFile.toPath())
+            log.info("write result to file: $relativePath")
             resultFile.writeText(result)
         }
     }

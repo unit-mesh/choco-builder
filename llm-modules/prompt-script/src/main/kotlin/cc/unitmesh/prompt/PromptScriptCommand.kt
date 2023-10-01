@@ -13,7 +13,7 @@ class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
     /**
      * Input file should be a yaml file.
      */
-    val config by option(help = "prompt script config file").required()
+    val input by option(help = "prompt script config file").required()
 
     companion object {
         val logger: Logger = org.slf4j.LoggerFactory.getLogger(PromptScriptCommand::class.java)
@@ -21,20 +21,20 @@ class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
 
     override fun run() {
         // check is yaml file
-        if (!config.endsWith(".yaml") && !config.endsWith(".yml")) {
-            throw Exception("input file should be a yaml file: $config")
+        if (!input.endsWith(".yaml") && !input.endsWith(".yml")) {
+            throw Exception("input file should be a yaml file: $input")
         }
 
         // check input file exits
-        val file = File(config)
+        val file = File(input)
         if (!file.exists()) {
-            throw Exception("input file not found: $config")
+            throw Exception("input file not found: $input")
         }
 
         // execute script
         val executor = ScriptExecutor(file)
         executor.execute()
 
-        logger.debug("execute script success: $config")
+        logger.debug("execute script success: $input")
     }
 }
