@@ -39,27 +39,24 @@ class ScriptExecutor {
 
     fun execute() {
         val script: PromptScript = PromptScript.fromString(content) ?: return
-
         // execute script
         script.jobs.forEach { (name, job) ->
             job.strategy.forEach {
-                when(it) {
-                    is StrategyItem.ConnectionItem -> {
-                        it.value.forEach { variable ->
-                            when(variable) {
-                                is Variable.KeyValue -> {
-                                    TODO()
-                                }
-                                is Variable.Range -> {
-                                    // todo: support range
-                                    val llmResult = execSingleJob(name, job)
-                                    handleSingleJobResult(name, job, llmResult)
-                                }
-                            }
-                        }
+                execStrategy(it, name, job)
+            }
+        }
+    }
+
+    private fun execStrategy(it: StrategyItem, name: String, job: Job) = when (it) {
+        is StrategyItem.ConnectionItem -> {
+            it.value.forEach { variable ->
+                when (variable) {
+                    is Variable.KeyValue -> {
+                        TODO()
                     }
-                    is StrategyItem.RepeatItem -> {
-                        repeat(it.value) {
+
+                    is Variable.Range -> {
+                        runRangeJob(variable) { value ->
                             val llmResult = execSingleJob(name, job)
                             handleSingleJobResult(name, job, llmResult)
                         }
@@ -67,7 +64,26 @@ class ScriptExecutor {
                 }
             }
         }
+
+        is StrategyItem.RepeatItem -> {
+            repeat(it.value) {
+                val llmResult = execSingleJob(name, job)
+                handleSingleJobResult(name, job, llmResult)
+            }
+        }
     }
+
+    private fun runRangeJob(variable: Variable.Range, function: (value: Double) -> Unit) {
+        val closedRange: ClosedRange<Double> = variable.toRange()
+        val step = variable.step.toDouble()
+
+        var currentValue = closedRange.start
+        while (currentValue <= closedRange.endInclusive) {
+            function(currentValue)
+            currentValue += step
+        }
+    }
+
 
     private fun handleSingleJobResult(name: String, job: Job, llmResult: String) {
         log.debug("execute job: $name")
