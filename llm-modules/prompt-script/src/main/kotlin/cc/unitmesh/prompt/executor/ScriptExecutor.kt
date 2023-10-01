@@ -51,13 +51,11 @@ class ScriptExecutor {
         is StrategyItem.ConnectionItem -> {
             it.value.forEach { variable ->
                 when (variable) {
-                    is Variable.KeyValue -> {
-                        TODO()
-                    }
-
+                    is Variable.KeyValue -> TODO()
                     is Variable.Range -> {
                         runRangeJob(variable) { value ->
-                            val llmResult = execSingleJob(name, job)
+                            val temperature: Double? = if (variable.key == "temperature") value else null
+                            val llmResult = execSingleJob(name, job, temperature)
                             handleSingleJobResult(name, job, llmResult)
                         }
                     }
@@ -107,10 +105,17 @@ class ScriptExecutor {
         resultFile.writeText(llmResult)
     }
 
-    private fun execSingleJob(name: String, job: Job): String {
+    private fun execSingleJob(name: String, job: Job, temperature: Double? = null): String {
         val connection = initConnectionConfig(job)
         val llmProvider = when (connection) {
-            is OpenAiConnection -> OpenAiProvider(connection.apiKey, connection.apiHost)
+            is OpenAiConnection -> {
+                val provider = OpenAiProvider(connection.apiKey, connection.apiHost)
+                if (temperature != null) {
+                    provider.temperature = temperature
+                }
+                provider
+            }
+
             is MockLlmConnection -> MockLlmProvider()
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
