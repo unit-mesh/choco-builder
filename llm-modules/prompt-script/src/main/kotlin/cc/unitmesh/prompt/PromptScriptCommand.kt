@@ -1,5 +1,6 @@
 package cc.unitmesh.prompt
 
+import cc.unitmesh.prompt.executor.ScriptExecutor
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
@@ -29,7 +30,7 @@ class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
         }
 
         // execute script
-        val executor = cc.unitmesh.prompt.executor.ScriptExecutor(file)
+        val executor = ScriptExecutor(file)
         executor.execute()
 
         logger.debug("execute script success: $input")
