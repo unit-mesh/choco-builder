@@ -39,7 +39,7 @@ class ScriptExecutor {
 
         // execute script
         script.jobs.forEach { (name, job) ->
-            println("execute job: $name")
+            log.info("execute job: $name")
             val result = runJob(name, job)
 
             val validators = job.buildValidtors(result)
@@ -55,6 +55,7 @@ class ScriptExecutor {
             // write to output
             val resultFileName = createFileName(name, job)
             val resultFile = this.basePath.resolve(resultFileName).toFile()
+            log.info("write result to file: ${resultFile.absolutePath}")
             resultFile.writeText(result)
         }
     }
@@ -104,7 +105,7 @@ class ScriptExecutor {
 
     private fun createConnection(job: Job): BaseConnection {
         val connectionFile = this.basePath.resolve(job.connection).toFile()
-        println("connection file: ${connectionFile.absolutePath}")
+        log.info("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)

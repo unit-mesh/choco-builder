@@ -1,0 +1,16 @@
+<configuration>
+    <!-- 配置日志输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.apache.velocity" level="OFF"/>
+    <logger name="org.apache.velocity.*" level="OFF"/>
+
+    <!-- 配置日志级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

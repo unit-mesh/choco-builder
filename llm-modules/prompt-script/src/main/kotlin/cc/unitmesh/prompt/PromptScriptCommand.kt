@@ -12,6 +12,10 @@ class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
      */
     val input by option(help = "input file").required()
 
+    companion object {
+        val logger = org.slf4j.LoggerFactory.getLogger(PromptScriptCommand::class.java)
+    }
+
     override fun run() {
         // check is yaml file
         if (!input.endsWith(".yaml") && !input.endsWith(".yml")) {
@@ -27,5 +31,7 @@ class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
         // execute script
         val executor = cc.unitmesh.prompt.executor.ScriptExecutor(file)
         executor.execute()
+
+        logger.debug("execute script success: $input")
     }
 }
