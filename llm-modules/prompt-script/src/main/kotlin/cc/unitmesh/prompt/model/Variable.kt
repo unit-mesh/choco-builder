@@ -23,11 +23,6 @@ sealed class Variable {
          *
          */
         fun toRange(): ClosedRange<Double> {
-            val stepType = when {
-                step.contains(".") -> Double::class
-                else -> Int::class
-            }
-
             val separator = when {
                 range.contains("~") -> "~"
                 range.contains("..") -> ".."

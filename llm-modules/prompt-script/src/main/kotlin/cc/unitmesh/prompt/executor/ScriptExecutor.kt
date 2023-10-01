@@ -8,6 +8,8 @@ import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.openai.OpenAiProvider
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.PromptScript
+import cc.unitmesh.prompt.model.StrategyItem
+import cc.unitmesh.prompt.model.Variable
 import cc.unitmesh.prompt.template.TemplateCompilerFactory
 import cc.unitmesh.prompt.template.TemplateEngineType
 import com.charleskorn.kaml.PolymorphismStyle
@@ -15,6 +17,7 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.file.Path
 
@@ -23,7 +26,7 @@ class ScriptExecutor {
     private var basePath: Path = Path.of(".")
 
     companion object {
-        val log = org.slf4j.LoggerFactory.getLogger(ScriptExecutor::class.java)
+        val log = LoggerFactory.getLogger(ScriptExecutor::class.java)
     }
 
     private constructor(content: String) {
@@ -39,8 +42,30 @@ class ScriptExecutor {
 
         // execute script
         script.jobs.forEach { (name, job) ->
-            val llmResult = execSingleJob(name, job)
-            handleSingleJobResult(name, job, llmResult)
+            job.strategy.forEach {
+                when(it) {
+                    is StrategyItem.ConnectionItem -> {
+                        it.value.forEach { variable ->
+                            when(variable) {
+                                is Variable.KeyValue -> {
+                                    TODO()
+                                }
+                                is Variable.Range -> {
+                                    // todo: support range
+                                    val llmResult = execSingleJob(name, job)
+                                    handleSingleJobResult(name, job, llmResult)
+                                }
+                            }
+                        }
+                    }
+                    is StrategyItem.RepeatItem -> {
+                        repeat(it.value) {
+                            val llmResult = execSingleJob(name, job)
+                            handleSingleJobResult(name, job, llmResult)
+                        }
+                    }
+                }
+            }
         }
     }
 
