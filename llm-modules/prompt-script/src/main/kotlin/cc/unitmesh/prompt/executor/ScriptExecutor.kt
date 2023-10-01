@@ -50,10 +50,11 @@ class ScriptExecutor {
         val validators = job.buildValidators(result)
         validators.forEach {
             val isSuccess = it.validate()
+            val simpleName = it.javaClass.simpleName
             if (!isSuccess) {
-                log.error("${it.javaClass.simpleName} validate failed: ${it.input}")
+                log.error("$simpleName validate failed: ${it.input}")
             } else {
-                log.debug("${it.javaClass.simpleName} validate success: ${it.input}")
+                log.debug("$simpleName validate success: ${it.input}")
             }
         }
 
