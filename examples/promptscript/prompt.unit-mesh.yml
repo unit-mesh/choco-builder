@@ -15,10 +15,10 @@ jobs:
         value:
           - type: range
             key: temperature
-            range: 0.0~1.0
+            range: 0.7~1.0
             step: 0.1
       - type: repeat
-        value: 1000
+        value: 3
 
     validate: # optional
       - type: json-path
