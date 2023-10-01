@@ -2,6 +2,7 @@ package cc.unitmesh.prompt.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.math.BigDecimal
 
 @Serializable
 sealed class Variable {
@@ -22,7 +23,7 @@ sealed class Variable {
          * So, we will parse [step] to confirm is int or float, then parse [range] to get [ClosedRange].
          *
          */
-        fun toRange(): ClosedRange<Double> {
+        fun toRange(): ClosedRange<BigDecimal> {
             val separator = when {
                 range.contains("~") -> "~"
                 range.contains("..") -> ".."
@@ -31,7 +32,7 @@ sealed class Variable {
                 else -> throw IllegalArgumentException("Unsupported range format: $range")
             }
 
-            val (start: Double, end: Double) = range.split(separator).map { it.trim().toDouble() }
+            val (start: BigDecimal, end: BigDecimal) = range.split(separator).map { it.trim().toBigDecimal() }
             return start.rangeTo(end)
         }
     }

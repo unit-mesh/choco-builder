@@ -19,6 +19,7 @@ import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.math.BigDecimal
 import java.nio.file.Path
 
 class ScriptExecutor {
@@ -44,6 +45,8 @@ class ScriptExecutor {
             job.strategy.forEach {
                 execStrategy(it, name, job)
             }
+
+            println()
         }
     }
 
@@ -54,7 +57,8 @@ class ScriptExecutor {
                     is Variable.KeyValue -> TODO()
                     is Variable.Range -> {
                         runRangeJob(variable) { value ->
-                            val temperature: Double? = if (variable.key == "temperature") value else null
+                            val temperature: BigDecimal? = if (variable.key == "temperature") value else null
+                            log.info("execute job: $name, strategy: ${it.value}, temperature: $temperature")
                             val llmResult = execSingleJob(name, job, temperature)
                             handleSingleJobResult(name, job, llmResult)
                         }
@@ -64,16 +68,17 @@ class ScriptExecutor {
         }
 
         is StrategyItem.RepeatItem -> {
-            repeat(it.value) {
+            repeat(it.value) { index ->
+                log.info("execute job: $name, strategy: repeat, times: ${index}/${it.value}")
                 val llmResult = execSingleJob(name, job)
                 handleSingleJobResult(name, job, llmResult)
             }
         }
     }
 
-    private fun runRangeJob(variable: Variable.Range, function: (value: Double) -> Unit) {
-        val closedRange: ClosedRange<Double> = variable.toRange()
-        val step = variable.step.toDouble()
+    private fun runRangeJob(variable: Variable.Range, function: (value: BigDecimal) -> Unit) {
+        val closedRange: ClosedRange<BigDecimal> = variable.toRange()
+        val step = variable.step.toBigDecimal()
 
         var currentValue = closedRange.start
         while (currentValue <= closedRange.endInclusive) {
@@ -105,13 +110,13 @@ class ScriptExecutor {
         resultFile.writeText(llmResult)
     }
 
-    private fun execSingleJob(name: String, job: Job, temperature: Double? = null): String {
+    private fun execSingleJob(name: String, job: Job, temperature: BigDecimal? = null): String {
         val connection = initConnectionConfig(job)
         val llmProvider = when (connection) {
             is OpenAiConnection -> {
                 val provider = OpenAiProvider(connection.apiKey, connection.apiHost)
                 if (temperature != null) {
-                    provider.temperature = temperature
+                    provider.temperature = temperature.toDouble()
                 }
                 provider
             }

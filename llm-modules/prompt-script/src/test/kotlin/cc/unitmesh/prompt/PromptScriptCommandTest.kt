@@ -8,7 +8,6 @@ import kotlin.test.Ignore
 
 class PromptScriptCommandTest {
     @Test
-    @Ignore
     fun should_print_test() {
         // given
         val command = PromptScriptCommand()
