@@ -39,37 +39,39 @@ class ScriptExecutor {
 
         // execute script
         script.jobs.forEach { (name, job) ->
-            log.debug("execute job: $name")
-            val result = runJob(name, job)
-
-            val validators = job.buildValidtors(result)
-            validators.forEach {
-                val isSuccess = it.validate()
-                if (!isSuccess) {
-                    log.error("${it.javaClass.simpleName} validate failed: ${it.input}")
-                } else {
-                    log.debug("${it.javaClass.simpleName} validate success: ${it.input}")
-                }
-            }
-
-            // write to output
-            val resultFileName = createFileName(name, job)
-            val resultFile = this.basePath.resolve(resultFileName).toFile()
-            val relativePath = this.basePath.relativize(resultFile.toPath())
-            log.info("write result to file: $relativePath")
-            resultFile.writeText(result)
+            runJob(name, job)
         }
     }
 
-    private fun runJob(name: String, job: Job): String {
+    private fun runJob(name: String, job: Job) {
+        log.debug("execute job: $name")
+        val result = createJob(name, job)
+
+        val validators = job.buildValidators(result)
+        validators.forEach {
+            val isSuccess = it.validate()
+            if (!isSuccess) {
+                log.error("${it.javaClass.simpleName} validate failed: ${it.input}")
+            } else {
+                log.debug("${it.javaClass.simpleName} validate success: ${it.input}")
+            }
+        }
+
+        // write to output
+        val resultFileName = createFileName(name, job)
+        val resultFile = this.basePath.resolve(resultFileName).toFile()
+        val relativePath = this.basePath.relativize(resultFile.toPath())
+        log.info("write result to file: $relativePath")
+        resultFile.writeText(result)
+    }
+
+    private fun createJob(name: String, job: Job): String {
         val connection = createConnection(job)
         val llmProvider = when (connection) {
             is OpenAiConnection -> OpenAiProvider(connection.apiKey, connection.apiHost)
             is MockLlmConnection -> MockLlmProvider()
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
-
-        // todo: handle repeat here
 
         val prompt = createTemplate(job)
         val msgs = TemplateRoleSplitter().split(prompt)
