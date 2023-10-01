@@ -1,11 +1,10 @@
 ---
 layout: default
-title: PromptScript
-parent: Retrieval Augmented Generation
-nav_order: 100
+title: Connection
+parent: Prompt Script
+nav_order: 1
 ---
 
-PromptScript 是一个轻量级的 Prompt 调试用的 DSL，以用于快速使用、构建 Prompt。
 
 # Connection
 
@@ -46,7 +45,3 @@ And all LLMs supported by [ctransformers](https://github.com/marella/ctransforme
 ## Tool Connection
 
 # Prompt Template
-
-
-
-
