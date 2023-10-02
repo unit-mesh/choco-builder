@@ -45,8 +45,6 @@ class ScriptExecutor {
             job.strategy.forEach {
                 execStrategy(it, name, job)
             }
-
-            println()
         }
     }
 

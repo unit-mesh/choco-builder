@@ -44,7 +44,7 @@ data class Job(
                     RegexValidator(it.value, input)
                 }
 
-                is ValidateItem.StringItem -> {
+                is ValidateItem.StringRuleItem -> {
                     StringValidator(it.value, input)
                 }
             }

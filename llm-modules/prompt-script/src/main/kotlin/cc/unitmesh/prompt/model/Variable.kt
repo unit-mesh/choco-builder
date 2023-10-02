@@ -4,6 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
+/**
+ * Variable can be used for [cc.unitmesh.prompt.model.StrategyItem.ConnectionItem]
+ */
 @Serializable
 sealed class Variable {
     @SerialName("key-value")
