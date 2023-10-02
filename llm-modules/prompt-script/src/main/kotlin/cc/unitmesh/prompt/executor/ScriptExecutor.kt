@@ -121,7 +121,7 @@ class ScriptExecutor {
                 provider
             }
 
-            is MockLlmConnection -> MockLlmProvider()
+            is MockLlmConnection -> MockLlmProvider(connection.response)
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
 

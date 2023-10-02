@@ -32,7 +32,10 @@ open class BaseConnection(
             ConnectionType.AzureOpenAI -> TODO()
             ConnectionType.CustomLlm -> TODO()
             ConnectionType.ExtTool -> TODO()
-            ConnectionType.MockLlm -> MockLlmConnection()
+            ConnectionType.MockLlm -> {
+                val response = configs.getOrDefault("api-response", "")
+                MockLlmConnection(response = response)
+            }
         }
     }
 }

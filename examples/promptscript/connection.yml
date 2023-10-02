@@ -3,7 +3,7 @@ name: open_ai_connection
 type: MockLlm
 configs:
   api-host: "http://mock.unitmesh.cc"
-  organization: "" # optional
+  api-response: "{\"text\": \"this is a mock resource\"}"
 secrets:
   api-key: "some keys"
   api-type: "azure"

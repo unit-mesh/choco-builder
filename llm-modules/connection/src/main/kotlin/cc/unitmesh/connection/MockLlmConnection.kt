@@ -1,6 +1,6 @@
 package cc.unitmesh.connection
 
-class MockLlmConnection : BaseConnection(
+class MockLlmConnection(val response: String) : BaseConnection(
     name = "mock",
     type = ConnectionType.MockLlm
 ) {}
