@@ -1,9 +1,4 @@
-$schema: schemas/OpenAIConnection.schema.json
-name: open_ai_connection
+name: mock_response
 type: MockLlm
 configs:
-  api-host: "http://mock.unitmesh.cc"
   api-response: "{\"text\": \"this is a mock resource\"}"
-secrets:
-  api-key: "some keys"
-  api-type: "azure"
