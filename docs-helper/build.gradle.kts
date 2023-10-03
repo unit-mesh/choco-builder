@@ -16,13 +16,13 @@ dependencies {
 }
 
 application {
-    mainClass.set("cc.unitmesh.docs.helper.RunnerKt")
+    mainClass.set("cc.unitmesh.docs.RunnerKt")
 }
 
 tasks {
     shadowJar {
         manifest {
-            attributes(Pair("Main-Class", "cc.unitmesh.docs.helper.RunnerKt"))
+            attributes(Pair("Main-Class", "cc.unitmesh.docs.RunnerKt"))
         }
     }
 }
