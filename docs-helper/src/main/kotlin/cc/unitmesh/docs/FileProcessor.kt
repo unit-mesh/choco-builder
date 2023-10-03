@@ -45,10 +45,10 @@ class FileProcessor {
         }
     }
 
-    fun process(): List<KtFile> {
+    fun process(rootDir: Path): List<KtFile> {
         return FileSystems
             .getDefault()
-            .fileSequence(DEFAULT_PATTERNS)
+            .fileSequence(DEFAULT_PATTERNS, rootDir)
             .map { it.toFile() }
             .map { file ->
                 process(code = Code.fromFile(file))
