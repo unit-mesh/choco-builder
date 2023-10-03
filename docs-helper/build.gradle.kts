@@ -12,6 +12,9 @@ dependencies {
     implementation(libs.clikt)
     implementation(libs.kotlin.reflect)
 
+    implementation(libs.logging.logback.classic)
+    implementation(libs.logging.kotlin)
+
     testImplementation(libs.bundles.test)
 }
 
