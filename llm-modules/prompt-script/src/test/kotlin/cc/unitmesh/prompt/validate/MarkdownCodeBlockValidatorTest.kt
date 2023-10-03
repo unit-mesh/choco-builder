@@ -1,11 +1,13 @@
 package cc.unitmesh.prompt.validate;
 
+import cc.unitmesh.docs.SampleCode
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class MarkdownCodeBlockValidatorTest {
 
     @Test
+    @SampleCode
     fun should_return_true_when_input_has_non_blank_text() {
         // given
         val input = "```kotlin\nval x = 10\n```"
