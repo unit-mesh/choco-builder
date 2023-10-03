@@ -3,6 +3,7 @@ package cc.unitmesh.docs
 import cc.unitmesh.docs.base.Code
 import cc.unitmesh.docs.base.DEFAULT_PATTERNS
 import cc.unitmesh.docs.base.fileSequence
+import com.intellij.lang.FileASTNode
 import com.intellij.mock.MockProject
 import com.intellij.openapi.util.Disposer
 import com.intellij.psi.PsiFileFactory
@@ -16,7 +17,7 @@ import org.jetbrains.kotlin.psi.KtFile
 import java.nio.file.*
 import kotlin.io.path.pathString
 
-class FileProcessor {
+class KtFileProcessor {
     private var psiFileFactory: PsiFileFactory
 
     init {
@@ -45,7 +46,7 @@ class FileProcessor {
         }
     }
 
-    fun process(rootDir: Path): List<KtFile> {
+    fun process(rootDir: Path): List<FileASTNode> {
         return FileSystems
             .getDefault()
             .fileSequence(DEFAULT_PATTERNS, rootDir)
@@ -55,7 +56,7 @@ class FileProcessor {
             }.toList()
     }
 
-    private fun process(code: Code): KtFile {
+    private fun process(code: Code): FileASTNode {
         val psiFileName =
             code
                 .filePath
@@ -72,6 +73,8 @@ class FileProcessor {
                 KotlinLanguage.INSTANCE,
                 code.content,
             ) as KtFile
-        return psiFile
+
+        val rootNode = psiFile.node
+        return rootNode
     }
 }
