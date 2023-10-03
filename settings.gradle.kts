@@ -8,6 +8,8 @@ include(":server")
 
 include(":cocoa-core")
 
+include(":docs-helper")
+
 include(":dsl:design")
 
 include(":rag-modules:document")

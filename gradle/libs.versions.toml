@@ -21,11 +21,11 @@ logback = "1.4.5"
 kotlinLogging = "4.0.0-beta-19"
 
 gson = "2.10.1"
-shadowJar = "7.1.2"
-
 compose = "1.3.0"
 
 kotless = "0.2.0"
+
+shadowJar = "8.1.1"
 
 [libraries]
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
@@ -151,6 +151,7 @@ jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jupyter = { id = "org.jetbrains.kotlin.jupyter.api", version.ref = "jupyterApi" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" }
 
 [bundles]
 test = ["test-junit-params", "kotlin-test", "test-kotlintest-assertions", "test-mockk", "test-assertj"]
