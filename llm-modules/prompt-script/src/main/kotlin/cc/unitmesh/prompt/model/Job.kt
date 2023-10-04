@@ -40,7 +40,7 @@ data class Job(
                     MarkdownCodeBlockValidator(input)
                 }
 
-                is cc.unitmesh.prompt.model.ValidateItem.Regex -> {
+                is ValidateRule.Regex -> {
                     RegexValidator(it.value, input)
                 }
 
