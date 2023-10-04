@@ -91,4 +91,44 @@ class STSemantic(): Semantic {
         interfaceDocs.size shouldBe 1
         interfaceDocs[0].children.size shouldBe 1
     }
+
+    @Test
+    fun should_handle_the_sample_code() {
+        val code = """
+/**
+ * JsonPath will validate is path is valid. If a path is invalid, will return false.
+ */
+class JsonPathValidator(val expression: String, override val input: String) : Validator {
+    override fun validate(): Boolean = try {
+        JsonPath.parse(input).read<Any>(expression)
+        true
+    } catch (e: Exception) {
+        false
+    }
+}
+
+class JsonPathValidatorTest {
+    @Test
+    @SampleCode(name = "检验成功", content = "")
+    fun should_return_true_when_path_is_valid() {
+        // start-sample
+        val expression = "${'$'}.name"
+        val input = "{\"name\": \"John\", \"age\": 30}"
+        // end-sample
+
+        // when
+        val validator = JsonPathValidator(expression, input)
+        val result = validator.validate()
+
+        // then
+        result shouldBe true
+    }
+}    
+""".trimIndent()
+        val processor = KtFileProcessor()
+        val astNode = processor.process(Code.fromSnippet(code))
+        docGen.extractRootNode(astNode)
+        val interfaceDocs = docGen.buildInterfaceDocs()
+        interfaceDocs.size shouldBe 0
+    }
 }

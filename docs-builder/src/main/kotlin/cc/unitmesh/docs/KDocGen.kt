@@ -10,6 +10,7 @@ import com.pinterest.ktlint.KtFileProcessor
 import org.jetbrains.annotations.TestOnly
 import org.jetbrains.kotlin.KtNodeTypes
 import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
 
@@ -18,11 +19,12 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
     private val processor: KtFileProcessor = KtFileProcessor()
     private var inheritanceDoc = mutableMapOf<String, List<KDocContent>>()
     private var classNodes = listOf<KtClass>()
+    private var fileNodes = listOf<FileASTNode>()
 
     override fun execute(): List<TreeDoc> {
-        val nodes = processor.process(rootDir)
+        fileNodes = processor.process(rootDir)
 
-        val normalDoc = nodes
+        val normalDoc = fileNodes
             .map {
                 extractRootNode(it)
             }.flatten()
@@ -38,13 +40,17 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         .map { (name, docs) ->
             val ktClass = classNodes.find { it.name == name }
             val clazz = ktClass ?: return@map null
-            val kDoc = clazz.findKDoc() ?: return@map null
+            val kDoc = clazz.buildDocWithTest(classNodes) ?: return@map null
 
             TreeDoc(kDoc, docs)
         }
         .filterNotNull()
 
     fun extractRootNode(node: FileASTNode): List<TreeDoc> {
+        classNodes += node.children()
+            .filter { it.elementType == KtNodeTypes.CLASS }
+            .mapNotNull { it.psi as? KtClass }
+
         return node.children()
             .map(::extractChildNode)
             .flatten()
@@ -57,9 +63,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         when (node.elementType) {
             KtNodeTypes.CLASS -> {
                 val clazz = node.psi as KtClass
-                classNodes = classNodes.plus(clazz)
-
-                val kDoc = clazz.findKDoc() ?: return docs
+                val kDoc = clazz.buildDocWithTest(classNodes) ?: return docs
                 if (clazz.isSealed()) {
                     val children = extractSealedClassDoc(clazz)
                     docs.add(TreeDoc(kDoc, children))
@@ -83,7 +87,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
             when (astNode.elementType) {
                 KtNodeTypes.CLASS -> {
                     val child = astNode.psi as KtClass
-                    child.findKDoc()?.let {
+                    child.buildDocWithTest(classNodes)?.let {
                         docs = docs.plus(it)
                     }
                 }
@@ -92,4 +96,13 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
 
         return docs
     }
+}
+
+fun KtElement.buildDocWithTest(classNodes: List<KtClass>): KDocContent? {
+    val testClass = classNodes.find { it.name == "${this.name}Test" || it.name == "${this.name}Tests" }
+    if (testClass != null) {
+        println("find test class: ${testClass.name}")
+    }
+
+    return this.findKDoc()
 }
