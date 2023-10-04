@@ -19,10 +19,10 @@ data class Job(
     val connection: String = "connections.yml",
     val vars: Map<String, String> = mapOf(),
     val strategy: List<JobStrategy> = listOf(),
-    val validateRule: List<ValidateRule> = listOf(),
+    val validate: List<ValidateRule> = listOf(),
 ) {
     fun buildValidators(input: String): List<Validator> {
-        val validators: List<Validator> = validateRule.map {
+        val validators: List<Validator> = validate.map {
             when (it) {
                 is ValidateRule.ExtTool -> {
                     ExtToolValidator(it.value, input)

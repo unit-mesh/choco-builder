@@ -16,7 +16,7 @@ class JobTest {
         val job = Job(
             description = "test",
             template = "test",
-            validateRule = validateRules
+            validate = validateRules
         )
 
         // when
@@ -38,7 +38,7 @@ class JobTest {
         val job = Job(
             description = "test",
             template = "test",
-            validateRule = validateRules
+            validate = validateRules
         )
 
         // when
