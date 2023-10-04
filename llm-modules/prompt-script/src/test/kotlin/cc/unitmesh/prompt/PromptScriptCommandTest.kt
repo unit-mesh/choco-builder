@@ -12,7 +12,7 @@ class PromptScriptCommandTest {
     fun should_print_test() {
         // given
         val command = PromptScriptCommand()
-        val inputFile = File(".").resolve("../../examples/promptscript/prompt.unit-mesh.yml").absolutePath.toString()
+        val inputFile = File(".").resolve("../../examples/prompt-script/prompt.unit-mesh.yml").absolutePath.toString()
         val result = command.test("--input $inputFile")
 
 

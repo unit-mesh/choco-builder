@@ -12,20 +12,20 @@ PromptScript 是一个轻量级的 Prompt 调试用的 DSL，以用于快速使�
 2. 配置 PromptScript 的 YAML 文件。
 3. 运行 PromptScript
 
-示例见：[examples/promptscript](https://github.com/unit-mesh/chocolate-factory/tree/master/examples/promptscript)
+示例见：[examples/prompt-script](https://github.com/unit-mesh/chocolate-factory/tree/master/examples/promptscript)
 
 日志示例:
 
 ```bash
-java -jar prompt-script-0.3.5-all.jar --input examples/promptscript/prompt.unit-mesh.yml
+java -jar prompt-script-0.3.5-all.jar --input examples/prompt-script/prompt.unit-mesh.yml
 
 [CF] c.u.p.e.ScriptExecutor execute job: prompt-evaluate
-[CF] c.u.p.e.ScriptExecutor connection file: /Volumes/source/ai/chocolate-factory/examples/promptscript/openai-connection.yml
+[CF] c.u.p.e.ScriptExecutor connection file: /Volumes/source/ai/chocolate-factory/examples/prompt-script/openai-connection.yml
 [CF] c.j.j.i.p.CompiledPath Evaluating path: $['id']
 [CF] c.u.p.e.ScriptExecutor JsonPathValidator validate failed: {"text":"目前最流行的前端框架有React、Angular和Vue.js"}
 [CF] c.u.p.e.ScriptExecutor StringValidator validate failed: {"text":"目前最流行的前端框架有React、Angular和Vue.js"}
-[CF] c.u.p.e.ScriptExecutor write result to file: examples/promptscript/prompt-evaluate-2023-10-01T12-34-42.269901.txt
-[CF] c.u.p.PromptScriptCommand execute script success: examples/promptscript/prompt.unit-mesh.yml
+[CF] c.u.p.e.ScriptExecutor write result to file: examples/prompt-script/prompt-evaluate-2023-10-01T12-34-42.269901.txt
+[CF] c.u.p.PromptScriptCommand execute script success: examples/prompt-script/prompt.unit-mesh.yml
 ```
 
 ## PromptScript 示例
