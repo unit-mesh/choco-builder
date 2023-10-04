@@ -1,9 +1,9 @@
 package cc.unitmesh.docs
 
+import cc.unitmesh.docs.base.DocContent
 import cc.unitmesh.docs.base.DocGenerator
 import cc.unitmesh.docs.base.TreeDoc
 import cc.unitmesh.docs.kdoc.ClassSample
-import cc.unitmesh.docs.kdoc.KDocContent
 import cc.unitmesh.docs.kdoc.FunctionSample
 import cc.unitmesh.docs.kdoc.findKDoc
 import com.intellij.lang.ASTNode
@@ -13,14 +13,13 @@ import org.jetbrains.kotlin.KtNodeTypes
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.psi.KtFunction
-import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
 
 
 class KDocGen(private val rootDir: Path) : DocGenerator() {
     private val processor: KtFileProcessor = KtFileProcessor()
-    private var inheritanceDoc = mutableMapOf<String, List<KDocContent>>()
+    private var inheritanceDoc = mutableMapOf<String, List<DocContent>>()
     private var classNodes = listOf<KtClass>()
     private var fileNodes = listOf<FileASTNode>()
 
@@ -53,7 +52,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
             val clazz = ktClass ?: return@map null
             val kDoc = clazz.findKDoc() ?: return@map null
 
-            TreeDoc(kDoc, docs)
+            TreeDoc(DocContent.fromKDoc(kDoc), docs)
         }
         .filterNotNull()
 
@@ -73,12 +72,13 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                 val kDoc = clazz.findKDoc() ?: return docs
                 if (clazz.isSealed()) {
                     val children = extractSealedClassDoc(clazz)
-                    docs.add(TreeDoc(kDoc, children))
+                    docs.add(TreeDoc(DocContent.fromKDoc(kDoc), children))
                 }
 
                 if (clazz.superTypeListEntries.isNotEmpty()) {
                     val superName = clazz.superTypeListEntries[0].typeAsUserType?.referencedName ?: ""
-                    inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() }.plus(kDoc)
+                    val doc = DocContent.fromKDoc(kDoc)
+                    inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() }.plus(doc)
                 }
             }
         }
@@ -86,8 +86,8 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         return docs
     }
 
-    private fun extractSealedClassDoc(clazz: KtClass): List<KDocContent> {
-        var docs: List<KDocContent> = listOf()
+    private fun extractSealedClassDoc(clazz: KtClass): List<DocContent> {
+        var docs: List<DocContent> = listOf()
         val body = clazz.body ?: return docs
 
         body.node.children().forEach { astNode ->
@@ -95,7 +95,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                 KtNodeTypes.CLASS -> {
                     val child = astNode.psi as KtClass
                     child.findKDoc()?.let {
-                        docs = docs.plus(it)
+                        docs = docs.plus(DocContent.fromKDoc(it))
                     }
                 }
             }
@@ -161,6 +161,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                                     val byType = astNode.findChildByType(KtNodeTypes.STRING_TEMPLATE)
                                     name = byType?.text.orEmpty().removeSurrounding("\"")
                                 }
+
                                 "content" -> {
                                     val contentType = astNode.findChildByType(KtNodeTypes.STRING_TEMPLATE)
                                     description = contentType?.text.orEmpty().removeSurrounding("\"")

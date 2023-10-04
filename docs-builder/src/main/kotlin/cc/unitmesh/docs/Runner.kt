@@ -24,7 +24,7 @@ class Runner : CliktCommand() {
         val outputDir = rootDir.resolve("docs/prompt-script")
         var index = 10
         docs.forEach { (name, content) ->
-            val permalink = Companion.uppercaseToDash(name)
+            val permalink = uppercaseToDash(name)
             var output = CustomJekyllFrontMatter(name, "Prompt Script", index, permalink)
                 .toMarkdown()
 
@@ -46,10 +46,10 @@ class Runner : CliktCommand() {
             val rootFileName = root.element?.containingFile?.name ?: "unknown"
             println("rootFileName: $rootFileName")
 
-            output.append("# ${root.element?.name} \n\n> ${root.contentTag.getContent()}\n\n")
+            output.append("# ${root.element?.name} \n\n> ${root.content}\n\n")
             children.forEach { child ->
                 output.append("## ${child.element?.name} \n\n")
-                output.append("${child.contentTag.getContent()}\n\n")
+                output.append("${child.content}\n\n")
             }
 
             root.element!!.name!! to output.toString()
