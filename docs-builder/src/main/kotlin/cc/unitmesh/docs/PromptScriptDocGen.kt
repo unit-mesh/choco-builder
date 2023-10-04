@@ -7,8 +7,8 @@ import cc.unitmesh.docs.kdoc.findKDoc
 import com.intellij.lang.ASTNode
 import com.intellij.lang.FileASTNode
 import com.pinterest.ktlint.KtFileProcessor
+import org.jetbrains.annotations.TestOnly
 import org.jetbrains.kotlin.KtNodeTypes
-import org.jetbrains.kotlin.kdoc.psi.impl.KDocTag
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
@@ -32,10 +32,12 @@ class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
         return normalDoc + interfaceDocs
     }
 
+    @TestOnly
     fun buildInterfaceDocs() = inheritanceDoc
         .filter { it.value.isNotEmpty() }
         .map { (name, docs) ->
-            val clazz = classNodes.find { it.name == name } ?: return@map null
+            val ktClass = classNodes.find { it.name == name }
+            val clazz = ktClass ?: return@map null
             val kDoc = clazz.findKDoc() ?: return@map null
 
             TreeDoc(kDoc, docs)
@@ -49,7 +51,7 @@ class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
             .toList()
     }
 
-    fun extractChildNode(node: ASTNode): MutableList<TreeDoc> {
+    private fun extractChildNode(node: ASTNode): MutableList<TreeDoc> {
         val docs: MutableList<TreeDoc> = mutableListOf()
 
         when (node.elementType) {
@@ -64,7 +66,8 @@ class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
                 }
 
                 if (clazz.superTypeListEntries.isNotEmpty()) {
-                    inheritanceDoc.getOrPut(clazz.name ?: "") { listOf(kDoc) }.plus(kDoc)
+                    val superName = clazz.superTypeListEntries[0].typeAsUserType?.referencedName ?: ""
+                    inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() }.plus(kDoc)
                 }
             }
         }

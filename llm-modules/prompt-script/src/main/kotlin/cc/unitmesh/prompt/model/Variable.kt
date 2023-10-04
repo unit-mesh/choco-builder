@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
 /**
- * Variable can be used for [cc.unitmesh.prompt.model.StrategyItem.ConnectionItem]
+ * Variable can be used for [cc.unitmesh.prompt.model.JobStrategy.Connection]
  */
 @Serializable
 sealed class Variable {

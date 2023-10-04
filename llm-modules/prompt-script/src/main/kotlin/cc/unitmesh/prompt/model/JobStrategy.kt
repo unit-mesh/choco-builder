@@ -4,12 +4,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * StrategyItem is the job's strategy config.
+ * JobStrategy is the job's strategy config.
  */
 @Serializable
-sealed class StrategyItem {
+sealed class JobStrategy {
     /**
-     * ConnectionItem is a config of [cc.unitmesh.connection.BaseConnection],
+     * Connection is a config of [cc.unitmesh.connection.BaseConnection],
      * which will be used for [cc.unitmesh.openai.LlmProvider]
      * like temperature, top-p, top-k, presence_penalty, frequency_penalty, stop etc.
      * for example:
@@ -26,10 +26,10 @@ sealed class StrategyItem {
      */
     @SerialName("connection")
     @Serializable
-    data class ConnectionItem(val value: List<Variable>) : StrategyItem()
+    data class Connection(val value: List<Variable>) : JobStrategy()
 
     /**
-     * RepeatItem is a config of repeat times.
+     * Repeat is a config of repeat times.
      * for example:
      * 
      *```yaml
@@ -39,5 +39,5 @@ sealed class StrategyItem {
      */
     @SerialName("repeat")
     @Serializable
-    data class RepeatItem(val value: Int) : StrategyItem()
+    data class Repeat(val value: Int) : JobStrategy()
 }

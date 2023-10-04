@@ -9,14 +9,14 @@ class JobTest {
     fun `should return list of validators`() {
         // given
         val input = "{}"
-        val validateItems: List<ValidateItem> = listOf(
-            ValidateItem.JsonItem("")
+        val validateRules: List<ValidateRule> = listOf(
+            ValidateRule.Json("")
         )
 
         val job = Job(
             description = "test",
             template = "test",
-            validate = validateItems
+            validateRule = validateRules
         )
 
         // when
@@ -30,15 +30,15 @@ class JobTest {
     fun should_return_true_when_run_json_validator() {
         // given
         val input = "{\"test\": \"test\"}"
-        val validateItems: List<ValidateItem> = listOf(
-            ValidateItem.JsonItem(""),
-            ValidateItem.JsonPathItem("$.test")
+        val validateRules: List<ValidateRule> = listOf(
+            ValidateRule.Json(""),
+            ValidateRule.JsonPath("$.test")
         )
 
         val job = Job(
             description = "test",
             template = "test",
-            validate = validateItems
+            validateRule = validateRules
         )
 
         // when

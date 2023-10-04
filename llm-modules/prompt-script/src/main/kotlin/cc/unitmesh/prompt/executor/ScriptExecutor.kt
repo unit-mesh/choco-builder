@@ -8,7 +8,7 @@ import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.openai.OpenAiProvider
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.PromptScript
-import cc.unitmesh.prompt.model.StrategyItem
+import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.Variable
 import cc.unitmesh.prompt.template.TemplateCompilerFactory
 import cc.unitmesh.prompt.template.TemplateEngineType
@@ -48,8 +48,8 @@ class ScriptExecutor {
         }
     }
 
-    private fun execStrategy(it: StrategyItem, name: String, job: Job) = when (it) {
-        is StrategyItem.ConnectionItem -> {
+    private fun execStrategy(it: JobStrategy, name: String, job: Job) = when (it) {
+        is JobStrategy.Connection -> {
             it.value.forEach { variable ->
                 when (variable) {
                     is Variable.KeyValue -> TODO()
@@ -65,7 +65,7 @@ class ScriptExecutor {
             }
         }
 
-        is StrategyItem.RepeatItem -> {
+        is JobStrategy.Repeat -> {
             repeat(it.value) { index ->
                 log.info("execute job: $name, strategy: repeat, times: ${index}/${it.value}")
                 val llmResult = execSingleJob(name, job)

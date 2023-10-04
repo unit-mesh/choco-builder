@@ -18,33 +18,33 @@ data class Job(
      */
     val connection: String = "connections.yml",
     val vars: Map<String, String> = mapOf(),
-    val strategy: List<StrategyItem> = listOf(),
-    val validate: List<ValidateItem> = listOf(),
+    val strategy: List<JobStrategy> = listOf(),
+    val validateRule: List<ValidateRule> = listOf(),
 ) {
     fun buildValidators(input: String): List<Validator> {
-        val validators: List<Validator> = validate.map {
+        val validators: List<Validator> = validateRule.map {
             when (it) {
-                is ValidateItem.ExtToolItem -> {
+                is ValidateRule.ExtTool -> {
                     ExtToolValidator(it.value, input)
                 }
 
-                is ValidateItem.JsonItem -> {
+                is ValidateRule.Json -> {
                     JsonValidator(input)
                 }
 
-                is ValidateItem.JsonPathItem -> {
+                is ValidateRule.JsonPath -> {
                     JsonPathValidator(it.value, input)
                 }
 
-                is ValidateItem.MarkdownCodeBlockItem -> {
+                is ValidateRule.MarkdownCodeBlock -> {
                     MarkdownCodeBlockValidator(input)
                 }
 
-                is ValidateItem.RegexItem -> {
+                is cc.unitmesh.prompt.model.ValidateItem.Regex -> {
                     RegexValidator(it.value, input)
                 }
 
-                is ValidateItem.StringRuleItem -> {
+                is ValidateRule.StringRule -> {
                     StringValidator(it.value, input)
                 }
             }
