@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.psi.psiUtil.isPropertyParameter
 import org.jetbrains.kotlin.resolve.DescriptorToSourceUtils
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toLowerCaseAsciiOnly
 
-internal data class KDocContent(
+data class KDocContent(
     val contentTag: KDocTag,
     val sections: List<KDocSection>,
 )

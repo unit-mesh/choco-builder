@@ -53,7 +53,7 @@ class KtFileProcessor {
             }.toList()
     }
 
-    private fun process(code: Code): FileASTNode {
+    fun process(code: Code): FileASTNode {
         val psiFileName =
             code
                 .filePath

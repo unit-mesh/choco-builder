@@ -1,11 +1,12 @@
 package cc.unitmesh.docs
 
 import cc.unitmesh.docs.base.DocGenerator
+import cc.unitmesh.docs.kdoc.KDocContent
 import com.pinterest.ktlint.KtFileProcessor
 import cc.unitmesh.docs.kdoc.findKDoc
 import com.intellij.lang.ASTNode
+import com.intellij.lang.FileASTNode
 import org.jetbrains.kotlin.KtNodeTypes
-import org.jetbrains.kotlin.kdoc.lexer.KDocTokens
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
@@ -16,14 +17,18 @@ class PromptScriptDocGen(val rootDir: Path) : DocGenerator() {
     override fun execute() {
         val lists = processor
             .process(rootDir)
-            .forEach {
-                it.children().forEach { child ->
-                    extractDocRecursively(child)
-                }
+            .map {
+                extractRootNode(it)
             }
     }
 
-    private fun extractDocRecursively(node: ASTNode) {
+    fun extractRootNode(it: FileASTNode) {
+        it.children().forEach { child ->
+            extractChildNode(child)
+        }
+    }
+
+    fun extractChildNode(node: ASTNode) {
         when (node.elementType) {
             KtNodeTypes.CLASS -> {
                 val clazz = node.psi as KtClass
@@ -32,33 +37,28 @@ class PromptScriptDocGen(val rootDir: Path) : DocGenerator() {
                 }
 
                 if (clazz.isSealed()) {
-                    extractSealedClassDoc(clazz)
+                    val classDoc = extractSealedClassDoc(clazz)
+                    println(classDoc)
                 }
-            }
-
-            KDocTokens.KDOC -> {
-                println(node.text)
-            }
-
-            else -> {
-//                println(node.elementType)
             }
         }
     }
 
-    private fun extractSealedClassDoc(clazz: KtClass) {
-        val body = clazz.body ?: return
+    fun extractSealedClassDoc(clazz: KtClass): List<KDocContent> {
+        var docs: List<KDocContent> = listOf()
+        val body = clazz.body ?: return docs
+
         body.node.children().forEach { astNode ->
             when (astNode.elementType) {
                 KtNodeTypes.CLASS -> {
                     val child = astNode.psi as KtClass
                     child.findKDoc()?.let {
-                        it.sections.forEach { section ->
-                            println(section.getContent())
-                        }
+                        docs = docs.plus(it)
                     }
                 }
             }
         }
+
+        return docs
     }
 }
