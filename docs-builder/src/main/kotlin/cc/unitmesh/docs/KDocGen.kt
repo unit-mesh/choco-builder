@@ -2,8 +2,9 @@ package cc.unitmesh.docs
 
 import cc.unitmesh.docs.base.DocGenerator
 import cc.unitmesh.docs.base.TreeDoc
+import cc.unitmesh.docs.kdoc.ClassSample
 import cc.unitmesh.docs.kdoc.KDocContent
-import cc.unitmesh.docs.kdoc.SampleCode
+import cc.unitmesh.docs.kdoc.FunctionSample
 import cc.unitmesh.docs.kdoc.findKDoc
 import com.intellij.lang.ASTNode
 import com.intellij.lang.FileASTNode
@@ -50,7 +51,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         .map { (name, docs) ->
             val ktClass = classNodes.find { it.name == name }
             val clazz = ktClass ?: return@map null
-            val kDoc = clazz.buildDocWithTest(classNodes) ?: return@map null
+            val kDoc = clazz.findKDoc() ?: return@map null
 
             TreeDoc(kDoc, docs)
         }
@@ -69,7 +70,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         when (node.elementType) {
             KtNodeTypes.CLASS -> {
                 val clazz = node.psi as KtClass
-                val kDoc = clazz.buildDocWithTest(classNodes) ?: return docs
+                val kDoc = clazz.findKDoc() ?: return docs
                 if (clazz.isSealed()) {
                     val children = extractSealedClassDoc(clazz)
                     docs.add(TreeDoc(kDoc, children))
@@ -93,7 +94,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
             when (astNode.elementType) {
                 KtNodeTypes.CLASS -> {
                     val child = astNode.psi as KtClass
-                    child.buildDocWithTest(classNodes)?.let {
+                    child.findKDoc()?.let {
                         docs = docs.plus(it)
                     }
                 }
@@ -104,48 +105,47 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
     }
 }
 
-fun KtElement.buildDocWithTest(classNodes: List<KtClass>): KDocContent? {
-    val kDocContent = this.findKDoc()
-
-    val testClass = classNodes.find { it.name == "${this.name}Test" || it.name == "${this.name}Tests" }
-    if (testClass != null) {
-        val classBody = testClass.body ?: return null
-        val methods: List<KtFunction> = classBody.node.children()
-            .filter { it.elementType == KtNodeTypes.FUN }
-            .map { it.psi as KtFunction }
-            .filter {
-                it.modifierList?.text?.contains("@SampleCode") ?: false
-            }
-            .toList()
-
-        // the code block will begin with `// start-sample` and end with `// end-sample`
-        val sourceCodes = methods.mapNotNull { method ->
-            val sampleCodeValue = getSampleCodeValue(method)
-
-            val lines = method.text.split("\n")
-            // find the start line with regex
-            val startLine = lines.indexOfFirst { it.contains("// start-sample") }
-            // find the end line with regex
-            val endLine = lines.indexOfFirst { it.contains("// end-sample") }
-            // get the code block
-            if (startLine == -1 || endLine == -1) {
-                null
-            } else {
-                val linesResults = lines.subList(startLine + 1, endLine).joinToString("\n") {
-                    it.replaceFirst(Regex("^\\s+"), "")
-                }
-
-                sampleCodeValue.name + "\n\n" + linesResults
-            }
-
-        }
-
+private fun buildSample(node: KtElement, classNodes: List<KtClass>): ClassSample? {
+    val testClass = classNodes.find { it.name == "${node.name}Test" || it.name == "${node.name}Tests" }
+    if (testClass == null) {
+        return null
     }
 
-    return kDocContent
+    val classBody = testClass.body ?: return null
+    val methods: List<KtFunction> = classBody.node.children()
+        .filter { it.elementType == KtNodeTypes.FUN }
+        .map { it.psi as KtFunction }
+        .filter {
+            it.modifierList?.text?.contains("@SampleCode") ?: false
+        }
+        .toList()
+
+    // the code block will begin with `// start-sample` and end with `// end-sample`
+    val sourceCodes = methods.mapNotNull { method ->
+        val sampleCodeValue = getSampleCodeValue(method)
+
+        val lines = method.text.split("\n")
+        // find the start line with regex
+        val startLine = lines.indexOfFirst { it.contains("// start-sample") }
+        // find the end line with regex
+        val endLine = lines.indexOfFirst { it.contains("// end-sample") }
+        // get the code block
+        if (startLine == -1 || endLine == -1) {
+            null
+        } else {
+            val linesResults = lines.subList(startLine + 1, endLine).joinToString("\n") {
+                it.replaceFirst(Regex("^\\s+"), "")
+            }
+
+            sampleCodeValue.code = sampleCodeValue.name + "\n\n" + linesResults
+            sampleCodeValue
+        }
+    }
+
+    return ClassSample(node.name!!, sourceCodes)
 }
 
-private fun getSampleCodeValue(method: KtFunction): SampleCode {
+private fun getSampleCodeValue(method: KtFunction): FunctionSample {
     // get modifier value from `@SampleCode(name = "检验成功", content = "")`
     var name = ""
     var description = ""
@@ -173,5 +173,5 @@ private fun getSampleCodeValue(method: KtFunction): SampleCode {
         }
     }
 
-    return SampleCode(name, description)
+    return FunctionSample(name, description)
 }
