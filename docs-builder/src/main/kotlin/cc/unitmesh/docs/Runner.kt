@@ -24,7 +24,7 @@ class Runner : CliktCommand() {
         val outputDir = rootDir.resolve("docs/prompt-script")
         var index = 10
         docs.forEach { (name, content) ->
-            val permalink = uppercaseToDash(name)
+            val permalink = Companion.uppercaseToDash(name)
             var output = CustomJekyllFrontMatter(name, "Prompt Script", index, permalink)
                 .toMarkdown()
 
@@ -35,19 +35,6 @@ class Runner : CliktCommand() {
             outputFile.toFile().writeText(output + "\n\n" + content)
             index += 1
         }
-    }
-
-    fun uppercaseToDash(name: String): String {
-        val result = StringBuilder()
-
-        for (char in name) {
-            if (char.isUpperCase() && result.isNotEmpty()) {
-                result.append('-')
-            }
-            result.append(char.lowercase())
-        }
-
-        return result.toString()
     }
 
 
@@ -66,6 +53,21 @@ class Runner : CliktCommand() {
             }
 
             root.element!!.name!! to output.toString()
+        }
+    }
+
+    companion object {
+        fun uppercaseToDash(name: String): String {
+            val result = StringBuilder()
+
+            for (char in name) {
+                if (char.isUpperCase() && result.isNotEmpty()) {
+                    result.append('-')
+                }
+                result.append(char.lowercase())
+            }
+
+            return result.toString()
         }
     }
 }
