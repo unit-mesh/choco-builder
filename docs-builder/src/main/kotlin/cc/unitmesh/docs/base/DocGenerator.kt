@@ -9,7 +9,6 @@ data class TreeDoc(
 )
 
 abstract class DocGenerator {
-    val baseDir = "build" + File.separator
 
     open fun execute() : List<TreeDoc> {
         return listOf()

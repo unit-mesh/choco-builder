@@ -2,7 +2,7 @@ package cc.unitmesh.docs.render
 
 data class CustomJekyllFrontMatter(
     var title: String,
-    val parent: String = "Prompt Script",
+    val parent: String,
     val navOrder: Int,
     val permalink: String,
 ) {

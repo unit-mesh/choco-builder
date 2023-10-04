@@ -9,6 +9,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 sealed class TemplateDatasource {
+    /**
+     * File is a file datasource, which will load data from a file.
+     */
     @Serializable
     @SerialName("file")
     data class File(val value: String) : TemplateDatasource()
