@@ -23,8 +23,16 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
 
     override fun execute(): List<TreeDoc> {
         fileNodes = processor.process(rootDir)
+        return extractNodes(fileNodes)
+    }
 
-        val normalDoc = fileNodes
+    fun extractNodes(fileASTNodes: List<FileASTNode>): List<TreeDoc> {
+        classNodes = fileASTNodes.flatMap { node -> node.children()
+                .filter { it.elementType == KtNodeTypes.CLASS }
+                .mapNotNull { it.psi as? KtClass }
+        }
+
+        val normalDoc = fileASTNodes
             .map {
                 extractRootNode(it)
             }.flatten()
@@ -34,8 +42,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         return normalDoc + interfaceDocs
     }
 
-    @TestOnly
-    fun buildInterfaceDocs() = inheritanceDoc
+    private fun buildInterfaceDocs() = inheritanceDoc
         .filter { it.value.isNotEmpty() }
         .map { (name, docs) ->
             val ktClass = classNodes.find { it.name == name }
@@ -46,11 +53,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         }
         .filterNotNull()
 
-    fun extractRootNode(node: FileASTNode): List<TreeDoc> {
-        classNodes += node.children()
-            .filter { it.elementType == KtNodeTypes.CLASS }
-            .mapNotNull { it.psi as? KtClass }
-
+    private fun extractRootNode(node: FileASTNode): List<TreeDoc> {
         return node.children()
             .map(::extractChildNode)
             .flatten()

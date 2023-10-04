@@ -55,7 +55,7 @@ sealed class StrategyItem {
 }
 """.trimIndent()
         val astNode = processor.process(Code.fromSnippet(sourceCode))
-        val docs = docGen.extractRootNode(astNode)
+        val docs = docGen.extractNodes(listOf(astNode))
 
         docs.size shouldBe 1
         docs[0].children.size shouldBe 2
@@ -84,12 +84,9 @@ class STSemantic(): Semantic {
 
         val processor = KtFileProcessor()
         val astNode = processor.process(Code.fromSnippet(code))
-        val normalDocs = docGen.extractRootNode(astNode)
-        normalDocs.size shouldBe 0
-
-        val interfaceDocs = docGen.buildInterfaceDocs()
-        interfaceDocs.size shouldBe 1
-        interfaceDocs[0].children.size shouldBe 1
+        val docs = docGen.extractNodes(listOf(astNode))
+        docs.size shouldBe 1
+        docs[0].children.size shouldBe 1
     }
 
     @Test
@@ -127,8 +124,7 @@ class JsonPathValidatorTest {
 """.trimIndent()
         val processor = KtFileProcessor()
         val astNode = processor.process(Code.fromSnippet(code))
-        docGen.extractRootNode(astNode)
-        val interfaceDocs = docGen.buildInterfaceDocs()
-        interfaceDocs.size shouldBe 0
+        val docs = docGen.extractNodes(listOf(astNode))
+        docs.size shouldBe 0
     }
 }
