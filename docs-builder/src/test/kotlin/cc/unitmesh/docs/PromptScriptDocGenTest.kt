@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import java.nio.file.Path
 
 class PromptScriptDocGenTest {
-    val docGen = PromptScriptDocGen(Path.of("."))
+    private val docGen = PromptScriptDocGen(Path.of("."))
 
     @Test
     fun should_handle_for_sealed_class_docs() {

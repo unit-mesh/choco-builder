@@ -36,7 +36,7 @@ class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
         when (node.elementType) {
             KtNodeTypes.CLASS -> {
                 val clazz = node.psi as KtClass
-                val kDoc = clazz.findKDoc()!!
+                val kDoc = clazz.findKDoc() ?: return docs
                 val children: List<KDocContent> = if (clazz.isSealed()) {
                     extractSealedClassDoc(clazz)
                 } else {

@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.util.capitalizeDecapitalize.toLowerCaseAsciiOnly
 data class KDocContent(
     val contentTag: KDocTag,
     val sections: List<KDocSection>,
+    val element: KtElement? = null
 )
 
 internal fun DeclarationDescriptor.findKDoc(
@@ -68,10 +69,11 @@ private fun KtElement.lookupOwnedKDoc(): KDocContent? {
                     // that contain @param tags (if any), as the most relatable ones
                     // practical example: val foo = Fo<caret>o("argument") -- show @constructor and @param content
                     val paramSections = kdoc.findSectionsContainingTag(KDocKnownTag.PARAM)
-                    return KDocContent(constructorSection, paramSections)
+                    return KDocContent(constructorSection, paramSections, this)
                 }
             }
-            return KDocContent(kdoc.getDefaultSection(), kdoc.getAllSections())
+
+            return KDocContent(kdoc.getDefaultSection(), kdoc.getAllSections(), this)
         }
     }
     return null
@@ -113,7 +115,7 @@ private fun KtElement.lookupKDocInContainer(): KDocContent? {
     return primaryContent?.let {
         // makes little sense to include any other sections, since we found
         // documentation for a very specific element, like a property/param
-        KDocContent(it, sections = emptyList())
+        KDocContent(it, sections = emptyList(), this)
     }
 }
 
