@@ -1,8 +1,5 @@
-package cc.unitmesh.docs
+package com.pinterest.ktlint
 
-import cc.unitmesh.docs.base.Code
-import cc.unitmesh.docs.base.DEFAULT_PATTERNS
-import cc.unitmesh.docs.base.fileSequence
 import com.intellij.lang.FileASTNode
 import com.intellij.mock.MockProject
 import com.intellij.openapi.util.Disposer

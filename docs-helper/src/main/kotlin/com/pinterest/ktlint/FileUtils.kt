@@ -1,4 +1,4 @@
-package cc.unitmesh.docs.base
+package com.pinterest.ktlint
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.jetbrains.kotlin.util.prefixIfNot
