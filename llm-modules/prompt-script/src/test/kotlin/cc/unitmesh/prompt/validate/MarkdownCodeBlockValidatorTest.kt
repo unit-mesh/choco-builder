@@ -7,10 +7,12 @@ import org.junit.jupiter.api.Test
 class MarkdownCodeBlockValidatorTest {
 
     @Test
-    @SampleCode
+    @SampleCode(name = "成功场景", content = "当代码块不为空里，返回 true。")
     fun should_return_true_when_input_has_non_blank_text() {
-        // given
+        // start-sample
         val input = "```kotlin\nval x = 10\n```"
+        // end-sample
+
         val validator = MarkdownCodeBlockValidator(input)
 
         // when
@@ -21,22 +23,12 @@ class MarkdownCodeBlockValidatorTest {
     }
 
     @Test
+    @SampleCode(name = "成功场景", content = "当代码块为空时，返回 false。")
     fun should_return_false_when_input_has_blank_text() {
-        // given
+        // start-sample
         val input = "```kotlin\n\n```"
-        val validator = MarkdownCodeBlockValidator(input)
+        // end-sample
 
-        // when
-        val result = validator.validate()
-
-        // then
-        assertFalse(result)
-    }
-
-    @Test
-    fun should_return_false_when_input_has_no_text() {
-        // given
-        val input = "```kotlin\n```"
         val validator = MarkdownCodeBlockValidator(input)
 
         // when
