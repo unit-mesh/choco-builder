@@ -16,14 +16,21 @@ class Runner : CliktCommand() {
         val promptScriptDir = rootDir.resolve("llm-modules/prompt-script")
         val treeDocs = PromptScriptDocGen(promptScriptDir).execute()
         val docs = renderDocs(treeDocs)
-        docs.joinToString("\n") { it }.also { println(it) }
+        docs
+            .filter { it.isNotBlank() }
+            .joinToString("\n")
+            .also {
+                println(it)
+            }
     }
 
-    private fun renderDocs(treeDocs: List<TreeDoc>) : List<String> {
+    private fun renderDocs(treeDocs: List<TreeDoc>): List<String> {
         return treeDocs.map { treeDoc ->
             var output = ""
             val root = treeDoc.root
             val children = treeDoc.children
+            val rootFileName = root.element?.containingFile?.name ?: "unknown"
+            println("rootFileName: $rootFileName")
 
             output += "## ${root.element?.name} \n\n> ${root.contentTag.getContent()}\n\n"
             children.forEach { child ->
