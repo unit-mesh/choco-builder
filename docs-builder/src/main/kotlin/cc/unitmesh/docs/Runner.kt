@@ -14,10 +14,13 @@ class Runner : CliktCommand() {
         val rootDir = Path.of(dir).toAbsolutePath().normalize()
 
         // the prompt script parts
-        val promptScriptDir = rootDir.resolve("llm-modules/prompt-script")
+        val connectionDir = rootDir.resolve("llm-modules/connection")
+        val connectionDocs = KDocGen(connectionDir).execute()
 
-        val treeDocs = PromptScriptDocGen(promptScriptDir).execute()
-        val docs = renderDocs(treeDocs)
+        val promptScriptDir = rootDir.resolve("llm-modules/prompt-script")
+        val treeDocs = KDocGen(promptScriptDir).execute()
+
+        val docs = renderDocs(treeDocs + connectionDocs)
         val outputDir = rootDir.resolve("docs/prompt-script")
         var index = 10
         docs.forEach { (name, content) ->

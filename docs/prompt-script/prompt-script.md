@@ -27,3 +27,33 @@ java -jar prompt-script-0.3.5-all.jar --input examples/promptscript/prompt.unit-
 [CF] c.u.p.e.ScriptExecutor write result to file: examples/promptscript/prompt-evaluate-2023-10-01T12-34-42.269901.txt
 [CF] c.u.p.PromptScriptCommand execute script success: examples/promptscript/prompt.unit-mesh.yml
 ```
+
+## PromptScript 示例
+
+```yml
+name: "Open AI Verifier"
+description: "Verify Open AI's LLM"
+
+jobs:
+  prompt-evaluate:
+    description: "Evaluate prompt with different parameters"
+    connection: connection.yml
+    template: code-complete.open-ai.vm
+    template-datasource:
+      - type: file
+        value: datasource.json
+
+    strategy:
+      - type: connection
+        value:
+          - type: range
+            key: temperature
+            range: 0.7~1.0
+            step: 0.1
+
+    validate: # optional
+      - type: json-path
+        value: $.id
+      - type: string
+        value: output.length > 300
+```

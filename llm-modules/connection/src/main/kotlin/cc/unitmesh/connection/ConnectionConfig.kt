@@ -3,15 +3,23 @@ package cc.unitmesh.connection
 import kotlinx.serialization.Serializable
 
 /**
- * A connection entity that stores the connection information.
+ * A connection entity that stores the connection information default use `connection.yml` in current directory.
  *
- * @param name Connection name
- * @param type Possible values include: "OpenAI", "AzureOpenAI", "Custom".
- * @param configs The configs kv pairs, like api_host, api_base, etc.
- * @param secrets The secrets kv pairs, like api_key.
+ * For example:
+ * ```yaml
+ * name: open_ai_connection
+ * type: OpenAI
+ * secrets:
+ *   api-key: ak-xxxx
+ * ```
+ *
+ * current supported connection type:
+ *
+ * - OpenAI
+ * - CustomLlm
  */
 @Serializable
-open class BaseConnection(
+open class ConnectionConfig(
     val `$schema`: String = "",
     val name: String,
     val type: ConnectionType,
@@ -21,7 +29,7 @@ open class BaseConnection(
      */
     private val secrets: Map<String, String> = mapOf(),
 ) {
-    fun convert(): BaseConnection {
+    fun convert(): ConnectionConfig {
         return when (type) {
             ConnectionType.OpenAI -> {
                 val host = configs.getOrDefault("api-host", "")
@@ -38,4 +46,12 @@ open class BaseConnection(
             }
         }
     }
+}
+
+enum class ConnectionType(val value: String) {
+    OpenAI("OpenAI"),
+    AzureOpenAI("AzureOpenAI"),
+    CustomLlm("CustomLlm"),
+    MockLlm("MockLlm"),
+    ExtTool("ExtTool"),
 }

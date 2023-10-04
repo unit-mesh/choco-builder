@@ -2,13 +2,12 @@ package cc.unitmesh.docs;
 
 import com.pinterest.ktlint.Code
 import com.pinterest.ktlint.KtFileProcessor
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.nio.file.Path
 
-class PromptScriptDocGenTest {
-    private val docGen = PromptScriptDocGen(Path.of("."))
+class KDocGenTest {
+    private val docGen = KDocGen(Path.of("."))
 
     @Test
     fun should_handle_for_sealed_class_docs() {

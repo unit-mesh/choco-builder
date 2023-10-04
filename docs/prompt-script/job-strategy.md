@@ -29,7 +29,7 @@ strategy:
 
 ## Connection 
 
-Connection is a config of [cc.unitmesh.connection.BaseConnection],
+Connection is a config of [cc.unitmesh.connection.ConnectionConfig],
 which will be used for [cc.unitmesh.openai.LlmProvider]
 like temperature, top-p, top-k, presence_penalty, frequency_penalty, stop etc.
 for example:

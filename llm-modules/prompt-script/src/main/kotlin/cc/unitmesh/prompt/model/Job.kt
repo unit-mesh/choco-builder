@@ -14,7 +14,7 @@ data class Job(
      */
     val templateDatasource: List<TemplateDatasource> = listOf(),
     /**
-     * Connection is a file that will be serialized to [cc.unitmesh.connection.BaseConnection] class
+     * Connection is a file that will be serialized to [cc.unitmesh.connection.ConnectionConfig] class
      */
     val connection: String = "connections.yml",
     val vars: Map<String, String> = mapOf(),

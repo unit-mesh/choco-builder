@@ -14,7 +14,7 @@ import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
 
 
-class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
+class KDocGen(private val rootDir: Path) : DocGenerator() {
     private val processor: KtFileProcessor = KtFileProcessor()
     private var inheritanceDoc = mutableMapOf<String, List<KDocContent>>()
     private var classNodes = listOf<KtClass>()

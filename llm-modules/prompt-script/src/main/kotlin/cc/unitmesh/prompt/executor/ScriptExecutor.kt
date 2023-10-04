@@ -2,7 +2,7 @@ package cc.unitmesh.prompt.executor
 
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.MockLlmProvider
-import cc.unitmesh.connection.BaseConnection
+import cc.unitmesh.connection.ConnectionConfig
 import cc.unitmesh.connection.MockLlmConnection
 import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.openai.OpenAiProvider
@@ -156,13 +156,13 @@ class ScriptExecutor {
         }
     }
 
-    private fun initConnectionConfig(job: Job): BaseConnection {
+    private fun initConnectionConfig(job: Job): ConnectionConfig {
         val connectionFile = this.basePath.resolve(job.connection).toFile()
         log.info("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
-        val connection = Yaml(configuration = configuration).decodeFromString<BaseConnection>(text)
+        val connection = Yaml(configuration = configuration).decodeFromString<ConnectionConfig>(text)
         return connection.convert()
     }
 }
