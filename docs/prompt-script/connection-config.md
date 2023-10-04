@@ -2,7 +2,7 @@
 layout: default
 title: ConnectionConfig
 parent: Prompt Script
-nav_order: 16
+nav_order: 14
 permalink: /prompt-script/connection-config
 ---
 

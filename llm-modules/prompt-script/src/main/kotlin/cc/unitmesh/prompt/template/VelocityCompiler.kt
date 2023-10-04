@@ -8,9 +8,6 @@ import java.io.File
 import java.io.StringWriter
 
 
-/**
- * Velocity compiler will compile the Apache Velocity template.
- */
 class VelocityCompiler : PromptCompiler {
     private val velocityContext = VelocityContext()
 
