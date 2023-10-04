@@ -8,7 +8,7 @@ include(":server")
 
 include(":cocoa-core")
 
-include(":docs-helper")
+include(":docs-builder")
 
 include(":dsl:design")
 
