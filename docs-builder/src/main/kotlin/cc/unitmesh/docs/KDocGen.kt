@@ -70,14 +70,15 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
             KtNodeTypes.CLASS -> {
                 val clazz = node.psi as KtClass
                 val kDoc = clazz.findKDoc() ?: return docs
+                val docContent = DocContent.fromKDoc(kDoc, buildSample(clazz))
                 if (clazz.isSealed()) {
                     val children = extractSealedClassDoc(clazz)
-                    docs.add(TreeDoc(DocContent.fromKDoc(kDoc), children))
+                    docs.add(TreeDoc(docContent, children))
                 }
 
                 if (clazz.superTypeListEntries.isNotEmpty()) {
                     val superName = clazz.superTypeListEntries[0].typeAsUserType?.referencedName ?: ""
-                    val doc = DocContent.fromKDoc(kDoc)
+                    val doc = docContent
                     inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() }.plus(doc)
                 }
             }

@@ -1,5 +1,6 @@
 package cc.unitmesh.docs.base
 
+import cc.unitmesh.docs.kdoc.ClassSample
 import cc.unitmesh.docs.kdoc.KDocContent
 import org.jetbrains.kotlin.psi.KtElement
 
@@ -12,13 +13,15 @@ data class DocContent(
     val name: String,
     val content: String,
     val element: KtElement?,
+    val sampleCode: ClassSample? = null,
 ) {
     companion object {
-        fun fromKDoc(content: KDocContent): DocContent {
+        fun fromKDoc(content: KDocContent, sampleCode: ClassSample? = null): DocContent {
             return DocContent(
                 name = content.element?.name ?: "",
                 content = content.contentTag.getContent(),
-                element = content.element
+                element = content.element,
+                sampleCode = sampleCode
             )
         }
     }

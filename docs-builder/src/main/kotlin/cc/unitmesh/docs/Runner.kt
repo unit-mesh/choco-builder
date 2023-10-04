@@ -50,6 +50,15 @@ class Runner : CliktCommand() {
             children.forEach { child ->
                 output.append("## ${child.element?.name} \n\n")
                 output.append("${child.content}\n\n")
+
+                if(child.sampleCode != null) {
+                    child.sampleCode.samples.map { sample ->
+                        output.append("Sample: ${sample.name}\n\n")
+                        output.append("```kotlin\n")
+                        output.append("${sample.code}\n")
+                        output.append("```\n\n")
+                    }
+                }
             }
 
             root.element!!.name!! to output.toString()

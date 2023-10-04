@@ -3,18 +3,6 @@ package cc.unitmesh.prompt.validate
 /**
  * This class represents a string validation expression that evaluates to a boolean value, determining whether subsequent
  * statements should be executed or not.
- *
- * @param expression The string validation expression, which can include functions like "contains," "endsWith," and others.
- * @param input The input string against which the expression is evaluated to generate a result.
- *
- * Example usage:
- * ```kotlin
- * StringValidator("output contains \"hello\"", "hello world").validate() shouldBe true
- * StringValidator("output endsWith \"world\"", "hello world").validate() shouldBe true
- * StringValidator("output startsWith \"hello\"", "hello world").validate() shouldBe true
- * StringValidator("output == \"hello world\"", "hello world").validate() shouldBe true
- * StringValidator("output.length > 5", "hello, world").validate() shouldBe true
- * ```
  */
 class StringValidator(val expression: String, override val input: String) : Validator {
     override fun validate(): Boolean {
