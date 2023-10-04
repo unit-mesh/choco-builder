@@ -8,6 +8,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.FileASTNode
 import com.pinterest.ktlint.KtFileProcessor
 import org.jetbrains.kotlin.KtNodeTypes
+import org.jetbrains.kotlin.kdoc.psi.impl.KDocTag
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
@@ -15,13 +16,31 @@ import java.nio.file.Path
 
 class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
     private val processor: KtFileProcessor = KtFileProcessor()
+    private var inheritanceDoc = mutableMapOf<String, List<KDocContent>>()
+    private var classNodes = listOf<KtClass>()
+
     override fun execute(): List<TreeDoc> {
-        return processor
-            .process(rootDir)
+        val nodes = processor.process(rootDir)
+
+        val normalDoc = nodes
             .map {
                 extractRootNode(it)
             }.flatten()
+
+        val interfaceDocs = buildInterfaceDocs()
+
+        return normalDoc + interfaceDocs
     }
+
+    fun buildInterfaceDocs() = inheritanceDoc
+        .filter { it.value.isNotEmpty() }
+        .map { (name, docs) ->
+            val clazz = classNodes.find { it.name == name } ?: return@map null
+            val kDoc = clazz.findKDoc() ?: return@map null
+
+            TreeDoc(kDoc, docs)
+        }
+        .filterNotNull()
 
     fun extractRootNode(node: FileASTNode): List<TreeDoc> {
         return node.children()
@@ -36,14 +55,17 @@ class PromptScriptDocGen(private val rootDir: Path) : DocGenerator() {
         when (node.elementType) {
             KtNodeTypes.CLASS -> {
                 val clazz = node.psi as KtClass
+                classNodes = classNodes.plus(clazz)
+
                 val kDoc = clazz.findKDoc() ?: return docs
-                val children: List<KDocContent> = if (clazz.isSealed()) {
-                    extractSealedClassDoc(clazz)
-                } else {
-                    listOf()
+                if (clazz.isSealed()) {
+                    val children = extractSealedClassDoc(clazz)
+                    docs.add(TreeDoc(kDoc, children))
                 }
 
-                docs.add(TreeDoc(kDoc, children))
+                if (clazz.superTypeListEntries.isNotEmpty()) {
+                    inheritanceDoc.getOrPut(clazz.name ?: "") { listOf(kDoc) }.plus(kDoc)
+                }
             }
         }
 

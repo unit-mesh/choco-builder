@@ -2,6 +2,7 @@ package cc.unitmesh.docs;
 
 import com.pinterest.ktlint.Code
 import com.pinterest.ktlint.KtFileProcessor
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.nio.file.Path
@@ -59,5 +60,36 @@ sealed class StrategyItem {
 
         docs.size shouldBe 1
         docs[0].children.size shouldBe 2
+    }
+
+    @Test
+    fun should_handle_for_interface() {
+        val code = """
+/**
+ * Semantic is a interface for embedding text.
+ */               
+interface Semantic {
+    fun embed(input: String): List<Double>
+}
+
+/**
+ * STSemantic is a implementation of [Semantic] for Demo
+ */
+class STSemantic(): Semantic {
+    override fun embed(input: String): List<Double> {
+        return listOf()
+    }
+}
+
+""".trimIndent()
+
+        val processor = KtFileProcessor()
+        val astNode = processor.process(Code.fromSnippet(code))
+        val normalDocs = docGen.extractRootNode(astNode)
+        normalDocs.size shouldBe 0
+
+        val interfaceDocs = docGen.buildInterfaceDocs()
+        interfaceDocs.size shouldBe 1
+        interfaceDocs[0].children.size shouldBe 1
     }
 }
