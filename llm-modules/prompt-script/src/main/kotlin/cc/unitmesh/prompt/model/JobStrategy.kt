@@ -4,7 +4,21 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * JobStrategy is the job's strategy config.
+ * JobStrategy is the job's strategy config, which will be used for [cc.unitmesh.prompt.model.Job].
+ * The strategy can be a connection config or a repeat config or others.
+ * For example:
+
+ * ```yaml
+ * strategy:
+ *    - type: connection
+ *      value:
+ *        - type: range
+ *          key: temperature
+ *          range: 0.7~1.0
+ *          step: 0.1
+ *    - type: repeat
+ *      value: 3
+ * ```
  */
 @Serializable
 sealed class JobStrategy {
@@ -31,7 +45,7 @@ sealed class JobStrategy {
     /**
      * Repeat is a config of repeat times.
      * for example:
-     * 
+     *
      *```yaml
      * - type: repeat
      *   value: 3

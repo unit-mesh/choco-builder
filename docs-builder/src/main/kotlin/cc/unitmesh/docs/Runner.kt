@@ -56,9 +56,10 @@ class Runner : CliktCommand() {
             val rootFileName = root.element?.containingFile?.name ?: "unknown"
             println("rootFileName: $rootFileName")
 
-            output.append("## ${root.element?.name} \n\n> ${root.contentTag.getContent()}\n\n")
+            output.append("# ${root.element?.name} \n\n> ${root.contentTag.getContent()}\n\n")
             children.forEach { child ->
-                output.append("- ${child.element?.name}. ${child.contentTag.getContent()}\n")
+                output.append("## ${child.element?.name} \n\n")
+                output.append("${child.contentTag.getContent()}\n\n")
             }
 
             root.element!!.name!! to output.toString()
