@@ -93,6 +93,14 @@ class STSemantic(): Semantic {
     fun should_handle_the_sample_code() {
         val code = """
 /**
+ * Validator is an interface for validating result.
+ */
+interface Validator {
+    val input: String
+    fun validate(): Boolean
+}
+
+/**
  * JsonPath will validate is path is valid. If a path is invalid, will return false.
  */
 class JsonPathValidator(val expression: String, override val input: String) : Validator {
@@ -124,7 +132,16 @@ class JsonPathValidatorTest {
 """.trimIndent()
         val processor = KtFileProcessor()
         val astNode = processor.process(Code.fromSnippet(code))
-        val docs = docGen.extractNodes(listOf(astNode))
-        docs.size shouldBe 0
+        val extractNodes = docGen.extractNodes(listOf(astNode))
+        val element = extractNodes[0].children[0].element!!
+        val codeSample = docGen.buildSample(element)!!
+
+        codeSample.nodeName shouldBe "JsonPathValidator"
+        val samples = codeSample.samples
+        samples.size shouldBe  1
+        samples[0].name shouldBe "检验成功"
+        samples[0].content shouldBe ""
+        samples[0].code shouldBe """val expression = "${'$'}.name"
+val input = "{\"name\": \"John\", \"age\": 30}""""
     }
 }
