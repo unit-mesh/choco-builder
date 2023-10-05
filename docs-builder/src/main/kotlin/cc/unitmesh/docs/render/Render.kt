@@ -6,7 +6,6 @@ data class CustomJekyllFrontMatter(
     val navOrder: Int,
     val permalink: String,
 ) {
-
     fun toMarkdown(): String {
         return """
 ---
@@ -14,7 +13,7 @@ layout: default
 title: $title
 parent: $parent
 nav_order: $navOrder
-permalink: /prompt-script/$permalink
+permalink: $permalink
 ---
 
 """.trimIndent()

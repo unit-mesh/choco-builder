@@ -1,13 +1,8 @@
-package cc.unitmesh.docs.base
+package cc.unitmesh.docs.model
 
-import cc.unitmesh.docs.kdoc.ClassSample
 import cc.unitmesh.docs.kdoc.KDocContent
+import cc.unitmesh.docs.sample.ClassSample
 import org.jetbrains.kotlin.psi.KtElement
-
-data class TreeDoc(
-    val root: DocContent,
-    val children: List<DocContent>,
-)
 
 data class DocContent(
     val name: String,
@@ -24,12 +19,5 @@ data class DocContent(
                 sampleCode = sampleCode
             )
         }
-    }
-}
-
-abstract class DocGenerator {
-
-    open fun execute(): List<TreeDoc> {
-        return listOf()
     }
 }

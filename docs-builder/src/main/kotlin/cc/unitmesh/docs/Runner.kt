@@ -1,6 +1,6 @@
 package cc.unitmesh.docs
 
-import cc.unitmesh.docs.base.TreeDoc
+import cc.unitmesh.docs.model.RootDocContent
 import cc.unitmesh.docs.render.CustomJekyllFrontMatter
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.default
@@ -24,7 +24,7 @@ class Runner : CliktCommand() {
         val outputDir = rootDir.resolve("docs/prompt-script")
         var index = 10
         docs.forEach { (name, content) ->
-            val permalink = uppercaseToDash(name)
+            val permalink = "/prompt-script/" + uppercaseToDash(name)
             var output = CustomJekyllFrontMatter(name, "Prompt Script", index, permalink)
                 .toMarkdown()
 
@@ -38,20 +38,20 @@ class Runner : CliktCommand() {
     }
 
 
-    private fun renderDocs(treeDocs: List<TreeDoc>): Map<String, String> {
-        return treeDocs.associate { treeDoc ->
+    private fun renderDocs(rootDocContents: List<RootDocContent>): Map<String, String> {
+        return rootDocContents.associate { treeDoc ->
             val output = StringBuilder()
             val root = treeDoc.root
             val children = treeDoc.children
             val rootFileName = root.element?.containingFile?.name ?: "unknown"
-            println("rootFileName: $rootFileName")
+            println("doc root: $rootFileName")
 
             output.append("# ${root.element?.name} \n\n> ${root.content}\n\n")
             children.forEach { child ->
                 output.append("## ${child.element?.name} \n\n")
                 output.append("${child.content}\n\n")
 
-                if(child.sampleCode != null) {
+                if (child.sampleCode != null) {
                     child.sampleCode.samples.map { sample ->
                         output.append("Sample: ${sample.name}\n\n")
                         output.append("```kotlin\n")

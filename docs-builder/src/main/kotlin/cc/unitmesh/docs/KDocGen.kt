@@ -1,10 +1,10 @@
 package cc.unitmesh.docs
 
-import cc.unitmesh.docs.base.DocContent
-import cc.unitmesh.docs.base.DocGenerator
-import cc.unitmesh.docs.base.TreeDoc
-import cc.unitmesh.docs.kdoc.ClassSample
-import cc.unitmesh.docs.kdoc.FunctionSample
+import cc.unitmesh.docs.model.DocContent
+import cc.unitmesh.docs.model.DocGenerator
+import cc.unitmesh.docs.model.RootDocContent
+import cc.unitmesh.docs.sample.ClassSample
+import cc.unitmesh.docs.sample.FunctionSample
 import cc.unitmesh.docs.kdoc.findKDoc
 import com.intellij.lang.ASTNode
 import com.intellij.lang.FileASTNode
@@ -23,12 +23,12 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
     private var classNodes = listOf<KtClass>()
     private var fileNodes = listOf<FileASTNode>()
 
-    override fun execute(): List<TreeDoc> {
+    override fun execute(): List<RootDocContent> {
         fileNodes = processor.process(rootDir)
         return extractNodes(fileNodes)
     }
 
-    fun extractNodes(fileASTNodes: List<FileASTNode>): List<TreeDoc> {
+    fun extractNodes(fileASTNodes: List<FileASTNode>): List<RootDocContent> {
         classNodes = fileASTNodes.flatMap { node ->
             node.children()
                 .filter { it.elementType == KtNodeTypes.CLASS }
@@ -52,19 +52,19 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
             val clazz = ktClass ?: return@map null
             val kDoc = clazz.findKDoc() ?: return@map null
 
-            TreeDoc(DocContent.fromKDoc(kDoc), docs)
+            RootDocContent(DocContent.fromKDoc(kDoc), docs)
         }
         .filterNotNull()
 
-    private fun extractRootNode(node: FileASTNode): List<TreeDoc> {
+    private fun extractRootNode(node: FileASTNode): List<RootDocContent> {
         return node.children()
             .map(::extractChildNode)
             .flatten()
             .toList()
     }
 
-    private fun extractChildNode(node: ASTNode): MutableList<TreeDoc> {
-        val docs: MutableList<TreeDoc> = mutableListOf()
+    private fun extractChildNode(node: ASTNode): MutableList<RootDocContent> {
+        val docs: MutableList<RootDocContent> = mutableListOf()
 
         when (node.elementType) {
             KtNodeTypes.CLASS -> {
@@ -73,7 +73,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                 val docContent = DocContent.fromKDoc(kDoc, buildSample(clazz))
                 if (clazz.isSealed()) {
                     val children = extractSealedClassDoc(clazz)
-                    docs.add(TreeDoc(docContent, children))
+                    docs.add(RootDocContent(docContent, children))
                 }
 
                 if (clazz.superTypeListEntries.isNotEmpty()) {
