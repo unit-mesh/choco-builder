@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Prompt Strategy
-nav_order: 80
+title: Prompt Log
+nav_order: 90
 has_children: true
 permalink: /docs/prompt
 ---
