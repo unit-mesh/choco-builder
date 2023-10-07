@@ -8,7 +8,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import java.nio.file.Path
 
 class Runner : CliktCommand() {
-    private val dir by option("-d", "--dir", help = "The directory to process").default("..")
+    private val dir by option("-d", "--dir", help = "The directory to process").default(".")
 
     override fun run() {
         val rootDir = Path.of(dir).toAbsolutePath().normalize()
@@ -29,8 +29,8 @@ class Runner : CliktCommand() {
         val outputDir = rootDir.resolve("docs/rag-script")
         var index = 10
         docs.forEach { (name, content) ->
-            val permalink = "/rag-script/" + uppercaseToDash(name)
-            var output = CustomJekyllFrontMatter(name, "RAG Script", index, permalink)
+            val permalink = uppercaseToDash(name)
+            var output = CustomJekyllFrontMatter(name, "RAG Script", index, "/rag-script/$permalink")
                 .toMarkdown()
 
             output = "$output$warningLog"
@@ -53,8 +53,8 @@ class Runner : CliktCommand() {
         val outputDir = rootDir.resolve("docs/prompt-script")
         var index = 10
         docs.forEach { (name, content) ->
-            val permalink = "/prompt-script/" + uppercaseToDash(name)
-            var output = CustomJekyllFrontMatter(name, "Prompt Script", index, permalink)
+            val permalink = uppercaseToDash(name)
+            var output = CustomJekyllFrontMatter(name, "Prompt Script", index, "/prompt-script/$permalink")
                 .toMarkdown()
 
             output = "$output$warningLog"
