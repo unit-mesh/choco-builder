@@ -13,6 +13,35 @@ class Runner : CliktCommand() {
     override fun run() {
         val rootDir = Path.of(dir).toAbsolutePath().normalize()
 
+        processRagScript(rootDir)
+        processPromptScript(rootDir)
+    }
+
+    private val warningLog =
+        "\n{: .warning }\nAutomatically generated documentation; use the command `./gradlew :docs-builder:run` and update comments in the source code to reflect changes."
+
+    private fun processRagScript(rootDir: Path) {
+        // the rag script parts
+        val ragScriptDir = rootDir.resolve("rag-modules/rag-script")
+        val ragScriptDocs = KDocGen(ragScriptDir).execute()
+
+        val docs = renderDocs(ragScriptDocs)
+        val outputDir = rootDir.resolve("docs/rag-script")
+        var index = 10
+        docs.forEach { (name, content) ->
+            val permalink = "/rag-script/" + uppercaseToDash(name)
+            var output = CustomJekyllFrontMatter(name, "RAG Script", index, permalink)
+                .toMarkdown()
+
+            output = "$output$warningLog"
+
+            val outputFile = outputDir.resolve("$permalink.md")
+            outputFile.toFile().writeText(output + "\n\n" + content)
+            index += 1
+        }
+    }
+
+    private fun processPromptScript(rootDir: Path) {
         // the prompt script parts
         val connectionDir = rootDir.resolve("llm-modules/connection")
         val connectionDocs = KDocGen(connectionDir).execute()
@@ -28,8 +57,7 @@ class Runner : CliktCommand() {
             var output = CustomJekyllFrontMatter(name, "Prompt Script", index, permalink)
                 .toMarkdown()
 
-            output =
-                "$output\n{: .warning }\nAutomatically generated documentation; use the command `./gradlew :docs-builder:run` and update comments in the source code to reflect changes."
+            output = "$output$warningLog"
 
             val outputFile = outputDir.resolve("$permalink.md")
             outputFile.toFile().writeText(output + "\n\n" + content)

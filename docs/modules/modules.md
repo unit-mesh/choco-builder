@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Modules
-nav_order: 30
+nav_order: 55
 has_children: true
 permalink: /modules
 ---
