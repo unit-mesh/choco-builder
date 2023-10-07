@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Semantic 搜索：Analyze 阶段
-parent: Prompt Strategy
+parent: Prompt Sample
 nav_order: 31
 ---
 

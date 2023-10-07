@@ -1,7 +1,7 @@
 ---
 layout: default
 title: UI 设计 - 总览
-parent: Prompt Strategy
+parent: Prompt Sample
 nav_order: 0
 ---
 
