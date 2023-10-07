@@ -120,10 +120,22 @@ rag {
 
 `document` function for provide document split for indexing, will auto-detect a file type.
 support: txt, pdf, doc, docx, xls, xlsx, ppt, pptx
+for example:
+```kotlin
+// 从文件中读取文档
+val document = document("filename.txt")
+// 将文档切割成 chunk
+val chunks = document.split()
+```
 
 ## directory 
 
 Directory is a function for indexing data for the workflow.
+for example:
+```kotlin
+val docs = directory("docs")
+val chunks = document.split()
+```
 
 ## code 
 
@@ -132,6 +144,11 @@ TODO: `code` function for provide code split for indexing.
 ## text 
 
 `text` function for provide text split for indexing.
+for example:
+
+```kotlin
+val chunks = text("fun main(args: Array<String>) {\n    println(\"Hello, World!\")\n}").split()
+```
 
 ## prepare 
 
@@ -139,11 +156,31 @@ Prepare is a function for preparing data for the workflow. You don't need to cal
 
 ## indexing 
 
-Indexing is a function for indexing data for the workflow. You don't need to call it as block.
+Indexing is a function block for indexing data for the workflow. You don't need to call it as block.
+for example:
+```kotlin
+indexing {
+    // 从文件中读取文档
+    val document = document("filename.txt")
+    // 将文档切割成 chunk
+    val chunks = document.split()
+    // 建立索引
+    store.indexing(chunks)
+}
+```
 
 ## querying 
 
-Querying is a function for querying data for the workflow. You don't need to call it as block.
+Querying is a function block for querying data for the workflow. You don't need to call it as block.
+for example:
+```kotlin
+querying {
+    // 查询
+    store.findRelevant("workflow dsl design ").lowInMiddle().also {
+        println(it)
+    }
+}
+```
 
 ## problem 
 

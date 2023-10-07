@@ -22,17 +22,29 @@ class Workflow(val name: String) {
     }
 
     /**
-     * Provider for LLM Connector, like OpenAI, Azure OpenAI, etc.
+     * Provider for LLM Connector, like OpenAI, etc.
+     * for example:
+     * ```kotlin
+     * llm = LlmConnector(LlmType.OpenAI)
+     * ```
      */
     var llm: LlmConnector = LlmConnector(LlmType.OpenAI, "", "")
 
     /**
      * Provider for vector store, like Elasticsearch, Milvus, InMemory, etc.
+     * usage:
+     * ```kotlin
+     * store = Store(StoreType.Memory)
+     * ```
      */
     var store: Store = Store(StoreType.MemoryEnglish)
 
     /**
      * Provider for text embedding, like OpenAI, SentenceTransformers, etc.
+     * for example:
+     * ```kotlin
+     * embedding = EmbeddingEngine(EngineType.SentenceTransformers)
+     * ```
      */
     var embedding: EmbeddingEngine = EmbeddingEngine(EngineType.EnglishTextEmbedding)
         set(value) {
@@ -45,6 +57,13 @@ class Workflow(val name: String) {
     /**
      * `document` function for provide document split for indexing, will auto-detect a file type.
      * support: txt, pdf, doc, docx, xls, xlsx, ppt, pptx
+     * for example:
+     * ```kotlin
+     * // 从文件中读取文档
+     * val document = document("filename.txt")
+     * // 将文档切割成 chunk
+     * val chunks = document.split()
+     * ```
      */
     fun document(file: String): DocumentDsl {
         return DocumentDsl.byFile(file)
@@ -52,6 +71,11 @@ class Workflow(val name: String) {
 
     /**
      * Directory is a function for indexing data for the workflow.
+     * for example:
+     * ```kotlin
+     * val docs = directory("docs")
+     * val chunks = document.split()
+     * ```
      */
     fun directory(directory: String): DocumentDsl {
         return DocumentDsl.byDir(directory)
@@ -66,6 +90,11 @@ class Workflow(val name: String) {
 
     /**
      * `text` function for provide text split for indexing.
+     * for example:
+     *
+     * ```kotlin
+     * val chunks = text("fun main(args: Array<String>) {\n    println(\"Hello, World!\")\n}").split()
+     * ```
      */
     fun text(text: String): Text {
         return Text(text)
@@ -79,7 +108,18 @@ class Workflow(val name: String) {
     }
 
     /**
-     * Indexing is a function for indexing data for the workflow. You don't need to call it as block.
+     * Indexing is a function block for indexing data for the workflow. You don't need to call it as block.
+     * for example:
+     * ```kotlin
+     * indexing {
+     *     // 从文件中读取文档
+     *     val document = document("filename.txt")
+     *     // 将文档切割成 chunk
+     *     val chunks = document.split()
+     *     // 建立索引
+     *     store.indexing(chunks)
+     * }
+     * ```
      */
     fun indexing(function: () -> Unit) {
         // make sure embedding is updated
@@ -88,7 +128,16 @@ class Workflow(val name: String) {
     }
 
     /**
-     * Querying is a function for querying data for the workflow. You don't need to call it as block.
+     * Querying is a function block for querying data for the workflow. You don't need to call it as block.
+     * for example:
+     * ```kotlin
+     * querying {
+     *     // 查询
+     *     store.findRelevant("workflow dsl design ").lowInMiddle().also {
+     *         println(it)
+     *     }
+     * }
+     * ```
      */
     fun querying(function: () -> Unit) {
         function()
@@ -124,6 +173,18 @@ class Workflow(val name: String) {
 
 /**
  * rag is a function block, it will return a Workflow object.
+ * for example:
+ * ```kotlin
+ *  rag {
+ *    indexing {
+ *        ...
+ *    }
+ *
+ *    querying {
+ *        ...
+ *    }
+ *}
+ * ```
  */
 fun rag(name: String, init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow(name)
