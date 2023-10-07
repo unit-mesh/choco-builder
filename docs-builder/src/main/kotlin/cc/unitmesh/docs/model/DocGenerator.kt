@@ -41,11 +41,9 @@ abstract class DocGenerator {
             if (startLine == -1 || endLine == -1) {
                 null
             } else {
-                val linesResults = lines.subList(startLine + 1, endLine).joinToString("\n") {
-                    it.replaceFirst(Regex("^\\s+"), "")
-                }
+                val linesResults = lines.subList(startLine + 1, endLine).joinToString("\n")
 
-                sampleCodeValue.code = linesResults
+                sampleCodeValue.code = linesResults.trimIndent()
                 sampleCodeValue
             }
         }

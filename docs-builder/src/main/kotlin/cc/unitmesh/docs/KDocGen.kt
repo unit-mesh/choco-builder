@@ -9,6 +9,7 @@ import com.intellij.lang.FileASTNode
 import com.pinterest.ktlint.KtFileProcessor
 import org.jetbrains.kotlin.KtNodeTypes
 import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtFunction
 import org.jetbrains.kotlin.psi.psiUtil.children
 import java.nio.file.Path
 
@@ -70,6 +71,15 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                     docs.add(RootDocContent(docContent, extractSealedClassDoc(clazz)))
                 }
 
+                // filter annotaion @RagScript
+                if (clazz.annotationEntries.isNotEmpty()) {
+                    val annotation = clazz.annotationEntries[0]
+                    if (annotation.text.contains("@RagScript")) {
+                        val children: List<DocContent> = extractFunctions(clazz.body?.node?.children()?.toList() ?: listOf())
+                        docs.add(RootDocContent(docContent, children))
+                    }
+                }
+
                 if (clazz.superTypeListEntries.isNotEmpty()) {
                     val superName = clazz.superTypeListEntries[0].typeAsUserType?.referencedName ?: ""
                     inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() } + docContent
@@ -78,6 +88,19 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         }
 
         return docs
+    }
+
+    private fun extractFunctions(children: List<ASTNode>): List<DocContent> {
+        if (children.isEmpty()) return listOf()
+
+        return children
+            .filter { it.elementType == KtNodeTypes.FUN }
+            .mapNotNull { it.psi as? KtFunction }
+            .mapNotNull { function ->
+                val kDoc = function.findKDoc() ?: return@mapNotNull null
+                DocContent.fromKDoc(kDoc, buildSample(function))
+            }
+            .toList()
     }
 
     private fun extractSealedClassDoc(clazz: KtClass): List<DocContent> {

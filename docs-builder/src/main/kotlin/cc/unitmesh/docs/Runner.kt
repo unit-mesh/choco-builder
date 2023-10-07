@@ -14,7 +14,7 @@ class Runner : CliktCommand() {
         val rootDir = Path.of(dir).toAbsolutePath().normalize()
 
         processRagScript(rootDir)
-//        processPromptScript(rootDir)
+        processPromptScript(rootDir)
     }
 
     private val warningLog =
@@ -71,10 +71,20 @@ class Runner : CliktCommand() {
             val output = StringBuilder()
             val root = treeDoc.root
             val children = treeDoc.children
+            output.append("# ${root.element?.name} \n\n> ${root.content}\n\n")
+
             val rootFileName = root.element?.containingFile?.name ?: "unknown"
             println("doc root: $rootFileName")
 
-            output.append("# ${root.element?.name} \n\n> ${root.content}\n\n")
+            if (root.sampleCode != null) {
+                root.sampleCode.samples.map { sample ->
+                    output.append("Sample: ${sample.name}\n\n")
+                    output.append("```kotlin\n")
+                    output.append("${sample.code}\n")
+                    output.append("```\n\n")
+                }
+            }
+
             children.forEach { child ->
                 output.append("## ${child.element?.name} \n\n")
                 output.append("${child.content}\n\n")
