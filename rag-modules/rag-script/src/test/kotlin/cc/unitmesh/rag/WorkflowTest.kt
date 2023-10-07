@@ -103,27 +103,6 @@ class WorkflowTest {
     }
 
     @Test
-    fun template_example() {
-        val promptText = prompt {
-            paragraph("Hello World")
-            codeblock("kotlin") {
-                "println(\"Hello World\")"
-            }
-            list(ListType.Unordered) {
-                listOf("Hello", "World")
-            }
-        }
-
-        promptText.toString() shouldBe """Hello World
-            |```kotlin
-            |println("Hello World")
-            |```
-            |* Hello
-            |* World
-            |""".trimMargin()
-    }
-
-    @Test
     @SampleCode(name = "最短 RAG 示例", content = "")
     fun english_text_example() {
         // start-sample

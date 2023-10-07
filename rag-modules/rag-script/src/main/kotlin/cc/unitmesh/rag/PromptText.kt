@@ -1,13 +1,16 @@
 package cc.unitmesh.rag
 
+import cc.unitmesh.rag.base.RagScript
+
 /**
- * PromptScript is a DSL for writing a prompt, will generate Markdown text.
+ * PromptText is a DSL for writing a prompt, will generate Markdown text.
  * - codeblock, will generate a codeblock starts with ```language
  * - paragraph, will generate a paragraph
  * - list, will generate a list
  * - linebreak, will generate a linebreak
  */
-class PromptScript {
+@RagScript
+class PromptText {
     private val sb = StringBuilder()
     fun codeblock(language: String, function: () -> String): String {
         val sb = StringBuilder()

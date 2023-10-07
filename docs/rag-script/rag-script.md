@@ -1,6 +1,7 @@
 ---
 layout: default
 title: RAG Script
+has_children: true
 nav_order: 35
 ---
 

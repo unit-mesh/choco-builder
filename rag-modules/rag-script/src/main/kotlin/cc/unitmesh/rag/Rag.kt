@@ -67,8 +67,8 @@ class Workflow(val name: String) {
     /**
      * `text` function for provide text split for indexing.
      */
-    fun text(text: String): TextDsl {
-        return TextDsl(text)
+    fun text(text: String): Text {
+        return Text(text)
     }
 
     /**
@@ -115,8 +115,8 @@ class Workflow(val name: String) {
         function()
     }
 
-    fun prompt(init: PromptScript.() -> Unit): PromptScript {
-        val prompt = PromptScript()
+    fun prompt(init: PromptText.() -> Unit): PromptText {
+        val prompt = PromptText()
         prompt.init()
         return prompt
     }
@@ -140,8 +140,8 @@ fun rag(init: Workflow.() -> Unit): Workflow {
     return workflow
 }
 
-fun prompt(init: PromptScript.() -> Unit): PromptScript {
-    val prompt = PromptScript()
+fun prompt(init: PromptText.() -> Unit): PromptText {
+    val prompt = PromptText()
     prompt.init()
     return prompt
 }
