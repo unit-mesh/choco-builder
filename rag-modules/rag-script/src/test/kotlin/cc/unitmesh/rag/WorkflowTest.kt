@@ -1,6 +1,7 @@
 package cc.unitmesh.rag
 
 import cc.unitmesh.cf.code.CodeSplitter
+import cc.unitmesh.docs.SampleCode
 import cc.unitmesh.rag.document.Document
 import chapi.domain.core.CodeDataStruct
 import io.kotest.matchers.shouldBe
@@ -10,10 +11,11 @@ import java.io.File
 import kotlin.test.Ignore
 
 class WorkflowTest {
-
     @Test
     @Ignore
+    @SampleCode(name = "代码语义化搜索", content = "")
     fun index_and_query() {
+        // start-sample
         rag {
             val apiKey = env?.get("OPENAI_API_KEY") ?: ""
             val apiHost = env?.get("OPENAI_API_HOST") ?: ""
@@ -64,56 +66,15 @@ class WorkflowTest {
                 }
             }
         }
+        // end-sample
     }
+
 
     @Test
     @Ignore
-    fun index_and_query_simple() {
-        rag("code") {
-            llm = LlmConnector(LlmType.OpenAI)
-            embedding = EmbeddingEngine(EngineType.SentenceTransformers)
-            store = Store(StoreType.Elasticsearch)
-
-            indexing {
-                val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
-                Exec.runJar(
-                    Http.download(cliUrl), args = listOf(
-                        "--language", "Kotlin",
-                        "--output", "json",
-                        "--path", ".",
-                        "--with-function-code"
-                    )
-                )
-
-                val chunks: List<Document> =
-                    Json.decodeFromString<List<CodeDataStruct>>(File("0_codes.json").readText())
-                        .map {
-                            CodeSplitter().split(it)
-                        }.flatten()
-
-                store.indexing(chunks)
-            }
-
-            querying {
-                val results = store.findRelevant("workflow dsl design ")
-                val sorted = results.lowInMiddle()
-
-                llm.completion {
-                    """根据用户的问题，总结如下的代码
-                        |${sorted.joinToString("\n") { "${it.score} ${it.embedded.text}" }}
-                        |
-                        |用户的问题是：如何设计一个 DSL 的 workflow
-                    """.trimMargin()
-                }.also {
-                    println(it)
-                }
-            }
-        }
-    }
-
-    @Test
-    @Ignore
+    @SampleCode(name = "最简洁的 RAG 示例", content = "")
     fun document_handle() {
+        // start-sample
         rag("code") {
             // 使用 OpenAI 作为 LLM 引擎
             llm = LlmConnector(LlmType.OpenAI)
@@ -138,6 +99,7 @@ class WorkflowTest {
                 }
             }
         }
+        // end-sample
     }
 
     @Test
@@ -162,7 +124,9 @@ class WorkflowTest {
     }
 
     @Test
+    @SampleCode(name = "最短 RAG 示例", content = "")
     fun english_text_example() {
+        // start-sample
         rag {
             indexing {
                 val chunks = text("fun main(args: Array<String>) {\n    println(\"Hello, World!\")\n}").split()
@@ -175,6 +139,7 @@ class WorkflowTest {
                 }
             }
         }
+        // end-sample
     }
 
     @Test

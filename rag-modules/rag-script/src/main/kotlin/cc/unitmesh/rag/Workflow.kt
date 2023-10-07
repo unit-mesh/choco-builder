@@ -42,7 +42,10 @@ class Workflow(val name: String) {
 
     private var dsl: Dsl? = null;
 
-
+    /**
+     * `document` function for provide document split for indexing, will auto-detect a file type.
+     * support: txt, pdf, doc, docx, xls, xlsx, ppt, pptx
+     */
     fun document(file: String): DocumentDsl {
         return DocumentDsl.byFile(file)
     }
@@ -54,10 +57,16 @@ class Workflow(val name: String) {
         return DocumentDsl.byDir(directory)
     }
 
+    /**
+     * TODO: `code` function for provide code split for indexing.
+     */
     fun code(file: String, language: String = "Kotlin"): CodeDsl {
         return CodeDsl(file)
     }
 
+    /**
+     * `text` function for provide text split for indexing.
+     */
     fun text(text: String): TextDsl {
         return TextDsl(text)
     }
@@ -113,12 +122,18 @@ class Workflow(val name: String) {
     }
 }
 
+/**
+ * rag is a function block, it will return a Workflow object.
+ */
 fun rag(name: String, init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow(name)
     workflow.init()
     return workflow
 }
 
+/**
+ * rag is a function block, it will return a Workflow object.
+ */
 fun rag(init: Workflow.() -> Unit): Workflow {
     val workflow = Workflow("scripting")
     workflow.init()

@@ -9,6 +9,9 @@ import cc.unitmesh.rag.document.DocumentType
 import cc.unitmesh.rag.store.EmbeddingMatch
 import java.io.File
 
+/**
+ * Document DSL for indexing document.
+ */
 class DocumentDsl(val path: String, val isDir: Boolean) {
     fun split(): List<Document> {
         val file = File(path)
@@ -41,8 +44,7 @@ class DocumentDsl(val path: String, val isDir: Boolean) {
         }
 
         fun parserByExt(extension: String): DocumentParser {
-            val documentType = DocumentType.of(extension)
-            val parser = when (documentType) {
+            return when (val documentType = DocumentType.of(extension)) {
                 DocumentType.TXT -> TextDocumentParser(documentType)
                 DocumentType.PDF -> PdfDocumentParser()
                 DocumentType.HTML -> TextDocumentParser(documentType)
@@ -50,7 +52,6 @@ class DocumentDsl(val path: String, val isDir: Boolean) {
                 DocumentType.XLS -> MsOfficeDocumentParser(documentType)
                 DocumentType.PPT -> MsOfficeDocumentParser(documentType)
             }
-            return parser
         }
     }
 }

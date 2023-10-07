@@ -14,7 +14,7 @@ class Runner : CliktCommand() {
         val rootDir = Path.of(dir).toAbsolutePath().normalize()
 
         processRagScript(rootDir)
-        processPromptScript(rootDir)
+//        processPromptScript(rootDir)
     }
 
     private val warningLog =
