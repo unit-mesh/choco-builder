@@ -67,14 +67,12 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                 val kDoc = clazz.findKDoc() ?: return docs
                 val docContent = DocContent.fromKDoc(kDoc, buildSample(clazz))
                 if (clazz.isSealed()) {
-                    val children = extractSealedClassDoc(clazz)
-                    docs.add(RootDocContent(docContent, children))
+                    docs.add(RootDocContent(docContent, extractSealedClassDoc(clazz)))
                 }
 
                 if (clazz.superTypeListEntries.isNotEmpty()) {
                     val superName = clazz.superTypeListEntries[0].typeAsUserType?.referencedName ?: ""
-                    val doc = docContent
-                    inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() }.plus(doc)
+                    inheritanceDoc[superName] = inheritanceDoc.getOrPut(superName) { listOf() } + docContent
                 }
             }
         }
@@ -89,8 +87,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
         body.node.children().forEach { astNode ->
             when (astNode.elementType) {
                 KtNodeTypes.CLASS -> {
-                    val child = astNode.psi as KtClass
-                    child.findKDoc()?.let {
+                    (astNode.psi as KtClass).findKDoc()?.let {
                         docs = docs.plus(DocContent.fromKDoc(it))
                     }
                 }
