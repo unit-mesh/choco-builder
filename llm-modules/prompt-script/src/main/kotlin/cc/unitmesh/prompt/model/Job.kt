@@ -22,35 +22,15 @@ data class Job(
     val validate: List<ValidateRule> = listOf(),
 ) {
     fun buildValidators(input: String): List<Validator> {
-        val validators: List<Validator> = validate.map {
+        return validate.map {
             when (it) {
-                is ValidateRule.ExtTool -> {
-                    ExtToolValidator(it.value, input)
-                }
-
-                is ValidateRule.Json -> {
-                    JsonValidator(input)
-                }
-
-                is ValidateRule.JsonPath -> {
-                    JsonPathValidator(it.value, input)
-                }
-
-                is ValidateRule.MarkdownCodeBlock -> {
-                    MarkdownCodeBlockValidator(input)
-                }
-
-                is ValidateRule.Regex -> {
-                    RegexValidator(it.value, input)
-                }
-
-                is ValidateRule.StringRule -> {
-                    StringValidator(it.value, input)
-                }
+                is ValidateRule.ExtTool -> ExtToolValidator(it.value, input)
+                is ValidateRule.Json -> JsonValidator(input)
+                is ValidateRule.JsonPath -> JsonPathValidator(it.value, input)
+                is ValidateRule.MarkdownCodeBlock -> MarkdownCodeBlockValidator(input)
+                is ValidateRule.Regex -> RegexValidator(it.value, input)
+                is ValidateRule.StringRule -> StringValidator(it.value, input)
             }
         }
-
-
-        return validators
     }
 }
