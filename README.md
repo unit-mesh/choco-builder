@@ -14,7 +14,7 @@
 
 ## What is Chocolate Factory?
 
-> Chocolate Factory 是一款开源的 AI Agent 开发引擎/数据框架，旨在帮助您轻松打造强大的 SDLC + LLM 生成助手。无论您是需要生成前端页面、后端
+> Chocolate Factory 是一款开源的 AI Agent 开发引擎/数据框架（Toolkit），旨在帮助您轻松打造强大的 LLM 助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
 ## QuickStart
@@ -31,6 +31,7 @@ docker-compose up
 
 ```kotlin
 @file:DependsOn("cc.unitmesh:rag-script:0.3.4")
+
 import cc.unitmesh.rag.*
 
 rag {
