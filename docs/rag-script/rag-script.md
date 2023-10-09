@@ -60,7 +60,7 @@ rag {
 - 生成问题，并使用 LLM 生成答案
 
 ```kotlin
-@file:DependsOn("cc.unitmesh:rag-script:0.3.3")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.6")
 
 import java.io.File
 import cc.unitmesh.cf.code.CodeSplitter
@@ -81,7 +81,7 @@ rag {
         // Data Loader
         val cliUrl = "https://github.com/archguard/archguard/releases/download/v2.0.7/scanner_cli-2.0.7-all.jar"
         val file = Http.download(cliUrl)
-        Exec().runJar(
+        Exec.runJar(
             file, args = listOf(
                 "--language", "Kotlin",
                 "--output", "json",

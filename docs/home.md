@@ -52,7 +52,7 @@ rag {
 }
 ```
 
-更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory/tree/master/examples/ragscripts)
+更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory/tree/master/examples/rag-script)
 
 方式 3：集成到 JVM 项目中
 

@@ -1,4 +1,4 @@
-@file:DependsOn("cc.unitmesh:rag-script:0.3.4")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.6")
 
 import cc.unitmesh.rag.*
 

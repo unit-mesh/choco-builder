@@ -1,4 +1,4 @@
-@file:DependsOn("cc.unitmesh:rag-script:0.3.4")
+@file:DependsOn("cc.unitmesh:rag-script:0.3.6")
 
 import java.io.File
 import cc.unitmesh.cf.code.CodeSplitter
@@ -21,7 +21,7 @@ rag {
 
         var outputFile = File("0_codes.json");
         if (!outputFile.exists()) {
-            outputFile = Exec().runJar(
+            outputFile = Exec.runJar(
                 file, args = listOf(
                     "--language", "Kotlin",
                     "--output", "json",
