@@ -53,7 +53,6 @@ configure(
             - project(":server")
             - project(":rag-modules")
             - project(":llm-modules")
-            - project(":code")
             - project(":dsl")
 ) {
     apply(plugin = "java-library")

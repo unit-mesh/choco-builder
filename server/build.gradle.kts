@@ -26,10 +26,10 @@ tasks.withType<BootJar> {
 dependencies {
     implementation(projects.llmModules.openai)
     implementation(projects.llmModules.sentenceTransformers)
+    implementation(projects.llmModules.codeSplitter)
     implementation(projects.cocoaCore)
     implementation(projects.dsl.design)
-    implementation(projects.code.interpreter)
-    implementation(projects.code.codeSplitter)
+    implementation(projects.llmTools.interpreter)
     implementation(projects.ragModules.storeElasticsearch)
 
     // kotlin dependencies
