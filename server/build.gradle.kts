@@ -71,9 +71,6 @@ dependencies {
 
     implementation(libs.velocity.engine)
 
-    // load config from .env file for testing
-    testImplementation(libs.dotenv.kotlin)
-
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
