@@ -6,19 +6,14 @@ nav_order: 1
 permalink: /dsl/design
 ---
 
-based on: [https://github.com/phodal/design](https://github.com/phodal/design)
+tech stacks: Antlr4, based on: [https://github.com/phodal/design](https://github.com/phodal/design)
 
-tech stacks: Antlr4
+- 语法文件：[Design.g4](https://github.com/unit-mesh/chocolate-factory/blob/master/dsl/design/src/main/antlr/Design.g4)
+- 渲染组件：[design-dsl-render.tsx](https://github.com/unit-mesh/chocolate-factory/blob/master/choc-ui/components/dsl/design-dsl-render.tsx)
 
-refs:
+# Design 语法
 
-- Apple's [Understanding Auto Layout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
-- [AutoLayout.js](https://github.com/IjzerenHein/autolayout.js)
-- [Sketch-n-Sketch](https://github.com/ravichugh/sketch-n-sketch)
-
-## DSLs
-
-Elements
+## 组件声明
 
 ```design
 page HomePage {
@@ -45,7 +40,7 @@ component BlogList {
 }
 ```
 
-Layout Examples:
+## Layout
 
 ```design
 Layout Navigation {
@@ -55,7 +50,7 @@ Layout Navigation {
 }
 ```
 
-Task Flows / User Flows Example
+## 用户交互流
 
 ```design
 flow login {
@@ -74,7 +69,7 @@ flow login {
 }
 ```
 
-Library Defines Examples
+## 库/基础元素定义
 
 ```design
 library FontSize {
@@ -105,3 +100,12 @@ library Button {
     ]
 }
 ```
+
+# 其它相关资料
+
+
+refs:
+
+- Apple's [Understanding Auto Layout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
+- [AutoLayout.js](https://github.com/IjzerenHein/autolayout.js)
+- [Sketch-n-Sketch](https://github.com/ravichugh/sketch-n-sketch)
