@@ -16,15 +16,11 @@ import java.time.Duration
 class OpenAiProvider(var apiKey: String, var apiHost: String? = null) : LlmProvider {
     override var temperature = 0.0
 
-    private val timeout = Duration.ofSeconds(600)
-
-    var totalTokens = 0L
-
     private val openai: OpenAiService by lazy {
         // for proxy
         if (apiHost != null) {
             val mapper = OpenAiService.defaultObjectMapper()
-            val client = OpenAiService.defaultClient(apiKey, timeout)
+            val client = OpenAiService.defaultClient(apiKey, Duration.ZERO)
 
             val host = apiHost!!.removeSurrounding("\"")
 
