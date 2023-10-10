@@ -1,4 +1,72 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.4...v) (2023-09-22)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.7...v) (2023-10-10)
+
+
+
+## [0.3.7](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.6...v0.3.7) (2023-10-10)
+
+
+### Bug Fixes
+
+* fix filename example error ([a988a2e](https://github.com/unit-mesh/chocolate-factory/commit/a988a2ef8a17a766f3adb1120da993b5228533de))
+* fix not follow readme ([2878c22](https://github.com/unit-mesh/chocolate-factory/commit/2878c221a8783fb6aea1ccb67d3be07428ae8cc2))
+* fix rename issues ([33f9b48](https://github.com/unit-mesh/chocolate-factory/commit/33f9b481bd23227224ca837f170ac7a1582e4e33))
+* fix server timeout issue ([42c8026](https://github.com/unit-mesh/chocolate-factory/commit/42c802670c4b34f4ce1e478d6354c2ea376a8bb9))
+* fix tests ([f747cc7](https://github.com/unit-mesh/chocolate-factory/commit/f747cc7817f89e28204b10b9b9110c5930404f3e))
+* fix tets ([03b9442](https://github.com/unit-mesh/chocolate-factory/commit/03b9442f4fa6e29bb57cdb501f993be8c9bf08e5))
+* update timeout config ([8c8c6b9](https://github.com/unit-mesh/chocolate-factory/commit/8c8c6b95439d6ea0db971c1a9fdf2625a2ced133))
+* **windows:** disbale for Windows ([8e2dd01](https://github.com/unit-mesh/chocolate-factory/commit/8e2dd01bd70e1c34a9414351abb4fb14c1cc1548))
+
+
+### Features
+
+* **doc:** init basic code scanner ([3e0afbf](https://github.com/unit-mesh/chocolate-factory/commit/3e0afbfb04ba5628029f8ecdfbb2b674137b0117))
+* **doc:** init first version findoc ([1d87258](https://github.com/unit-mesh/chocolate-factory/commit/1d87258545421d3fd3d5c41b0835f853d49a15a2))
+* **docs:** add first version output ([aa109d3](https://github.com/unit-mesh/chocolate-factory/commit/aa109d342768f6426bb9fcc528b50c6bde71876e))
+* **docs:** add for interface support ([63ae794](https://github.com/unit-mesh/chocolate-factory/commit/63ae7941a7c1bb0f0ce420c244cc34d6c234ef27))
+* init first version docs ([09113db](https://github.com/unit-mesh/chocolate-factory/commit/09113db3242cd700b88e0e8292041b2c541667b2))
+
+
+
+## [0.3.6](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.5...v0.3.6) (2023-10-01)
+
+
+### Bug Fixes
+
+* fix imports ([d7ad0b5](https://github.com/unit-mesh/chocolate-factory/commit/d7ad0b5ea69b49669e3e5f5c31645f46d3aa22a7))
+
+
+### Features
+
+* add log for repeat ([4f3d7ce](https://github.com/unit-mesh/chocolate-factory/commit/4f3d7cebbb339d43c04524bfe220cefa8ffdca75))
+* init basic temperature support ([a0ceb7f](https://github.com/unit-mesh/chocolate-factory/commit/a0ceb7fa2a8c58d7351358708b03e47fd90155c3))
+* update for job strategy ([214fd7e](https://github.com/unit-mesh/chocolate-factory/commit/214fd7e80cda5b8b2d084cec36872e618034c780))
+
+
+
+## [0.3.5](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.4...v0.3.5) (2023-09-30)
+
+
+### Bug Fixes
+
+* fix empty item issues ([18df5c5](https://github.com/unit-mesh/chocolate-factory/commit/18df5c5504f04599cc2d4f1ae584cca53df360b5))
+* fix not convert issues ([fcf8168](https://github.com/unit-mesh/chocolate-factory/commit/fcf81688a55fa99f509adfd9c2f5c125b70a1481))
+* ignore tests ([f6904db](https://github.com/unit-mesh/chocolate-factory/commit/f6904db8c5b8d16276bbd62329a7645b36d835af))
+
+
+### Features
+
+* add handle for single string ([0bc695b](https://github.com/unit-mesh/chocolate-factory/commit/0bc695b53093b8fbbb5b2c9890047aedef8e7516))
+* add simple float eval ([68a635a](https://github.com/unit-mesh/chocolate-factory/commit/68a635ae26740fb19395764414dafb0affac9a68))
+* **doc:** init directory for project ([d1717ae](https://github.com/unit-mesh/chocolate-factory/commit/d1717ae15177b74655e8b33f520e0dccfff43523))
+* init code splitter ([d60145f](https://github.com/unit-mesh/chocolate-factory/commit/d60145f383eff2db458dbe7258774f95cabaedbd))
+* init first version fro template ([6c3e242](https://github.com/unit-mesh/chocolate-factory/commit/6c3e242287cfd43783f4d25f4ad4b6add9b0e928))
+* make for intergrations ([619bbe0](https://github.com/unit-mesh/chocolate-factory/commit/619bbe0e3cb5373b7fa31004958726896270e284))
+* **prompt:** add clikt as application in port ([0708825](https://github.com/unit-mesh/chocolate-factory/commit/0708825608ee20f16dfd947c562f6f183dced3e8))
+* **prompt:** enable for write to file ([d0e2bca](https://github.com/unit-mesh/chocolate-factory/commit/d0e2bca50bba0d660cd58ea68543db534e35eb80))
+* **prompt:** init basic dsl ([328355e](https://github.com/unit-mesh/chocolate-factory/commit/328355e1afe2f1ab54bb77f901b525fbfacaf650))
+* **prompt:** init compile script parser ([f175799](https://github.com/unit-mesh/chocolate-factory/commit/f175799c1c106c249accb3e0b57764d71f16992f))
+* **prompt:** init first version prompts ([9aeb54a](https://github.com/unit-mesh/chocolate-factory/commit/9aeb54a1a6d24f9d30e8609c455501d4a0ae6f01))
+* **range:** add simple functions ([4eac995](https://github.com/unit-mesh/chocolate-factory/commit/4eac995cafbf7633a476c66a6d1beb3ce628c948))
 
 
 
