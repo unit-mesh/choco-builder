@@ -33,11 +33,11 @@ dependencies {
     implementation(projects.ragModules.storeElasticsearch)
 
     // kotlin dependencies
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation(kotlin("reflect"))
     implementation(libs.serialization.json)
     implementation(libs.coroutines.core)
 
-    implementation("io.reactivex.rxjava3:rxjava:3.1.7")
+    implementation(libs.rxjava3)
 
     // spring dependencies
     implementation("org.springframework.boot:spring-boot-starter")
@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.bundles.jackson)
 
     // data convert
-    implementation(kotlin("reflect"))
     implementation(libs.reflections)
 
     // database dependencies
