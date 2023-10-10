@@ -21,11 +21,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody
 import java.io.IOException
 
 
-@Controller
+@RestController
 class ChatController(
     val feFlow: FEWorkflow,
     val codeFlow: CodeInterpreterWorkflow,

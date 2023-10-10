@@ -56,7 +56,7 @@ class OpenAiProvider(var apiKey: String, var apiHost: String? = null) : LlmProvi
         var result = ""
         openai.streamChatCompletion(request)
             .blockingForEach { response ->
-                val completion = response.choices[0].message
+                val completion = response.choices?.get(0)?.message
                 if (completion != null && completion.content != null) {
                     result += completion.content
                 }
