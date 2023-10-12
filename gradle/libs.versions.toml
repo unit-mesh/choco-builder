@@ -27,6 +27,8 @@ kotless = "0.2.0"
 
 shadowJar = "8.1.1"
 
+jgit = "6.7.0.202309050840-r"
+
 [libraries]
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-stdlib-jdk8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
@@ -145,6 +147,8 @@ jsoup = "org.jsoup:jsoup:1.16.1"
 ktor-client-logging = "io.ktor:ktor-client-logging:2.3.4"
 ktor-client-core = "io.ktor:ktor-client-core:2.3.4"
 ktor-client-cio = "io.ktor:ktor-client-cio:2.3.4"
+
+jgit = { group = "org.eclipse.jgit", name = "org.eclipse.jgit", version.ref = "jgit" }
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

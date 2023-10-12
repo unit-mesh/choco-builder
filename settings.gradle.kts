@@ -22,10 +22,12 @@ include(":llm-modules:sentence-transformers")
 include(":llm-modules:openai")
 include(":llm-modules:connection")
 include(":llm-modules:prompt-script")
-include(":llm-modules:code-splitter")
 
 include(":llm-tools:interpreter")
 include(":llm-tools:web-tools")
+
+include(":code-modules:code-splitter")
+include(":code-modules:code-diff")
 
 //include(":client:prompt-script-cli")
 

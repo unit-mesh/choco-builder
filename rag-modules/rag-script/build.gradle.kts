@@ -12,7 +12,7 @@ dependencies {
     implementation(projects.cocoaCore)
     implementation(projects.ragModules.document)
     implementation(projects.ragModules.storeElasticsearch)
-    implementation(projects.llmModules.codeSplitter)
+    implementation(projects.codeModules.codeSplitter)
     implementation(projects.llmModules.sentenceTransformers)
     implementation(projects.llmModules.openai)
 
