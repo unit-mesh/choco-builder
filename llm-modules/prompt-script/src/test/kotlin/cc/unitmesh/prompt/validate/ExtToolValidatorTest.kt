@@ -11,7 +11,7 @@ class ExtToolValidatorTest {
         val input = "input"
 
         // When
-        val validator = ExtToolValidator(execCommand, input)
+        val validator = ExtToolValidator(execCommand, input, it.options)
         val result = validator.validate()
 
         // Then

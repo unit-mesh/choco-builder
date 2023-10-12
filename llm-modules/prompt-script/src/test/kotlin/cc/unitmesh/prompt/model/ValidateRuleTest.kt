@@ -4,8 +4,6 @@ import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class ValidateRuleTest {

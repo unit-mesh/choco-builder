@@ -24,7 +24,7 @@ data class Job(
     fun buildValidators(input: String): List<Validator> {
         return validate.map {
             when (it) {
-                is ValidateRule.ExtTool -> ExtToolValidator(it.value, input)
+                is ValidateRule.ExtTool -> ExtToolValidator(it.value, input, it.options)
                 is ValidateRule.Json -> JsonValidator(input)
                 is ValidateRule.JsonPath -> JsonPathValidator(it.value, input)
                 is ValidateRule.MarkdownCodeBlock -> MarkdownCodeBlockValidator(input)
