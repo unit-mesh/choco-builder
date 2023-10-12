@@ -15,7 +15,7 @@ chapi = "2.1.3"
 
 slf4j = "2.0.5"
 
-archguard = "2.0.5"
+archguard = "2.0.7"
 
 logback = "1.4.5"
 kotlinLogging = "5.1.0"
