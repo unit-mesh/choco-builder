@@ -37,7 +37,7 @@ class ChangedEntry(
     val functionName: String = "",
 )
 
-class GitDiffer(val path: String, val branch: String, val loopDepth: Int = SHORT_ID_LENGTH) : NodeRelationBuilder() {
+class GitDiffer(val path: String, private val branch: String, private val loopDepth: Int = SHORT_ID_LENGTH) : NodeRelationBuilder() {
     private var baseLineDataTree: List<DifferFile> = listOf()
     private val differFileMap: MutableMap<String, DifferFile> = mutableMapOf()
     private val changedFiles: MutableMap<String, ChangedEntry> = mutableMapOf()
