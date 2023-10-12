@@ -6,6 +6,11 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.serialization.json)
+    implementation(libs.archguard.analyser.diffChanges)
+
+    implementation(libs.chapi.domain)
+
     // should get the code data from language analyser
     implementation(libs.chapi.kotlin) {
         exclude(group = "com.ibm.icu", module = "icu4j")

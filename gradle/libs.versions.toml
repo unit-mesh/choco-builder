@@ -15,7 +15,7 @@ chapi = "2.1.3"
 
 slf4j = "2.0.5"
 
-archguard = "2.0.1"
+archguard = "2.0.5"
 
 logback = "1.4.5"
 kotlinLogging = "5.1.0"
@@ -72,8 +72,11 @@ chapi-kotlin = { group = "com.phodal.chapi", name = "chapi-ast-kotlin", version.
 
 # archguard
 # implementation("org.archguard.aaac:lang:2.0.0-beta.5")
+archguard-scanner-core = { group = "org.archguard.scanner", name = "scanner_core", version.ref = "archguard" }
 archguard-dsl = { group = "org.archguard.aaac", name = "dsl", version.ref = "archguard" }
 archguard-analyser-sca = { group = "org.archguard.scanner", name = "analyser_sca", version.ref = "archguard" }
+## analyser_diff_changes
+archguard-analyser-diffChanges = { group = "org.archguard.scanner", name = "analyser_diff_changes", version.ref = "archguard" }
 archguard-lang-kotlin = { group = "org.archguard.scanner", name = "lang_kotlin", version.ref = "archguard" }
 archguard-lang-java = { group = "org.archguard.scanner", name = "lang_java", version.ref = "archguard" }
 archguard-lang-python = { group = "org.archguard.scanner", name = "lang_python", version.ref = "archguard" }
