@@ -108,5 +108,5 @@ sealed class ValidateRule {
      */
     @SerialName("ext-tool")
     @Serializable
-    data class ExtTool(val value: String) : ValidateRule()
+    data class ExtTool(val value: String, val options: Map<String, String> = mapOf()) : ValidateRule()
 }
