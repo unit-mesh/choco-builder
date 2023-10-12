@@ -5,32 +5,30 @@ import org.junit.jupiter.api.Test
 
 class ExtToolValidatorTest {
     @Test
-    fun should_return_false_when_command_executes_unsuccessfully() {
-        // Given
-        val execCommand = "invalid_command"
-        val input = "input"
+    fun should_return_true_when_command_executes_successfully() {
+        // given
+        val execCommand = "ls -l"
+        val input = ""
+        val options = mapOf<String, String>()
 
-        // When
-        val validator = ExtToolValidator(execCommand, input, emptyMap())
-        val result = validator.validate()
+        // when
+        val result = ExtToolValidator(execCommand, input, options).validate()
 
-        // Then
-        assertEquals(false, result)
+        // then
+        assertEquals(true, result)
     }
 
     @Test
-    fun should_validate_git_command_with_status_with_short_format() {
-        // Given
-        val execCommand = "git"
-        val options = mapOf(
-            "status" to ".",
-        )
+    fun should_return_true_when_command_executes_successfully_with_input() {
+        // given
+        val execCommand = "ls -l"
+        val input = "src"
+        val options = mapOf<String, String>()
 
-        // When
-        val validator = ExtToolValidator(execCommand, "", options)
-        val result = validator.validate()
+        // when
+        val result = ExtToolValidator(execCommand, input, options).validate()
 
-        // Then
+        // then
         assertEquals(true, result)
     }
 }

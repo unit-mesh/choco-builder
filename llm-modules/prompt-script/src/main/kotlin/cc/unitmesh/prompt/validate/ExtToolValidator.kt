@@ -6,8 +6,8 @@ package cc.unitmesh.prompt.validate
 class ExtToolValidator(private val execCommand: String, override val input: String, val options: Map<String, String>) :
     Validator {
     override fun validate(): Boolean {
-        val commandList = mutableListOf<String>()
-        commandList.add(execCommand)
+        // a exec command like `ls -l`
+        val commandList = execCommand.split(" ").toMutableList()
 
         for ((key, value) in options) {
             commandList.add(key)
