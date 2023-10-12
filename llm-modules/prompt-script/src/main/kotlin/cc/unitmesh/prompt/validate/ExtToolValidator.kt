@@ -10,17 +10,23 @@ class ExtToolValidator(private val execCommand: String, override val input: Stri
         commandList.add(execCommand)
 
         for ((key, value) in options) {
-            commandList.add("--$key")
+            commandList.add(key)
             commandList.add(value)
         }
 
-        commandList.add(input)
+        if (input.isNotEmpty()) {
+            commandList.add(input)
+        }
 
         val processBuilder = ProcessBuilder(commandList)
 
         return try {
             val process = processBuilder.start()
             val exitCode = process.waitFor()
+            // show stdout
+            process.inputStream.bufferedReader().use { println(it.readText()) }
+            // show stderr
+            process.errorStream.bufferedReader().use { println(it.readText()) }
             exitCode == 0
         } catch (e: Exception) {
             e.printStackTrace()
