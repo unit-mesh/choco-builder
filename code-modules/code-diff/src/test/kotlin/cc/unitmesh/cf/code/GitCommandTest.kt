@@ -1,5 +1,6 @@
 package cc.unitmesh.cf.code;
 
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class GitOutputTest {
@@ -9,6 +10,6 @@ class GitOutputTest {
         val gitCommand = GitCommand()
 
         val hash = gitCommand.latestCommitHash()
-        println(hash)
+        hash.stdout.split("\n").size shouldBe 10
     }
 }

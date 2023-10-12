@@ -13,8 +13,8 @@ class Command {
             logger.info("Executing: $commandLine ${args.joinToString(" ")}")
         }
 
-        val newArgs = args + commandLine
-        val processBuilder = ProcessBuilder("bash", "-c", *newArgs.toTypedArray())
+        val newArgs = commandLine + " " + args.joinToString(" ")
+        val processBuilder = ProcessBuilder("bash", "-c", newArgs)
         return doExecute(processBuilder, options)
     }
 
