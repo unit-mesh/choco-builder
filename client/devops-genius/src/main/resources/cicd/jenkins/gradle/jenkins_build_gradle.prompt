@@ -2,26 +2,19 @@ Description:
 Create Jenkinsfile for Jenkins for java version 17 gradle project which use latest ubuntu version builds project and runs tests.
 Code:
 node {
-    def server = Artifactory.server "SERVER_ID"
-    def rtGradle = Artifactory.newGradleBuild()
-    def buildInfo
+  agent {
+      label 'ubuntu'
+  }
 
-    stage('Clone sources') {
-        git url: 'https://github.com/jfrogdev/project-examples.git'
-    }
+  tools {
+      jdk 'jdk_17_latest'
+  }
 
-    stage('Artifactory configuration') {
-        rtGradle.tool = "Gradle-8.0"
-        rtGradle.deployer repo:'ext-release-local', server: server
-        rtGradle.resolver repo:'remote-repos', server: server
-    }
+  stage 'Stage Checkout'
 
-    stage('Gradle build') {
-        buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
-    }
+  checkout scm
+  sh 'git submodule update --init'
 
-    stage('Publish build info') {
-        server.publishBuildInfo buildInfo
-    }
+  stage 'Stage Build'
+  sh './gradlew build'
 }
-
