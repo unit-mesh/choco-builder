@@ -4,7 +4,7 @@ import cc.unitmesh.cf.code.command.Command
 import cc.unitmesh.cf.code.command.ExecOptions
 import cc.unitmesh.cf.code.command.StringListExecListeners
 
-class GitCommand(var workingDirectory: String = ".") {
+class GitCommand(private var workingDirectory: String = ".") {
     companion object {
         private val logger = org.slf4j.LoggerFactory.getLogger(GitCommand::class.java)
     }
@@ -14,11 +14,35 @@ class GitCommand(var workingDirectory: String = ".") {
         "GCM_INTERACTIVE" to "Never" // Disable prompting for git credential manager
     )
 
-    // enable for custom git path
-    var gitPath = "git"
+    private var gitPath = "git"
 
     private val exec = Command()
 
+    /**
+     * Checks out a specific reference in the Git repository.
+     *
+     * @param ref the reference to check out
+     * @param startPoint the starting point for the new branch (optional)
+     * @return the output of the Git command
+     */
+    fun checkout(ref: String, startPoint: String? = null): GitOutput {
+        val args = mutableListOf("checkout", "--progress", "--force")
+
+        if (startPoint != null) {
+            args.addAll(listOf("-B", ref, startPoint))
+        } else {
+            args.add(ref)
+        }
+
+        return execGit(args)
+    }
+
+    /**
+     * Logs the latest commit in the Git repository.
+     *
+     * @param format the format of the log message (optional)
+     * @return the GitOutput object containing the log information
+     */
     fun log(format: String? = null): GitOutput {
         val args = if (format != null) {
             listOf("log", "-1", format)
@@ -29,12 +53,24 @@ class GitCommand(var workingDirectory: String = ".") {
         return execGit(args, false, silent)
     }
 
+    /**
+     * get the latest commit hash for the current branch
+     * @param num the number of commits to return
+     */
     fun latestCommitHash(num: Int = 10): GitOutput {
         val format = "--pretty=format:%h"
         val args = listOf("log", "-$num", format)
         return execGit(args, false, silent = true)
     }
 
+    /**
+     * Executes a Git command with the given arguments.
+     *
+     * @param args the list of arguments for the Git command
+     * @param allowAllExitCodes flag indicating whether to allow all exit codes or not (default: false)
+     * @param silent flag indicating whether to suppress the command output or not (default: false)
+     * @return the GitOutput object containing the result of the Git command execution
+     */
     private fun execGit(args: List<String>, allowAllExitCodes: Boolean = false, silent: Boolean = false): GitOutput {
         val result = GitOutput()
 
