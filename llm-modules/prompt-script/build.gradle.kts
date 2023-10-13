@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.jvm)
     alias(libs.plugins.serialization)
     alias(libs.plugins.shadow)
-
-    id("org.jetbrains.dokka") version "1.9.0"
 }
 
 dependencies {
@@ -34,4 +32,12 @@ dependencies {
 
 application {
     mainClass.set("cc.unitmesh.prompt.MainKt")
+}
+
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "cc.unitmesh.prompt.MainKt"))
+        }
+    }
 }
