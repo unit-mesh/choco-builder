@@ -37,13 +37,34 @@ class ChangedEntry(
     val functionName: String = "",
 )
 
-class GitDiffer(val path: String, private val branch: String, private val loopDepth: Int = SHORT_ID_LENGTH) : NodeRelationBuilder() {
+/**
+ * The GitDiffer class is responsible for comparing and counting the number of changed calls between two revisions in a Git repository.
+ * It extends the NodeRelationBuilder class.
+ *
+ * @param path The path to the Git repository.
+ * @param branch The branch to compare.
+ * @param loopDepth The depth of the loop for calculating reverse calls (default value is SHORT_ID_LENGTH).
+ * @property baseLineDataTree A list of DifferFile objects representing the baseline AST tree.
+ * @property differFileMap A mutable map of file paths to DifferFile objects.
+ * @property changedFiles A mutable map of file paths to ChangedEntry objects representing changed files.
+ * @property changedClasses A mutable map of file paths to ChangedEntry objects representing changed classes.
+ * @property changedFunctions A mutable map of file paths to ChangedEntry objects representing changed functions.
+ */
+class GitDiffer(val path: String, private val branch: String, private val loopDepth: Int = SHORT_ID_LENGTH) :
+    NodeRelationBuilder() {
     private var baseLineDataTree: List<DifferFile> = listOf()
     private val differFileMap: MutableMap<String, DifferFile> = mutableMapOf()
     private val changedFiles: MutableMap<String, ChangedEntry> = mutableMapOf()
     private val changedClasses: MutableMap<String, ChangedEntry> = mutableMapOf()
     private val changedFunctions: MutableMap<String, ChangedEntry> = mutableMapOf()
 
+    /**
+     * Counts the number of changed calls between two revisions.
+     *
+     * @param sinceRev The revision to start counting from.
+     * @param untilRev The revision to stop counting at.
+     * @return A list of ChangedCall objects representing the changed calls between the two revisions.
+     */
     fun countBetween(sinceRev: String, untilRev: String): List<ChangedCall> {
         val repository = FileRepositoryBuilder().findGitDir(File(path)).build()
         val git = Git(repository).specifyBranch(branch)
@@ -91,6 +112,13 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
             .map { d -> compareWithBaseline(d, repository, revCommit) }
     }
 
+    /**
+     * Compares the given diff entry with the baseline data.
+     *
+     * @param diffEntry The diff entry to compare.
+     * @param repository The repository containing the baseline data.
+     * @param revCommit The commit containing the baseline data.
+     */
     private fun compareWithBaseline(
         diffEntry: DiffEntry,
         repository: Repository,

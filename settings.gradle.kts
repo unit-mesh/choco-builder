@@ -27,9 +27,9 @@ include(":llm-tools:interpreter")
 include(":llm-tools:web-tools")
 
 include(":code-modules:code-splitter")
-include(":code-modules:code-diff")
+include(":code-modules:git-differ")
 
-//include(":client:prompt-script-cli")
+include(":client:devops-genius")
 
 dependencyResolutionManagement {
     repositories {

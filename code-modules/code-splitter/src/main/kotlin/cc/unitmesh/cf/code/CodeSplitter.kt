@@ -6,9 +6,21 @@ import chapi.domain.core.CodeFunction
 import org.jetbrains.annotations.TestOnly
 
 /**
- * SweepAI code splitting solution.
- * https://docs.sweep.dev/blogs/chunking-2m-files
- * Also see in: https://github.com/jerryjliu/llama_index/pull/7100
+ * The `CodeSplitter` class is a solution for splitting code into smaller chunks for better semantic understanding and processing.
+ * It is designed to handle large code files and split them into manageable portions.
+ *
+ * The class provides methods to split code based on specified parameters such as chunk size and maximum characters.
+ * It also allows for adding a comment string to each chunk for better semantic understanding.
+ *
+ * The `CodeSplitter` class is part of the SweepAI code splitting solution and can be used to chunk code files.
+ * For more information on code splitting, refer to the [SweepAI code splitting documentation](https://docs.sweep.dev/blogs/chunking-2m-files).
+ *
+ * This class can be found in the [llama_index](https://github.com/jerryjliu/llama_index) repository, specifically in the [pull request #7100](https://github.com/jerryjliu/llama_index/pull/7100).
+ *
+ * @param comment The comment string to prepend to each chunk for better semantic understanding. Defaults to "//".
+ * @param chunkLines The number of lines per chunk. Defaults to 40 lines.
+ * @param maxChars The maximum number of characters per chunk. Defaults to 1500 characters.
+ * @param chunkLinesOverlap The number of overlapping lines between chunks. Defaults to 15 lines.
  */
 class CodeSplitter(
     // the comment string to prepend to each chunk, for better semantic understanding

@@ -25,7 +25,7 @@ class Command {
 
         val exitCode = process.waitFor()
 
-        process.inputStream.bufferedReader().use { it ->
+        process.inputStream.bufferedReader().use {
             it.forEachLine { line ->
                 options.listeners.stdout(line)
             }
