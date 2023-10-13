@@ -1,11 +1,8 @@
 package cc.unitmesh.rag
 
-import cc.unitmesh.document.parser.MsOfficeDocumentParser
-import cc.unitmesh.document.parser.PdfDocumentParser
-import cc.unitmesh.document.parser.TextDocumentParser
+import cc.unitmesh.document.DocumentFactory
 import cc.unitmesh.rag.document.Document
 import cc.unitmesh.rag.document.DocumentParser
-import cc.unitmesh.rag.document.DocumentType
 import cc.unitmesh.rag.store.EmbeddingMatch
 import java.io.File
 
@@ -44,14 +41,7 @@ class DocumentDsl(val path: String, val isDir: Boolean) {
         }
 
         fun parserByExt(extension: String): DocumentParser {
-            return when (val documentType = DocumentType.of(extension)) {
-                DocumentType.TXT -> TextDocumentParser(documentType)
-                DocumentType.PDF -> PdfDocumentParser()
-                DocumentType.HTML -> TextDocumentParser(documentType)
-                DocumentType.DOC -> MsOfficeDocumentParser(documentType)
-                DocumentType.XLS -> MsOfficeDocumentParser(documentType)
-                DocumentType.PPT -> MsOfficeDocumentParser(documentType)
-            }
+            return DocumentFactory.parserByExt(extension) ?: throw IllegalArgumentException("Unsupported file type: $extension")
         }
     }
 }

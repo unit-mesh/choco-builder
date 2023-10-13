@@ -9,9 +9,13 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.cocoaCore)
+    implementation(projects.llmModules.sentenceTransformers)
+    implementation(projects.ragModules.storeElasticsearch)
+    implementation(projects.ragModules.document)
+
     implementation(libs.clikt)
 
-    implementation(projects.cocoaCore)
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
 

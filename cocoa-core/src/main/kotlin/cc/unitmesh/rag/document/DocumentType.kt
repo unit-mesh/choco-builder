@@ -25,6 +25,7 @@ enum class DocumentType(vararg supportedExtensions: String) {
     HTML("html", "htm", "xhtml"),
     DOC("doc", "docx"),
     XLS("xls", "xlsx"),
+    MD("md", "markdown"),
     PPT("ppt", "pptx");
 
     private val supportedExtensions: Iterable<String>
@@ -34,7 +35,7 @@ enum class DocumentType(vararg supportedExtensions: String) {
     }
 
     companion object {
-        fun of(fileName: String): DocumentType {
+        fun of(fileName: String): DocumentType? {
             for (documentType in entries) {
                 for (supportedExtension in documentType.supportedExtensions) {
                     if (fileName.endsWith(supportedExtension)) {
@@ -43,11 +44,7 @@ enum class DocumentType(vararg supportedExtensions: String) {
                 }
             }
 
-            throw UnsupportedDocumentTypeException(fileName)
+            return null
         }
     }
 }
-
-
-class UnsupportedDocumentTypeException(filePath: String?) :
-    RuntimeException(String.format("Document type of '%s' is not supported", filePath))
