@@ -12,4 +12,8 @@ class GeniusCommand : CliktCommand(help = HELP_TEXT) {
     override fun run() = Unit
 }
 
-fun main(args: Array<String>) = GeniusCommand().subcommands(CodeReviewCommand()).main(args)
+fun main(args: Array<String>) = GeniusCommand().subcommands(
+    CodeReviewCommand(),
+    CiCdCommand(),
+    IssueCommand(),
+).main(args)

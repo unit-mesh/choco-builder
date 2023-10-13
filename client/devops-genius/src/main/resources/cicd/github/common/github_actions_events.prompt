@@ -1,0 +1,42 @@
+Description:
+Create build.yml YAML file for GitHub Action which triggers on push.
+Code:
+on:
+  push
+Description:
+Create build.yml YAML file for GitHub Action which triggers on push and pull request.
+Code:
+on:
+  push:
+  pull_request:
+Description:
+Create build.yml YAML file for GitHub Action which triggers on push to branches 'main', all 'releases'.
+Code:
+on:
+  push:
+    branches:
+      - main
+      - releases/**
+Description:
+Create build.yml YAML file for GitHub Action which triggers on opened or closed pull request to branches 'main'.
+Code:
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - closed
+Description:
+Create build.yml YAML file for GitHub Action which triggers on push to any branch if any kotlin file change.
+Code:
+on:
+  push:
+    paths:
+      - '**.kt'
+Description:
+Create build.yml YAML file for GitHub Action which triggers at 8am every day.
+Code:
+on:
+  schedule:
+    - cron: '0 8 * * *'
