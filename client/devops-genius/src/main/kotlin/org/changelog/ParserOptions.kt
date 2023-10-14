@@ -15,7 +15,36 @@ open class ParserOptions(
     val issuePrefixes: List<String>? = null,
     val issuePrefixesCaseSensitive: Boolean? = null,
     val referenceActions: List<String>? = null,
-)
+)                   {
+    companion object {
+        fun defaultOptions(): ParserOptions {
+            return ParserOptions(
+                noteKeywords = listOf("BREAKING CHANGE", "BREAKING-CHANGE"),
+                issuePrefixes = listOf("#"),
+                referenceActions = listOf(
+                    "close",
+                    "closes",
+                    "closed",
+                    "fix",
+                    "fixes",
+                    "fixed",
+                    "resolve",
+                    "resolves",
+                    "resolved"
+                ),
+                headerPattern = Regex("^(\\w*)(?:\\(([\\w$.*\\-*/ ]*)\\))?: (.*)$"),
+                headerCorrespondence = listOf(
+                    "type",
+                    "scope",
+                    "subject"
+                ),
+                revertPattern = Regex("^Revert\\s\"([\\s\\S]*)\"\\s*This reverts commit (\\w*)\\."),
+                revertCorrespondence = listOf("header", "hash"),
+                fieldPattern = Regex("^-(.*?)-$")
+            )
+        }
+    }
+}
 
 
 /**

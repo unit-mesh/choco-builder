@@ -10,27 +10,24 @@ data class CommitReference(
 )
 
 data class CommitNote(
-    val title: String,
-    val text: String,
+    var title: String,
+    var text: String,
 )
 
-typealias CommitMeta = Map<String, String?>
-
-open class CommitBase(
-    val merge: String? = null,
-    val revert: Map<String, String>? = null,
-    val header: String? = null,
-    val body: String? = null,
-    val footer: String? = null,
-    val notes: List<CommitNote>,
-    val mentions: List<String>,
-    val references: List<CommitReference>,
-)
+typealias CommitMeta = MutableMap<String, String?>
 
 data class Commit(
-    val meta: CommitMeta,
-) : CommitBase(
-    notes = listOf(),
-    mentions = listOf(),
-    references = listOf(),
+    var merge: String? = null,
+    var revert: Map<String, String?>? = null,
+    var header: String? = null,
+    var body: String? = null,
+    var footer: String? = null,
+    val notes: List<CommitNote> = emptyList(),
+    val mentions: List<String> = emptyList(),
+    val references: List<CommitReference> = emptyList(),
+    var meta: CommitMeta = mutableMapOf(),
 )
+
+
+
+
