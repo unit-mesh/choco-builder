@@ -14,6 +14,10 @@ fun isWhitespace(content: String): Boolean {
  * <newline> ::= <CR>? <LF>
  */
 fun isNewline(token: String): Boolean {
+    if (token.isEmpty()) {
+        return false
+    }
+
     val char = token[0]
     return char == CR || char == LF
 }

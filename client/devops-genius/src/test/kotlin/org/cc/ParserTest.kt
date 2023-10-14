@@ -27,90 +27,10 @@ class ParserTest {
 
 
     @Test
-    @Ignore
-    fun `parses BREAKING CHANGE footers with higher precedence than body`() {
-        val parsed =
-            Parser("fix: address major bug\n\nBREAKING CHANGE: this is breaking.\n\nAuthor: @bcoe\nRefs #392").parse()
-
-        val data = Node(
-            "message", "", Position(Pos(10, 1, 83), Pos(1, 1, 0)),
-            listOf(
-                Node(
-                    "summary", "address major bug", Position(Pos(23, 1, 22), Pos(1, 1, 0)),
-                    listOf(
-                        Node(
-                            "type", "fix", Position(Pos(4, 1, 3), Pos(1, 1, 0))
-                        ),
-                        Node(
-                            "separator", ":", Position(Pos(5, 1, 4), Pos(4, 1, 3))
-                        ),
-                        Node(
-                            "whitespace", " ", Position(Pos(6, 1, 5), Pos(5, 1, 4))
-                        ),
-                        Node(
-                            "text", "address major bug", Position(Pos(23, 1, 22), Pos(6, 1, 5))
-                        )
-                    )
-                ),
-                Node(
-                    "newline", "\n", Position(Pos(1, 3, 24), Pos(23, 1, 22))
-                ),
-                Node(
-                    "footer", "", Position(Pos(35, 3, 58), Pos(1, 3, 24)),
-                    listOf(
-                        Node(
-                            "token", "BREAKING CHANGE", Position(Pos(16, 3, 39), Pos(1, 3, 24))
-                        ),
-                        Node(
-                            "separator", ":", Position(Pos(17, 3, 40), Pos(16, 3, 39))
-                        ),
-                        Node(
-                            "whitespace", " ", Position(Pos(18, 3, 41), Pos(17, 3, 40))
-                        ),
-                        Node(
-                            "value", "this is breaking.", Position(Pos(35, 3, 58), Pos(18, 3, 41))
-                        )
-                    )
-                ),
-                Node(
-                    "newline", "\n", Position(Pos(1, 5, 60), Pos(35, 3, 58))
-                ),
-                Node(
-                    "footer", "", Position(Pos(14, 5, 73), Pos(1, 5, 60)),
-                    listOf(
-                        Node(
-                            "token", "Author", Position(Pos(7, 5, 66), Pos(7, 5, 66))
-                        ),
-                        Node(
-                            "separator", ":", Position(Pos(8, 5, 67), Pos(7, 5, 66))
-                        ),
-                        Node(
-                            "whitespace", " ", Position(Pos(9, 5, 68), Pos(8, 5, 67))
-                        ),
-                        Node(
-                            "value", "@bcoe", Position(Pos(14, 5, 73), Pos(9, 5, 68))
-                        )
-                    )
-                ),
-                Node(
-                    "newline", "\n", Position(Pos(1, 6, 74), Pos(14, 5, 73))
-                ),
-                Node(
-                    "footer", "", Position(Pos(5, 6, 78), Pos(1, 6, 74)),
-                    listOf(
-                        Node(
-                            "token", "Refs", Position(Pos(5, 6, 78), Pos(5, 6, 78))
-                        ),
-                        Node(
-                            "separator", " #", Position(Pos(7, 6, 80), Pos(5, 6, 78))
-                        ),
-                        Node(
-                            "value", "392", Position(Pos(10, 6, 83), Pos(7, 6, 80))
-                        )
-                    )
-                )
-            )
-        )
-//        json.encodeToString(parsed) shouldBe json.encodeToString(data)
+    fun `supports multiline BREAKING CHANGES, via continuation`() {
+        val json = this::class.java.classLoader.getResource("commits/supports-multiline-breaking-changes-via-continuation.json").readText()
+        val data = Json.decodeFromString(Node.serializer(), json)
+        val parsed = Parser("fix: address major bug\nBREAKING CHANGE: first line of breaking change\n second line of breaking change\n third line of breaking change").parse()
+        parsed shouldBe data
     }
 }
