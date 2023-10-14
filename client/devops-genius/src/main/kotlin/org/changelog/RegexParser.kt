@@ -7,6 +7,8 @@ fun join(parts: List<String>, joiner: String): String {
         .joinToString(joiner)
 }
 
+val nomatchRegex = Regex("(?!.*)")
+
 object RegexParser {
     /**
      * Make the regexes used to parse a commit.
@@ -26,31 +28,7 @@ object RegexParser {
         )
     }
 
-    /**
-     * Make the regexes used to parse a commit.
-     * @param options
-     * @return Regexes.
-     */
-    fun getParserRegexes(
-        options: Map<String, Any?> = mapOf(
-            "noteKeywords" to null,
-            "notesPattern" to null,
-            "issuePrefixes" to null,
-            "issuePrefixesCaseSensitive" to null,
-            "referenceActions" to null
-        )
-    ): ParserRegexes {
-        val notes = getNotesRegex(options["noteKeywords"] as? List<String>, options["notesPattern"] as? (String) -> Regex)
-        val referenceParts = getReferencePartsRegex(
-            options["issuePrefixes"] as? List<String>,
-            options["issuePrefixesCaseSensitive"] as? Boolean
-        )
-        val references = getReferencesRegex(options["referenceActions"] as? List<String>)
-
-        return ParserRegexes(notes, referenceParts, references, Regex("@([\\w-]+)"))
-    }
-
-    fun getNotesRegex(noteKeywords: List<String>?, notesPattern: ((String) -> Regex)?): Regex {
+    private fun getNotesRegex(noteKeywords: List<String>?, notesPattern: ((String) -> Regex)?): Regex {
         val nomatchRegex = Regex("(?!.*)")
 
         if (noteKeywords == null) {
@@ -66,19 +44,20 @@ object RegexParser {
         return notesPattern(noteKeywordsSelection)!!
     }
 
-    fun getReferencePartsRegex(issuePrefixes: List<String>?, issuePrefixesCaseSensitive: Boolean?): Regex {
-        val nomatchRegex = Regex("(?!.*)")
-
+    private fun getReferencePartsRegex(issuePrefixes: List<String>?, issuePrefixesCaseSensitive: Boolean?): Regex {
         if (issuePrefixes == null) {
             return nomatchRegex
         }
 
-        val flags = if (issuePrefixesCaseSensitive == true) setOf(RegexOption.MULTILINE) else setOf(RegexOption.IGNORE_CASE)
+        val flags = when (issuePrefixesCaseSensitive) {
+            true -> setOf(RegexOption.MULTILINE)
+            else -> setOf(RegexOption.IGNORE_CASE)
+        }
 
         return Regex("(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${join(issuePrefixes, "|")})([\\w-]*\\d+)", flags)
     }
 
-    fun getReferencesRegex(referenceActions: List<String>?): Regex {
+    private fun getReferencesRegex(referenceActions: List<String>?): Regex {
         if (referenceActions == null) {
             // matches everything
             return Regex("()(.+)", setOf(RegexOption.IGNORE_CASE))
