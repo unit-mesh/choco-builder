@@ -1,4 +1,4 @@
-package org.cc
+package org.cc.ast
 
 const val CR = '\u000d'
 const val LF = '\u000a'

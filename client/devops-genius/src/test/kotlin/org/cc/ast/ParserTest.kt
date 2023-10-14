@@ -1,4 +1,4 @@
-package org.cc
+package org.cc.ast
 
 import io.kotest.matchers.shouldBe
 import kotlinx.serialization.json.Json

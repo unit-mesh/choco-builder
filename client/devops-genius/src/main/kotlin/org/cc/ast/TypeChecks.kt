@@ -1,4 +1,4 @@
-package org.cc
+package org.cc.ast
 
 /**
  * Determines whether a given character is a whitespace character.

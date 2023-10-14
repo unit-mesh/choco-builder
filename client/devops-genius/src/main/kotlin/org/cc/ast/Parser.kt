@@ -1,4 +1,4 @@
-package org.cc
+package org.cc.ast
 
 class Parser(val commitText: String) {
     private val scanner = Scanner(commitText.trim())

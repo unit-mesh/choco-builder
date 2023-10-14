@@ -1,4 +1,4 @@
-package org.cc
+package org.cc.ast
 
 // TypeScript version
 // class Scanner {

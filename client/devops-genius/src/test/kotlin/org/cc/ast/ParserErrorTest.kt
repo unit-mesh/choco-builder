@@ -1,4 +1,4 @@
-package org.cc
+package org.cc.ast
 
 import org.junit.jupiter.api.Test
 
