@@ -10,6 +10,13 @@ plugins {
 
 dependencies {
     implementation(projects.cocoaCore)
+
+    implementation(projects.codeModules.gitDiffer)
+    implementation(libs.codedb.checkout)
+    implementation(libs.archguard.analyser.diffChanges)
+
+    implementation(projects.codeModules.codeSplitter)
+
     implementation(projects.llmModules.sentenceTransformers)
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.ragModules.document)
