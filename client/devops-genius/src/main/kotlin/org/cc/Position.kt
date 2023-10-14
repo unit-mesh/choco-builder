@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Position(
-    var end: Pos,
     val start: Pos,
+    var end: Pos,
 )
 
 @Serializable
 data class Pos(
-    var column: Int,
     var line: Int,
+    var column: Int,
     var offset: Int,
 )

@@ -1,0 +1,98 @@
+{
+  "type": "message",
+  "children": [
+    {
+      "type": "summary",
+      "children": [
+        {
+          "type": "type",
+          "value": "fix",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 4,
+              "offset": 3
+            }
+          }
+        },
+        {
+          "type": "separator",
+          "value": ":",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 4,
+              "offset": 3
+            },
+            "end": {
+              "line": 1,
+              "column": 5,
+              "offset": 4
+            }
+          }
+        },
+        {
+          "type": "whitespace",
+          "value": " ",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 5,
+              "offset": 4
+            },
+            "end": {
+              "line": 1,
+              "column": 6,
+              "offset": 5
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": "a really weird bug",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 6,
+              "offset": 5
+            },
+            "end": {
+              "line": 1,
+              "column": 24,
+              "offset": 23
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 24,
+          "offset": 23
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 1,
+      "column": 24,
+      "offset": 23
+    }
+  }
+}
