@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CodeReview Local Debug" type="JetRunConfigurationType">
+  <configuration default="false" name="DevOpsGenius - CodeReview Local Debug" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="cc.unitmesh.genius.MainKt" />
     <module name="chocolate-factory.client.devops-genius.main" />
     <option name="PROGRAM_PARAMETERS" value="code-review" />

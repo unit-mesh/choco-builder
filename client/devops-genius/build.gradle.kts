@@ -21,6 +21,8 @@ dependencies {
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.ragModules.document)
 
+    implementation(libs.kaml)
+
     implementation(libs.clikt)
 
     implementation(libs.kotlin.stdlib)
