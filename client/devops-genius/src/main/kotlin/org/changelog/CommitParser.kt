@@ -94,14 +94,14 @@ class CommitParser(
 
     private fun isLineAvailable() = lineIndex < lines.size
 
-    private fun parseReference(input: String, action: String?): CommitReference? {
+    private fun parseReference(input: String, action: String?): List<CommitReference> {
         val regexes = this.regexes
-        val matches = regexes.referenceParts.find(input)
+        val matches = regexes.referenceParts.findAll(input)
 
-        if (matches == null || matches.groups.isEmpty()) {
-            return null
-        }
+        return matches.map { matchToReference(it, action) }.toList()
+    }
 
+    private fun matchToReference(matches: MatchResult, action: String?): CommitReference {
         val raw = matches.groups[0]?.value
         var repository: String? = matches.groups[1]?.value
         val prefix = matches.groups[2]?.value ?: ""
@@ -133,22 +133,18 @@ class CommitParser(
         } else {
             Regex("()(.+)", setOf(RegexOption.IGNORE_CASE))
         }
-        val references = mutableListOf<CommitReference>()
 
-        val matches: MatchResult = regex.find(input) ?: return references
+        return regex.findAll(input)
+            .map { matches ->
+                val firstValue = matches.groupValues.getOrNull(1)
 
-        val firstValue = matches.groupValues.getOrNull(1)
+                val action = if (firstValue?.isNotEmpty() == true) firstValue else null
+                val sentence = matches.groupValues.getOrNull(2) ?: ""
 
-        val action = if (firstValue?.isNotEmpty() == true) firstValue else null
-        val sentence = matches.groupValues.getOrNull(2) ?: ""
-
-        val reference: CommitReference? = this.parseReference(sentence, action)
-
-        if (reference != null) {
-            references.add(reference)
-        }
-
-        return references
+                parseReference(sentence, action)
+            }
+            .flatten()
+            .toList()
     }
 
     private fun skipEmptyLines() {
@@ -336,14 +332,9 @@ class CommitParser(
         val commit = this.commit
         val regexes = this.regexes
 
-        var lastIndex = 0
-
-        while (true) {
-            val matchResult = regexes.mentions.find(input, lastIndex) ?: break
-
+        regexes.mentions.findAll(input).forEach { matchResult ->
             val match = matchResult.groupValues[1]
             commit.mentions.add(match)
-            lastIndex = matchResult.range.last + 1
         }
     }
 
