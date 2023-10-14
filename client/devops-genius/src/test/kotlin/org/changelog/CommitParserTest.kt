@@ -1,5 +1,6 @@
 package org.changelog;
 
+import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore
@@ -19,7 +20,6 @@ class CommitParserTest  {
     val customParser = CommitParser(customOptions)
 
     @Test
-    @Ignore
     fun shouldWork() {
         val parser = CommitParser()
         val commit = "feat(ng-list): Allow custom separator\n" +
@@ -31,7 +31,7 @@ class CommitParserTest  {
 
         result.header shouldBe "feat(ng-list): Allow custom separator"
         result.footer shouldBe "Closes #123\nCloses #25\nFixes #33"
-        assert(result.references == listOf(
+        result.references shouldBe listOf(
             CommitReference(
                 action = "Closes",
                 issue = "123",
@@ -56,6 +56,6 @@ class CommitParserTest  {
                 raw = "#33",
                 repository = null
             )
-        ))
+        )
     }
 }

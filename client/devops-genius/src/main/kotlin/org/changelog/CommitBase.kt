@@ -1,5 +1,8 @@
 package org.changelog
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CommitReference(
     val raw: String,
     val action: String? = null,
@@ -9,13 +12,13 @@ data class CommitReference(
     val prefix: String,
 )
 
+@Serializable
 data class CommitNote(
     var title: String,
     var text: String,
 )
 
-typealias CommitMeta = MutableMap<String, String?>
-
+@Serializable
 data class Commit(
     var merge: String? = null,
     var revert: Map<String, String?>? = null,
@@ -24,8 +27,8 @@ data class Commit(
     var footer: String? = null,
     val notes: List<CommitNote> = emptyList(),
     val mentions: List<String> = emptyList(),
-    val references: List<CommitReference> = emptyList(),
-    var meta: CommitMeta = mutableMapOf(),
+    val references: MutableList<CommitReference> = mutableListOf(),
+    var meta: MutableMap<String, String?> = mutableMapOf(),
 )
 
 

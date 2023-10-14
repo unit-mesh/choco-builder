@@ -1,7 +1,5 @@
 package org.changelog
 
-import java.util.regex.Pattern
-
 fun createCommitObject(): Commit {
     return Commit()
 }
@@ -27,20 +25,20 @@ fun appendLine(src: String?, line: String?): String {
  * @returns String without leading and trailing newlines.
  */
 fun trimNewLines(input: String): String {
-    val matches = input.indexOfAny(charArrayOf('\r', '\n'))
+    val matches = Regex("[^\r\n]").find(input)
 
-    if (matches == -1) {
+    if (matches?.range == null) {
         return ""
     }
 
-    val firstIndex = matches
+    val firstIndex = matches.range.first
     var lastIndex = input.length - 1
 
     while (input[lastIndex] == '\r' || input[lastIndex] == '\n') {
         lastIndex--
     }
 
-    return input.substring(firstIndex, lastIndex + 1)
+    return input.substring(firstIndex..lastIndex)
 }
 
 /**
@@ -83,16 +81,16 @@ fun gpgFilter(line: String): Boolean {
 }
 
 class CommitParser(
-    val options: ParserOptions = ParserOptions.defaultOptions()
+    val options: ParserOptions = ParserOptions.defaultOptions(),
 ) {
     private val regexes: ParserRegexes = RegexParser.getParserRegexes(options)
     private val lines = mutableListOf<String>()
     private var lineIndex = 0
     private var commit = createCommitObject()
 
-    private fun currentLine() = lines.getOrNull(lineIndex)
+    private fun currentLine() = lines.get(lineIndex)
 
-    private fun nextLine() = lines.getOrNull(lineIndex++)
+    private fun nextLine() = lines.get(lineIndex++)
 
     private fun isLineAvailable() = lineIndex < lines.size
 
@@ -119,49 +117,28 @@ class CommitParser(
         }
 
 
-        return CommitReference(raw!!, action, owner, repository, prefix, issue)
+        return CommitReference(raw!!, action, owner = owner, repository = repository, prefix = prefix, issue = issue)
     }
 
     fun parseReferences(input: String): List<CommitReference> {
-        val regexes = this.regexes
-        val regex = if (regexes.references.find(input) != null) {
-            regexes.references
+        val regex = if (this.regexes.references.find(input) != null) {
+            this.regexes.references
         } else {
             Regex("()(.+)", setOf(RegexOption.IGNORE_CASE))
         }
         val references = mutableListOf<CommitReference>()
-        var matches: MatchResult?
-        var action: String?
-        var sentence: String
-        var reference: CommitReference?
-        var shouldBreak: Boolean = false
+        val action: String?
+        val sentence: String
 
-        while (true) {
-            if (shouldBreak) {
-                break
-            }
+        val matches: MatchResult = regex.find(input) ?: return references
 
-            matches = regex.find(input)
+        action = matches.groupValues.getOrNull(1)
+        sentence = matches.groupValues.getOrNull(2) ?: ""
 
-            if (matches == null) {
-                break
-            }
+        val reference: CommitReference? = this.parseReference(sentence, action)
 
-            action = matches.groupValues.getOrNull(1)
-            sentence = matches.groupValues.getOrNull(2) ?: ""
-
-            while (true) {
-                reference = this.parseReference(sentence, action)
-                println("parseReferences: $reference")
-
-                if (reference == null) {
-                    shouldBreak = true
-                    break
-                }
-
-                references.add(reference)
-            }
-
+        if (reference != null) {
+            references.add(reference)
         }
 
         return references
@@ -176,28 +153,6 @@ class CommitParser(
         }
     }
 
-    //  private parseMerge() {
-    //    const { commit, options } = this
-    //    const correspondence = options.mergeCorrespondence || []
-    //    const merge = this.currentLine()
-    //    const matches = merge && options.mergePattern
-    //      ? merge.match(options.mergePattern)
-    //      : null
-    //
-    //    if (matches) {
-    //      this.nextLine()
-    //
-    //      commit.merge = matches[0] || null
-    //
-    //      correspondence.forEach((key, index) => {
-    //        commit[key] = matches[index + 1] || null
-    //      })
-    //
-    //      return true
-    //    }
-    //
-    //    return false
-    //  }
     fun parseMerge(): Boolean {
         val commit = this.commit
         val options = this.options
@@ -220,28 +175,6 @@ class CommitParser(
         return false
     }
 
-    //  private parseHeader(isMergeCommit: boolean) {
-    //    if (isMergeCommit) {
-    //      this.skipEmptyLines()
-    //    }
-    //
-    //    const { commit, options } = this
-    //    const correspondence = options.headerCorrespondence || []
-    //    const header = this.nextLine()
-    //    const matches = header && options.headerPattern
-    //      ? header.match(options.headerPattern)
-    //      : null
-    //
-    //    if (header) {
-    //      commit.header = header
-    //    }
-    //
-    //    if (matches) {
-    //      correspondence.forEach((key, index) => {
-    //        commit[key] = matches[index + 1] || null
-    //      })
-    //    }
-    //  }
     fun parseHeader(isMergeCommit: Boolean) {
         if (isMergeCommit) {
             this.skipEmptyLines()
@@ -264,40 +197,6 @@ class CommitParser(
         }
     }
 
-    //private parseMeta() {
-    //    const {
-    //      options,
-    //      commit
-    //    } = this
-    //
-    //    if (!options.fieldPattern || !this.isLineAvailable()) {
-    //      return false
-    //    }
-    //
-    //    let matches: RegExpMatchArray | null
-    //    let field: string | null = null
-    //    let parsed = false
-    //
-    //    while (this.isLineAvailable()) {
-    //      matches = this.currentLine().match(options.fieldPattern)
-    //
-    //      if (matches) {
-    //        field = matches[1] || null
-    //        this.nextLine()
-    //        continue
-    //      }
-    //
-    //      if (field) {
-    //        parsed = true
-    //        commit[field] = appendLine(commit[field], this.currentLine())
-    //        this.nextLine()
-    //      } else {
-    //        break
-    //      }
-    //    }
-    //
-    //    return parsed
-    //  }
     fun parseMeta(): Boolean {
         val options = this.options
         val commit = this.commit
@@ -331,59 +230,6 @@ class CommitParser(
         return parsed
     }
 
-    //  private parseNotes() {
-    //    const {
-    //      regexes,
-    //      commit
-    //    } = this
-    //
-    //    if (!this.isLineAvailable()) {
-    //      return false
-    //    }
-    //
-    //    const matches = this.currentLine().match(regexes.notes)
-    //    let references: CommitReference[] = []
-    //
-    //    if (matches) {
-    //      const note: CommitNote = {
-    //        title: matches[1],
-    //        text: matches[2]
-    //      }
-    //
-    //      commit.notes.push(note)
-    //      commit.footer = appendLine(commit.footer, this.currentLine())
-    //      this.nextLine()
-    //
-    //      while (this.isLineAvailable()) {
-    //        if (this.parseMeta()) {
-    //          return true
-    //        }
-    //
-    //        if (this.parseNotes()) {
-    //          return true
-    //        }
-    //
-    //        references = this.parseReferences(this.currentLine())
-    //
-    //        if (references.length) {
-    //          commit.references.push(...references)
-    //        } else {
-    //          note.text = appendLine(note.text, this.currentLine())
-    //        }
-    //
-    //        commit.footer = appendLine(commit.footer, this.currentLine())
-    //        this.nextLine()
-    //
-    //        if (references.length) {
-    //          break
-    //        }
-    //      }
-    //
-    //      return true
-    //    }
-    //
-    //    return false
-    //  }
     fun parseNotes(): Boolean {
         val regexes = this.regexes
         val commit = this.commit
@@ -417,7 +263,7 @@ class CommitParser(
                 references = this.parseReferences(this.currentLine()!!)
 
                 if (references.isNotEmpty()) {
-                    commit.references.toMutableList().addAll(references)
+                    commit.references.addAll(references)
                 } else {
                     note.text = appendLine(note.text, this.currentLine())
                 }
@@ -436,47 +282,6 @@ class CommitParser(
         return false
     }
 
-    //private parseBodyAndFooter(isBody: boolean) {
-    //    const { commit } = this
-    //
-    //    if (!this.isLineAvailable()) {
-    //      return isBody
-    //    }
-    //
-    //    const references = this.parseReferences(this.currentLine())
-    //    const isStillBody = !references.length && isBody
-    //
-    //    if (isStillBody) {
-    //      commit.body = appendLine(commit.body, this.currentLine())
-    //    } else {
-    //      commit.references.push(...references)
-    //      commit.footer = appendLine(commit.footer, this.currentLine())
-    //    }
-    //
-    //    this.nextLine()
-    //
-    //    return isStillBody
-    //  }
-    //
-    //  private parseBreakingHeader() {
-    //    const {
-    //      commit,
-    //      options
-    //    } = this
-    //
-    //    if (!options.breakingHeaderPattern || commit.notes.length || !commit.header) {
-    //      return
-    //    }
-    //
-    //    const matches = commit.header.match(options.breakingHeaderPattern)
-    //
-    //    if (matches) {
-    //      commit.notes.push({
-    //        title: 'BREAKING CHANGE',
-    //        text: matches[3]
-    //      })
-    //    }
-    //  }
     fun parseBodyAndFooter(isBody: Boolean): Boolean {
         val commit = this.commit
 
@@ -490,7 +295,7 @@ class CommitParser(
         if (isStillBody) {
             commit.body = appendLine(commit.body, this.currentLine())
         } else {
-            commit.references.toMutableList().addAll(references)
+            commit.references.addAll(references)
             commit.footer = appendLine(commit.footer, this.currentLine())
         }
 
@@ -500,23 +305,23 @@ class CommitParser(
     }
 
     //  private parseBreakingHeader() {
-    //    const {
-    //      commit,
-    //      options
-    //    } = this
-    //
-    //    if (!options.breakingHeaderPattern || commit.notes.length || !commit.header) {
-    //      return
-    //    }
-    //
-    //    const matches = commit.header.match(options.breakingHeaderPattern)
-    //
-    //    if (matches) {
-    //      commit.notes.push({
-    //        title: 'BREAKING CHANGE',
-    //        text: matches[3]
-    //      })
-    //    }
+//    const {
+//      commit,
+//      options
+//    } = this
+//
+//    if (!options.breakingHeaderPattern || commit.notes.length || !commit.header) {
+//      return
+//    }
+//
+//    const matches = commit.header.match(options.breakingHeaderPattern)
+//
+//    if (matches) {
+//      commit.notes.push({
+//        title: 'BREAKING CHANGE',
+//        text: matches[3]
+//      })
+//    }
     fun parseBreakingHeader() {
         val commit = this.commit
         val options = this.options
@@ -538,22 +343,22 @@ class CommitParser(
     }
 
     //private parseMentions(input: string) {
-    //    const {
-    //      commit,
-    //      regexes
-    //    } = this
-    //    let matches: RegExpExecArray | null
-    //
-    //    for (;;) {
-    //      matches = regexes.mentions.exec(input)
-    //
-    //      if (!matches) {
-    //        break
-    //      }
-    //
-    //      commit.mentions.push(matches[1])
-    //    }
-    //  }
+//    const {
+//      commit,
+//      regexes
+//    } = this
+//    let matches: RegExpExecArray | null
+//
+//    for (;;) {
+//      matches = regexes.mentions.exec(input)
+//
+//      if (!matches) {
+//        break
+//      }
+//
+//      commit.mentions.push(matches[1])
+//    }
+//  }
     fun parseMentions(input: String) {
         val commit = this.commit
         val regexes = this.regexes
@@ -571,23 +376,23 @@ class CommitParser(
     }
 
     // private parseRevert(input: string) {
-    //    const {
-    //      commit,
-    //      options
-    //    } = this
-    //    const correspondence = options.revertCorrespondence || []
-    //    const matches = options.revertPattern
-    //      ? input.match(options.revertPattern)
-    //      : null
-    //
-    //    if (matches) {
-    //      commit.revert = correspondence.reduce<CommitMeta>((meta, key, index) => {
-    //        meta[key] = matches[index + 1] || null
-    //
-    //        return meta
-    //      }, {})
-    //    }
-    //  }
+//    const {
+//      commit,
+//      options
+//    } = this
+//    const correspondence = options.revertCorrespondence || []
+//    const matches = options.revertPattern
+//      ? input.match(options.revertPattern)
+//      : null
+//
+//    if (matches) {
+//      commit.revert = correspondence.reduce<CommitMeta>((meta, key, index) => {
+//        meta[key] = matches[index + 1] || null
+//
+//        return meta
+//      }, {})
+//    }
+//  }
     fun parseRevert(input: String) {
         val commit = this.commit
         val options = this.options
@@ -601,21 +406,6 @@ class CommitParser(
         }
     }
 
-    //  private cleanupCommit() {
-    //    const { commit } = this
-    //
-    //    if (commit.body) {
-    //      commit.body = trimNewLines(commit.body)
-    //    }
-    //
-    //    if (commit.footer) {
-    //      commit.footer = trimNewLines(commit.footer)
-    //    }
-    //
-    //    commit.notes.forEach((note) => {
-    //      note.text = trimNewLines(note.text)
-    //    })
-    //  }
     fun cleanupCommit() {
         val commit = this.commit
 
@@ -643,7 +433,7 @@ class CommitParser(
         }
 
         val commentFilter = getCommentFilter(this.options.commentChar)
-        val rawLines = trimNewLines(input).split(Regex("\\r?\\n"))
+        val rawLines = trimNewLines(input).split(Regex("\r?\n"))
         val lines = truncateToScissor(rawLines).filter { line -> commentFilter(line) && gpgFilter(line) }
 
         this.lines.clear()
@@ -658,7 +448,7 @@ class CommitParser(
         this.parseHeader(isMergeCommit)
 
         if (commit.header != null) {
-            commit.references.toMutableList().addAll(this.parseReferences(commit.header!!))
+            commit.references.addAll(this.parseReferences(commit.header!!))
         }
 
         var isBody = true
