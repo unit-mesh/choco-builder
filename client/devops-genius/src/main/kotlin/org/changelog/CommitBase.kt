@@ -25,8 +25,8 @@ data class Commit(
     var header: String? = null,
     var body: String? = null,
     var footer: String? = null,
-    val notes: List<CommitNote> = emptyList(),
-    val mentions: List<String> = emptyList(),
+    val notes: MutableList<CommitNote> = mutableListOf(),
+    val mentions: MutableList<String> = mutableListOf(),
     val references: MutableList<CommitReference> = mutableListOf(),
     var meta: MutableMap<String, String?> = mutableMapOf(),
 )

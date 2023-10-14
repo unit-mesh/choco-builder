@@ -77,7 +77,7 @@ fun truncateToScissor(lines: List<String>): List<String> {
  * @returns True if the line is not a GPG sign line.
  */
 fun gpgFilter(line: String): Boolean {
-    return !line.matches(Regex("^\\s*gpg:"))
+    return !line.matches(Regex("^\\s*gpg:.*"))
 }
 
 class CommitParser(
@@ -117,7 +117,14 @@ class CommitParser(
         }
 
 
-        return CommitReference(raw!!, action, owner = owner, repository = repository, prefix = prefix, issue = issue)
+        return CommitReference(
+            raw!!,
+            action = action,
+            owner = owner,
+            repository = repository,
+            prefix = prefix,
+            issue = issue
+        )
     }
 
     fun parseReferences(input: String): List<CommitReference> {
@@ -127,13 +134,13 @@ class CommitParser(
             Regex("()(.+)", setOf(RegexOption.IGNORE_CASE))
         }
         val references = mutableListOf<CommitReference>()
-        val action: String?
-        val sentence: String
 
         val matches: MatchResult = regex.find(input) ?: return references
 
-        action = matches.groupValues.getOrNull(1)
-        sentence = matches.groupValues.getOrNull(2) ?: ""
+        val firstValue = matches.groupValues.getOrNull(1)
+
+        val action = if (firstValue?.isNotEmpty() == true) firstValue else null
+        val sentence = matches.groupValues.getOrNull(2) ?: ""
 
         val reference: CommitReference? = this.parseReference(sentence, action)
 
@@ -192,7 +199,8 @@ class CommitParser(
 
         if (matches != null) {
             correspondence.forEachIndexed { index, key ->
-                commit.meta[key] = matches.groupValues.getOrNull(index + 1)
+                val orNull = matches.groupValues.getOrNull(index + 1)
+                commit.meta[key] = if (orNull?.isNotEmpty() == true) orNull else null
             }
         }
     }
@@ -247,7 +255,7 @@ class CommitParser(
                 text = matches.groupValues.getOrNull(2) ?: "",
             )
 
-            commit.notes.toMutableList().add(note)
+            commit.notes.add(note)
             commit.footer = appendLine(commit.footer, this.currentLine())
             this.nextLine()
 
@@ -304,24 +312,6 @@ class CommitParser(
         return isStillBody
     }
 
-    //  private parseBreakingHeader() {
-//    const {
-//      commit,
-//      options
-//    } = this
-//
-//    if (!options.breakingHeaderPattern || commit.notes.length || !commit.header) {
-//      return
-//    }
-//
-//    const matches = commit.header.match(options.breakingHeaderPattern)
-//
-//    if (matches) {
-//      commit.notes.push({
-//        title: 'BREAKING CHANGE',
-//        text: matches[3]
-//      })
-//    }
     fun parseBreakingHeader() {
         val commit = this.commit
         val options = this.options
@@ -333,7 +323,7 @@ class CommitParser(
         val matches = options.breakingHeaderPattern.find(commit.header!!)
 
         if (matches != null) {
-            commit.notes.toMutableList().add(
+            commit.notes.add(
                 CommitNote(
                     title = "BREAKING CHANGE",
                     text = matches.groupValues.getOrNull(3) ?: "",
@@ -342,57 +332,15 @@ class CommitParser(
         }
     }
 
-    //private parseMentions(input: string) {
-//    const {
-//      commit,
-//      regexes
-//    } = this
-//    let matches: RegExpExecArray | null
-//
-//    for (;;) {
-//      matches = regexes.mentions.exec(input)
-//
-//      if (!matches) {
-//        break
-//      }
-//
-//      commit.mentions.push(matches[1])
-//    }
-//  }
     fun parseMentions(input: String) {
         val commit = this.commit
         val regexes = this.regexes
-        var matches: MatchResult?
 
-        while (true) {
-            matches = regexes.mentions.find(input)
+        val matches: MatchResult = regexes.mentions.find(input) ?: return
 
-            if (matches == null) {
-                break
-            }
-
-            commit.mentions.toMutableList().add(matches.groupValues.getOrNull(1) ?: "")
-        }
+        commit.mentions.add(matches.groupValues.getOrNull(1) ?: "")
     }
 
-    // private parseRevert(input: string) {
-//    const {
-//      commit,
-//      options
-//    } = this
-//    const correspondence = options.revertCorrespondence || []
-//    const matches = options.revertPattern
-//      ? input.match(options.revertPattern)
-//      : null
-//
-//    if (matches) {
-//      commit.revert = correspondence.reduce<CommitMeta>((meta, key, index) => {
-//        meta[key] = matches[index + 1] || null
-//
-//        return meta
-//      }, {})
-//    }
-//  }
     fun parseRevert(input: String) {
         val commit = this.commit
         val options = this.options
