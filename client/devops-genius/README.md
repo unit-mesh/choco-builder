@@ -11,3 +11,22 @@ DevOpsGenius 旨在以结合 AIGC 改进软件开发和运维的 DevOps 实践�
 ## CI/CD
 
 Jenkins file: [https://www.jenkins.io/doc/pipeline/examples/](https://www.jenkins.io/doc/pipeline/examples/)
+
+## CodeReview Design
+
+DevOps 平台：[https://devops.phodal.com](https://devops.phodal.com/checklists/code-review) 的代码检视检查清单。
+
+- 业务逻辑。
+  - 文档信息。
+- 代码逻辑。
+  - 代码是否符合编码规范。
+  - 代码是否符合设计规范。
+- 需求信息。标准的提交格式：
+  - feat(devops): init first review command #8
+
+## Prompt 策略
+
+1. 如果变更的代码行数少，则只审核业务含义 —— 根据提交信息，解析对应的 story 名称，然后进行检查。
+2. 根据变更的代码，生成对应的代码信息，作为上下文的一部分。
+3. 如果变更的行数多，则需要进行代码逻辑的检查，以及对应的语法检查。
+4. 如果单次变更的行数过多，则需要进行拆分。
