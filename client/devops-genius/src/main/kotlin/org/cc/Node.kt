@@ -1,5 +1,8 @@
 package org.cc
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Node(
     val type: String,
     var value: String = "",

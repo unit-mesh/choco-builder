@@ -51,10 +51,16 @@ class Scanner(
     //    return token
     //  }
     fun peek(): String {
+        if (pos.offset >= text.length) {
+            return ""
+        }
+
         var token = text[pos.offset].toString()
+        // Consume <CR>? <LF>
         if (token == CR.toString() && text[pos.offset + 1] == LF) {
             token += LF
         }
+
         return token
     }
 
@@ -63,6 +69,10 @@ class Scanner(
     //    return literal === str
     //  }
     fun peekLiteral(literal: String): Boolean {
+        if (literal.length > text.length - pos.offset) {
+            return false
+        }
+
         val str = text.substring(pos.offset, pos.offset + literal.length)
         return literal == str
     }

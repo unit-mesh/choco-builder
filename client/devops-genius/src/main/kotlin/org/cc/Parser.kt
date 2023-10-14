@@ -77,7 +77,7 @@ class Parser(val commitText: String) {
         // <summary> ...
         val s = summary()
         if (s == null) {
-            throw s!!
+            throw ScannerException(node, "summary")
         } else {
             node.children += s
         }
@@ -90,7 +90,7 @@ class Parser(val commitText: String) {
         // ... <newline>* <body> ...
         nl = newline()
         if (nl == null) {
-            throw nl!!
+            throw ScannerException(node, "newline")
         } else {
             node.children += nl
             b = body()
@@ -348,7 +348,8 @@ class Parser(val commitText: String) {
         }
 
         if (scanner.peek() != ")") {
-            throw scanner.abort(node, listOf(")"))
+            scanner.abort(node, listOf(")"))
+            return null
         } else {
             scanner.exit(node)
             scanner.next()
@@ -406,12 +407,13 @@ class Parser(val commitText: String) {
         val pf = preFooter()
         if (pf != null) {
             scanner.abort(node)
+            return null
         }
 
         // ["BREAKING CHANGE", ":", <whitespace>*]
-        val b = breakingChange(false)
-        if (b != null && scanner.peek() == ":") {
-            node.children += b
+        val breaking = breakingChange(false)
+        if (breaking != null && scanner.peek() == ":") {
+            node.children += breaking
             node.children += separator()!!
             val w = whitespace()
             if (w != null) {
@@ -425,14 +427,15 @@ class Parser(val commitText: String) {
         // <newline>, <body>*
         val nl = newline()
         if (nl != null) {
-            val b = body()
-            if (b == null) {
+            val body = body()
+            if (body == null) {
                 scanner.abort(nl)
             } else {
                 node.children += nl
-                node.children += b.children
+                node.children += body.children
             }
         }
+
         return scanner.exit(node)
     }
 
@@ -583,16 +586,16 @@ class Parser(val commitText: String) {
 
         val t = type()
         if (t == null) {
-            return t
+            return null
         } else {
             node.children += t
             val s = scope()
             if (s != null) {
                 node.children += s
             }
-            val b = breakingChange()
-            if (b != null) {
-                node.children += b
+            val change = breakingChange()
+            if (change != null) {
+                node.children += change
             }
         }
         return scanner.exit(node)
@@ -623,6 +626,7 @@ class Parser(val commitText: String) {
         } else if (scanner.peekLiteral("BREAKING CHANGE") || scanner.peekLiteral("BREAKING-CHANGE")) {
             node.value = scanner.next("BREAKING CHANGE".length)
         }
+
         if (node.value == "") {
             scanner.abort(node, listOf("BREAKING CHANGE"))
             return null
@@ -648,6 +652,7 @@ class Parser(val commitText: String) {
     fun value(): Node {
         val node = scanner.enter("value", listOf())
         node.children += text()
+
         var c: Node
         while (true) {
             c = continuation() ?: break
@@ -730,10 +735,12 @@ class Parser(val commitText: String) {
     //}
     fun separator(): Node? {
         val node = scanner.enter("separator", "")
+        // ":"
         if (scanner.peek() == ":") {
             node.value = scanner.next()
             return scanner.exit(node)
         }
+        // " #"
         if (scanner.peek() == " ") {
             scanner.next()
             if (scanner.peek() == "#") {
@@ -794,6 +801,7 @@ class Parser(val commitText: String) {
         while (isNewline(scanner.peek())) {
             node.value += scanner.next()
         }
+
         if (node.value == "") {
             scanner.abort(node, listOf("<CR><LF>", "<LF>"))
             return null
