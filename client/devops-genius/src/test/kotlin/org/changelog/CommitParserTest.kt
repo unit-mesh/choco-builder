@@ -3,18 +3,18 @@ package org.changelog;
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class CommitParserTest {
-    val customOptions: ParserOptions = ParserOptions(
-        revertPattern = Regex("^Revert\\s\"([\\s\\S]*)\"\\s*This reverts commit (.*)\\.$"),
-        revertCorrespondence = listOf("header", "hash"),
-        fieldPattern = Regex("^-(.*?)-$"),
-        headerPattern = Regex("^(\\w*)(?:\\(([\\w$.*\\- ]*)\\))?: (.*)$"),
-        headerCorrespondence = listOf("type", "scope", "subject"),
-        noteKeywords = listOf("BREAKING AMEND"),
-        issuePrefixes = listOf("#", "gh-"),
-        referenceActions = listOf("kill", "kills", "killed", "handle", "handles", "handled")
-    )
+val customOptions: ParserOptions = ParserOptions(
+    revertPattern = Regex("^Revert\\s\"([\\s\\S]*)\"\\s*This reverts commit (.*)\\.$"),
+    revertCorrespondence = listOf("header", "hash"),
+    fieldPattern = Regex("^-(.*?)-$"),
+    headerPattern = Regex("^(\\w*)(?:\\(([\\w$.*\\- ]*)\\))?: (.*)$"),
+    headerCorrespondence = listOf("type", "scope", "subject"),
+    noteKeywords = listOf("BREAKING AMEND"),
+    issuePrefixes = listOf("#", "gh-"),
+    referenceActions = listOf("kill", "kills", "killed", "handle", "handles", "handled")
+)
 
+class CommitParserTest {
     val customParser = CommitParser(customOptions)
 
     @Test

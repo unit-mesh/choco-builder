@@ -88,9 +88,9 @@ class CommitParser(
     private var lineIndex = 0
     private var commit = createCommitObject()
 
-    private fun currentLine() = lines.get(lineIndex)
+    private fun currentLine() = lines.getOrNull(lineIndex)
 
-    private fun nextLine() = lines.get(lineIndex++)
+    private fun nextLine() = lines.getOrNull(lineIndex++)
 
     private fun isLineAvailable() = lineIndex < lines.size
 
@@ -336,9 +336,15 @@ class CommitParser(
         val commit = this.commit
         val regexes = this.regexes
 
-        val matches: MatchResult = regexes.mentions.find(input) ?: return
+        var lastIndex = 0
 
-        commit.mentions.add(matches.groupValues.getOrNull(1) ?: "")
+        while (true) {
+            val matchResult = regexes.mentions.find(input, lastIndex) ?: break
+
+            val match = matchResult.groupValues[1]
+            commit.mentions.add(match)
+            lastIndex = matchResult.range.last + 1
+        }
     }
 
     fun parseRevert(input: String) {
