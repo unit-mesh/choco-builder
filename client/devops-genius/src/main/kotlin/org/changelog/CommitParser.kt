@@ -410,13 +410,9 @@ class CommitParser(
             }
         }
 
-        println("parseBreakingHeader")
         this.parseBreakingHeader()
-        println("parseMentions")
         this.parseMentions(input)
-        println("parseRevert")
         this.parseRevert(input)
-        println("cleanupCommit")
         this.cleanupCommit()
 
         return commit

@@ -1,6 +1,6 @@
 package org.changelog
 
-open class ParserOptions(
+data class ParserOptions(
     val commentChar: String? = null,
     val mergePattern: Regex? = null,
     val mergeCorrespondence: List<String>? = null,
@@ -46,13 +46,13 @@ open class ParserOptions(
     }
 }
 
-
-/**
- * What warn function to use. For example, `console.warn.bind(console)`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
- */
-class ParserStreamOptions(
-    warn: Boolean? = null,
-    warnFunction: ((String) -> Unit)? = null,
-) : ParserOptions(
-
-)
+//
+///**
+// * What warn function to use. For example, `console.warn.bind(console)`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
+// */
+//class ParserStreamOptions(
+//    warn: Boolean? = null,
+//    warnFunction: ((String) -> Unit)? = null,
+//) : ParserOptions(
+//
+//)
