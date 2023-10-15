@@ -1,5 +1,10 @@
 package org.changelog
 
+import com.charleskorn.kaml.PolymorphismStyle
+import com.charleskorn.kaml.Yaml
+import com.charleskorn.kaml.YamlConfiguration
+import kotlinx.serialization.serializer
+
 data class ParserOptions(
     val commentChar: String? = null,
     val mergePattern: Regex? = null,
@@ -42,6 +47,16 @@ data class ParserOptions(
                 revertCorrespondence = listOf("header", "hash"),
                 fieldPattern = Regex("^-(.*?)-$")
             )
+        }
+
+        fun fromString(yamlString: String): ParserOptions? {
+            return try {
+                val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
+                Yaml(configuration = configuration).decodeFromString(serializer(), yamlString)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
     }
 }

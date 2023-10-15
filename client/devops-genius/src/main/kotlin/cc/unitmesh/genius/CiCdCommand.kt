@@ -20,7 +20,7 @@ class CiCdCommand : CliktCommand(help = "Auto create CI/CD script with GenAI") {
     private fun createCommitParser(): CommitParser {
         val parserOptions = if (commitMessageOptionFile.isNotEmpty()) {
             val commitMsgOptionText = File(commitMessageOptionFile).readText()
-            fromString(commitMsgOptionText)
+            ParserOptions.fromString(commitMsgOptionText)
         } else {
             ParserOptions.defaultOptions()
         }
@@ -30,15 +30,5 @@ class CiCdCommand : CliktCommand(help = "Auto create CI/CD script with GenAI") {
         }
 
         return CommitParser(parserOptions)
-    }
-
-    fun fromString(yamlString: String): ParserOptions? {
-        return try {
-            val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
-            Yaml(configuration = configuration).decodeFromString(serializer(), yamlString)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
     }
 }
