@@ -1,6 +1,9 @@
 name: "ChocolateFactory"
-repo: "." # relative to the project root, or GitHub repo
+repo: "." # relative to the project root, or GitHub repo, like "unitmesh/chocolate-factory"
 
 commit:
-  noteKeywords: ["BREAKING CHANGE", "BREAKING-CHANGE"]
-  issuePrefixes: ["#"]
+  noteKeywords: [ "BREAKING CHANGE", "BREAKING-CHANGE" ]
+  issuePrefixes: [ "#" ]
+
+store:
+  indexName: "unitmesh/chocolate-factory" # default to github repo
