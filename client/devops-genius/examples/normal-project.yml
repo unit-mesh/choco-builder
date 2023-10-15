@@ -1,0 +1,6 @@
+name: "ChocolateFactory"
+repo: "." # relative to the project root, or GitHub repo
+
+commit:
+  noteKeywords: ["BREAKING CHANGE", "BREAKING-CHANGE"]
+  issuePrefixes: ["#"]

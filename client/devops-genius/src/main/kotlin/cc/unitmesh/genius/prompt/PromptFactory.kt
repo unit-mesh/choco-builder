@@ -14,7 +14,5 @@ abstract class PromptFactory(promptsBasePath: String) {
         return paths.joinToString(System.lineSeparator())
     }
 
-    fun createPrompt(project: SimpleProject, description: String) {
-        TODO()
-    }
+    abstract fun createPrompt(project: SimpleProject, description: String): String
 }

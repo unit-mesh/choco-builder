@@ -20,7 +20,7 @@ data class ParserOptions(
     val issuePrefixes: List<String>? = null,
     val issuePrefixesCaseSensitive: Boolean? = null,
     val referenceActions: List<String>? = null,
-)                   {
+) {
     companion object {
         fun defaultOptions(): ParserOptions {
             return ParserOptions(
@@ -49,10 +49,30 @@ data class ParserOptions(
             )
         }
 
-        fun fromString(yamlString: String): ParserOptions? {
+        fun fromString(content: String): ParserOptions? {
             return try {
-                val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
-                Yaml(configuration = configuration).decodeFromString(serializer(), yamlString)
+                val conf = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
+                val userOptions = Yaml(configuration = conf).decodeFromString<ParserOptions>(serializer(), content)
+                // merge default options
+                defaultOptions().copy(
+                    commentChar = userOptions.commentChar ?: defaultOptions().commentChar,
+                    mergePattern = userOptions.mergePattern ?: defaultOptions().mergePattern,
+                    mergeCorrespondence = userOptions.mergeCorrespondence ?: defaultOptions().mergeCorrespondence,
+                    headerPattern = userOptions.headerPattern ?: defaultOptions().headerPattern,
+                    breakingHeaderPattern = userOptions.breakingHeaderPattern
+                        ?: defaultOptions().breakingHeaderPattern,
+                    headerCorrespondence = userOptions.headerCorrespondence ?: defaultOptions().headerCorrespondence,
+                    revertPattern = userOptions.revertPattern ?: defaultOptions().revertPattern,
+                    revertCorrespondence = userOptions.revertCorrespondence ?: defaultOptions().revertCorrespondence,
+                    fieldPattern = userOptions.fieldPattern ?: defaultOptions().fieldPattern,
+                    noteKeywords = userOptions.noteKeywords ?: defaultOptions().noteKeywords,
+                    notesPattern = userOptions.notesPattern ?: defaultOptions().notesPattern,
+                    issuePrefixes = userOptions.issuePrefixes ?: defaultOptions().issuePrefixes,
+                    issuePrefixesCaseSensitive = userOptions.issuePrefixesCaseSensitive
+                        ?: defaultOptions().issuePrefixesCaseSensitive,
+                    referenceActions = userOptions.referenceActions ?: defaultOptions().referenceActions,
+                )
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
