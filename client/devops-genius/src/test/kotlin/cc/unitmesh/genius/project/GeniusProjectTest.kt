@@ -20,7 +20,7 @@ kanban:
   type: GitHub
   token: "xx"
   
-commit-log:
+commitLog:
     ignorePatterns: ["*.md", "*.json"]
         """.trimIndent()
 
