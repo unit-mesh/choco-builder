@@ -12,6 +12,7 @@ import org.eclipse.jgit.diff.DiffEntry
 import org.eclipse.jgit.diff.DiffFormatter
 import org.eclipse.jgit.diff.RawTextComparator
 import org.eclipse.jgit.dircache.DirCacheIterator
+import org.eclipse.jgit.lib.AbbreviatedObjectId.fromObjectId
 import org.eclipse.jgit.lib.ObjectId
 import org.eclipse.jgit.lib.Repository
 import org.eclipse.jgit.revwalk.RevCommit
@@ -20,8 +21,10 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import org.eclipse.jgit.treewalk.FileTreeIterator
 import org.eclipse.jgit.treewalk.TreeWalk
 import org.eclipse.jgit.util.io.DisabledOutputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.nio.charset.StandardCharsets
+
 
 @Serializable
 class DifferFile(
@@ -58,6 +61,9 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
     private val changedClasses: MutableMap<String, ChangedEntry> = mutableMapOf()
     private val changedFunctions: MutableMap<String, ChangedEntry> = mutableMapOf()
 
+    private val repository: Repository = FileRepositoryBuilder().findGitDir(File(path)).build()
+    private val git = Git(repository).specifyBranch(branch)
+
     /**
      * Counts the number of changed calls between two revisions.
      *
@@ -66,9 +72,6 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
      * @return A list of ChangedCall objects representing the changed calls between the two revisions.
      */
     fun countBetween(sinceRev: String, untilRev: String): List<ChangedCall> {
-        val repository = FileRepositoryBuilder().findGitDir(File(path)).build()
-        val git = Git(repository).specifyBranch(branch)
-
         val since: ObjectId = git.repository.resolve(sinceRev)
         val until: ObjectId = git.repository.resolve(untilRev)
 
@@ -89,6 +92,23 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
 
         // 4. align to the latest file path (maybe), like: increment for path changes
         return changedCalls
+    }
+
+    fun patchBetween(sinceRev: String, untilRev: String): String {
+        git.use {
+            // 获取 sinceRev 和 untilRev 的 ObjectId
+            val sinceObj: ObjectId = repository.resolve(sinceRev)
+            val untilObj: ObjectId = repository.resolve(untilRev)
+
+            // 获取两个提交之间的差异（补丁）
+            val outputStream = ByteArrayOutputStream()
+            val diffFormatter = DiffFormatter(outputStream)
+            diffFormatter.setRepository(repository)
+            diffFormatter.format(sinceObj, untilObj)
+
+            val patchText = outputStream.toString(StandardCharsets.UTF_8.name())
+            return patchText.toString()
+        }
     }
 
     private fun calculateChange(): List<ChangedCall> {
