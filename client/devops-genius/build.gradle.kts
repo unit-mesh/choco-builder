@@ -22,6 +22,8 @@ dependencies {
     implementation(projects.ragModules.document)
 
     implementation(libs.kaml)
+    implementation(libs.github.api)
+    implementation(libs.gitlab4j.api)
 
     implementation(libs.clikt)
 

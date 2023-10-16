@@ -13,18 +13,18 @@ object KanbanFactory {
      * @param url the URL of the repository
      * @return a Kanban object representing the repository's Kanban board, or null if the URL is invalid or unsupported
      */
-    fun fromRepositoryUrl(url: String): Kanban? {
-        try {
+    fun fromRepositoryUrl(url: String, token: String): Kanban? {
+        return try {
             val parsedUrl = URL(url)
             val host = parsedUrl.host
 
-            return when {
-                host.contains("github.com") -> GitHubKanban()
-                host.contains("gitlab.com") -> GitlabKanban()
-                else -> GitlabKanban()
+            when {
+                host.contains("github.com") -> GitHubKanban(url, token)
+                host.contains("gitlab.com") -> GitlabKanban(url, token)
+                else -> GitlabKanban(url, token)
             }
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 }

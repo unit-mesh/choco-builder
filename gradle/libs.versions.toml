@@ -101,6 +101,10 @@ azure-openai = "com.azure:azure-ai-openai:1.0.0-beta.3"
 
 kaml = "com.charleskorn.kaml:kaml:0.55.0"
 
+github-api = "org.kohsuke:github-api:1.314"
+gitlab4j-api = "org.gitlab4j:gitlab4j-api:4.17.0"
+
+
 jackson-module-kotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2"
 jackson-module-jsonSchema = "com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.2"
 jackson-dataformat-yaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2"

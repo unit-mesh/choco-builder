@@ -13,7 +13,7 @@ class KanbanServiceTest {
         val url = "https://github.com/example/repository"
 
         // when
-        val result = KanbanFactory.fromRepositoryUrl(url)
+        val result = KanbanFactory.fromRepositoryUrl(url, "token")
 
         // then
         result!!.javaClass shouldBe GitHubKanban::class.java
@@ -25,7 +25,7 @@ class KanbanServiceTest {
         val url = "https://gitlab.com/example/repository"
 
         // when
-        val result = KanbanFactory.fromRepositoryUrl(url)
+        val result = KanbanFactory.fromRepositoryUrl(url, "token")
 
         // then
         result!!.javaClass shouldBe GitlabKanban::class.java
