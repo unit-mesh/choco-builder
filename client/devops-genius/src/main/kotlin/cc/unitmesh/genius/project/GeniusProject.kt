@@ -6,18 +6,22 @@ import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import java.nio.file.FileSystems
+import java.nio.file.Path
 
 @Serializable
 data class GeniusProject(
     val name: String = "",
     val path: String = "",
-    val store: GeniusStore = GeniusStore(),
-    val kanban: GeniusKanban = GeniusKanban(),
+    val store: GeniusStore? = null,
+    val kanban: GeniusKanban? = null,
+    val commitLog: GeniusCommitLog? = null,
 ) {
     var repoUrl: String = ""
 
     fun fetchStory(id: String): Issue {
-        return KanbanFactory.fromRepositoryUrl(repoUrl, kanban.token)!!.fetch(id)
+        return KanbanFactory.fromRepositoryUrl(repoUrl, kanban!!.token)!!.fetch(id)
     }
 
     companion object {
@@ -45,3 +49,21 @@ data class GeniusKanban(
     val token: String = "",
     val type: String = "",
 )
+
+@Serializable
+data class GeniusCommitLog(
+    /**
+     * Ignore files when generate commit log, which is a list of glob pattern.
+     */
+    val ignorePatterns: List<String>,
+) {
+    @Transient
+    private val compiledPatterns = ignorePatterns.map {
+        val matcher = FileSystems.getDefault().getPathMatcher("glob:$it")
+        matcher
+    }
+
+    fun isIgnoreFile(filename: String): Boolean {
+        return compiledPatterns.none { it.matches(Path.of(filename)) }
+    }
+}

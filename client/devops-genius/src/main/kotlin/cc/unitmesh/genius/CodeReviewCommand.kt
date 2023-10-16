@@ -28,7 +28,7 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
     private val project: GeniusProject by lazy {
         val path = Path(configFile)
         if (path.exists()) {
-            logger.info("load project from config file: $configFile")
+            logger.info("load project from config file: ${path.toAbsolutePath()}")
             GeniusProject.fromYml(path.readText())
         } else {
             logger.info("load project from repo: $repo")
@@ -72,10 +72,16 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
         }
         println("stories: $stories")
 
-        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
-        println("callList: $callList")
         val patch = diff.patchBetween(option.sinceCommit, option.untilCommit)
-        println("patch: $patch")
+        patch.filter {
+            project.commitLog?.isIgnoreFile(it.key) ?: true
+        }.map {
+            println("path: ${it.key}")
+            println(it.value)
+        }
+
+//        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
+//        println("callList: ${callList.joinToString("\n")}")
     }
 
     private fun createCommitParser(): CommitParser {

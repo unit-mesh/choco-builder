@@ -19,6 +19,9 @@ store:
 kanban:
   type: GitHub
   token: "xx"
+  
+commit-log:
+    ignorePatterns: ["*.md", "*.json"]
         """.trimIndent()
 
         // when

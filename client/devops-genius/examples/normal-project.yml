@@ -10,4 +10,10 @@ commit:
 store:
   indexName: "unitmesh/chocolate-factory" # default to github repo
 
-
+commitLog:
+  ignorePatterns:
+    - "**/*.md"
+    - "**/*.json"
+    - "**/*.yml"
+    - "**/*.yaml"
+    - "**/*.vm"

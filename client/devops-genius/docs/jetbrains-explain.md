@@ -10,7 +10,7 @@ See https://youtrack.jetbrains.com/issue/KT-41985
 
 Changes:
 
-    Index: README.adoc
+Index: README.adoc
 ===================================================================
 --- a/README.adoc	(revision b6ed535e3d4b6734a5695c32cc23ce8d5524b3eb)
 +++ b/README.adoc	(revision 0906a3d831fea14898e4f0914d6b64531f6c3ade)
