@@ -1,6 +1,6 @@
 package cc.unitmesh.genius.prompt
 
-import cc.unitmesh.genius.project.SimpleProject
+import cc.unitmesh.genius.project.GeniusProject
 
 abstract class PromptFactory(promptsBasePath: String) {
     private val promptsLoader: PromptsLoader
@@ -13,5 +13,5 @@ abstract class PromptFactory(promptsBasePath: String) {
         return paths.joinToString(System.lineSeparator())
     }
 
-    abstract fun createPrompt(project: SimpleProject, description: String): String
+    abstract fun createPrompt(project: GeniusProject, description: String): String
 }

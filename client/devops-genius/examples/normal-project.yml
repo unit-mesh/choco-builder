@@ -9,3 +9,5 @@ commit:
 # store the changelog in the repo
 store:
   indexName: "unitmesh/chocolate-factory" # default to github repo
+
+
