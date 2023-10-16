@@ -1,6 +1,9 @@
 package cc.unitmesh.genius.devops
 
-class Issue(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Issue(
     val id: String,
     val title: String,
     val body: String,

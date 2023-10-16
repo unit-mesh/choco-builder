@@ -303,7 +303,8 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
     }
 
     fun gitRepositoryUrl(): String {
-        return git.repository.config.getString("remote", "origin", "url")
+        val repoUrl = git.repository.config.getString("remote", "origin", "url")
+        return repoUrl
     }
 
     fun commitMessagesBetween(sinceCommit: String, untilCommit: String): Map<String, String> {

@@ -38,3 +38,4 @@ out/
 .env
 server/src/main/resources/application-dev.yml
 server/src/main/resources/frontend/components/mui-components.json
+devops-genius.yml

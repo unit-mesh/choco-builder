@@ -1,5 +1,7 @@
 package cc.unitmesh.genius.project
 
+import cc.unitmesh.genius.devops.Issue
+import cc.unitmesh.genius.devops.KanbanFactory
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
@@ -12,7 +14,11 @@ data class GeniusProject(
     val store: GeniusStore = GeniusStore(),
     val kanban: GeniusKanban = GeniusKanban(),
 ) {
-    val repoUrl: String = ""
+    var repoUrl: String = ""
+
+    fun fetchStory(id: String): Issue {
+        return KanbanFactory.fromRepositoryUrl(repoUrl, kanban.token)!!.fetch(id)
+    }
 
     companion object {
         fun fromYml(yaml: String): GeniusProject {
