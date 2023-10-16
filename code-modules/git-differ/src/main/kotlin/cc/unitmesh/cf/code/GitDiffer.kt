@@ -3,7 +3,7 @@ package cc.unitmesh.cf.code
 import chapi.domain.core.CodeDataStruct
 import chapi.parser.ParseMode
 import kotlinx.serialization.Serializable
-import org.archguard.scanner.core.diffchanges.ChangedCall
+//import org.archguard.scanner.core.diffchanges.ChangedNode
 import org.archguard.scanner.core.diffchanges.NodeRelation
 import org.archguard.scanner.core.diffchanges.NodeRelationBuilder
 import org.archguard.scanner.core.diffchanges.SHORT_ID_LENGTH
@@ -12,7 +12,6 @@ import org.eclipse.jgit.diff.DiffEntry
 import org.eclipse.jgit.diff.DiffFormatter
 import org.eclipse.jgit.diff.RawTextComparator
 import org.eclipse.jgit.dircache.DirCacheIterator
-import org.eclipse.jgit.lib.AbbreviatedObjectId.fromObjectId
 import org.eclipse.jgit.lib.ObjectId
 import org.eclipse.jgit.lib.Repository
 import org.eclipse.jgit.revwalk.RevCommit
@@ -38,6 +37,7 @@ class ChangedEntry(
     val packageName: String,
     val className: String,
     val functionName: String = "",
+    val code: String = "",
 )
 
 /**
@@ -74,9 +74,9 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
      *
      * @param sinceRev The revision to start counting from.
      * @param untilRev The revision to stop counting at.
-     * @return A list of ChangedCall objects representing the changed calls between the two revisions.
+     * @return A list of ChangedNode objects representing the changed calls between the two revisions.
      */
-    fun countBetween(sinceRev: String, untilRev: String): List<ChangedCall> {
+    fun countBetween(sinceRev: String, untilRev: String): List<ChangedNode> {
         val since: ObjectId = git.repository.resolve(sinceRev)
         val until: ObjectId = git.repository.resolve(untilRev)
 
@@ -91,12 +91,12 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
         // 3. count changed items reverse-call function
         this.baseLineDataTree.forEach { file -> this.fillFunctionMap(file.dataStructs) }
         this.baseLineDataTree.forEach { file -> this.fillReverseCallMap(file.dataStructs) }
-        val changedCalls = this.calculateChange()
+        val nodes = this.calculateChange()
 
         // add path map to projects
 
         // 4. align to the latest file path (maybe), like: increment for path changes
-        return changedCalls
+        return nodes
     }
 
     /**
@@ -123,9 +123,12 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
             outputStream.toString().split("diff --git ").forEach {
                 val lines = it.split("\n")
                 if (lines.size > 1) {
-                    val path = lines[0].split(" b/")[1]
-                    val patch = lines.subList(1, lines.size).joinToString("\n")
-                    patchMap[path] = patch
+                    val split = lines[0].split(" b/")
+                    if (split.size > 1) {
+                        val path = split[1]
+                        val patch = it.substring(lines[0].length + 1)
+                        patchMap[path] = patch
+                    }
                 }
             }
 
@@ -133,17 +136,18 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
         }
     }
 
-    private fun calculateChange(): List<ChangedCall> {
+    private fun calculateChange(): List<ChangedNode> {
         return changedFunctions.map {
             val callName = it.value.packageName + "." + it.value.className + "." + it.value.functionName
             val nodeRelations: MutableList<NodeRelation> = mutableListOf()
             calculateReverseCalls(callName, nodeRelations, loopDepth) ?: listOf()
 
-            ChangedCall(
+            ChangedNode(
                 path = it.value.path,
                 packageName = it.value.packageName,
                 className = it.value.className,
-                relations = nodeRelations
+                relations = nodeRelations,
+                code = ""
             )
         }.toList()
     }
@@ -185,16 +189,16 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
                 if (newDataStructs.size != oldDataStructs.size) {
                     val difference = newDataStructs.filterNot { oldDataStructs.contains(it) }
                     difference.forEach {
-                        this.changedFiles[filePath] = ChangedEntry(filePath, filePath, it.Package, it.NodeName)
+                        this.changedFiles[filePath] = ChangedEntry(filePath, filePath, it.Package, it.NodeName, it.Content)
                     }
                 } else {
                     // compare for field
                     newDataStructs.forEachIndexed { index, ds ->
                         // in first version, if field changed, just make data structure change will be simple
                         if (ds.Fields.size != oldDataStructs[index].Fields.size) {
-                            this.changedClasses[filePath] = ChangedEntry(filePath, filePath, ds.Package, ds.NodeName)
+                            this.changedClasses[filePath] = ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, ds.Content)
                         } else if (ds.Fields != oldDataStructs[index].Fields) {
-                            this.changedClasses[filePath] = ChangedEntry(filePath, filePath, ds.Package, ds.NodeName)
+                            this.changedClasses[filePath] = ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, ds.Content)
                         }
 
                         // compare for function sizes
@@ -202,7 +206,7 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
                             val difference = ds.Functions.filterNot { oldDataStructs[index].Functions.contains(it) }
                             difference.forEach {
                                 this.changedFunctions[filePath] =
-                                    ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, it.Name)
+                                    ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, it.Name, it.Content)
                             }
                         }
                     }
