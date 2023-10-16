@@ -61,8 +61,13 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
     private val changedClasses: MutableMap<String, ChangedEntry> = mutableMapOf()
     private val changedFunctions: MutableMap<String, ChangedEntry> = mutableMapOf()
 
-    private val repository: Repository = FileRepositoryBuilder().findGitDir(File(path)).build()
-    private val git = Git(repository).specifyBranch(branch)
+    private val repository: Repository
+    private val git: Git
+
+    init {
+        repository = FileRepositoryBuilder().findGitDir(File(path)).build()
+        git = Git(repository).specifyBranch(branch)
+    }
 
     /**
      * Counts the number of changed calls between two revisions.
