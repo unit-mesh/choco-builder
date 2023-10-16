@@ -99,7 +99,9 @@ class GitCommand(private var workingDirectory: String = ".") {
             logger.info(result.stdout)
         }
 
-        logger.info(stderr.joinToString(""))
+        if (result.exitCode != 0) {
+            logger.error(stderr.joinToString(""))
+        }
 
         return result
     }

@@ -1,11 +1,11 @@
 <configuration>
-<!--    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--        <encoder>-->
-<!--            <charset>UTF-8</charset>-->
-<!--            &lt;!&ndash; logger for disabled log when need  &ndash;&gt;-->
-<!--            <pattern>[SCANNER] %logger{36} %msg%n</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <!-- logger for disabled log when need  -->
+            <pattern>[SCANNER] %logger{36} %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <logger name="org.eclipse.jgit.internal.storage.file.FileSnapshot" level="OFF"/>
     <logger name="org.eclipse.jgit.internal.storage.file.Pack" level="OFF"/>

@@ -27,9 +27,9 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
 
         val diff = GitDiffer(repo, branch)
         val callList = diff.countBetween(sinceCommit, untilCommit)
+        println("callList: $callList")
         val patch = diff.patchBetween(sinceCommit, untilCommit)
         println("patch: $patch")
-//        println("callList: $callList")
     }
 
     private fun createCommitParser(): CommitParser {

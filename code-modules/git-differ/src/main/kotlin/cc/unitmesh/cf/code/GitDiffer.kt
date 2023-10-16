@@ -99,7 +99,14 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
         return changedCalls
     }
 
-    fun patchBetween(sinceRev: String, untilRev: String): String {
+    /**
+     * This method retrieves the difference (patch) between two given revisions in a Git repository.
+     *
+     * @param sinceRev The revision to start from.
+     * @param untilRev The revision to end at.
+     * @return A map containing the file paths as keys and the corresponding patch text as values.
+     */
+    fun patchBetween(sinceRev: String, untilRev: String): Map<String, String> {
         git.use {
             // 获取 sinceRev 和 untilRev 的 ObjectId
             val sinceObj: ObjectId = repository.resolve(sinceRev)
@@ -111,8 +118,18 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
             diffFormatter.setRepository(repository)
             diffFormatter.format(sinceObj, untilObj)
 
-            val patchText = outputStream.toString(StandardCharsets.UTF_8.name())
-            return patchText.toString()
+            // 将补丁转换为 Map
+            val patchMap = mutableMapOf<String, String>()
+            outputStream.toString().split("diff --git ").forEach {
+                val lines = it.split("\n")
+                if (lines.size > 1) {
+                    val path = lines[0].split(" b/")[1]
+                    val patch = lines.subList(1, lines.size).joinToString("\n")
+                    patchMap[path] = patch
+                }
+            }
+
+            return patchMap
         }
     }
 
@@ -236,7 +253,7 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
                 differFileMap[pathString] = differFile
                 files += differFile
             } catch (e: Exception) {
-                println(e)
+                // ignore
             }
         }
 
