@@ -1,4 +1,4 @@
-package cc.unitmesh.genius.helper
+package cc.unitmesh.genius.prompt
 
 import java.nio.charset.Charset
 

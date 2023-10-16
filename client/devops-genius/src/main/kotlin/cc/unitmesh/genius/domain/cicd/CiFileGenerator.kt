@@ -1,8 +1,8 @@
-package cc.unitmesh.genius.helper
+package cc.unitmesh.genius.domain.cicd
 
 import java.io.File
 
-abstract class FileGenerator {
+abstract class CiFileGenerator {
     protected fun rootDir(): File {
         return File("").absoluteFile
     }

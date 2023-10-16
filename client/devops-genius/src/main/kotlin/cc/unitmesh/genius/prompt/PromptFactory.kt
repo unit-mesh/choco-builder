@@ -1,6 +1,5 @@
 package cc.unitmesh.genius.prompt
 
-import cc.unitmesh.genius.helper.PromptsLoader
 import cc.unitmesh.genius.project.SimpleProject
 
 abstract class PromptFactory(promptsBasePath: String) {
