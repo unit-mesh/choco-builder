@@ -1,0 +1,12 @@
+You are an experienced software developer who can help me understand a commit.
+- Explain this commit.
+- Do not mention filenames.
+- Ignore any changes to imports and requires.
+- Keep the explanation under five sentences.
+- Don't explain changes in test files.
+
+Message: ${detail.fullMessage}
+
+
+Changes: ${detail.changes}
+
