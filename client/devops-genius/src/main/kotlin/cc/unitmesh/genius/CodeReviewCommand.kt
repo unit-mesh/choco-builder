@@ -8,6 +8,8 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.changelog.CommitParser
 import org.changelog.ParserOptions
@@ -80,8 +82,8 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
             println(it.value)
         }
 
-//        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
-//        println("callList: ${callList.joinToString("\n")}")
+        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
+        println(Json.encodeToString(callList))
     }
 
     private fun createCommitParser(): CommitParser {

@@ -122,19 +122,23 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
             val patchMap = mutableMapOf<String, String>()
             outputStream.toString().split("diff --git ").forEach {
                 val lines = it.split("\n")
-                if (lines.size > 1) {
-                    val split = lines[0].split(" b/")
-                    if (split.size > 1) {
-                        val path = split[1]
-                        val patch = it.substring(lines[0].length + 1)
-                        patchMap[path] = patch
-                    }
+                if (lines.size <= 1) {
+                    return@forEach
+                }
+
+                val split = lines[0].split(" b/")
+                if (split.size > 1) {
+                    val path = split[1]
+                    val patch = it.substring(lines[0].length + 1)
+                    patchMap[path] = Companion.trimDiff(patch)
                 }
             }
 
             return patchMap
         }
     }
+
+
 
     private fun calculateChange(): List<ChangedNode> {
         return changedFunctions.map {
@@ -313,5 +317,27 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
 
         val commits = git.log().addRange(since, until).call()
         return commits.associate { it.name to it.shortMessage }
+    }
+
+    companion object {
+        private val revisionRegex = Regex("\\(revision [^)]+\\)")
+
+        fun trimDiff(diffString: String): String {
+            val lines = diffString.lines()
+            val destination = ArrayList<String>()
+            for (line in lines) {
+                if (line.startsWith("diff --git ") || line.startsWith("index ") || line.startsWith("Index ")) continue
+
+                if (line == "===================================================================") continue
+
+                if (line.startsWith("---") || line.startsWith("+++")) {
+                    val result = revisionRegex.replace(line, "")
+                    destination.add(result)
+                } else {
+                    destination.add(line)
+                }
+            }
+            return destination.joinToString("\n")
+        }
     }
 }
