@@ -1,0 +1,19 @@
+name: "Open AI Verifier"
+description: "Verify Open AI's LLM"
+
+jobs:
+  prompt-evaluate: # job name should be unique for each job
+    description: "Evaluate prompt with different parameters"
+    connection: openai-connection.yml
+    template: ../src/main/resources/code-review/simple-review.open-ai.vm
+    template-datasource:
+      - type: file
+        value: ../src/main/resources/code-review/example.json
+
+    strategy:
+      - type: connection
+        value:
+          - type: range
+            key: temperature
+            range: 0.0~0.0
+            step: 0.1

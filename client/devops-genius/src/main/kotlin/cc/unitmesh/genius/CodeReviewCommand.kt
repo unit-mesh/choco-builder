@@ -72,10 +72,10 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
         }
         println("stories: $stories")
 
-//        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
-//        println("callList: $callList")
-//        val patch = diff.patchBetween(option.sinceCommit, option.untilCommit)
-//        println("patch: $patch")
+        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
+        println("callList: $callList")
+        val patch = diff.patchBetween(option.sinceCommit, option.untilCommit)
+        println("patch: $patch")
     }
 
     private fun createCommitParser(): CommitParser {

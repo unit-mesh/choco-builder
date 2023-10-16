@@ -1,0 +1,4 @@
+name: mock_response
+type: MockLlm
+configs:
+  api-response: "{\"text\": \"this is a mock resource\"}"

@@ -100,8 +100,11 @@ class ScriptExecutor {
         }
 
         // write to output
-        val resultFileName = createFileName(name, job)
+        val resultFileName = createFileName(name)
+        writeToFile(resultFileName, llmResult)
+    }
 
+    private fun writeToFile(resultFileName: String, llmResult: String) {
         val resultFile = this.basePath.resolve(resultFileName).toFile()
         val relativePath = this.basePath.relativize(resultFile.toPath())
         log.info("write result to file: $relativePath")
@@ -131,10 +134,14 @@ class ScriptExecutor {
             throw Exception("no messages found in template")
         }
 
+        val resultFileName = createFileName("prompt-log")
+        writeToFile(resultFileName, messages.joinToString("\n"))
+        log.info("save prompt to debug file: $resultFileName")
+
         return llmProvider.completion(messages)
     }
 
-    private fun createFileName(name: String, job: Job): String {
+    private fun createFileName(name: String): String {
         val currentMoment: Instant = Clock.System.now()
         val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
         val timeStr = datetimeInUtc.toString().replace(":", "-")
