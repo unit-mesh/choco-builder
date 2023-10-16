@@ -1,9 +1,11 @@
 name: "ChocolateFactory"
 repo: "." # relative to the project root, or GitHub repo, like "unitmesh/chocolate-factory"
 
+# the doc for [org.changelog.CommitParser]
 commit:
   noteKeywords: [ "BREAKING CHANGE", "BREAKING-CHANGE" ]
   issuePrefixes: [ "#" ]
 
+# store the changelog in the repo
 store:
   indexName: "unitmesh/chocolate-factory" # default to github repo
