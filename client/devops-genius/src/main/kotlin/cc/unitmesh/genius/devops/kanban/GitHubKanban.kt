@@ -18,12 +18,7 @@ class GitHubKanban(private val repoUrl: String, private val token: String) : Kan
     }
 
     override fun fetch(id: String): Issue {
-        // format; repoUrl: to owner/repo, like https://github.com/unitmesh/devti will be unitmesh/devti
-        var repoUrl = repoUrl.split("/").takeLast(2).joinToString("/")
-
-        // if repoUrl ends with .git, remove it
-        repoUrl = if (repoUrl.endsWith(".git")) repoUrl.substring(0, repoUrl.length - 4) else repoUrl
-
+        val repoUrl = formatUrl(this.repoUrl)
         val issue = gitHub.getRepository(repoUrl).getIssue(Integer.parseInt(id))
 
         return Issue(
@@ -34,5 +29,22 @@ class GitHubKanban(private val repoUrl: String, private val token: String) : Kan
             issue.labels.map { it.name },
             issue.assignees.map { it.name }
         )
+    }
+
+    companion object {
+        /**
+         * Formats the repository URL to owner/repo format.
+         *
+         * The formatUrl method takes the repository URL and formats it to the owner/repo format.
+         * For example, if the repository URL is "https://github.com/unitmesh/devti",
+         * the formatted URL will be "unitmesh/devti".
+         *
+         * @return The formatted repository URL in the owner/repo format.
+         */
+        fun formatUrl(repoUrl: String): String {
+            var url = repoUrl.split("/").takeLast(2).joinToString("/")
+            url = if (url.endsWith(".git")) url.substring(0, url.length - 4) else url
+            return url
+        }
     }
 }
