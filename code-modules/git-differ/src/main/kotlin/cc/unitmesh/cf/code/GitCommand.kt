@@ -96,6 +96,7 @@ class GitCommand(private var workingDirectory: String = ".") {
         result.stdout = stdout.joinToString("\n")
 
         if (result.stdout.isNotEmpty()) {
+            logger.info("execGit: git ${args.joinToString(" ")}")
             logger.info(result.stdout)
         }
 

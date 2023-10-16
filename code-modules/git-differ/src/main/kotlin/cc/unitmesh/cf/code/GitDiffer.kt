@@ -301,4 +301,16 @@ class GitDiffer(val path: String, private val branch: String, private val loopDe
     private fun Git.specifyBranch(branch: String): Git = apply {
         checkout().setName(branch).call()
     }
+
+    fun gitRepositoryUrl(): String {
+        return git.repository.config.getString("remote", "origin", "url")
+    }
+
+    fun commitMessagesBetween(sinceCommit: String, untilCommit: String): Map<String, String> {
+        val since: ObjectId = git.repository.resolve(sinceCommit)
+        val until: ObjectId = git.repository.resolve(untilCommit)
+
+        val commits = git.log().addRange(since, until).call()
+        return commits.associate { it.name to it.shortMessage }
+    }
 }

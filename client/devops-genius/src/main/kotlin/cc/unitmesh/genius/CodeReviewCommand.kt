@@ -2,8 +2,10 @@ package cc.unitmesh.genius
 
 import cc.unitmesh.cf.code.GitCommand
 import cc.unitmesh.cf.code.GitDiffer
+import cc.unitmesh.genius.domain.review.ReviewOption
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import org.changelog.CommitParser
 import org.changelog.ParserOptions
@@ -15,21 +17,42 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
     private val sinceCommit by option(help = "Begin commit revision").default("")
     private val untilCommit by option(help = "End commit revision. Aka latest").default("")
     private val commitMessageOptionFile by option(help = "commit message option file").default("")
+    private val verbose by option(help = "verbose").flag(default = false)
 
     override fun run() {
-        val lastestIds = GitCommand().latestCommitHash(2).stdout.split("\n")
+        val defaultLatestIds = GitCommand().latestCommitHash(2).stdout.split("\n")
         val sinceCommit = sinceCommit.ifEmpty {
-            lastestIds[lastestIds.lastIndex]
+            defaultLatestIds[defaultLatestIds.lastIndex]
         }
         val untilCommit = untilCommit.ifEmpty {
-            lastestIds[0]
+            defaultLatestIds[0]
         }
 
         val diff = GitDiffer(repo, branch)
-        val callList = diff.countBetween(sinceCommit, untilCommit)
-        println("callList: $callList")
-        val patch = diff.patchBetween(sinceCommit, untilCommit)
-        println("patch: $patch")
+        val repositoryUrl = diff.gitRepositoryUrl()
+
+        val reviewOption = ReviewOption(
+            path = repo,
+            repo = repositoryUrl,
+            branch = branch,
+            sinceCommit = sinceCommit,
+            untilCommit = untilCommit,
+            commitOptionFile = commitMessageOptionFile,
+            verbose = verbose,
+        )
+
+        doExecute(reviewOption, diff)
+    }
+
+    private fun doExecute(option: ReviewOption, diff: GitDiffer) {
+        val commitParser = createCommitParser()
+        val commitMessages = diff.commitMessagesBetween(option.sinceCommit, option.untilCommit)
+        val storyIds = commitMessages.map { commitParser.parse(it.value).references }.flatten()
+        println("storyIds: $storyIds")
+//        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
+//        println("callList: $callList")
+//        val patch = diff.patchBetween(option.sinceCommit, option.untilCommit)
+//        println("patch: $patch")
     }
 
     private fun createCommitParser(): CommitParser {
