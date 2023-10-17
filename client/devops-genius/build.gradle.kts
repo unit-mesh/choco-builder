@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.archguard.analyser.diffChanges)
 
     implementation(projects.codeModules.codeSplitter)
+    implementation(projects.codeModules.gitCommitMessage)
 
     implementation(projects.llmModules.sentenceTransformers)
     implementation(projects.ragModules.storeElasticsearch)

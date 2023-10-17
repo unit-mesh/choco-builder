@@ -28,6 +28,7 @@ include(":llm-tools:web-tools")
 
 include(":code-modules:code-splitter")
 include(":code-modules:git-differ")
+include(":code-modules:git-commit-message")
 
 include(":client:devops-genius")
 

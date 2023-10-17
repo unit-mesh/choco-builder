@@ -13,6 +13,10 @@ import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.changelog.CommitParser
 import org.changelog.ParserOptions
+import com.charleskorn.kaml.PolymorphismStyle
+import com.charleskorn.kaml.Yaml
+import com.charleskorn.kaml.YamlConfiguration
+import kotlinx.serialization.serializer
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.exists
@@ -103,5 +107,35 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
 
     companion object {
         val logger = LoggerFactory.getLogger(CodeReviewCommand::class.java)
+    }
+}
+
+private fun ParserOptions.Companion.fromString(content: String): ParserOptions? {
+    return try {
+        val conf = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
+        val userOptions = Yaml(configuration = conf).decodeFromString<ParserOptions>(serializer(), content)
+        // merge default options
+        defaultOptions().copy(
+            commentChar = userOptions.commentChar ?: defaultOptions().commentChar,
+            mergePattern = userOptions.mergePattern ?: defaultOptions().mergePattern,
+            mergeCorrespondence = userOptions.mergeCorrespondence ?: defaultOptions().mergeCorrespondence,
+            headerPattern = userOptions.headerPattern ?: defaultOptions().headerPattern,
+            breakingHeaderPattern = userOptions.breakingHeaderPattern
+                ?: defaultOptions().breakingHeaderPattern,
+            headerCorrespondence = userOptions.headerCorrespondence ?: defaultOptions().headerCorrespondence,
+            revertPattern = userOptions.revertPattern ?: defaultOptions().revertPattern,
+            revertCorrespondence = userOptions.revertCorrespondence ?: defaultOptions().revertCorrespondence,
+            fieldPattern = userOptions.fieldPattern ?: defaultOptions().fieldPattern,
+            noteKeywords = userOptions.noteKeywords ?: defaultOptions().noteKeywords,
+            notesPattern = userOptions.notesPattern ?: defaultOptions().notesPattern,
+            issuePrefixes = userOptions.issuePrefixes ?: defaultOptions().issuePrefixes,
+            issuePrefixesCaseSensitive = userOptions.issuePrefixesCaseSensitive
+                ?: defaultOptions().issuePrefixesCaseSensitive,
+            referenceActions = userOptions.referenceActions ?: defaultOptions().referenceActions,
+        )
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
 }
