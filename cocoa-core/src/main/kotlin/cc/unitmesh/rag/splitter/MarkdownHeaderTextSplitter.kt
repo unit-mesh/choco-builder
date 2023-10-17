@@ -35,6 +35,9 @@ data class LineType(var content: String, val metadata: Map<String, Any>)
  * @constructor Creates a new instance of the `MarkdownHeaderTextSplitter` class with the specified headers to split on and aggregation option.
  * @param headersToSplitOn The list of headers to split on, along with their associated metadata.
  * @param returnEachLine A flag indicating whether to return each line separately or aggregate them into chunks with common headers.
+ *
+ * 在使用本地的 Sentence Transformers 的 all-MiniLM-L6-v2 模型，由于受输出是 384 的长度影响，需要控制好 token 的长度。 因此，需要对文档进行二次分割。
+ *
  */
 class MarkdownHeaderTextSplitter(
     headersToSplitOn: List<Pair<String, String?>>,

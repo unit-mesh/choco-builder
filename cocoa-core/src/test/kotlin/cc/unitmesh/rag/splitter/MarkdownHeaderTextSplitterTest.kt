@@ -17,6 +17,7 @@
  */
 package cc.unitmesh.rag.splitter;
 
+import cc.unitmesh.docs.SampleCode
 import cc.unitmesh.rag.document.Document
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -113,6 +114,7 @@ internal class MarkdownHeaderTextSplitterTest {
      * Test markdown splitter by header: Case 3.
      */
     @Test
+    @SampleCode
     fun testMdHeaderTextSplitter3() {
         val markdownDocument = """
                 # Foo
@@ -136,6 +138,8 @@ internal class MarkdownHeaderTextSplitterTest {
                  Hi this is Molly
                 
                 """.trimIndent()
+
+        // start-sample
         val headersToSplitOn: List<Pair<String, String>> = listOf(
             Pair("#", "Header 1"),
             Pair("##", "Header 2"),
@@ -144,7 +148,9 @@ internal class MarkdownHeaderTextSplitterTest {
         )
         val markdownSplitter = MarkdownHeaderTextSplitter(headersToSplitOn)
         val output: List<Document> = markdownSplitter.splitText(markdownDocument)
-        val expectedOutput: List<Document> = listOf<Document>(
+        // end-sample
+
+        val expectedOutput: List<Document> = listOf(
             Document(
                 "Hi this is Jim  \nHi this is Joe",
                 mapOf("Header 1" to "Foo", "Header 2" to "Bar")

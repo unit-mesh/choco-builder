@@ -23,6 +23,16 @@ import kotlin.math.max
 import kotlin.math.min
 
 
+/**
+ * The TokenTextSplitter class is responsible for splitting a text into smaller chunks based on token size and character length.
+ * It uses an encoding tokenizer to encode and decode the text into tokens.
+ *
+ * @property encoding The encoding tokenizer used to encode and decode the text into tokens. The default tokenizer is OpenAiEncoding.
+ * @property chunkSize The target size of each text chunk in tokens. The default value is 800.
+ * @property minChunkSizeChars The minimum size of each text chunk in characters. The default value is 350.
+ * @property minChunkLengthToEmbed The minimum length of a chunk text to be included in the final chunks. The default value is 5.
+ * @property maxNumChunks The maximum number of chunks to generate from a text. The default value is 10000.
+ */
 class TokenTextSplitter(
     private val encoding: EncodingTokenizer = OpenAiEncoding(),
     // The target size of each text chunk in tokens

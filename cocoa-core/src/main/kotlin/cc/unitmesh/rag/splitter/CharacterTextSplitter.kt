@@ -22,7 +22,20 @@ import java.lang.String.join
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
+/**
+ * The `CharacterTextSplitter` class is a subclass of the `TextSplitter` class. It is responsible for splitting incoming text into chunks based on a specified separator.
+ *
+ * This class provides a method `splitText` that splits the incoming text into smaller pieces using a regular expression. It then merges these smaller pieces into medium-sized chunks using the `mergeSplits` method.
+ *
+ * The `CharacterTextSplitter` class also contains a companion object with a logger for logging purposes.
+ *
+ * @property separator The separator used to split the text into smaller pieces.
+ *
+ * @constructor Creates an instance of the `CharacterTextSplitter` class.
+ *
+ * @see TextSplitter
+ *
+ */
 class CharacterTextSplitter : TextSplitter() {
     companion object {
         private val log = org.slf4j.LoggerFactory.getLogger(CharacterTextSplitter::class.java)
