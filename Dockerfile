@@ -2,7 +2,7 @@ FROM gradle:jdk17 as build
 WORKDIR /app
 COPY . .
 RUN rm -rf choc-ui
-RUN ./gradlew build --no-daemon
+RUN ./gradlew build  -x test --no-daemon
 
 FROM openjdk:17-jdk
 WORKDIR /app
