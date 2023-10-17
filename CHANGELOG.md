@@ -1,4 +1,41 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.7...v) (2023-10-10)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.8...v) (2023-10-17)
+
+
+
+## [0.3.8](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.7...v0.3.8) (2023-10-17)
+
+
+### Bug Fixes
+
+* **devops:** add more testcases for commit message [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([cd43b4f](https://github.com/unit-mesh/chocolate-factory/commit/cd43b4fd0052918262541a06e07ae3eb09615260))
+* **devops:** fix testing for commit message [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([50b8ad6](https://github.com/unit-mesh/chocolate-factory/commit/50b8ad6dffb233f0ebba8cac957570e0bc1db241))
+* fix tets ([6e21742](https://github.com/unit-mesh/chocolate-factory/commit/6e2174271578c0cab9921187b3ed837611d7b0c6))
+
+
+### Features
+
+* **devops:** add explain prompt for testing [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([22e3dc9](https://github.com/unit-mesh/chocolate-factory/commit/22e3dc9579335b1f392cd1f597cf7b38b9a1b082))
+* **devops:** add filter for patterns [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([236ad98](https://github.com/unit-mesh/chocolate-factory/commit/236ad98998e83d221f08e027613da193f63f7e90))
+* **devops:** add simple line match for commit [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([ccc423e](https://github.com/unit-mesh/chocolate-factory/commit/ccc423ea3f460f430fa18437956085252d1c7500))
+* **devops:** feat first version git log parser [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([49e7e37](https://github.com/unit-mesh/chocolate-factory/commit/49e7e3724a4e6a1c0a55c2a190ef3024a080ee71))
+* **devops:** init basic ci/cd scripts ([21ae8a0](https://github.com/unit-mesh/chocolate-factory/commit/21ae8a0c1cf396dcf277dbe8bc1cb05246b142a4))
+* **devops:** init basic for debug [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([c71b12b](https://github.com/unit-mesh/chocolate-factory/commit/c71b12bcb151b4f99d11076745bcf77646dfd15a))
+* **devops:** init basic system build ([e68faaa](https://github.com/unit-mesh/chocolate-factory/commit/e68faaa0304f1d2bbc34adea46c2964131a262fc))
+* **devops:** init basic workflow [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([3be80ec](https://github.com/unit-mesh/chocolate-factory/commit/3be80ec447baf83573481576e08ed9a95af8d6e6))
+* **devops:** init featch issue logic for github [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([3d116aa](https://github.com/unit-mesh/chocolate-factory/commit/3d116aaf47004ac616751b775ec3cceb471ea7d5))
+* **devops:** init first review command [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([4268ab2](https://github.com/unit-mesh/chocolate-factory/commit/4268ab2434b0f48dc078e22d53ea45e2abae68f0))
+* **devops:** init for github and gitlab parser [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([206c98f](https://github.com/unit-mesh/chocolate-factory/commit/206c98f68d5d1dcd78460d751fc17d1c9221e7d1))
+* **devops:** init issue parser [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([485e041](https://github.com/unit-mesh/chocolate-factory/commit/485e041d6a54d98886882cb228eb1d758ed217a0))
+* **devops:** init parser for generate patch [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([ba245ca](https://github.com/unit-mesh/chocolate-factory/commit/ba245ca5913233898ea5636526d4a61cfddd7665))
+* **devops:** init project config [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([70dd852](https://github.com/unit-mesh/chocolate-factory/commit/70dd8524b07817a2380c265e82c195c89ce2c38e))
+* **devops:** init project config for yaml [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([e44a243](https://github.com/unit-mesh/chocolate-factory/commit/e44a24387c4f1abf8f82e14334b181a455788ea7))
+* **devops:** init prompt factory [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([2f98a68](https://github.com/unit-mesh/chocolate-factory/commit/2f98a68dd1d151f054680668a058283f9fceadba))
+* **devops:** init prompt testing scripts [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([68d68dc](https://github.com/unit-mesh/chocolate-factory/commit/68d68dc3b179a0f19fff623305f87365962ccb65))
+* init basic commands ([bdd1d10](https://github.com/unit-mesh/chocolate-factory/commit/bdd1d1010106a3acf3906d31154b129ab1ee260a))
+* init basic genius command ([1038e0c](https://github.com/unit-mesh/chocolate-factory/commit/1038e0cabda39d604f8c4d9eaf128e792e4c7a83))
+* init for code differ [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([9476aa3](https://github.com/unit-mesh/chocolate-factory/commit/9476aa32f10d1f16919a5104aa895bd1e9ea7285))
+* init git command [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([2637a99](https://github.com/unit-mesh/chocolate-factory/commit/2637a9972f101c4d07b9a3d6a5a5bfe021aabd15))
+* init options for ext tool ([c964c51](https://github.com/unit-mesh/chocolate-factory/commit/c964c51ec0c71f2f4a806f351f97c4f3015a7ef1))
 
 
 
