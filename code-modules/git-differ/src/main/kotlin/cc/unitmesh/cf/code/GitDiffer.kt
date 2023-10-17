@@ -121,7 +121,7 @@ class GitDiffer(val path: String, private val branch: String = "master", private
             // 将补丁转换为 Map
             val patchMap = mutableMapOf<String, String>()
             outputStream.toString().split("diff --git ").forEach {
-                val lines = it.split("\n")
+                val lines = it.split(System.lineSeparator())
                 if (lines.size <= 1) {
                     return@forEach
                 }
@@ -137,7 +137,6 @@ class GitDiffer(val path: String, private val branch: String = "master", private
             return patchMap
         }
     }
-
 
 
     private fun calculateChange(): List<ChangedNode> {
@@ -193,16 +192,19 @@ class GitDiffer(val path: String, private val branch: String = "master", private
                 if (newDataStructs.size != oldDataStructs.size) {
                     val difference = newDataStructs.filterNot { oldDataStructs.contains(it) }
                     difference.forEach {
-                        this.changedFiles[filePath] = ChangedEntry(filePath, filePath, it.Package, it.NodeName, it.Content)
+                        this.changedFiles[filePath] =
+                            ChangedEntry(filePath, filePath, it.Package, it.NodeName, it.Content)
                     }
                 } else {
                     // compare for field
                     newDataStructs.forEachIndexed { index, ds ->
                         // in first version, if field changed, just make data structure change will be simple
                         if (ds.Fields.size != oldDataStructs[index].Fields.size) {
-                            this.changedClasses[filePath] = ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, ds.Content)
+                            this.changedClasses[filePath] =
+                                ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, ds.Content)
                         } else if (ds.Fields != oldDataStructs[index].Fields) {
-                            this.changedClasses[filePath] = ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, ds.Content)
+                            this.changedClasses[filePath] =
+                                ChangedEntry(filePath, filePath, ds.Package, ds.NodeName, ds.Content)
                         }
 
                         // compare for function sizes
@@ -337,7 +339,7 @@ class GitDiffer(val path: String, private val branch: String = "master", private
                     destination.add(line)
                 }
             }
-            return destination.joinToString("\n")
+            return destination.joinToString(System.lineSeparator())
         }
     }
 }

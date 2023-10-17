@@ -43,7 +43,7 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
     }
 
     override fun run() {
-        val defaultLatestIds = GitCommand().latestCommitHash(2).stdout.split("\n")
+        val defaultLatestIds = GitCommand().latestCommitHash(2).stdout.split(System.lineSeparator())
         val sinceCommit = sinceCommit.ifEmpty {
             defaultLatestIds[defaultLatestIds.lastIndex]
         }
