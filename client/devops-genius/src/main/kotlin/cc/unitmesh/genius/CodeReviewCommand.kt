@@ -2,14 +2,13 @@ package cc.unitmesh.genius
 
 import cc.unitmesh.cf.code.GitCommand
 import cc.unitmesh.cf.code.GitDiffer
+import cc.unitmesh.genius.domain.review.CodeReviewAction
 import cc.unitmesh.genius.domain.review.ReviewOption
 import cc.unitmesh.genius.project.GeniusProject
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.changelog.CommitParser
 import org.changelog.ParserOptions
@@ -64,53 +63,11 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
             untilCommit = untilCommit,
             commitOptionFile = commitMessageOptionFile,
             verbose = verbose,
+            project = project,
         )
 
-        doExecute(reviewOption, diff)
-    }
-
-    private fun doExecute(option: ReviewOption, diff: GitDiffer) {
         val commitParser = createCommitParser()
-        val commitMessages = diff.commitMessagesBetween(option.sinceCommit, option.untilCommit)
-        val parsedMsgs = commitMessages.map {
-            commitParser.parse(it.value)
-        }
-
-        val filterCommits = parsedMsgs.filter {
-            if (it.meta.containsKey("type")) {
-                val type = it.meta["type"] as String
-                project.commitLog?.isIgnoreType(type) ?: true
-            } else {
-                true
-            }
-        }
-
-        if (option.verbose) {
-            println("parsedMsgs: $parsedMsgs")
-            println("filterCommits: $filterCommits")
-        }
-
-        if (filterCommits.isEmpty()) {
-            println("commit don't need review")
-            return
-        }
-
-        val storyIds = parsedMsgs.map { it.references }.flatten()
-        val stories = storyIds.map {
-            project.fetchStory(it.issue)
-        }
-        println("stories: $stories")
-
-        val patch = diff.patchBetween(option.sinceCommit, option.untilCommit)
-        patch.filter {
-            project.commitLog?.isIgnoreFile(it.key) ?: true
-        }.map {
-            println("path: ${it.key}")
-            println(it.value)
-        }
-
-        val callList = diff.countBetween(option.sinceCommit, option.untilCommit)
-        println(Json.encodeToString(callList))
+        CodeReviewAction(project, reviewOption, diff, commitParser).execute()
     }
 
     private fun createCommitParser(): CommitParser {
