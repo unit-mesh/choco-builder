@@ -30,9 +30,13 @@ import java.io.InputStream
 
 
 /**
- * Extracts text from a Microsoft Office document.
- * This parser supports various file formats, including ppt, pptx, doc, docx, xls, and xlsx.
- * For detailed information on supported formats, please refer to the [official Apache POI website](https://poi.apache.org/).
+ * The `MsOfficeDocumentParser` class is responsible for extracting text from Microsoft Office documents.
+ * It supports various file formats, including ppt, pptx, doc, docx, xls, and xlsx.
+ * This class implements the `DocumentParser` interface.
+ *
+ * For detailed information on the supported formats, please refer to the official Apache POI website: [https://poi.apache.org/](https://poi.apache.org/).
+ *
+ * @param documentType The type of the Microsoft Office document to be parsed.
  */
 open class MsOfficeDocumentParser(private val documentType: DocumentType) : DocumentParser {
     override fun parse(inputStream: InputStream): List<Document> {

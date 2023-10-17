@@ -26,6 +26,13 @@ import java.io.InputStream
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 
+/**
+ * The `TextDocumentParser` class is responsible for parsing text documents.
+ * It implements the `DocumentParser` interface.
+ *
+ * @property documentType The type of the document being parsed.
+ * @property charset The character encoding used for reading the document. It defaults to UTF-8.
+ */
 class TextDocumentParser(
     private val documentType: DocumentType?,
     private val charset: Charset = StandardCharsets.UTF_8,

@@ -20,8 +20,12 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
     private var fileNodes = listOf<FileASTNode>()
 
     override fun execute(): List<RootDocContent> {
-        fileNodes = processor.process(rootDir)
+        fileNodes = fileNodes + processor.process(rootDir)
         return extractNodes(fileNodes)
+    }
+
+    fun appendNodes(dir: Path) {
+        fileNodes = fileNodes + processor.process(dir)
     }
 
     fun extractNodes(fileASTNodes: List<FileASTNode>): List<RootDocContent> {
@@ -71,7 +75,7 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
                     docs.add(RootDocContent(docContent, extractSealedClassDoc(clazz)))
                 }
 
-                // filter annotaion @RagScript
+                // filter annotation @RagScript
                 if (clazz.annotationEntries.isNotEmpty()) {
                     val annotation = clazz.annotationEntries[0]
                     if (annotation.text.contains("@RagScript")) {

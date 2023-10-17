@@ -15,6 +15,7 @@ class Runner : CliktCommand() {
 
         processRagScript(rootDir)
         processPromptScript(rootDir)
+        processDocumentModule(rootDir)
     }
 
     private val warningLog =
@@ -60,6 +61,29 @@ class Runner : CliktCommand() {
             output = "$output$warningLog"
 
             val outputFile = outputDir.resolve("$permalink.md")
+            outputFile.toFile().writeText(output + "\n\n" + content)
+            index += 1
+        }
+    }
+
+    private fun processDocumentModule(rootDir: Path) {
+        val documentDir = rootDir.resolve("rag-modules/document")
+        val kDocGen = KDocGen(documentDir)
+
+        kDocGen.appendNodes(rootDir.resolve("cocoa-core/src/main/kotlin/cc/unitmesh/rag/document"))
+
+        val documentDocs = kDocGen.execute()
+
+        val docs = renderDocs(documentDocs)
+        val outputDir = rootDir.resolve("docs/rag/")
+        var index = 10
+        docs.forEach { (name, content) ->
+            var output = CustomJekyllFrontMatter("Document", "Retrieval Augmented Generation", index, "/rag/document")
+                .toMarkdown()
+
+            output = "$output$warningLog"
+
+            val outputFile = outputDir.resolve("document.md")
             outputFile.toFile().writeText(output + "\n\n" + content)
             index += 1
         }

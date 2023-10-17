@@ -24,6 +24,18 @@ import cc.unitmesh.rag.document.Document
 data class HeaderType(val level: Int, val name: String, val data: String)
 data class LineType(var content: String, val metadata: Map<String, Any>)
 
+/**
+ * The `MarkdownHeaderTextSplitter` class is responsible for splitting a markdown file into chunks based on specified headers.
+ * It allows for the extraction of content associated with each header and provides options for aggregating the content into chunks
+ * with common headers or returning each line separately.
+ *
+ * @property headersToSplitOn The list of headers to split on, along with their associated metadata.
+ * @property returnEachLine A flag indicating whether to return each line separately or aggregate them into chunks with common headers.
+ *
+ * @constructor Creates a new instance of the `MarkdownHeaderTextSplitter` class with the specified headers to split on and aggregation option.
+ * @param headersToSplitOn The list of headers to split on, along with their associated metadata.
+ * @param returnEachLine A flag indicating whether to return each line separately or aggregate them into chunks with common headers.
+ */
 class MarkdownHeaderTextSplitter(
     headersToSplitOn: List<Pair<String, String?>>,
     private val returnEachLine: Boolean,

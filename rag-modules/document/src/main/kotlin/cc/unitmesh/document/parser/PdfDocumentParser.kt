@@ -27,6 +27,18 @@ import org.apache.pdfbox.text.PDFTextStripper
 import java.io.IOException
 import java.io.InputStream
 
+/**
+ * PdfDocumentParser is a class that implements the DocumentParser interface and is used to parse PDF documents.
+ *
+ * This class provides a method to parse a given input stream containing a PDF document and returns a list of Document objects.
+ * Each Document object represents a parsed document and contains the extracted content along with additional metadata.
+ *
+ * The parse method reads the input stream, loads the PDF document using the Loader class, and extracts the text content using the PDFTextStripper class.
+ * The extracted content is then used to create a Document object with the document type set to PDF.
+ *
+ * If an IOException occurs during the parsing process, a RuntimeException is thrown.
+ *
+ */
 class PdfDocumentParser : DocumentParser {
     override fun parse(inputStream: InputStream): List<Document> {
         val documents: MutableList<Document> = mutableListOf()

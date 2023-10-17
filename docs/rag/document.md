@@ -2,33 +2,83 @@
 layout: default
 title: Document
 parent: Retrieval Augmented Generation
-nav_order: 2
+nav_order: 10
+permalink: /rag/document
 ---
 
-主要的实现是基于 [Langchain4j](https://github.com/langchain4j/langchain4j) 的实现。
+{: .warning }
+Automatically generated documentation; use the command `./gradlew :docs-builder:run` and update comments in the source code to reflect changes.
 
-## Document Parser
+# DocumentParser 
 
-变化点：返回由 Document 组成的 List，而不是单个 Document。
+> > 当前的 Chocolate Factory 主要基于 [Langchain4j](https://github.com/langchain4j/langchain4j) 的实现。
 
-支持的类型，参考：[DocumentType](https://github.com/unit-mesh/chocolate-factory/blob/master/cocoa-core/src/main/kotlin/cc/unitmesh/rag/document/DocumentType.kt) :
+Parse the given input stream and return a list of documents.
 
-对应的三个解解析类：
+返回多个 [Document]:
+- [cc.unitmesh.rag.document.DocumentType.PPT]
 
-- MsOfficeDocumentParser
-- PdfDocumentParser
-- TextDocumentParser
+返回单个 [Document]:
+- [cc.unitmesh.rag.document.DocumentType.PDF]
+- [cc.unitmesh.rag.document.DocumentType.TXT]
+- [cc.unitmesh.rag.document.DocumentType.HTML]
+- [cc.unitmesh.rag.document.DocumentType.DOC]
 
-## PDF
 
-### Adobe PDF extract API [To Spike]
+## MdDocumentParser 
 
-Docs: [https://developer.adobe.com/document-services/docs/overview/pdf-extract-api/](https://developer.adobe.com/document-services/docs/overview/pdf-extract-api/)
+Markdown Document Parser
 
-![Extract Process](https://developer.adobe.com/document-services/docs/static/18fb6fd7224a217aed770df84103f50c/624f1/extract_process_21.webp)
+This class represents a parser for Markdown documents.
 
-相关论文：
+The MdDocumentParser class uses the [MarkdownHeaderTextSplitter] class to split the text of the document
+into separate sections based on the headers in the Markdown syntax. It then returns a list of Document
+objects representing each section of the document.
 
-- [PDFTriage: Question Answering over Long, Structured Documents](https://arxiv.org/abs/2309.08872)
-  ，中文翻译：[ PDFTriage:面向长篇结构化文档的问答](https://mp.weixin.qq.com/s/B2Zl9hnAHxohWKRXEBaC9w)
+Example usage:
+```
+val parser = MdDocumentParser()
+val inputStream = FileInputStream("document.md")
+val documents = parser.parse(inputStream)
+```
+
+
+
+Sample: 
+
+```kotlin
+val parser = MdDocumentParser()
+val inputStream = ByteArrayInputStream("Sample Markdown Text".toByteArray())
+val result = parser.parse(inputStream)
+```
+
+## MsOfficeDocumentParser 
+
+The `MsOfficeDocumentParser` class is responsible for extracting text from Microsoft Office documents.
+It supports various file formats, including ppt, pptx, doc, docx, xls, and xlsx.
+This class implements the `DocumentParser` interface.
+
+For detailed information on the supported formats, please refer to the official Apache POI website: [https://poi.apache.org/](https://poi.apache.org/).
+
+
+
+## PdfDocumentParser 
+
+PdfDocumentParser is a class that implements the DocumentParser interface and is used to parse PDF documents.
+
+This class provides a method to parse a given input stream containing a PDF document and returns a list of Document objects.
+Each Document object represents a parsed document and contains the extracted content along with additional metadata.
+
+The parse method reads the input stream, loads the PDF document using the Loader class, and extracts the text content using the PDFTextStripper class.
+The extracted content is then used to create a Document object with the document type set to PDF.
+
+If an IOException occurs during the parsing process, a RuntimeException is thrown.
+
+
+## TextDocumentParser 
+
+The `TextDocumentParser` class is responsible for parsing text documents.
+It implements the `DocumentParser` interface.
+
+
 
