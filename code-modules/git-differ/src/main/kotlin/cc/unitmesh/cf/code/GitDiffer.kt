@@ -138,6 +138,8 @@ class GitDiffer(val path: String, private val branch: String = "master", private
         return patchMap
     }
 
+    private val lineTip = "\\ No newline at end of file"
+
     private fun generatePatches(
         outputStream: ByteArrayOutputStream,
         changedLineCount: ChangedLineCount,
@@ -154,7 +156,13 @@ class GitDiffer(val path: String, private val branch: String = "master", private
             val split = lines[0].split(" b/")
             if (split.size > 1) {
                 val path = split[1]
-                val patch = it.substring(lines[0].length + 1)
+                var patch = it.substring(lines[0].length + 1)
+
+                // if a patch includes `\ No newline at the end of file` remove it
+                if (patch.contains(lineTip)) {
+                    patch = patch.replace(lineTip + System.lineSeparator(), "")
+                }
+
                 patchMap[path] = OptimizePatch(changedLineCount, PatchChangeType.from(changeType), patch, path)
             }
         }
