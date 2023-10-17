@@ -52,6 +52,7 @@ data class GeniusKanban(
 
 @Serializable
 data class GeniusCommitLog(
+    val ignoreType: List<String>,
     /**
      * Ignore files when generate commit log, which is a list of glob pattern.
      */
@@ -61,6 +62,10 @@ data class GeniusCommitLog(
     private val compiledPatterns = ignorePatterns.map {
         val matcher = FileSystems.getDefault().getPathMatcher("glob:$it")
         matcher
+    }
+
+    fun isIgnoreType(type: String) : Boolean {
+        return !ignoreType.contains(type)
     }
 
     fun isIgnoreFile(filename: String): Boolean {

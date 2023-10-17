@@ -11,6 +11,7 @@ store:
   indexName: "unitmesh/chocolate-factory" # default to github repo
 
 commitLog:
+  ignoreType: [ "chore", "docs", "style" ]
   ignorePatterns:
     - "**/*.md"
     - "**/*.json"

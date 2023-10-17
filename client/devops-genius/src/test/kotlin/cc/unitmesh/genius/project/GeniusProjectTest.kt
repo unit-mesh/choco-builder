@@ -21,6 +21,7 @@ kanban:
   token: "xx"
   
 commitLog:
+    ignoreType: [ "chore", "docs", "style" ]
     ignorePatterns: ["*.md", "*.json"]
         """.trimIndent()
 

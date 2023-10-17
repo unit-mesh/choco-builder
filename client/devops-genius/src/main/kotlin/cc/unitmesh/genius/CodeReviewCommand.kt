@@ -72,7 +72,30 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
     private fun doExecute(option: ReviewOption, diff: GitDiffer) {
         val commitParser = createCommitParser()
         val commitMessages = diff.commitMessagesBetween(option.sinceCommit, option.untilCommit)
-        val storyIds = commitMessages.map { commitParser.parse(it.value).references }.flatten()
+        val parsedMsgs = commitMessages.map {
+            commitParser.parse(it.value)
+        }
+
+        val filterCommits = parsedMsgs.filter {
+            if (it.meta.containsKey("type")) {
+                val type = it.meta["type"] as String
+                project.commitLog?.isIgnoreType(type) ?: true
+            } else {
+                true
+            }
+        }
+
+        if (option.verbose) {
+            println("parsedMsgs: $parsedMsgs")
+            println("filterCommits: $filterCommits")
+        }
+
+        if (filterCommits.isEmpty()) {
+            println("commit don't need review")
+            return
+        }
+
+        val storyIds = parsedMsgs.map { it.references }.flatten()
         val stories = storyIds.map {
             project.fetchStory(it.issue)
         }

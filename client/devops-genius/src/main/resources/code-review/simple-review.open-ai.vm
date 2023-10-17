@@ -16,4 +16,7 @@ Commit Message: ${detail.fullMessage}
 Code Changes: ${detail.changes}
 
 As your Tech lead, I am only concerned with a few key code review issues. Please provide me with a critical summary.
-Take deep breath, Submit your summary under 5 sentences in here:
+You should follow the following format:
+
+Need another one to check: Yes/No // depends on the complexity of the code
+Summary: // Submit your summary under 5 sentences in here
