@@ -10,13 +10,11 @@ import kotlin.test.Test
 class GitDifferTest {
     @Test
     fun should_enable_to_diff() {
-        if (getOS() == OS.WINDOWS) {
-            return
-        }
+        if (getOS() == OS.WINDOWS) return
 
         val gitCommand = GitCommand()
 
-        val hashes: List<String> = gitCommand.latestCommitHash().stdout.split("\n")
+        val hashes: List<String> = gitCommand.latestCommitHash().stdout.split(System.lineSeparator())
 
         val path = Path(".").toAbsolutePath().parent.parent
         val gitDiffer = GitDiffer(path.toString(), "master")
@@ -27,9 +25,7 @@ class GitDifferTest {
 
     @Test
     fun should_trim_diff_string() {
-        if (getOS() == OS.WINDOWS) {
-            return
-        }
+        if (getOS() == OS.WINDOWS) return
 
         // given
         val diffString = """

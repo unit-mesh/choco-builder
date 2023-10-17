@@ -1,16 +1,16 @@
 package cc.unitmesh.cf.code
 
+//import org.archguard.scanner.core.diffchanges.ChangedNode
+import chapi.ast.javaast.JavaAnalyser
+import chapi.ast.kotlinast.KotlinAnalyser
 import chapi.domain.core.CodeDataStruct
 import chapi.parser.ParseMode
 import kotlinx.serialization.Serializable
-//import org.archguard.scanner.core.diffchanges.ChangedNode
 import org.archguard.scanner.core.diffchanges.NodeRelation
 import org.archguard.scanner.core.diffchanges.NodeRelationBuilder
 import org.archguard.scanner.core.diffchanges.SHORT_ID_LENGTH
 import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.diff.DiffEntry
-import org.eclipse.jgit.diff.DiffFormatter
-import org.eclipse.jgit.diff.RawTextComparator
+import org.eclipse.jgit.diff.*
 import org.eclipse.jgit.dircache.DirCacheIterator
 import org.eclipse.jgit.lib.ObjectId
 import org.eclipse.jgit.lib.Repository
@@ -38,6 +38,8 @@ class ChangedEntry(
     val className: String,
     val functionName: String = "",
     val code: String = "",
+    val addedLines: Int = 0,
+    val deletedLines: Int = 0
 )
 
 /**
@@ -93,7 +95,7 @@ class GitDiffer(val path: String, private val branch: String = "master", private
         this.baseLineDataTree.forEach { file -> this.fillReverseCallMap(file.dataStructs) }
         val nodes = this.calculateChange()
 
-        // add path map to projects
+        // add a path map to projects
 
         // 4. align to the latest file path (maybe), like: increment for path changes
         return nodes
@@ -118,6 +120,8 @@ class GitDiffer(val path: String, private val branch: String = "master", private
             diffFormatter.setRepository(repository)
             diffFormatter.format(sinceObj, untilObj)
 
+            summaryFileDiff(diffFormatter, sinceObj, untilObj)
+
             // 将补丁转换为 Map
             val patchMap = mutableMapOf<String, String>()
             outputStream.toString().split("diff --git ").forEach {
@@ -130,11 +134,46 @@ class GitDiffer(val path: String, private val branch: String = "master", private
                 if (split.size > 1) {
                     val path = split[1]
                     val patch = it.substring(lines[0].length + 1)
-                    patchMap[path] = Companion.trimDiff(patch)
+                    patchMap[path] = trimDiff(patch)
                 }
             }
 
             return patchMap
+        }
+    }
+
+    private fun summaryFileDiff(
+        diffFormatter: DiffFormatter,
+        sinceObj: ObjectId,
+        untilObj: ObjectId,
+    ) {
+        val diffs: List<DiffEntry> = diffFormatter.scan(sinceObj, untilObj)
+        diffs.map {
+            val edits: EditList = diffFormatter.toFileHeader(it).toEditList()
+            var deleteLines = 0
+            var addLines = 0
+            edits.forEach { edit ->
+                when (edit.type) {
+                    Edit.Type.DELETE -> {
+                        deleteLines += edit.lengthA
+                    }
+
+                    Edit.Type.REPLACE -> {
+                        deleteLines += edit.lengthA
+                    }
+
+                    Edit.Type.INSERT -> {
+                        addLines += edit.lengthB
+                    }
+
+                    else -> {
+                        // ignore
+                    }
+                }
+            }
+
+            println("删除行数：$deleteLines")
+            println("新增行数：$addLines")
         }
     }
 
@@ -150,7 +189,7 @@ class GitDiffer(val path: String, private val branch: String = "master", private
                 packageName = it.value.packageName,
                 className = it.value.className,
                 relations = nodeRelations,
-                code = ""
+                code = it.value.code,
             )
         }.toList()
     }
@@ -281,16 +320,17 @@ class GitDiffer(val path: String, private val branch: String = "master", private
         val content = repository.newObjectReader().use { objectReader ->
             String(objectReader.open(blobId).bytes, StandardCharsets.UTF_8)
         }
+
         return when (extension) {
             "kt", "kts" -> {
-                val analyser = chapi.ast.kotlinast.KotlinAnalyser()
+                val analyser = KotlinAnalyser()
                 analyser.analysis(content, fileName, ParseMode.Full).run {
                     DataStructures.map { it.apply { it.FilePath = pathString } }
                 }
             }
 
             "java" -> {
-                val analyser = chapi.ast.javaast.JavaAnalyser()
+                val analyser = JavaAnalyser()
                 val basicNodes = analyser.identBasicInfo(content, fileName).run {
                     DataStructures.map { ds -> ds.apply { ds.Imports = Imports } }
                 }

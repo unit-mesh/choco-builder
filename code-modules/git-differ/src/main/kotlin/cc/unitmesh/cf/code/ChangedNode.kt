@@ -10,6 +10,15 @@ class ChangedNode(
     val className: String,
     val relations: List<NodeRelation>,
     val code: String,
+    /**
+     * ignore imports, comments, blank lines
+     */
+    val keyAddLines: Int = 0,
+    /**
+     * ignore imports, comments, blank lines
+     */
+    val keyDeletedLines: Int = 0,
 ) {
 
 }
+
