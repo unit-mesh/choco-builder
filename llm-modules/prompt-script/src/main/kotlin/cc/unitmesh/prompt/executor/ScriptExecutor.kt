@@ -135,7 +135,7 @@ class ScriptExecutor {
         }
 
         val resultFileName = createFileName("prompt-log")
-        writeToFile(resultFileName, messages.joinToString("\n"))
+        writeToFile(resultFileName, messages.joinToString("\n") { it.content })
         log.info("save prompt to debug file: $resultFileName")
 
         return llmProvider.completion(messages)

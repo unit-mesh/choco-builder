@@ -19,7 +19,7 @@ class GitDifferTest {
         val path = Path(".").toAbsolutePath().parent.parent
         val gitDiffer = GitDiffer(path.toString(), "master")
 
-        val changedNodes = gitDiffer.patchBetween(hashes[0], hashes[1])
+        val changedNodes = gitDiffer.patchBetween(hashes[1], hashes[0])
         changedNodes.map {
             println(it.value.content)
         }
