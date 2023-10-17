@@ -60,11 +60,10 @@ data class GeniusCommitLog(
 ) {
     @Transient
     private val compiledPatterns = ignorePatterns.map {
-        val matcher = FileSystems.getDefault().getPathMatcher("glob:$it")
-        matcher
+        FileSystems.getDefault().getPathMatcher("glob:$it")
     }
 
-    fun isIgnoreType(type: String) : Boolean {
+    fun isIgnoreType(type: String): Boolean {
         return !ignoreType.contains(type)
     }
 
