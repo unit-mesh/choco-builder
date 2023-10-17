@@ -20,12 +20,14 @@ class KDocGen(private val rootDir: Path) : DocGenerator() {
     private var fileNodes = listOf<FileASTNode>()
 
     override fun execute(): List<RootDocContent> {
-        fileNodes = fileNodes + processor.process(rootDir)
+        fileNodes += processor.process(rootDir)
         return extractNodes(fileNodes)
     }
 
-    fun appendNodes(dir: Path) {
-        fileNodes = fileNodes + processor.process(dir)
+    fun appendNodes(vararg dirs: Path) {
+        dirs.forEach {
+            fileNodes += processor.process(it)
+        }
     }
 
     fun extractNodes(fileASTNodes: List<FileASTNode>): List<RootDocContent> {

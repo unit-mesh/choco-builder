@@ -1,5 +1,6 @@
 package cc.unitmesh.rag.store;
 
+import cc.unitmesh.docs.SampleCode
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.toEmbedding
 import cc.unitmesh.rag.document.Document
@@ -7,8 +8,24 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class InMemoryEmbeddingStoreTest {
+    @Test
+    @SampleCode
+    fun it_works() {
+        // start-sample
+        val embeddingStore: EmbeddingStore<Document> = InMemoryEmbeddingStore()
+
+        embeddingStore.add(toEmbedding(floatArrayOf(1f, 3f)), Document.from("first"))
+        embeddingStore.add(toEmbedding(floatArrayOf(2f, 2f)), Document.from("second"))
+
+        val relevant: List<EmbeddingMatch<Document>> =
+            embeddingStore.findRelevant(toEmbedding(floatArrayOf(4f, 0f)), 2)
+
+        // end-sample
+
+    }
 
     @Test
+    @SampleCode(name = "文本嵌入示例", content = "")
     fun should_add_embedding_with_generated_id() {
         val embeddingStore: EmbeddingStore<Document> = InMemoryEmbeddingStore()
 

@@ -41,7 +41,21 @@ import java.io.IOException
 import java.util.*
 
 /**
- * Elastic Embedding Store Implementation
+ * ElasticsearchStore is an implementation of the EmbeddingStore interface that uses Elasticsearch as the underlying storage.
+ * It allows storing and retrieving embeddings along with associated documents.
+ *
+ * The ElasticsearchStore class requires the following parameters to be provided:
+ * - serverUrl: The URL of the Elasticsearch server. The default value is "http://localhost:9200".
+ * - indexName: The name of the Elasticsearch index to use. The default value is "chocolate-code".
+ * - username: The username for authentication with the Elasticsearch server. This parameter is optional.
+ * - password: The password for authentication with the Elasticsearch server. This parameter is optional.
+ * - apiKey: The API key for authentication with the Elasticsearch server. This parameter is optional.
+ *
+ * The ElasticsearchStore class provides methods for adding embeddings and documents, as well as retrieving relevant embeddings based on a reference embedding.
+ *
+ * ```kotlin
+ * val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
+ * ```
  */
 class ElasticsearchStore(
     private val serverUrl: String = "http://localhost:9200",

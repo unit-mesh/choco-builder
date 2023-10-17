@@ -171,8 +171,7 @@ indexing {
 
 ## querying 
 
-Querying is a function block for querying data for the workflow. You don't need to call it as block.
-
+querying is a function block for querying data for the workflow. you don't need to call it as block.
 for example:
 ```kotlin
 querying {

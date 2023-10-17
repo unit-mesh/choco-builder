@@ -16,6 +16,7 @@ class Runner : CliktCommand() {
         processRagScript(rootDir)
         processPromptScript(rootDir)
         processDocumentModule(rootDir)
+        processVectorStoreModule(rootDir)
     }
 
     private val warningLog =
@@ -84,6 +85,35 @@ class Runner : CliktCommand() {
             output = "$output$warningLog"
 
             val outputFile = outputDir.resolve("document.md")
+            outputFile.toFile().writeText(output + "\n\n" + content)
+            index += 1
+        }
+    }
+
+    private fun processVectorStoreModule(rootDir: Path) {
+        val documentDir = rootDir.resolve("cocoa-core/src/main/kotlin/cc/unitmesh/rag/store/")
+        val kDocGen = KDocGen(documentDir)
+
+        kDocGen.appendNodes(
+            rootDir.resolve("cocoa-core/src/test/kotlin/cc/unitmesh/rag/store/"),
+            rootDir.resolve("rag-modules/store-elasticsearch"),
+            rootDir.resolve("rag-modules/store-milvus"),
+            rootDir.resolve("rag-modules/store-pinecone")
+        )
+
+        val documentDocs = kDocGen.execute()
+
+        val docs = renderDocs(documentDocs)
+        val outputDir = rootDir.resolve("docs/rag/")
+        var index = 11
+        docs.forEach { (name, content) ->
+            var output =
+                CustomJekyllFrontMatter("Vector Store", "Retrieval Augmented Generation", index, "/rag/vector-store")
+                    .toMarkdown()
+
+            output = "$output$warningLog"
+
+            val outputFile = outputDir.resolve("vector-store.md")
             outputFile.toFile().writeText(output + "\n\n" + content)
             index += 1
         }

@@ -12,6 +12,13 @@ data class Entry<Embedded>(
     var embedded: Embedded?,
 )
 
+/**
+ * The `InMemoryEmbeddingStore` class is an implementation of the `EmbeddingStore` interface that stores embeddings in memory.
+ * It provides methods to add embeddings, retrieve relevant embeddings, and manage the storage of embeddings.
+ *
+ * @param Embedded the type of the embedded object associated with each embedding
+ *
+ */
 class InMemoryEmbeddingStore<Embedded> : EmbeddingStore<Embedded> {
     private val entries: MutableList<Entry<Embedded>> = ArrayList()
     override fun add(embedding: Embedding): String {
