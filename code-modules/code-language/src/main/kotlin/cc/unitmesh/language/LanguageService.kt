@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.language
+package cc.unitmesh.language
 
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -44,6 +44,11 @@ class LanguageService {
 
     fun guessLineComment(language: String): String? {
         return languageMap[language]?.lineComment?.get(0)
+    }
+
+    fun isCommentLine(language: String, line: String): Boolean {
+        val lineComment = guessLineComment(language) ?: return false
+        return line.trimStart().startsWith(lineComment)
     }
 
     /**

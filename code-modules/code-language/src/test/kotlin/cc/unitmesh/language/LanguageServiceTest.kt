@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.language;
+package cc.unitmesh.language;
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package cc.unitmesh.cf.language
+package cc.unitmesh.language
 
 import kotlinx.serialization.Serializable
 

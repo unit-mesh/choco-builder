@@ -27,6 +27,7 @@ include(":llm-tools:interpreter")
 include(":llm-tools:web-tools")
 
 include(":code-modules:code-splitter")
+include(":code-modules:code-language")
 include(":code-modules:git-differ")
 include(":code-modules:git-commit-message")
 
