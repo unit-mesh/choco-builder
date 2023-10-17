@@ -39,7 +39,7 @@ class ChangedEntry(
     val functionName: String = "",
     val code: String = "",
     val addedLines: Int = 0,
-    val deletedLines: Int = 0
+    val deletedLines: Int = 0,
 )
 
 /**
@@ -108,73 +108,87 @@ class GitDiffer(val path: String, private val branch: String = "master", private
      * @param untilRev The revision to end at.
      * @return A map containing the file paths as keys and the corresponding patch text as values.
      */
-    fun patchBetween(sinceRev: String, untilRev: String): Map<String, String> {
-        git.use {
-            // 获取 sinceRev 和 untilRev 的 ObjectId
-            val sinceObj: ObjectId = repository.resolve(sinceRev)
-            val untilObj: ObjectId = repository.resolve(untilRev)
+    fun patchBetween(sinceRev: String, untilRev: String): Map<String, OptimizePatch> {
+        // 获取 sinceRev 和 untilRev 的 ObjectId
+        val sinceObj: ObjectId = repository.resolve(sinceRev)
+        val untilObj: ObjectId = repository.resolve(untilRev)
 
-            // 获取两个提交之间的差异（补丁）
-            val outputStream = ByteArrayOutputStream()
-            val diffFormatter = DiffFormatter(outputStream)
-            diffFormatter.setRepository(repository)
-            diffFormatter.format(sinceObj, untilObj)
+        // 获取两个提交之间的差异（补丁）
+        val outputStream = ByteArrayOutputStream()
+        val diffFormatter = DiffFormatter(outputStream)
+        diffFormatter.setRepository(repository)
+        diffFormatter.format(sinceObj, untilObj)
 
-            summaryFileDiff(diffFormatter, sinceObj, untilObj)
+        val diffs: List<DiffEntry> = diffFormatter.scan(sinceObj, untilObj)
+        val patchMap = mutableMapOf<String, OptimizePatch>()
 
-            // 将补丁转换为 Map
-            val patchMap = mutableMapOf<String, String>()
-            outputStream.toString().split("diff --git ").forEach {
-                val lines = it.split(System.lineSeparator())
-                if (lines.size <= 1) {
-                    return@forEach
-                }
-
-                val split = lines[0].split(" b/")
-                if (split.size > 1) {
-                    val path = split[1]
-                    val patch = it.substring(lines[0].length + 1)
-                    patchMap[path] = trimDiff(patch)
-                }
+        diffs.map { diff ->
+            val changedLineCount = summaryModifier(diffFormatter, diff)
+            val patches = generatePatches(outputStream, changedLineCount, diff.changeType)
+            when (diff.changeType) {
+                DiffEntry.ChangeType.ADD -> patchMap += patches
+                DiffEntry.ChangeType.MODIFY -> patchMap += patches
+                DiffEntry.ChangeType.DELETE -> {}
+                DiffEntry.ChangeType.RENAME -> {}
+                else -> {}
             }
-
-            return patchMap
         }
+
+
+        return patchMap
     }
 
-    private fun summaryFileDiff(
-        diffFormatter: DiffFormatter,
-        sinceObj: ObjectId,
-        untilObj: ObjectId,
-    ) {
-        val diffs: List<DiffEntry> = diffFormatter.scan(sinceObj, untilObj)
-        diffs.map {
-            val edits: EditList = diffFormatter.toFileHeader(it).toEditList()
-            var deleteLines = 0
-            var addLines = 0
-            edits.forEach { edit ->
-                when (edit.type) {
-                    Edit.Type.DELETE -> {
-                        deleteLines += edit.lengthA
-                    }
+    private fun generatePatches(
+        outputStream: ByteArrayOutputStream,
+        changedLineCount: ChangedLineCount,
+        changeType: DiffEntry.ChangeType,
+    ): MutableMap<String, OptimizePatch> {
+        val patchMap: MutableMap<String, OptimizePatch> = mutableMapOf()
 
-                    Edit.Type.REPLACE -> {
-                        deleteLines += edit.lengthA
-                    }
-
-                    Edit.Type.INSERT -> {
-                        addLines += edit.lengthB
-                    }
-
-                    else -> {
-                        // ignore
-                    }
-                }
+        outputStream.toString().split("diff --git ").forEach {
+            val lines = it.split(System.lineSeparator())
+            if (lines.size <= 1) {
+                return@forEach
             }
 
-            println("删除行数：$deleteLines")
-            println("新增行数：$addLines")
+            val split = lines[0].split(" b/")
+            if (split.size > 1) {
+                val path = split[1]
+                val patch = it.substring(lines[0].length + 1)
+                patchMap[path] = OptimizePatch(changedLineCount, PatchChangeType.from(changeType), patch, path)
+            }
         }
+
+        return patchMap
+    }
+
+    private fun summaryModifier(diffFormatter: DiffFormatter, diff: DiffEntry): ChangedLineCount {
+        val edits: EditList = diffFormatter.toFileHeader(diff).toEditList()
+        var deleteLines = 0
+        var addLines = 0
+
+        edits.forEach { edit ->
+            when (edit.type) {
+                Edit.Type.DELETE -> {
+                    deleteLines += edit.lengthA
+                }
+
+                Edit.Type.INSERT -> {
+                    addLines += edit.lengthB
+                }
+
+                Edit.Type.REPLACE -> {
+                    deleteLines += edit.lengthA
+                    addLines += edit.lengthB
+                }
+
+                else -> {
+                    // ignore
+                }
+            }
+        }
+
+        return ChangedLineCount(deleteLines, addLines)
     }
 
 
