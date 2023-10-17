@@ -29,6 +29,7 @@ The DocumentParser interface also returns single types of documents:
 The DocumentParser interface provides a method to parse the input stream of a document.
 
 
+The constant value representing the document type.
 
 ## MdDocumentParser 
 
@@ -48,6 +49,7 @@ val documents = parser.parse(inputStream)
 ```
 
 
+Creates an instance of MdDocumentParser.
 
 Sample: 
 
@@ -86,4 +88,6 @@ The `TextDocumentParser` class is responsible for parsing text documents.
 It implements the `DocumentParser` interface.
 
 
+The type of the document being parsed.
+The character encoding used for reading the document. It defaults to UTF-8.
 

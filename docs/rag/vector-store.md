@@ -37,10 +37,31 @@ The ElasticsearchStore class provides methods for adding embeddings and document
 val store: ElasticsearchStore = ElasticsearchStore(elasticsearchUrl)
 ```
 
+## MilvusEmbeddingStore 
+
+The MilvusEmbeddingStore class is an implementation of the EmbeddingStore interface that
+provides functionality to store and retrieve embeddings using the Milvus service.
+
+
+The host address of the Milvus service. Default value is "localhost".
+The port number of the Milvus service. Default value is 19530.
+The name of the index used for storing embeddings. Default value is "chocolate-code".
+The MilvusServiceClient instance used for communication with the Milvus service.
+
+
+## PineconeEmbeddingStore 
+
+The `PineconeEmbeddingStore` class is an implementation of the `EmbeddingStore` interface that
+provides functionality for storing and retrieving embeddings using the Pinecone service.
+
+
+
 ## InMemoryEmbeddingStore 
 
 The `InMemoryEmbeddingStore` class is an implementation of the `EmbeddingStore` interface that stores embeddings in memory.
 It provides methods to add embeddings, retrieve relevant embeddings, and manage the storage of embeddings.
+
+
 
 Sample: 
 

@@ -34,7 +34,22 @@ import io.pinecone.PineconeConnectionConfig
 import io.pinecone.proto.*
 import java.util.stream.Collectors
 
-class PineconeEmbeddingStoreImpl(
+/**
+ * The `PineconeEmbeddingStore` class is an implementation of the `EmbeddingStore` interface that
+ * provides functionality for storing and retrieving embeddings using the Pinecone service.
+ *
+ * @param apiKey The API key for accessing the Pinecone service.
+ * @param environment The environment in which the Pinecone project is hosted.
+ * @param projectId The ID of the Pinecone project.
+ * @param index The name of the index within the Pinecone project.
+ * @param nameSpace The namespace for the embeddings (default is "default").
+ *
+ * for example:
+ * ```kotlin
+ * val store = PineconeEmbeddingStore("your-api-key", "your-environment", "your-project-id", "your-index")
+ * ```
+ */
+class PineconeEmbeddingStore(
     apiKey: String,
     environment: String,
     projectId: String,

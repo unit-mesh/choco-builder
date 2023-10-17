@@ -7,6 +7,16 @@ import cc.unitmesh.rag.store.EmbeddingStore
 import io.milvus.client.MilvusServiceClient
 import io.milvus.param.ConnectParam
 
+/**
+ * The MilvusEmbeddingStore class is an implementation of the EmbeddingStore interface that
+ * provides functionality to store and retrieve embeddings using the Milvus service.
+ *
+ * @property host The host address of the Milvus service. Default value is "localhost".
+ * @property port The port number of the Milvus service. Default value is 19530.
+ * @property indexName The name of the index used for storing embeddings. Default value is "chocolate-code".
+ * @property client The MilvusServiceClient instance used for communication with the Milvus service.
+ *
+ */
 class MilvusEmbeddingStore(
     private val host: String = "localhost",
     private val port: Int = 19530,
