@@ -26,15 +26,38 @@ class PromptScriptCommand : CliktCommand(help = HELP_TEXT) {
         }
 
         // check input file exits
-        val file = File(input)
-        if (!file.exists()) {
-            throw Exception("input file not found: $input")
-        }
-
-        // execute script
-        val executor = ScriptExecutor(file)
-        executor.execute()
+        executeScript(input)
 
         logger.debug("execute script success: $input")
     }
+}
+
+/**
+ * Execute script is a method used for running Kotlin Scripting mods.
+ *
+ * @param input the path to the input file containing the script to be executed
+ * @throws Exception if the input file is not found
+ *
+ * Example usage:
+ * ```kotlin
+ * @file:DependsOn("cc.unitmesh:prompt-script:0.3.8")
+ *
+ * import cc.unitmesh.prompt.executeScript
+ *
+ * executeScript("config/prompt.unit-mesh.yml")
+ * ```
+ *
+ * This method takes a string input representing the path to the input file containing the script to be executed.
+ * It checks if the file exists, and if not, throws an exception indicating that the input file was not found.
+ * If the file exists, it creates a ScriptExecutor object with the input file and executes the script using the execute() method of the ScriptExecutor class.
+ */
+fun executeScript(input: String) {
+    val file = File(input)
+    if (!file.exists()) {
+        throw Exception("input file not found: ${input}")
+    }
+
+    // execute script
+    val executor = ScriptExecutor(file)
+    executor.execute()
 }
