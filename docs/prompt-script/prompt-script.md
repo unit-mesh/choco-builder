@@ -6,7 +6,7 @@ has_children: true
 permalink: /prompt-script
 ---
 
-PromptScript 是一个轻量级的 Prompt 调试用的 DSL （Yaml）脚本，以用于快速使用、构建 Prompt。
+PromptScript 是一个轻量级的 Prompt 调试、测试场景下的 DSL （Yaml）脚本，以用于快速测试和构建 Prompt。
 
 特性：
 
