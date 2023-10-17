@@ -53,7 +53,7 @@ class ChangedEntry(
  * @property changedClasses A mutable map of file paths to ChangedEntry objects representing changed classes.
  * @property changedFunctions A mutable map of file paths to ChangedEntry objects representing changed functions.
  */
-class GitDiffer(val path: String, private val branch: String, private val loopDepth: Int = SHORT_ID_LENGTH) :
+class GitDiffer(val path: String, private val branch: String = "master", private val loopDepth: Int = SHORT_ID_LENGTH) :
     NodeRelationBuilder() {
     private var baseLineDataTree: List<DifferFile> = listOf()
     private val differFileMap: MutableMap<String, DifferFile> = mutableMapOf()

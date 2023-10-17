@@ -1,9 +1,23 @@
 package cc.unitmesh.cf.code;
 
 import io.kotest.matchers.shouldBe
+import kotlin.io.path.Path
 import kotlin.test.Test
 
 class GitDifferTest {
+    @Test
+    fun should_enable_to_diff() {
+
+        val gitCommand = GitCommand()
+
+        val hashes: List<String> = gitCommand.latestCommitHash().stdout.split("\n")
+
+        val path = Path(".").toAbsolutePath().parent.parent
+        val gitDiffer = GitDiffer(path.toString(), "master")
+        val changedNodes = gitDiffer.patchBetween(hashes[0], hashes[1])
+        println(changedNodes)
+    }
+
     @Test
     fun should_trim_diff_string() {
         // given
