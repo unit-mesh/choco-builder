@@ -48,6 +48,22 @@ jobs:
 
 ## 运行 PromptScript
 
+### 方式 1：使用 Kotlin Scripting
+
+在 Intellij IDEA 中编写 Kotlin Scripting，保存为 `prompt-script.main.kts`，然后运行。PS：其中的 `prompt-script` 为任意名称，main.kts 是固定的。
+
+```kotlin
+@file:DependsOn("cc.unitmesh:prompt-script:0.3.8")
+
+import cc.unitmesh.prompt.*
+
+executeScript("config/prompt.unit-mesh.yml")
+```
+
+或者使用 Kotlin Scripting CLI 运行：`kotlinc -script prompt-script.main.kts`
+
+### 方式 2：使用 CLI 运行
+
 1. 下载 CLI。从 [releases](https://github.com/unit-mesh/chocolate-factory/releases) 下载 prompt-script-all.jar，（这里的 * 是版本号）。
 2. 配置 PromptScript 的 YAML 文件。
 3. 运行 PromptScript
