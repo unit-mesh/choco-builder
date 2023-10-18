@@ -10,6 +10,16 @@ commit:
 store:
   indexName: "unitmesh/chocolate-factory" # default to github repo
 
+kanban:
+  type: GitHub
+  token: "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"
+
+connection:
+  name: open_ai_connection
+  type: OpenAI
+  secrets:
+    api-key: xxxx
+
 commitLog:
   ignoreType: [ "chore", "docs", "style" ]
   ignorePatterns:
@@ -18,3 +28,4 @@ commitLog:
     - "**/*.yml"
     - "**/*.yaml"
     - "**/*.vm"
+    - ".gitignore"

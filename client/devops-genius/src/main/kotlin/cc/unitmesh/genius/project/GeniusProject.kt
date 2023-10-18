@@ -1,12 +1,20 @@
 package cc.unitmesh.genius.project
 
+import cc.unitmesh.cf.core.llms.LlmProvider
+import cc.unitmesh.cf.core.llms.MockLlmProvider
+import cc.unitmesh.connection.ConnectionConfig
+import cc.unitmesh.connection.MockLlmConnection
+import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.genius.devops.Issue
 import cc.unitmesh.genius.devops.KanbanFactory
+import cc.unitmesh.openai.OpenAiProvider
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlinx.serialization.decodeFromString
+import java.io.File
 import java.nio.file.FileSystems
 import java.nio.file.Path
 
@@ -17,12 +25,28 @@ data class GeniusProject(
     val store: GeniusStore? = null,
     val kanban: GeniusKanban? = null,
     val commitLog: GeniusCommitLog? = null,
+    val connection: String = "connection.yml",
 ) {
     var repoUrl: String = ""
 
     fun fetchStory(id: String): Issue {
         return KanbanFactory.fromRepositoryUrl(repoUrl, kanban!!.token)!!.fetch(id)
     }
+
+    fun connector(): LlmProvider {
+        val text = File(connection).readBytes().toString(Charsets.UTF_8)
+        val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
+        val connection = Yaml(configuration = configuration).decodeFromString<ConnectionConfig>(text).convert()
+
+        val llmProvider = when (connection) {
+            is OpenAiConnection -> OpenAiProvider(connection.apiKey, connection.apiHost)
+            is MockLlmConnection -> MockLlmProvider(connection.response)
+            else -> throw Exception("unsupported connection type: ${connection.type}")
+        }
+
+        return llmProvider
+    }
+
 
     companion object {
         fun fromYml(yaml: String): GeniusProject {

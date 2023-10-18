@@ -4,8 +4,6 @@ import cc.unitmesh.cf.code.GitDiffer
 import cc.unitmesh.genius.context.GeniusAction
 import cc.unitmesh.genius.devops.Issue
 import cc.unitmesh.genius.project.GeniusProject
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.changelog.CommitParser
 import org.slf4j.LoggerFactory
 
@@ -48,7 +46,6 @@ class CodeReviewAction(
         val stories = storyIds.map {
             project.fetchStory(it.issue)
         }
-        logger.info("stories: $stories")
 
         context.businessContext = stories.joinToString(System.lineSeparator(), transform = Issue::title)
 
@@ -56,12 +53,17 @@ class CodeReviewAction(
         context.changes = patch.filter {
             project.commitLog?.isIgnoreFile(it.key) ?: true
         }.map {
-            it.value
+            it.value.content
         }.joinToString(System.lineSeparator())
 
         promptFactory.context = context
-        val prompt = promptFactory.createPrompt(project, "")
-        println(prompt)
+        val messages = promptFactory.createPrompt(project, "")
+
+        logger.info("messages: $messages")
+
+        project.connector().streamCompletion(messages).blockingForEach {
+            print(it)
+        }
 
         return ""
     }

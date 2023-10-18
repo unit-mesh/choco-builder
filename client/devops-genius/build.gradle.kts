@@ -20,6 +20,8 @@ dependencies {
 
     implementation(projects.llmModules.sentenceTransformers)
     implementation(projects.llmModules.promptScript)
+    implementation(projects.llmModules.connection)
+    implementation(projects.llmModules.openai)
 
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.ragModules.document)
@@ -29,6 +31,7 @@ dependencies {
     implementation(libs.gitlab4j.api)
 
     implementation(libs.clikt)
+    implementation(libs.rxjava3)
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.serialization.json)
