@@ -22,26 +22,38 @@ class VelocityCompiler : PromptCompiler {
         }
     }
 
+    override fun append(key: String, value: Any) {
+        velocityContext.put(key, value)
+    }
+
     override fun compile(templatePath: String, dataPath: String): String {
         val obj = loadData(dataPath)!!
         obj.asMap().forEach { (key, u) ->
             velocityContext.put(key, u)
         }
 
-        return compileToString(templatePath)
+        val template = File(templatePath).readText()
+        return compileToString(template)
     }
 
-    override fun compile(templatePath: String, dataPath: Map<String, Any>): String {
-        dataPath.forEach { (key, u) ->
+    /**
+     * Compiles a template using Velocity and returns the compiled result as a string.
+     *
+     * @param templatePath The path to the template file.
+     * @param data A map containing the data to be used in the template. The keys in the map represent the variable names
+     * and the values represent the corresponding values to be used in the template.
+     * @return The compiled template as a string.
+     */
+    override fun compile(templatePath: String, data: Map<String, Any>): String {
+        data.forEach { (key, u) ->
             velocityContext.put(key, u)
         }
 
-        return compileToString(templatePath)
+        val template = File(templatePath).readText()
+        return compileToString(template)
     }
 
-    private fun compileToString(templatePath: String): String {
-        val template = File(templatePath).readText()
-
+    override fun compileToString(template: String): String {
         val sw = StringWriter()
         Velocity.evaluate(velocityContext, sw, "#" + this.javaClass.name, template)
         return sw.toString()

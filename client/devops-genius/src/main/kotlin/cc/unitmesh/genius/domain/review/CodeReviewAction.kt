@@ -1,7 +1,7 @@
 package cc.unitmesh.genius.domain.review
 
 import cc.unitmesh.cf.code.GitDiffer
-import cc.unitmesh.genius.domain.GeniusAction
+import cc.unitmesh.genius.context.GeniusAction
 import cc.unitmesh.genius.project.GeniusProject
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

@@ -19,6 +19,8 @@ dependencies {
     implementation(projects.codeModules.gitCommitMessage)
 
     implementation(projects.llmModules.sentenceTransformers)
+    implementation(projects.llmModules.promptScript)
+
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.ragModules.document)
 

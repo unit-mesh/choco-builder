@@ -1,4 +1,4 @@
-package cc.unitmesh.genius.domain
+package cc.unitmesh.genius.context
 
 interface GeniusAction {
     fun execute(): Any
