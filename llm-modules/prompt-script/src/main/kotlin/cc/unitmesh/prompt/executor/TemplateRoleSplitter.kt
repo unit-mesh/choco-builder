@@ -3,16 +3,16 @@ package cc.unitmesh.prompt.executor
 /**
  *
  * A template role is a string that contains multiple sections.
- * Each section is a string that starts with "###" and ends with "###".
- * The section name is the string between "###" and "###", then will be used as the key of the section.
+ * Each section is a string that starts with "```" and ends with "```".
+ * The section name is the string between "```" and "```", then will be used as the key of the section.
  * The content of the section is the string between the section name and the next section name.
  *
  * For example:
  *
- * ###system###
+ * ```system```
  * You are a helpful assistant.
  *
- * ###user###
+ * ```user```
  * ${question}
  *
  * Will be split to:
@@ -21,6 +21,7 @@ package cc.unitmesh.prompt.executor
  *    "user" to "${question}"
  * )
  *
+ * If the input string does not start with "```" and end with "```", it will be treated as a section named "user".
  */
 class TemplateRoleSplitter {
     fun split(input: String): Map<String, String> {
@@ -46,6 +47,10 @@ class TemplateRoleSplitter {
         // Add the last section if it exists
         if (currentSection.isNotEmpty()) {
             sections[currentSection] = contentBuilder.toString()
+        }
+
+        if (sections.isEmpty()) {
+            sections["user"] = input
         }
 
         return sections
