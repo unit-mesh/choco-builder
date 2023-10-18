@@ -1,5 +1,11 @@
 # DevOpsGenius
 
+<p align="center">
+  <a href="https://github.com/unit-mesh/chocolate-factory">
+    <img src="https://img.shields.io/badge/powered_by-chocolate_factory-blue?logo=kotlin&logoColor=fff" alt="Powered By" />
+  </a>  
+</p>
+
 DevOpsGenius 旨在以结合 AIGC 改进软件开发和运维的 DevOps 实践。它结合了人工智能和自动化技术，
 为团队提供自动的代码评审和拉取请求处理功能，提高开发流程的效率和质量。
 

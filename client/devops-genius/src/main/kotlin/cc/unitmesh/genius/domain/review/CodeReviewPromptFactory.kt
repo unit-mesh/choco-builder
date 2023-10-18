@@ -9,10 +9,8 @@ class CodeReviewPromptFactory : PromptFactory("code-review") {
     private val template = VelocityCompiler()
 
     override fun createPrompt(project: GeniusProject, description: String): String {
-        val paths = listOf(
-            "simple-review.open-ai.vm"
-        )
+        val prompt = promptsLoader.getPrompt("simple-review.open-ai.vm")
 
-        return loadPrompts(paths)
+        return prompt
     }
 }
