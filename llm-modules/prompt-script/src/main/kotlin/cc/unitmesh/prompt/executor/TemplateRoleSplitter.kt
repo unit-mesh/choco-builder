@@ -1,5 +1,7 @@
 package cc.unitmesh.prompt.executor
 
+import cc.unitmesh.cf.core.llms.LlmMsg
+
 /**
  *
  * A template role is a string that contains multiple sections.
@@ -54,5 +56,14 @@ class TemplateRoleSplitter {
         }
 
         return sections
+    }
+}
+
+fun mapToMessages(msgs: Map<String, String>): List<LlmMsg.ChatMessage> {
+    return msgs.map {
+        LlmMsg.ChatMessage(
+            role = LlmMsg.ChatRole.from(it.key),
+            content = it.value,
+        )
     }
 }

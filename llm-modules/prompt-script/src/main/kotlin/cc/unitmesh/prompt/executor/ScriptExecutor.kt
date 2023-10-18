@@ -128,7 +128,7 @@ class ScriptExecutor {
 
         val prompt = createTemplate(job)
         val msgs = TemplateRoleSplitter().split(prompt)
-        val messages = toMessages(msgs)
+        val messages = mapToMessages(msgs)
 
         if (messages.isEmpty()) {
             throw Exception("no messages found in template")
@@ -171,14 +171,5 @@ class ScriptExecutor {
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
         val connection = Yaml(configuration = configuration).decodeFromString<ConnectionConfig>(text)
         return connection.convert()
-    }
-}
-
-private fun toMessages(msgs: Map<String, String>): List<LlmMsg.ChatMessage> {
-    return msgs.map {
-        LlmMsg.ChatMessage(
-            role = LlmMsg.ChatRole.from(it.key),
-            content = it.value,
-        )
     }
 }

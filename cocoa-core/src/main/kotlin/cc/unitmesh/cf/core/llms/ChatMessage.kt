@@ -2,9 +2,9 @@ package cc.unitmesh.cf.core.llms
 
 class LlmMsg {
     data class ChatMessage(
-        val role: ChatRole,
-        val content: String,
-        val name: String? = null,
+        var role: ChatRole,
+        var content: String,
+        var name: String? = null,
     )
 
     data class ChatChoice(
