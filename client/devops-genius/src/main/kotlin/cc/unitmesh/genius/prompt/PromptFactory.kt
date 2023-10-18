@@ -9,7 +9,7 @@ abstract class PromptFactory(promptsBasePath: String) {
         promptsLoader = PromptsLoader(promptsBasePath)
     }
 
-    private fun loadPrompts(paths: List<String?>): String {
+    protected fun loadPrompts(paths: List<String>): String {
         return paths.joinToString(System.lineSeparator())
     }
 

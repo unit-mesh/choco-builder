@@ -1,4 +1,4 @@
-package cc.unitmesh.genius.model;
+package cc.unitmesh.genius.project;
 
 public enum BuildSystemType {
     GRADLE,
