@@ -31,8 +31,6 @@ include(":code-modules:code-language")
 include(":code-modules:git-differ")
 include(":code-modules:git-commit-message")
 
-include(":client:devops-genius")
-
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
