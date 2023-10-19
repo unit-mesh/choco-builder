@@ -128,7 +128,7 @@ class ScriptExecutor {
 
         val prompt = createTemplate(job)
         val msgs = TemplateRoleSplitter().split(prompt)
-        val messages = mapToMessages(msgs)
+        val messages = LlmMsg.fromMap(msgs)
 
         if (messages.isEmpty()) {
             throw Exception("no messages found in template")

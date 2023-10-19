@@ -7,6 +7,17 @@ class LlmMsg {
         var name: String? = null,
     )
 
+    companion object {
+        fun fromMap(msgs: Map<String, String>): List<ChatMessage> {
+            return msgs.map {
+                ChatMessage(
+                    role = ChatRole.from(it.key),
+                    content = it.value,
+                )
+            }
+        }
+    }
+
     data class ChatChoice(
         val index: Int,
         val message: ChatMessage,

@@ -59,11 +59,3 @@ class TemplateRoleSplitter {
     }
 }
 
-fun mapToMessages(msgs: Map<String, String>): List<LlmMsg.ChatMessage> {
-    return msgs.map {
-        LlmMsg.ChatMessage(
-            role = LlmMsg.ChatRole.from(it.key),
-            content = it.value,
-        )
-    }
-}

@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory
 
 class CodeReviewAction(
     val project: GeniusProject,
-    val option: ReviewOption,
-    val diff: GitDiffer,
-    val commitParser: CommitParser,
+    private val option: ReviewOption,
+    private val diff: GitDiffer,
+    private val commitParser: CommitParser,
 ) : GeniusAction {
-    val promptFactory = CodeReviewPromptFactory()
-    val context = CodeReviewContext()
+    private val promptFactory = CodeReviewPromptFactory()
+    private val context = CodeReviewContext()
 
     override fun execute(): Any {
         val commitMessages = diff.commitMessagesBetween(option.sinceCommit, option.untilCommit)
