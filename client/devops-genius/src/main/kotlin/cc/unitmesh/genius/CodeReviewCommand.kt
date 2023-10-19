@@ -16,6 +16,7 @@ import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.serializer
+import org.slf4j.Logger
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.exists
@@ -86,7 +87,7 @@ class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
     }
 
     companion object {
-        val logger = LoggerFactory.getLogger(CodeReviewCommand::class.java)
+        private val logger = LoggerFactory.getLogger(CodeReviewCommand::class.java)!!
     }
 }
 

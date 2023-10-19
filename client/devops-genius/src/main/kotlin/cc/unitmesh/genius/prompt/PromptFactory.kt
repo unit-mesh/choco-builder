@@ -17,7 +17,7 @@ abstract class PromptFactory(promptsBasePath: String) {
         promptsLoader = PromptsLoader(promptsBasePath)
     }
 
-    fun createPrompt(project: GeniusProject, description: String): List<LlmMsg.ChatMessage> {
+    open fun createPrompt(project: GeniusProject, description: String): List<LlmMsg.ChatMessage> {
         val prompt = promptsLoader.getTemplate(templatePath)
 
         val msgs = splitter.split(prompt)

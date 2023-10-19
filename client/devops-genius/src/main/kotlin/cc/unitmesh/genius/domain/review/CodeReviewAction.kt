@@ -44,8 +44,13 @@ class CodeReviewAction(
 
         val storyIds = parsedMsgs.map { it.references }.flatten()
         val stories = storyIds.map {
-            project.fetchStory(it.issue)
-        }
+            try {
+                project.fetchStory(it.issue)
+            } catch (e: Exception) {
+                logger.error("fetch story error: $it", e)
+                null
+            }
+        }.filterNotNull()
 
         context.businessContext = stories.joinToString(System.lineSeparator(), transform = Issue::title)
 
