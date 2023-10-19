@@ -1,4 +1,28 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.8...v) (2023-10-17)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.0...v) (2023-10-19)
+
+
+
+# [0.4.0](https://github.com/unit-mesh/chocolate-factory/compare/v0.3.8...v0.4.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* add checkout and disable for testing ([bbe8989](https://github.com/unit-mesh/chocolate-factory/commit/bbe898908bffce5ee3326a7ca8544f53ba13036a))
+* fix template role splitter test issue ([b715e02](https://github.com/unit-mesh/chocolate-factory/commit/b715e02d38dc50240d798039c013be901a8274f6))
+* fix tests ([c8250b2](https://github.com/unit-mesh/chocolate-factory/commit/c8250b202e46579792cd4ddef65a27021bf9a2bf))
+* fix tests ([61027be](https://github.com/unit-mesh/chocolate-factory/commit/61027be2b85fc7aaf32c454f7d0a9760faaa0a12))
+* ignore some test for windows, since we don't have enough energy to support it ([aa5d04d](https://github.com/unit-mesh/chocolate-factory/commit/aa5d04d70c57fa37baccc40c84603f39b52d262b))
+* try to handle for Windows ([80a200f](https://github.com/unit-mesh/chocolate-factory/commit/80a200f57180b84b818db473c6629c191598e689))
+
+
+### Features
+
+* add: for new line end of line handle ([de68155](https://github.com/unit-mesh/chocolate-factory/commit/de681553169469d293579e4c059721919ad83a68))
+* **differ:** add for handle patches match [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([07626cc](https://github.com/unit-mesh/chocolate-factory/commit/07626ccd97cb5888fccd0499a304715f710ada7d))
+* init ignore type [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([8e65aed](https://github.com/unit-mesh/chocolate-factory/commit/8e65aedd64886987619d888ec3c3e82656500720))
+* **review:** add prompt generate for [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([1217a21](https://github.com/unit-mesh/chocolate-factory/commit/1217a21871430824a5a37750371aa750742b71a1))
+* **review:** make it works with llm [#8](https://github.com/unit-mesh/chocolate-factory/issues/8) ([c9ebd8e](https://github.com/unit-mesh/chocolate-factory/commit/c9ebd8e99c303c9e83e961aaf9ce9216436958aa))
+* update sample for scripts ([4cc6f78](https://github.com/unit-mesh/chocolate-factory/commit/4cc6f78ad1a8e6da642a4644107fd7253db6c217))
 
 
 
