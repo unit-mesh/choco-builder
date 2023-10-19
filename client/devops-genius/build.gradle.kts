@@ -19,7 +19,6 @@ dependencies {
     implementation(projects.codeModules.gitCommitMessage)
 
     implementation(projects.llmModules.sentenceTransformers)
-    implementation(projects.llmModules.promptScript)
     implementation(projects.llmModules.connection)
     implementation(projects.llmModules.openai)
 
