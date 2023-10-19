@@ -1,6 +1,5 @@
-package cc.unitmesh.prompt.template
+package cc.unitmesh.template
 
-import cc.unitmesh.template.PromptCompiler
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.apache.velocity.VelocityContext

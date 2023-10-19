@@ -1,11 +1,11 @@
 package cc.unitmesh.prompt;
 
-import cc.unitmesh.prompt.template.TemplateCompilerFactory
+import cc.unitmesh.prompt.template.TemplateDataCompile
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 
-class TemplateCompilerFactoryTests {
-    private val manager = TemplateCompilerFactory()
+class TemplateDataCompileTests {
+    private val manager = TemplateDataCompile()
 
     @Test
     fun should_return_prompt_when_getPrompt_called() {

@@ -3,12 +3,13 @@ package cc.unitmesh.prompt.template
 import cc.unitmesh.prompt.model.TemplateDatasource
 import cc.unitmesh.template.PromptCompiler
 import cc.unitmesh.template.TemplateEngineType
+import cc.unitmesh.template.VelocityCompiler
 import java.nio.file.Path
 
 
-class TemplateCompilerFactory(private val type: TemplateEngineType = TemplateEngineType.VELOCITY) {
+class TemplateDataCompile(private val type: TemplateEngineType = TemplateEngineType.VELOCITY) {
     companion object {
-        val logger: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(TemplateCompilerFactory::class.java)
+        val logger: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(TemplateDataCompile::class.java)
     }
 
     private val compiler: PromptCompiler = when (type) {

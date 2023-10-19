@@ -10,7 +10,7 @@ import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.PromptScript
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.Variable
-import cc.unitmesh.prompt.template.TemplateCompilerFactory
+import cc.unitmesh.prompt.template.TemplateDataCompile
 import cc.unitmesh.template.TemplateEngineType
 import cc.unitmesh.template.TemplateRoleSplitter
 import com.charleskorn.kaml.PolymorphismStyle
@@ -155,7 +155,7 @@ class ScriptExecutor {
         val ext = job.template.substringAfterLast(".")
         return when (ext) {
             "vm", "vsl", "ft" -> {
-                val factory = TemplateCompilerFactory(type = TemplateEngineType.VELOCITY)
+                val factory = TemplateDataCompile(type = TemplateEngineType.VELOCITY)
                 val templatePath = this.basePath.resolve(job.template).toString()
                 factory.compile(templatePath, job.templateDatasource, this.basePath)
             }

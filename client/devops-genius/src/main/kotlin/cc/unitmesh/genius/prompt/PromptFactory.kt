@@ -3,7 +3,7 @@ package cc.unitmesh.genius.prompt
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.genius.project.GeniusProject
 import cc.unitmesh.template.TemplateRoleSplitter
-import cc.unitmesh.prompt.template.VelocityCompiler
+import cc.unitmesh.template.VelocityCompiler
 
 abstract class PromptFactory(promptsBasePath: String) {
     protected val template = VelocityCompiler()
