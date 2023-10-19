@@ -1,6 +1,4 @@
-package cc.unitmesh.prompt.executor
-
-import cc.unitmesh.cf.core.llms.LlmMsg
+package cc.unitmesh.template
 
 /**
  *

@@ -1,6 +1,8 @@
 package cc.unitmesh.prompt.template
 
 import cc.unitmesh.prompt.model.TemplateDatasource
+import cc.unitmesh.template.PromptCompiler
+import cc.unitmesh.template.TemplateEngineType
 import java.nio.file.Path
 
 

@@ -11,7 +11,8 @@ import cc.unitmesh.prompt.model.PromptScript
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.Variable
 import cc.unitmesh.prompt.template.TemplateCompilerFactory
-import cc.unitmesh.prompt.template.TemplateEngineType
+import cc.unitmesh.template.TemplateEngineType
+import cc.unitmesh.template.TemplateRoleSplitter
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration

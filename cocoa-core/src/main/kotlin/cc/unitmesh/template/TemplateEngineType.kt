@@ -1,4 +1,4 @@
-package cc.unitmesh.prompt.template
+package cc.unitmesh.template
 
 enum class TemplateEngineType {
     VELOCITY,

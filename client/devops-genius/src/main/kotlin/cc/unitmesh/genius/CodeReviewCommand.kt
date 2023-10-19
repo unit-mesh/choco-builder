@@ -16,12 +16,29 @@ import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.serializer
-import org.slf4j.Logger
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 
+/**
+ * The `CodeReviewCommand` class is a command-line interface for performing code reviews using AIGC (Artificial Intelligence for Code Review).
+ * It extends the `CliktCommand` class from the `clikt` library and provides options and functionality for reviewing code in a Git repository.
+ *
+ * @property repo The path to the Git repository. It can be a local file path or a Git URL. Default value is "." (current directory).
+ * @property branch The name of the Git branch to review. Default value is "master".
+ * @property sinceCommit The revision of the first commit to include in the review. Default value is an empty string, which means the earliest commit in the repository.
+ * @property untilCommit The revision of the last commit to include in the review. Default value is an empty string, which means the latest commit in the repository.
+ * @property commitMessageOptionFile The path to the commit message option file. Default value is an empty string, which means no commit message options are used.
+ * @property verbose A flag indicating whether to enable verbose output. Default value is false.
+ * @property configFile The path to the configuration file. Default value is "devops-genius.yml".
+ * @property project The `GeniusProject` instance representing the project being reviewed. It is lazily initialized based on the configuration file or the repository path.
+ *
+ * @constructor Creates a new instance of `CodeReviewCommand`.
+ *
+ * @see CliktCommand
+ * @see GeniusProject
+ */
 class CodeReviewCommand : CliktCommand(help = "Code Review with AIGC") {
     private val repo by option(help = "Git repository path. Use local file path, or Git Url").default(".")
     private val branch by option(help = "Git branch name").default("master")

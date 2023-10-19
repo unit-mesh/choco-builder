@@ -2,7 +2,7 @@ package cc.unitmesh.genius.prompt
 
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.genius.project.GeniusProject
-import cc.unitmesh.prompt.executor.TemplateRoleSplitter
+import cc.unitmesh.template.TemplateRoleSplitter
 import cc.unitmesh.prompt.template.VelocityCompiler
 
 abstract class PromptFactory(promptsBasePath: String) {
