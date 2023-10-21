@@ -31,12 +31,13 @@ class TemplateRoleSplitter {
         val contentBuilder = StringBuilder()
 
         for (line in lines) {
-            if (line.startsWith("```") && line.endsWith("```")) {
+            if (line.startsWith("```") && line.endsWith("```") && line.length > 6) {
                 // Found a section header
                 if (currentSection.isNotEmpty()) {
                     sections[currentSection] = contentBuilder.toString()
                     contentBuilder.clear()
                 }
+
                 currentSection = line.substring(3, line.length - 3)
             } else {
                 // Append line to the current section's content
