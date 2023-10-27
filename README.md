@@ -72,7 +72,7 @@ dependencies {
 
 See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see in [documents](./docs)
 
-## Design Philosophy: Domain Driven Problem Solving
+## Design Philosophy: Domain Driven Problem-Solving
 
 The key concepts of Chocolate Factory are:
 

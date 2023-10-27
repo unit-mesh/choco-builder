@@ -1,4 +1,9 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.0...v) (2023-10-19)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.0...v) (2023-10-27)
+
+
+### Bug Fixes
+
+* fix code highlight issue ([0bbde56](https://github.com/unit-mesh/chocolate-factory/commit/0bbde56cf2cadc7e9b1f986fe29b6bd0b093dc12))
 
 
 
