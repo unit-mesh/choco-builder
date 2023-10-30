@@ -6,7 +6,7 @@ kotlinxSerialization = "1.6.0"
 
 jupyterApi = "0.12.0-65"
 
-junit = "5.9.1"
+junit = "5.9.3"
 kotlinTest = "5.5.4"
 mockk = "1.13.5"
 assertj = "3.22.0"
@@ -167,7 +167,7 @@ jupyter = { id = "org.jetbrains.kotlin.jupyter.api", version.ref = "jupyterApi" 
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" }
 
 [bundles]
-test = ["test-junit-params", "kotlin-test", "test-kotlintest-assertions", "test-mockk", "test-assertj"]
+test = ["test-junit-params", "test-junit-api", "kotlin-test", "test-kotlintest-assertions", "test-mockk", "test-assertj"]
 
 jackson = ["jackson-module-jsonSchema", "jackson-module-kotlin", "jackson-dataformat-yaml"]
 

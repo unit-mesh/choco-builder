@@ -12,6 +12,7 @@ class KotlinInterpreterTest {
             code = "val x = 3; y*2",
             language = "kotlin",
         )
+
         val res = compiler.eval(request)
     }
 

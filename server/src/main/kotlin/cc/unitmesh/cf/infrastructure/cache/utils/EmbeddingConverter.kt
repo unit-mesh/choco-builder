@@ -1,8 +1,8 @@
 package cc.unitmesh.cf.infrastructure.cache.utils
 
 import cc.unitmesh.nlp.embedding.Embedding
-import jakarta.persistence.AttributeConverter
-import jakarta.persistence.Converter
+import javax.persistence.AttributeConverter
+import javax.persistence.Converter
 
 @Converter
 class EmbeddingConverter : AttributeConverter<Embedding, String> {

@@ -39,6 +39,8 @@ dependencies {
 
     implementation(libs.rxjava3)
 
+    implementation("jakarta.json:jakarta.json-api:2.1.3")
+
     // spring dependencies
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -73,5 +75,6 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation(libs.bundles.test)
+    // test-junit-params
     testRuntimeOnly(libs.test.junit.engine)
 }
