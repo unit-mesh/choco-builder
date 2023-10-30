@@ -29,17 +29,17 @@ allprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(11)
     }
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "17"
+            jvmTarget = "11"
         }
     }
 
@@ -74,7 +74,7 @@ configure(
                 }
                 pom {
                     name.set("ChocolateFactory")
-                    description.set("Chocolate Factory is a cutting-edge LLM application engine designed to empower you in creating your very own AI assistant.")
+                    description.set("Chocolate Factory is a cutting-edge LLM toolkit designed to empower you in creating your very own AI assistant.")
                     url.set("https://framework.unitmesh.cc/")
                     licenses {
                         license {
