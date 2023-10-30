@@ -39,6 +39,7 @@ import org.apache.http.message.BasicHeader
 import org.elasticsearch.client.RestClient
 import java.io.IOException
 import java.util.*
+import kotlin.streams.toList
 
 /**
  * ElasticsearchStore is an implementation of the EmbeddingStore interface that uses Elasticsearch as the underlying storage.

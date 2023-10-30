@@ -19,6 +19,7 @@
 package cc.unitmesh.rag.splitter
 
 import cc.unitmesh.rag.document.Document
+import kotlin.streams.toList
 
 
 data class HeaderType(val level: Int, val name: String, val data: String)
@@ -67,8 +68,8 @@ class MarkdownHeaderTextSplitter(
      * @param lines Line of text / associated header metadata
      * @return List of Document chunks
      */
-    private fun aggregateLinesToChunks(lines: List<LineType>): MutableList<Document> {
-        val aggregatedChunks: MutableList<LineType> = ArrayList<LineType>()
+    private fun aggregateLinesToChunks(lines: List<LineType>): List<Document> {
+        val aggregatedChunks: MutableList<LineType> = ArrayList()
         for (line in lines) {
             if (aggregatedChunks.isNotEmpty() && aggregatedChunks[aggregatedChunks.size - 1].metadata == line.metadata) {
                 // If the last line in the aggregated list has the same metadata as the current line,
@@ -190,7 +191,6 @@ class MarkdownHeaderTextSplitter(
             linesWithMetadata.add(LineType(currentContent.joinToString("\n"), currentMetadata))
         }
         // linesWithMetadata has each line with associated header metadata aggregate these into chunks based on common
-        // metadata
         return if (!returnEachLine) {
             aggregateLinesToChunks(linesWithMetadata)
         } else {
