@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.9.10"
     kotlin("plugin.jpa") version "1.9.10"
 
-    id("org.springframework.boot") version "3.1.3"
+    id("org.springframework.boot") version "2.7.17"
     id("io.spring.dependency-management") version "1.1.3"
 
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
