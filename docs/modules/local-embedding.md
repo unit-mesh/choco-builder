@@ -65,3 +65,49 @@ M3E 对应的 Tips
 - 多语言使用场景，并且不介意数据隐私的话，我建议使用 text-embedding-ada-002
 - 代码检索场景，推荐使用 text-embedding-ada-002
 - 文本检索场景，请使用具备文本检索能力的模型，只在 S2S 上训练的文本嵌入模型，没有办法完成文本检索任务
+
+## Intellij
+
+### SearchEverywhere—SemanticSearch
+
+估计可能是这个版本：[https://huggingface.co/prajjwal1/bert-tiny](https://huggingface.co/prajjwal1/bert-tiny)
+
+```json
+{
+  "clean_up_tokenization_spaces": true,
+  "cls_token": "[CLS]",
+  "do_basic_tokenize": true,
+  "do_lower_case": true,
+  "mask_token": "[MASK]",
+  "model_max_length": 512,
+  "never_split": null,
+  "pad_token": "[PAD]",
+  "sep_token": "[SEP]",
+  "strip_accents": null,
+  "tokenize_chinese_chars": true,
+  "tokenizer_class": "BertTokenizer",
+  "unk_token": "[UNK]"
+}
+```
+
+Intellij 的 tokenizer_config.json 配置：
+
+```json
+{
+  "do_lower_case": true,
+  "unk_token": "[UNK]",
+  "sep_token": "[SEP]",
+  "pad_token": "[PAD]",
+  "cls_token": "[CLS]",
+  "mask_token": "[MASK]",
+  "clean_up_tokenization_spaces": true,
+  "tokenize_chinese_chars": true,
+  "strip_accents": null,
+  "special_tokens_map_file": null,
+  "do_basic_tokenize": true,
+  "never_split": null,
+  "tokenizer_class": "BertTokenizer",
+  "model_max_length": 512
+}
+```
+
