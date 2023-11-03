@@ -27,4 +27,3 @@ semantic-text-search-0.0.3
     └── encoder
         └── bert-base-uncased.txt
 ```
-
