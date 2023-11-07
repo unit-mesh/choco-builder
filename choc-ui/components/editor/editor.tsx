@@ -3,7 +3,7 @@ import './styles.css'
 import {Color} from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
-import {EditorProvider, useCurrentEditor} from '@tiptap/react'
+import {EditorProvider, Extension, useCurrentEditor} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
 
@@ -180,7 +180,19 @@ const MenuBar = () => {
     )
 }
 
+const AiPlugin = Extension.create({
+    // @ts-ignore
+    addKeyboardShortcuts() {
+        return {
+            '/': () => {
+                console.log("slash")
+            }
+        }
+    }
+})
+
 const extensions = [
+    AiPlugin,
     Color.configure({types: [TextStyle.name, ListItem.name]}),
     // @ts-ignore
     TextStyle.configure({types: [ListItem.name]}),
