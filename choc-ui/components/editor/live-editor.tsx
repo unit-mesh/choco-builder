@@ -3,7 +3,7 @@ import './styles.css'
 import {Color} from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
-import {Editor, EditorContent, FloatingMenu, Extension, useCurrentEditor, useEditor} from '@tiptap/react'
+import {Editor, FloatingMenu, Extension, useCurrentEditor, useEditor, EditorProvider} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React, {useEffect} from 'react'
 
@@ -287,7 +287,13 @@ const LiveEditor = () => {
           bullet list
         </button>
       </FloatingMenu>}
-      <EditorContent editor={editor}/>
+      <EditorProvider
+        extensions={extensions}
+        content={content}
+        slotBefore={<MenuBar/>}
+      >
+
+      </EditorProvider>
     </>
   )
 }
