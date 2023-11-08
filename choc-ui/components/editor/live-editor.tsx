@@ -3,9 +3,9 @@ import './styles.css'
 import {Color} from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
-import {Editor, EditorProvider, Extension, useCurrentEditor} from '@tiptap/react'
+import {Editor, EditorContent, FloatingMenu, Extension, useCurrentEditor, useEditor} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React from 'react'
+import React, {useEffect} from 'react'
 
 const MenuBar = () => {
   const {editor} = useCurrentEditor()
@@ -248,10 +248,47 @@ display: none;
 `
 
 const LiveEditor = () => {
-  return (
-    <EditorProvider slotBefore={<MenuBar/>} extensions={extensions} content={content}>
+  const editor = useEditor({
+    extensions: extensions,
+    content: content,
+  })
 
-    </EditorProvider>
+  const [isEditable, setIsEditable] = React.useState(true)
+
+  useEffect(() => {
+    if (editor) {
+      editor.setEditable(isEditable)
+    }
+  }, [isEditable, editor])
+
+  return (
+    <>
+      <div>
+        <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
+        Editable
+      </div>
+      {editor && <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
+          className={editor.isActive('heading', {level: 1}) ? 'is-active' : ''}
+        >
+          h1
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
+          className={editor.isActive('heading', {level: 2}) ? 'is-active' : ''}
+        >
+          h2
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={editor.isActive('bulletList') ? 'is-active' : ''}
+        >
+          bullet list
+        </button>
+      </FloatingMenu>}
+      <EditorContent editor={editor}/>
+    </>
   )
 }
 
