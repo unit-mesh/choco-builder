@@ -44,11 +44,13 @@ class STSemantic(
 
         val floatArray = outputTensor.floatBuffer.array()
         // floatArray is an inputIds.size * 384 array, we need to mean it to 384 * 1
-        val meanArray = FloatArray(384)
-        for (i in 0 until 384) {
+        // 1, shape, shape.length
+        val shapeSize = outputTensor.info.shape[2].toInt()
+        val meanArray = FloatArray(shapeSzie)
+        for (i in 0 until shapeSzie) {
             var sum = 0f
             for (j in inputIds.indices) {
-                sum += floatArray[j * 384 + i]
+                sum += floatArray[j * shapeSzie + i]
             }
 
             meanArray[i] = sum / inputIds.size
