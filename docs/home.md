@@ -75,6 +75,22 @@ dependencies {
 
 更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
 
+
+## Use Cases
+
+Desktop/IDE:
+
+- [https://github.com/unit-mesh/auto-dev](https://github.com/unit-mesh/auto-dev)
+
+Server:
+
+- [https://github.com/unit-mesh/devops-genius/](https://github.com/unit-mesh/devops-genius/)
+
+Android:
+
+- [https://github.com/unit-mesh/android-semantic-search-kit](https://github.com/unit-mesh/android-semantic-search-kit)
+
+
 ## 设计理念：领域驱动的问题求解
 
 Chocolate Factory 是基于领域驱动设计思想的，如下图所示：

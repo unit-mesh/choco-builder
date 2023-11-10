@@ -68,6 +68,20 @@ dependencies {
 
 更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
 
+## Use Cases
+
+Desktop/IDE: 
+
+- [https://github.com/unit-mesh/auto-dev](https://github.com/unit-mesh/auto-dev)
+
+Server:
+
+- [https://github.com/unit-mesh/devops-genius/](https://github.com/unit-mesh/devops-genius/)
+
+Android:
+
+- [https://github.com/unit-mesh/android-semantic-search-kit](https://github.com/unit-mesh/android-semantic-search-kit)
+
 ## Development
 
 See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see in [documents](./docs)
