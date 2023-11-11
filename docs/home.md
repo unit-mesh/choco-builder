@@ -23,6 +23,9 @@ permalink: /
 > Chocolate Factory 是一款开源的 AI Agent 开发引擎/数据框架（Toolkit），旨在帮助您轻松打造强大的 LLM 助手。无论您是需要生成前端页面、后端
 > API、SQL 图表，还是测试用例数据，Chocolate Factory 都能满足您的需求。
 
+For native (Android/iOS/Embedded device) SDK:
+see in [https://github.com/unit-mesh/inference](https://github.com/unit-mesh/inference)
+
 ## Quick Start
 
 方式 1：本地部署
