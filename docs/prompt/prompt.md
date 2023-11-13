@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Prompt Sample
-nav_order: 90
+nav_order: 100
 has_children: true
 permalink: /docs/prompt
 ---
