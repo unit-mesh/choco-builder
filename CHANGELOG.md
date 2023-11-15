@@ -1,9 +1,26 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.0...v) (2023-10-27)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.3...v) (2023-11-15)
+
+
+
+## [0.4.3](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.0...v0.4.3) (2023-11-13)
 
 
 ### Bug Fixes
 
 * fix code highlight issue ([0bbde56](https://github.com/unit-mesh/chocolate-factory/commit/0bbde56cf2cadc7e9b1f986fe29b6bd0b093dc12))
+* fix compile error ([a7512ef](https://github.com/unit-mesh/chocolate-factory/commit/a7512ef2d097fe93205b597367f7839027633a2f))
+* fix item issue for mobile cases ([401f55c](https://github.com/unit-mesh/chocolate-factory/commit/401f55c76e572edb7e858e7adc0b0dfcfef1399f))
+* fix list issues ([52e3258](https://github.com/unit-mesh/chocolate-factory/commit/52e32584d45f6ec5fc8bf7c1925ff505fd31f600))
+* fix tests issues ([078828c](https://github.com/unit-mesh/chocolate-factory/commit/078828cbaa5a9c1393853852ff280895b22f7b07))
+* fix typos ([373e98f](https://github.com/unit-mesh/chocolate-factory/commit/373e98fe91a8226efafe116d72217284b13b4408))
+
+
+### Features
+
+* **editor:** add demo for element type ([f9f9266](https://github.com/unit-mesh/chocolate-factory/commit/f9f9266254b3b89cd009eac3e6ab7d441a0c5ea4))
+* **editor:** add float menu sample ([b25f126](https://github.com/unit-mesh/chocolate-factory/commit/b25f126def79d8c24712887d5452784d99b33a03))
+* **editor:** init basic slash for command ([58c358a](https://github.com/unit-mesh/chocolate-factory/commit/58c358a1f28bae160d51c85fed28a4bd49d6b5e2))
+* init editor for viewer ([89472ce](https://github.com/unit-mesh/chocolate-factory/commit/89472ceb6853f1170dba002943b0961860129613))
 
 
 
