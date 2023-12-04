@@ -1,9 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.jvm)
-    alias(libs.plugins.shadow)
     alias(libs.plugins.serialization)
-    application
 }
 
 repositories {
