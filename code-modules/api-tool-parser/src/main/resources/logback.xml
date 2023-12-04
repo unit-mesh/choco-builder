@@ -1,0 +1,4 @@
+<configuration debug="true">
+    <logger name="io.swagger.v3.parser" level="ERROR"/>
+    <logger name="cc.unitmesh.processor.api.UnitApi" level="TRACE"/>
+</configuration>

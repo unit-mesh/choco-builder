@@ -1,0 +1,16 @@
+<configuration debug="true">
+    　　
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="io.swagger.v3.parser" level="ERROR"/>
+    <logger name="cc.unitmesh.processor.api.UnitApi" level="TRACE"/>
+
+    　
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
