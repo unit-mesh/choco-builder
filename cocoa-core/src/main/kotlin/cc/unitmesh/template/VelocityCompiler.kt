@@ -1,6 +1,6 @@
 package cc.unitmesh.template
 
-import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.apache.velocity.VelocityContext
@@ -16,7 +16,7 @@ class VelocityCompiler : PromptCompiler {
         val logger: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(VelocityCompiler::class.java)
     }
 
-    fun loadJson(fileName: String): JsonObject? {
+    private fun loadJson(fileName: String): JsonObject? {
         // check is json or jsonl file
         if (!fileName.endsWith(".json")) {
             logger.error("unsupported data file: $fileName")
@@ -47,6 +47,16 @@ class VelocityCompiler : PromptCompiler {
 
     override fun compile(templatePath: String, dataPath: String): String {
         val obj = loadJson(dataPath)!!
+        obj.asMap().forEach { (key, u) ->
+            velocityContext.put(key, u)
+        }
+
+        val template = File(templatePath).readText()
+        return compileToString(template)
+    }
+
+    override fun compile(templatePath: String, element: JsonElement): String {
+        val obj = element.asJsonObject
         obj.asMap().forEach { (key, u) ->
             velocityContext.put(key, u)
         }

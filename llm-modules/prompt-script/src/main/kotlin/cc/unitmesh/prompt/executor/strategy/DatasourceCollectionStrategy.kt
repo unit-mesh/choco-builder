@@ -1,12 +1,19 @@
 package cc.unitmesh.prompt.executor.strategy
 
+import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.prompt.executor.ScriptExecutor
 import cc.unitmesh.prompt.executor.base.JobStrategyExecutor
+import cc.unitmesh.prompt.executor.base.SingleJobExecuteStrategy
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.TemplateDatasource
+import cc.unitmesh.prompt.template.TemplateDataCompile
+import cc.unitmesh.template.TemplateEngineType
+import cc.unitmesh.template.TemplateRoleSplitter
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonParser
+import java.math.BigDecimal
 import java.nio.file.Path
 
 class DatasourceCollectionStrategy(
@@ -20,9 +27,37 @@ class DatasourceCollectionStrategy(
         data.forEach { item ->
             val obj = item.asJsonObject
             val temperature = obj.get("temperature")?.asBigDecimal
-//            val llmResult = execSingleJob(jobName, job, temperature)
-//            handleSingleJobResult(jobName, job, llmResult)
+            val llmResult = execJob(job, item, temperature)
+            handleJobResult(jobName, job, llmResult)
         }
+    }
+
+    fun execJob(job: Job, item: JsonElement, temperature: BigDecimal? = null): String {
+        val llmProvider = createLlmProvider(job, temperature)
+
+        val ext = job.template.substringAfterLast(".")
+        val prompt = when (ext) {
+            "vm", "vsl", "ft" -> {
+                val factory = TemplateDataCompile(type = TemplateEngineType.VELOCITY)
+                val templatePath = basePath.resolve(job.template).toString()
+                factory.compile(templatePath, item)
+            }
+
+            else -> throw Exception("unsupported template type: $ext")
+        }
+
+        val msgs = TemplateRoleSplitter().split(prompt)
+        val messages = LlmMsg.fromMap(msgs)
+
+        if (messages.isEmpty()) {
+            throw Exception("no messages found in template")
+        }
+
+        val resultFileName = createFileName("prompt-log")
+        writeToFile(resultFileName, messages.joinToString("\n") { it.content })
+        SingleJobExecuteStrategy.log.info("save prompt to debug file: $resultFileName")
+
+        return llmProvider.completion(messages)
     }
 
     private fun loadCollection(sources: List<TemplateDatasource>): JsonArray {

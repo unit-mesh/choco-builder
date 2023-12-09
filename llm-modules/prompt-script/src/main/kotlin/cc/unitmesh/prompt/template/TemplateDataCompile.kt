@@ -4,6 +4,7 @@ import cc.unitmesh.prompt.model.TemplateDatasource
 import cc.unitmesh.template.PromptCompiler
 import cc.unitmesh.template.TemplateEngineType
 import cc.unitmesh.template.VelocityCompiler
+import com.google.gson.JsonElement
 import java.nio.file.Path
 
 
@@ -33,5 +34,9 @@ class TemplateDataCompile(private val type: TemplateEngineType = TemplateEngineT
 
         logger.error("unsupported template datasource: $templateDatasource")
         return ""
+    }
+
+    fun compile(templatePath: String, element: JsonElement): String {
+        return compiler.compile(templatePath, element)
     }
 }

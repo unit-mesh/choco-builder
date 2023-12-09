@@ -1,5 +1,7 @@
 package cc.unitmesh.template
 
+import com.google.gson.JsonElement
+
 interface PromptCompiler {
     /**
      * Appends a key-value pair to the existing data.
@@ -18,5 +20,6 @@ interface PromptCompiler {
      * @return the compiled template as a string
      */
     fun compileToString(template: String): String
+    fun compile(templatePath: String, element: JsonElement): String
 }
 
