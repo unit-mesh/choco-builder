@@ -23,29 +23,8 @@ class SingleJobExecutor(
     val job: Job,
     private val basePath: Path = Path.of(".")
 ) {
-    fun handleSingleJobResult(jobName: String, job: Job, llmResult: String) {
-        ScriptExecutor.log.debug("execute job: $jobName")
-        val validators = job.buildValidators(llmResult)
-        validators.forEach {
-            val isSuccess = it.validate()
-            val simpleName = it.javaClass.simpleName
-            if (!isSuccess) {
-                ScriptExecutor.log.error("$simpleName validate failed: ${it.input}")
-            } else {
-                ScriptExecutor.log.debug("$simpleName validate success: ${it.input}")
-            }
-        }
-
-        // write to output
-        val resultFileName = createFileName(jobName)
-        writeToFile(resultFileName, llmResult)
-    }
-
-    private fun writeToFile(resultFileName: String, llmResult: String) {
-        val resultFile = this.basePath.resolve(resultFileName).toFile()
-        val relativePath = this.basePath.relativize(resultFile.toPath())
-        ScriptExecutor.log.info("write result to file: $relativePath")
-        resultFile.writeText(llmResult)
+    companion object {
+        val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(SingleJobExecutor::class.java)
     }
 
     fun execSingleJob(name: String, job: Job, temperature: BigDecimal? = null): String {
@@ -63,7 +42,7 @@ class SingleJobExecutor(
             else -> throw Exception("unsupported connection type: ${connection.type}")
         }
 
-        val prompt = createTemplate(job)
+        val prompt = renderTemplate(job)
         val msgs = TemplateRoleSplitter().split(prompt)
         val messages = LlmMsg.fromMap(msgs)
 
@@ -73,9 +52,34 @@ class SingleJobExecutor(
 
         val resultFileName = createFileName("prompt-log")
         writeToFile(resultFileName, messages.joinToString("\n") { it.content })
-        ScriptExecutor.log.info("save prompt to debug file: $resultFileName")
+        log.info("save prompt to debug file: $resultFileName")
 
         return llmProvider.completion(messages)
+    }
+
+    fun handleSingleJobResult(jobName: String, job: Job, llmResult: String) {
+        log.debug("execute job: $jobName")
+        val validators = job.buildValidators(llmResult)
+        validators.forEach {
+            val isSuccess = it.validate()
+            val simpleName = it.javaClass.simpleName
+            if (!isSuccess) {
+                log.error("$simpleName validate failed: ${it.input}")
+            } else {
+                log.debug("$simpleName validate success: ${it.input}")
+            }
+        }
+
+        // write to output
+        val resultFileName = createFileName(jobName)
+        writeToFile(resultFileName, llmResult)
+    }
+
+    private fun writeToFile(resultFileName: String, llmResult: String) {
+        val resultFile = this.basePath.resolve(resultFileName).toFile()
+        val relativePath = this.basePath.relativize(resultFile.toPath())
+        log.info("write result to file: $relativePath")
+        resultFile.writeText(llmResult)
     }
 
     private fun createFileName(name: String): String {
@@ -87,7 +91,7 @@ class SingleJobExecutor(
         return "${jobName}-${timeStr}.txt"
     }
 
-    private fun createTemplate(job: Job): String {
+    private fun renderTemplate(job: Job): String {
         val ext = job.template.substringAfterLast(".")
         return when (ext) {
             "vm", "vsl", "ft" -> {
@@ -102,7 +106,7 @@ class SingleJobExecutor(
 
     private fun initConnectionConfig(job: Job): ConnectionConfig {
         val connectionFile = this.basePath.resolve(job.connection).toFile()
-        ScriptExecutor.log.info("connection file: ${connectionFile.absolutePath}")
+        log.info("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
