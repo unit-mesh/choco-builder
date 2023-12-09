@@ -11,11 +11,38 @@ import java.io.StringWriter
 class VelocityCompiler : PromptCompiler {
     private val velocityContext = VelocityContext()
 
-    private fun loadData(fileName: String): JsonObject? {
+    companion object {
+        val logger: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(VelocityCompiler::class.java)
+    }
+
+    fun loadData(fileName: String): JsonObject? {
+        // check is json or jsonl file
+        if (!fileName.endsWith(".json") && !fileName.endsWith(".jsonl")) {
+            logger.error("unsupported data file: $fileName")
+            return null
+        }
+
         return try {
             val fileContent = File(fileName).readText()
-            val jsonObject = JsonParser.parseString(fileContent)?.getAsJsonObject()
-            jsonObject
+            when {
+                fileName.endsWith(".json") -> {
+                    JsonParser.parseString(fileContent)?.getAsJsonObject()
+                }
+
+                fileName.endsWith(".jsonl") -> {
+                    val jsonObjects = fileContent.split("\n").mapNotNull {
+                        JsonParser.parseString(it)?.getAsJsonObject()
+                    }
+                    JsonObject().apply {
+                        addProperty("data", jsonObjects.toString())
+                    }
+                }
+
+                else -> {
+                    logger.error("unsupported data file: $fileName")
+                    null
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null

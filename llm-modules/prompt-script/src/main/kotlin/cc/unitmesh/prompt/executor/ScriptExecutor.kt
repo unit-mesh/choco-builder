@@ -18,6 +18,7 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.math.BigDecimal
@@ -28,7 +29,7 @@ class ScriptExecutor {
     private var basePath: Path = Path.of(".")
 
     companion object {
-        val log = LoggerFactory.getLogger(ScriptExecutor::class.java)
+        val log: Logger = LoggerFactory.getLogger(ScriptExecutor::class.java)
     }
 
     private constructor(content: String) {
