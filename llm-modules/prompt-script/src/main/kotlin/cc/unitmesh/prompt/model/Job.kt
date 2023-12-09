@@ -20,6 +20,8 @@ data class Job(
     val vars: Map<String, String> = mapOf(),
     val strategy: List<JobStrategy> = listOf(),
     val validate: List<ValidateRule> = listOf(),
+    @SerialName("log-path")
+    val logPath: String = "logs",
 ) {
     fun buildValidators(input: String): List<Validator> {
         return validate.map {

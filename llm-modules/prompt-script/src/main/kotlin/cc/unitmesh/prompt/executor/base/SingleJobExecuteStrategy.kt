@@ -30,8 +30,15 @@ open class SingleJobExecuteStrategy(
         }
 
         val resultFileName = createFileName("prompt-log")
-        writeToFile(resultFileName, messages.joinToString("\n") { it.content })
-        log.info("save prompt to debug file: $resultFileName")
+        val logbasePath = Path.of(job.logPath)
+        if (!logbasePath.toFile().exists()) {
+            logbasePath.toFile().mkdirs()
+        }
+
+        val resultFilePath = logbasePath.resolve(resultFileName)
+
+        writeToFile(resultFilePath.toString(), messages.joinToString("\n") { it.content })
+        log.info("save prompt to debug file: $resultFilePath")
 
         return llmProvider.completion(messages)
     }
