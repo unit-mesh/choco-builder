@@ -6,16 +6,15 @@ import cc.unitmesh.connection.ConnectionConfig
 import cc.unitmesh.connection.MockLlmConnection
 import cc.unitmesh.connection.OpenAiConnection
 import cc.unitmesh.openai.OpenAiProvider
-import cc.unitmesh.prompt.model.Job
-import cc.unitmesh.prompt.model.PromptScript
-import cc.unitmesh.prompt.model.JobStrategy
-import cc.unitmesh.prompt.model.Variable
+import cc.unitmesh.prompt.model.*
 import cc.unitmesh.prompt.template.TemplateDataCompile
 import cc.unitmesh.template.TemplateEngineType
 import cc.unitmesh.template.TemplateRoleSplitter
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
+import com.google.gson.JsonArray
+import com.google.gson.JsonParser
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import org.slf4j.Logger
@@ -74,6 +73,50 @@ class ScriptExecutor {
                 handleSingleJobResult(name, job, llmResult)
             }
         }
+
+        is JobStrategy.DatasourceCollection -> {
+            val data: JsonArray = loadCollection(job.templateDatasource)
+            data.forEach { item ->
+                val obj = item.asJsonObject
+                val temperature = obj.get("temperature")?.asBigDecimal
+                val llmResult = execSingleJob(name, job, temperature)
+                handleSingleJobResult(name, job, llmResult)
+            }
+        }
+    }
+
+    private fun loadCollection(sources: List<TemplateDatasource>): JsonArray {
+        // for now, only support json and jsonl
+        val results = JsonArray()
+        sources.forEach { datasource ->
+            when(datasource) {
+               is TemplateDatasource.File -> {
+                     val file = this.basePath.resolve(datasource.value).toFile()
+                     val text = file.readText(Charsets.UTF_8)
+                     val ext = file.extension
+                     when (ext) {
+                          "json" -> {
+                            val obj = JsonParser.parseString(text).asJsonObject
+                            results.add(obj)
+                          }
+
+                          "jsonl" -> {
+                            val lines = text.split("\n")
+                            lines.forEach { line ->
+                                 val obj = JsonParser.parseString(line).asJsonObject
+                                 results.add(obj)
+                            }
+                          }
+
+                          else -> {
+                            log.error("unsupported datasource file: ${file.absolutePath}")
+                          }
+                     }
+               }
+           }
+        }
+
+        return results
     }
 
     private fun runRangeJob(variable: Variable.Range, function: (value: BigDecimal) -> Unit) {

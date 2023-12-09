@@ -16,9 +16,9 @@ class VelocityCompiler : PromptCompiler {
         val logger: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(VelocityCompiler::class.java)
     }
 
-    fun loadData(fileName: String): JsonObject? {
+    fun loadJson(fileName: String): JsonObject? {
         // check is json or jsonl file
-        if (!fileName.endsWith(".json") && !fileName.endsWith(".jsonl")) {
+        if (!fileName.endsWith(".json")) {
             logger.error("unsupported data file: $fileName")
             return null
         }
@@ -28,19 +28,6 @@ class VelocityCompiler : PromptCompiler {
             when {
                 fileName.endsWith(".json") -> {
                     JsonParser.parseString(fileContent)?.getAsJsonObject()
-                }
-
-                fileName.endsWith(".jsonl") -> {
-                    val array = JsonArray().apply {
-                        fileContent.split("\n")
-                            .filter { it.isNotBlank() }
-                            .mapNotNull { JsonParser.parseString(it)?.getAsJsonObject() }
-                            .forEach { add(it) }
-                    }
-
-                    JsonObject().apply {
-                        add("data", array)
-                    }
                 }
 
                 else -> {
@@ -59,7 +46,7 @@ class VelocityCompiler : PromptCompiler {
     }
 
     override fun compile(templatePath: String, dataPath: String): String {
-        val obj = loadData(dataPath)!!
+        val obj = loadJson(dataPath)!!
         obj.asMap().forEach { (key, u) ->
             velocityContext.put(key, u)
         }
