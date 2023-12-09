@@ -44,9 +44,9 @@ class ScriptExecutor {
                         runRangeJob(variable) { value ->
                             val temperature: BigDecimal? = if (variable.key == "temperature") value else null
                             log.info("execute job: $jobName, strategy: ${it.value}, temperature: $temperature")
-                            SingleJobExecutor(jobName, job, basePath).apply {
+                            SingleJobExecuteStrategy(jobName, job, basePath).apply {
                                 val llmResult = execSingleJob(jobName, job, temperature)
-                                handleSingleJobResult(jobName, job, llmResult)
+                                handleJobResult(jobName, job, llmResult)
                             }
                         }
                     }
@@ -57,9 +57,9 @@ class ScriptExecutor {
         is JobStrategy.Repeat -> {
             repeat(it.value) { index ->
                 log.info("execute job: $jobName, strategy: repeat, times: ${index}/${it.value}")
-                SingleJobExecutor(jobName, job, basePath).apply {
+                SingleJobExecuteStrategy(jobName, job, basePath).apply {
                     val llmResult = execSingleJob(jobName, job)
-                    handleSingleJobResult(jobName, job, llmResult)
+                    handleJobResult(jobName, job, llmResult)
                 }
             }
         }

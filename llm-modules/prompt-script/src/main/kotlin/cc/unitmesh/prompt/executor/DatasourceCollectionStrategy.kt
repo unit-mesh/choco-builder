@@ -9,11 +9,11 @@ import java.nio.file.Path
 
 class DatasourceCollectionStrategy(
     val job: Job,
-    val basePath: Path,
+    override val basePath: Path,
     val jobName: String,
     val collection: JobStrategy.DatasourceCollection,
-) {
-    fun execute() {
+) : JobStrategyExecutor {
+    override fun execute() {
         val data: JsonArray = loadCollection(job.templateDatasource)
         data.forEach { item ->
             val obj = item.asJsonObject
