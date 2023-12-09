@@ -8,13 +8,13 @@ import cc.unitmesh.template.TemplateRoleSplitter
 import java.math.BigDecimal
 import java.nio.file.Path
 
-class SingleJobExecuteStrategy(
+class RepeatExecuteStrategy(
     val jobName: String,
     val job: Job,
     override val basePath: Path,
 ) : JobStrategyExecutor {
     companion object {
-        val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(SingleJobExecuteStrategy::class.java)
+        val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(RepeatExecuteStrategy::class.java)
     }
 
     override fun execute() {

@@ -12,19 +12,20 @@ import java.nio.file.Path
 
 class ScriptExecutor {
     private val content: String
-    private var basePath: Path = Path.of(".")
+    private lateinit var basePath: Path
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(ScriptExecutor::class.java)
+    }
+
+    constructor(file: File) : this(file.readText(Charsets.UTF_8)) {
+        this.basePath = file.toPath().parent
     }
 
     private constructor(content: String) {
         this.content = content
     }
 
-    constructor(file: File) : this(file.readText(Charsets.UTF_8)) {
-        this.basePath = file.toPath().parent
-    }
 
     fun execute() {
         val script: PromptScript = PromptScript.fromString(content) ?: return
@@ -35,16 +36,16 @@ class ScriptExecutor {
         }
     }
 
-    private fun execStrategy(it: JobStrategy, jobName: String, job: Job) = when (it) {
+    private fun execStrategy(strategy: JobStrategy, jobName: String, job: Job) = when (strategy) {
         is JobStrategy.Connection -> {
-            it.value.forEach { variable ->
+            strategy.value.forEach { variable ->
                 when (variable) {
                     is Variable.KeyValue -> TODO()
                     is Variable.Range -> {
                         runRangeJob(variable) { value ->
                             val temperature: BigDecimal? = if (variable.key == "temperature") value else null
-                            log.info("execute job: $jobName, strategy: ${it.value}, temperature: $temperature")
-                            SingleJobExecuteStrategy(jobName, job, basePath).apply {
+                            log.info("execute job: $jobName, strategy: ${strategy.value}, temperature: $temperature")
+                            RepeatExecuteStrategy(jobName, job, basePath).apply {
                                 val llmResult = execSingleJob(jobName, job, temperature)
                                 handleJobResult(jobName, job, llmResult)
                             }
@@ -55,9 +56,9 @@ class ScriptExecutor {
         }
 
         is JobStrategy.Repeat -> {
-            repeat(it.value) { index ->
-                log.info("execute job: $jobName, strategy: repeat, times: ${index}/${it.value}")
-                SingleJobExecuteStrategy(jobName, job, basePath).apply {
+            repeat(strategy.value) { index ->
+                log.info("execute job: $jobName, strategy: repeat, times: ${index}/${strategy.value}")
+                RepeatExecuteStrategy(jobName, job, basePath).apply {
                     val llmResult = execSingleJob(jobName, job)
                     handleJobResult(jobName, job, llmResult)
                 }
@@ -65,7 +66,7 @@ class ScriptExecutor {
         }
 
         is JobStrategy.DatasourceCollection -> {
-            DatasourceCollectionStrategy(job, basePath, jobName, it).execute()
+            DatasourceCollectionStrategy(job, basePath, jobName, strategy).execute()
         }
     }
 

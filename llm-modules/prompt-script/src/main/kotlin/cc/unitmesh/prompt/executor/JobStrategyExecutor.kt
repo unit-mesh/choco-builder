@@ -37,15 +37,15 @@ interface JobStrategyExecutor {
     }
 
     fun handleJobResult(jobName: String, job: Job, llmResult: String) {
-        SingleJobExecuteStrategy.log.debug("execute job: $jobName")
+        RepeatExecuteStrategy.log.debug("execute job: $jobName")
         val validators = job.buildValidators(llmResult)
         validators.forEach {
             val isSuccess = it.validate()
             val simpleName = it.javaClass.simpleName
             if (!isSuccess) {
-                SingleJobExecuteStrategy.log.error("$simpleName validate failed: ${it.input}")
+                RepeatExecuteStrategy.log.error("$simpleName validate failed: ${it.input}")
             } else {
-                SingleJobExecuteStrategy.log.debug("$simpleName validate success: ${it.input}")
+                RepeatExecuteStrategy.log.debug("$simpleName validate success: ${it.input}")
             }
         }
 
@@ -58,7 +58,7 @@ interface JobStrategyExecutor {
     fun writeToFile(resultFileName: String, llmResult: String) {
         val resultFile = this.basePath.resolve(resultFileName).toFile()
         val relativePath = this.basePath.relativize(resultFile.toPath())
-        SingleJobExecuteStrategy.log.info("write result to file: $relativePath")
+        RepeatExecuteStrategy.log.info("write result to file: $relativePath")
         resultFile.writeText(llmResult)
     }
 
@@ -73,7 +73,7 @@ interface JobStrategyExecutor {
 
     private fun initConnectionConfig(job: Job): ConnectionConfig {
         val connectionFile = this.basePath.resolve(job.connection).toFile()
-        SingleJobExecuteStrategy.log.info("connection file: ${connectionFile.absolutePath}")
+        RepeatExecuteStrategy.log.info("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)
