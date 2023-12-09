@@ -61,6 +61,8 @@ sealed class JobStrategy {
      *```yaml
      * - type: datasource-collection
      *   value:
+     *     - temperature: 0.3
+     *       max_tokens: 1000
      *```
      */
     @SerialName("datasource-collection")

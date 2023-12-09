@@ -54,3 +54,14 @@ for example:
   value: 3
 ```
 
+## DatasourceCollection 
+
+Represents a collection of data sources.
+
+```yaml
+- type: datasource-collection
+  value:
+    - temperature: 0.3
+      max_tokens: 1000
+```
+
