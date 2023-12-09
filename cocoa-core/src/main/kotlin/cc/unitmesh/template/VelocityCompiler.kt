@@ -1,5 +1,6 @@
 package cc.unitmesh.template
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.apache.velocity.VelocityContext
@@ -30,11 +31,15 @@ class VelocityCompiler : PromptCompiler {
                 }
 
                 fileName.endsWith(".jsonl") -> {
-                    val jsonObjects = fileContent.split("\n").mapNotNull {
-                        JsonParser.parseString(it)?.getAsJsonObject()
+                    val array = JsonArray().apply {
+                        fileContent.split("\n")
+                            .filter { it.isNotBlank() }
+                            .mapNotNull { JsonParser.parseString(it)?.getAsJsonObject() }
+                            .forEach { add(it) }
                     }
+
                     JsonObject().apply {
-                        addProperty("data", jsonObjects.toString())
+                        add("data", array)
                     }
                 }
 
