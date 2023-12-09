@@ -50,4 +50,30 @@ jobs:
 
         assertNotNull(promptScript)
     }
+
+    @Test
+    fun should_support_for_unit_eval() {
+        val string = """name: "Eval Units"
+description: "A sample of unit mesh"
+
+jobs:
+  prompt-evaluate: # job name should be unique for each job
+    description: "Evaluate prompt with different parameters"
+    connection: mock-connection.yml
+    template: fixtures/code-completion.vm
+    template-datasource:
+      - type: file
+        value: fixtures/code-completion.jsonl
+
+    strategy:
+      - type: datasource-collection
+        value:
+          - temperature: 0.3
+            max_tokens: 1000
+
+"""
+
+        val promptScript = PromptScript.fromString(string)
+        assertNotNull(promptScript)
+    }
 }

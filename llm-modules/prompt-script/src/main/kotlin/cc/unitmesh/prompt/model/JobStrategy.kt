@@ -56,14 +56,14 @@ sealed class JobStrategy {
     data class Repeat(val value: Int) : JobStrategy()
 
     /**
-     * Repeat is a config of repeat times.
-     * for example:
+     * Represents a collection of data sources.
      *
      *```yaml
-     * - type: jsonl
+     * - type: datasource-collection
+     *   value:
      *```
      */
     @SerialName("datasource-collection")
     @Serializable
-    data class DatasourceCollection(val value: List<Variable>) : JobStrategy()
+    data class DatasourceCollection(val value: List<Map<String, String>>) : JobStrategy()
 }

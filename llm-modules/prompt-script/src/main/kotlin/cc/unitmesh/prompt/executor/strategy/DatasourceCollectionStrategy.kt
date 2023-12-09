@@ -3,7 +3,6 @@ package cc.unitmesh.prompt.executor.strategy
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.prompt.executor.ScriptExecutor
 import cc.unitmesh.prompt.executor.base.JobStrategyExecutor
-import cc.unitmesh.prompt.executor.base.SingleJobExecuteStrategy
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.TemplateDatasource
@@ -30,18 +29,13 @@ class DatasourceCollectionStrategy(
     override fun execute() {
         val data: JsonArray = loadCollection(job.templateDatasource)
         data.forEach { item ->
-            val collection: List<Variable> = collection.value
-            val temperature: BigDecimal = collection.find {
-                when (it) {
-                    is Variable.KeyValue -> it.key == "temperature"
-                    else -> false
+            val collection: List<Map<String, String>> = collection.value
+            var temperature: BigDecimal? = null
+            collection.forEach { variable ->
+                if (variable.containsKey("temperature")) {
+                    temperature = variable["temperature"]?.toBigDecimal()
                 }
-            }?.let {
-                when (it) {
-                    is Variable.KeyValue -> it.value.toBigDecimal()
-                    else -> null
-                }
-            } ?: BigDecimal.ZERO
+            }
 
             val llmResult = execJob(job, item, temperature)
             handleJobResult(jobName, job, llmResult)
