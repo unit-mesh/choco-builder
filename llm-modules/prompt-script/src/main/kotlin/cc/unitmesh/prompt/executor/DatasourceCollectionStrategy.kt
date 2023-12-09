@@ -8,10 +8,10 @@ import com.google.gson.JsonParser
 import java.nio.file.Path
 
 class DatasourceCollectionStrategy(
-    it: JobStrategy.DatasourceCollection,
     val job: Job,
     val basePath: Path,
     val jobName: String,
+    val collection: JobStrategy.DatasourceCollection,
 ) {
     fun execute() {
         val data: JsonArray = loadCollection(job.templateDatasource)
@@ -24,8 +24,8 @@ class DatasourceCollectionStrategy(
     }
 
     private fun loadCollection(sources: List<TemplateDatasource>): JsonArray {
-        // for now, only support json and jsonl
         val results = JsonArray()
+
         sources.forEach { datasource ->
             when (datasource) {
                 is TemplateDatasource.File -> {
