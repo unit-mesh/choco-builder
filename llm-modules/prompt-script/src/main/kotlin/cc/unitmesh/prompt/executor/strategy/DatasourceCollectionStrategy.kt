@@ -7,6 +7,7 @@ import cc.unitmesh.prompt.executor.base.SingleJobExecuteStrategy
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.TemplateDatasource
+import cc.unitmesh.prompt.model.Variable
 import cc.unitmesh.prompt.template.TemplateDataCompile
 import cc.unitmesh.template.TemplateEngineType
 import cc.unitmesh.template.TemplateRoleSplitter
@@ -19,14 +20,25 @@ import java.nio.file.Path
 class DatasourceCollectionStrategy(
     val job: Job,
     override val basePath: Path,
-    val jobName: String,
-    val collection: JobStrategy.DatasourceCollection,
+    private val jobName: String,
+    private val collection: JobStrategy.DatasourceCollection,
 ) : JobStrategyExecutor {
     override fun execute() {
         val data: JsonArray = loadCollection(job.templateDatasource)
         data.forEach { item ->
-            val obj = item.asJsonObject
-            val temperature = obj.get("temperature")?.asBigDecimal
+            val collection: List<Variable> = collection.value
+            val temperature: BigDecimal = collection.find {
+                when (it) {
+                    is Variable.KeyValue -> it.key == "temperature"
+                    else -> false
+                }
+            }?.let {
+                when (it) {
+                    is Variable.KeyValue -> it.value.toBigDecimal()
+                    else -> null
+                }
+            } ?: BigDecimal.ZERO
+
             val llmResult = execJob(job, item, temperature)
             handleJobResult(jobName, job, llmResult)
         }
