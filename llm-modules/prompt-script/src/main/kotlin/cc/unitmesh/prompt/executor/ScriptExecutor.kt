@@ -1,13 +1,14 @@
 package cc.unitmesh.prompt.executor
 
+import cc.unitmesh.prompt.executor.strategy.ConnectionExecuteStrategy
+import cc.unitmesh.prompt.executor.strategy.DatasourceCollectionStrategy
+import cc.unitmesh.prompt.executor.strategy.RepeatExecuteStrategy
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.PromptScript
-import cc.unitmesh.prompt.model.Variable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.math.BigDecimal
 import java.nio.file.Path
 
 class ScriptExecutor {
@@ -38,46 +39,15 @@ class ScriptExecutor {
 
     private fun execStrategy(strategy: JobStrategy, jobName: String, job: Job) = when (strategy) {
         is JobStrategy.Connection -> {
-            strategy.value.forEach { variable ->
-                when (variable) {
-                    is Variable.KeyValue -> TODO()
-                    is Variable.Range -> {
-                        runRangeJob(variable) { value ->
-                            val temperature: BigDecimal? = if (variable.key == "temperature") value else null
-                            log.info("execute job: $jobName, strategy: ${strategy.value}, temperature: $temperature")
-                            RepeatExecuteStrategy(jobName, job, basePath).apply {
-                                val llmResult = execSingleJob(jobName, job, temperature)
-                                handleJobResult(jobName, job, llmResult)
-                            }
-                        }
-                    }
-                }
-            }
+            ConnectionExecuteStrategy(jobName, job, basePath, strategy).execute()
         }
 
         is JobStrategy.Repeat -> {
-            repeat(strategy.value) { index ->
-                log.info("execute job: $jobName, strategy: repeat, times: ${index}/${strategy.value}")
-                RepeatExecuteStrategy(jobName, job, basePath).apply {
-                    val llmResult = execSingleJob(jobName, job)
-                    handleJobResult(jobName, job, llmResult)
-                }
-            }
+            RepeatExecuteStrategy(jobName, job, basePath, strategy).execute()
         }
 
         is JobStrategy.DatasourceCollection -> {
             DatasourceCollectionStrategy(job, basePath, jobName, strategy).execute()
-        }
-    }
-
-    private fun runRangeJob(variable: Variable.Range, function: (value: BigDecimal) -> Unit) {
-        val closedRange: ClosedRange<BigDecimal> = variable.toRange()
-        val step = variable.step.toBigDecimal()
-
-        var currentValue = closedRange.start
-        while (currentValue <= closedRange.endInclusive) {
-            function(currentValue)
-            currentValue += step
         }
     }
 }

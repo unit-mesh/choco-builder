@@ -1,4 +1,4 @@
-package cc.unitmesh.prompt.executor
+package cc.unitmesh.prompt.executor.base
 
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.MockLlmProvider
@@ -16,6 +16,10 @@ import java.math.BigDecimal
 import java.nio.file.Path
 
 interface JobStrategyExecutor {
+    companion object {
+        val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(JobStrategyExecutor::class.java)
+    }
+
     val basePath: Path
 
     fun execute()
@@ -37,15 +41,15 @@ interface JobStrategyExecutor {
     }
 
     fun handleJobResult(jobName: String, job: Job, llmResult: String) {
-        RepeatExecuteStrategy.log.debug("execute job: $jobName")
+        log.debug("execute job: $jobName")
         val validators = job.buildValidators(llmResult)
         validators.forEach {
             val isSuccess = it.validate()
             val simpleName = it.javaClass.simpleName
             if (!isSuccess) {
-                RepeatExecuteStrategy.log.error("$simpleName validate failed: ${it.input}")
+                log.error("$simpleName validate failed: ${it.input}")
             } else {
-                RepeatExecuteStrategy.log.debug("$simpleName validate success: ${it.input}")
+                log.debug("$simpleName validate success: ${it.input}")
             }
         }
 
@@ -58,7 +62,7 @@ interface JobStrategyExecutor {
     fun writeToFile(resultFileName: String, llmResult: String) {
         val resultFile = this.basePath.resolve(resultFileName).toFile()
         val relativePath = this.basePath.relativize(resultFile.toPath())
-        RepeatExecuteStrategy.log.info("write result to file: $relativePath")
+        log.info("write result to file: $relativePath")
         resultFile.writeText(llmResult)
     }
 
@@ -73,7 +77,7 @@ interface JobStrategyExecutor {
 
     private fun initConnectionConfig(job: Job): ConnectionConfig {
         val connectionFile = this.basePath.resolve(job.connection).toFile()
-        RepeatExecuteStrategy.log.info("connection file: ${connectionFile.absolutePath}")
+        log.info("connection file: ${connectionFile.absolutePath}")
         val text = connectionFile.readBytes().toString(Charsets.UTF_8)
 
         val configuration = YamlConfiguration(polymorphismStyle = PolymorphismStyle.Property)

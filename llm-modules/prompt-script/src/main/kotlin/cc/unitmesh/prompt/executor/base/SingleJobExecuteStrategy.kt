@@ -1,26 +1,23 @@
-package cc.unitmesh.prompt.executor
+package cc.unitmesh.prompt.executor.base
 
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.template.TemplateDataCompile
 import cc.unitmesh.template.TemplateEngineType
 import cc.unitmesh.template.TemplateRoleSplitter
+import org.slf4j.Logger
 import java.math.BigDecimal
 import java.nio.file.Path
 
-class RepeatExecuteStrategy(
-    val jobName: String,
-    val job: Job,
-    override val basePath: Path,
+open class SingleJobExecuteStrategy(
+    open val jobName: String,
+    open val job: Job,
+    override val basePath: Path
 ) : JobStrategyExecutor {
-    companion object {
-        val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(RepeatExecuteStrategy::class.java)
-    }
 
     override fun execute() {
-        TODO("Not yet implemented")
-    }
 
+    }
     fun execSingleJob(name: String, job: Job, temperature: BigDecimal? = null): String {
         val llmProvider = createLlmProvider(job, temperature)
 
@@ -50,5 +47,9 @@ class RepeatExecuteStrategy(
 
             else -> throw Exception("unsupported template type: $ext")
         }
+    }
+
+    companion object {
+        val log: Logger = org.slf4j.LoggerFactory.getLogger(SingleJobExecuteStrategy::class.java)
     }
 }
