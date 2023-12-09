@@ -23,6 +23,10 @@ class DatasourceCollectionStrategy(
     private val jobName: String,
     private val collection: JobStrategy.DatasourceCollection,
 ) : JobStrategyExecutor {
+    companion object {
+        val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger(DatasourceCollectionStrategy::class.java)
+    }
+
     override fun execute() {
         val data: JsonArray = loadCollection(job.templateDatasource)
         data.forEach { item ->
@@ -67,8 +71,8 @@ class DatasourceCollectionStrategy(
 
         val resultFileName = createFileName("prompt-log")
         writeToFile(resultFileName, messages.joinToString("\n") { it.content })
-        SingleJobExecuteStrategy.log.info("save prompt to debug file: $resultFileName")
 
+        log.info("save prompt to debug file: $resultFileName")
         return llmProvider.completion(messages)
     }
 
