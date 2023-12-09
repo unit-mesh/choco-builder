@@ -9,15 +9,12 @@ import org.slf4j.Logger
 import java.math.BigDecimal
 import java.nio.file.Path
 
-open class SingleJobExecuteStrategy(
+abstract class SingleJobExecuteStrategy(
     open val jobName: String,
     open val job: Job,
     override val basePath: Path
 ) : JobStrategyExecutor {
 
-    override fun execute() {
-
-    }
     fun execSingleJob(name: String, job: Job, temperature: BigDecimal? = null): String {
         val llmProvider = createLlmProvider(job, temperature)
 
