@@ -1,10 +1,10 @@
-FROM gradle:jdk17 as build
+FROM gradle:jdk11 as build
 WORKDIR /app
 COPY . .
 RUN rm -rf choc-ui
 RUN ./gradlew build  -x test --no-daemon
 
-FROM openjdk:17-jdk
+FROM openjdk:11-jdk
 WORKDIR /app
 COPY --from=build /app/server/build/libs/server-*.jar app.jar
 RUN ls -la
