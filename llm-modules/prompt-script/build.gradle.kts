@@ -16,6 +16,11 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.rxjava3)
 
+    // language parser
+    implementation(libs.chapi.domain)
+    implementation(libs.chapi.java)
+    implementation(libs.chapi.kotlin)
+
     implementation(libs.serialization.json)
     // for json path construction
     implementation(libs.gson)

@@ -33,7 +33,7 @@ data class Job(
                 is ValidateRule.MarkdownCodeBlock -> MarkdownCodeBlockValidator(llmResult)
                 is ValidateRule.Regex -> RegexValidator(it.value, llmResult)
                 is ValidateRule.StringRule -> StringValidator(it.value, llmResult)
-                is ValidateRule.CodeCompletion -> CompletionValidator(llmResult, it.selection, dataItem, it.language)
+                is ValidateRule.CodeCompletion -> CodeCompletionValidator(llmResult, it.selection, dataItem, it.language)
             }
         }
     }

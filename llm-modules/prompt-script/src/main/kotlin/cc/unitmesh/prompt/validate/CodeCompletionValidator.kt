@@ -1,11 +1,13 @@
 package cc.unitmesh.prompt.validate
 
 import cc.unitmesh.cf.core.parser.MarkdownCode
+import chapi.ast.javaast.JavaAnalyser
+import chapi.ast.kotlinast.KotlinAnalyser
 import com.google.gson.JsonElement
 import com.jayway.jsonpath.JsonPath
 import org.slf4j.Logger
 
-class CompletionValidator(
+class CodeCompletionValidator(
     /**
      * the origin output
      */
@@ -24,7 +26,7 @@ class CompletionValidator(
     private val language: String,
 ) : Validator {
     companion object {
-        val logger: Logger = org.slf4j.LoggerFactory.getLogger(CompletionValidator::class.java)
+        val logger: Logger = org.slf4j.LoggerFactory.getLogger(CodeCompletionValidator::class.java)
     }
 
     override fun validate(): Boolean {
@@ -34,7 +36,22 @@ class CompletionValidator(
 
         when (language) {
             "java" -> {
-                //
+                val datastructures = JavaAnalyser().analysis(fullCode, "test.java").DataStructures
+                if (datastructures.isEmpty()) {
+                    logger.error("java code completion failed: $fullCode")
+                    return false
+                }
+
+                return true
+            }
+            "kotlin" -> {
+                val datastructures = KotlinAnalyser().analysis(fullCode, "test.kt").DataStructures
+                if (datastructures.isEmpty()) {
+                    logger.error("kotlin code completion failed: $fullCode")
+                    return false
+                }
+
+                return true
             }
 
             else -> {
