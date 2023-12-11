@@ -24,16 +24,16 @@ data class Job(
     @SerialName("log-path")
     val logPath: String = "logs",
 ) {
-    fun buildValidators(input: String, dataItem: JsonElement): List<Validator> {
+    fun buildValidators(llmResult: String, dataItem: JsonElement): List<Validator> {
         return validate.map {
             when (it) {
-                is ValidateRule.ExtTool -> ExtToolValidator(it.value, input, it.options)
-                is ValidateRule.Json -> JsonValidator(input)
-                is ValidateRule.JsonPath -> JsonPathValidator(it.value, input)
-                is ValidateRule.MarkdownCodeBlock -> MarkdownCodeBlockValidator(input)
-                is ValidateRule.Regex -> RegexValidator(it.value, input)
-                is ValidateRule.StringRule -> StringValidator(it.value, input)
-                is ValidateRule.CodeCompletion -> CompletionValidator(input, it.selection, dataItem, it.language)
+                is ValidateRule.ExtTool -> ExtToolValidator(it.value, llmResult, it.options)
+                is ValidateRule.Json -> JsonValidator(llmResult)
+                is ValidateRule.JsonPath -> JsonPathValidator(it.value, llmResult)
+                is ValidateRule.MarkdownCodeBlock -> MarkdownCodeBlockValidator(llmResult)
+                is ValidateRule.Regex -> RegexValidator(it.value, llmResult)
+                is ValidateRule.StringRule -> StringValidator(it.value, llmResult)
+                is ValidateRule.CodeCompletion -> CompletionValidator(llmResult, it.selection, dataItem, it.language)
             }
         }
     }

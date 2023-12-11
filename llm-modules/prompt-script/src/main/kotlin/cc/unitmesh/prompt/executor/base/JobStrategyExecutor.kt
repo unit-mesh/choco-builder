@@ -48,9 +48,9 @@ interface JobStrategyExecutor {
             val isSuccess = it.validate()
             val simpleName = it.javaClass.simpleName
             if (!isSuccess) {
-                log.error("$simpleName validate failed: ${it.input}")
+                log.error("$simpleName validate failed: ${it.llmResult}")
             } else {
-                log.debug("$simpleName validate success: ${it.input}")
+                log.debug("$simpleName validate success: ${it.llmResult}")
             }
         }
 

@@ -3,7 +3,7 @@ package cc.unitmesh.prompt.validate
 /**
  * Extension Tool is validate command, like `plantuml xxx.puml`
  */
-class ExtToolValidator(private val execCommand: String, override val input: String, val options: Map<String, String>) :
+class ExtToolValidator(private val execCommand: String, override val llmResult: String, val options: Map<String, String>) :
     Validator {
     override fun validate(): Boolean {
         // a exec command like `ls -l`
@@ -14,8 +14,8 @@ class ExtToolValidator(private val execCommand: String, override val input: Stri
             commandList.add(value)
         }
 
-        if (input.isNotEmpty()) {
-            commandList.add(input)
+        if (llmResult.isNotEmpty()) {
+            commandList.add(llmResult)
         }
 
         val processBuilder = ProcessBuilder(commandList)

@@ -1,6 +1,6 @@
 package cc.unitmesh.prompt.validate
 
 interface Validator {
-    val input: String
+    val llmResult: String
     fun validate(): Boolean
 }

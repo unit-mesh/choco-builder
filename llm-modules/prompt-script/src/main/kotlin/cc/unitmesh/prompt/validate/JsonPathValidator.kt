@@ -5,9 +5,9 @@ import com.jayway.jsonpath.JsonPath
 /**
  * JsonPath will validate is path is valid. If a path is invalid, will return false.
  */
-class JsonPathValidator(val expression: String, override val input: String) : Validator {
+class JsonPathValidator(val expression: String, override val llmResult: String) : Validator {
     override fun validate(): Boolean = try {
-        JsonPath.parse(input).read<Any>(expression)
+        JsonPath.parse(llmResult).read<Any>(expression)
         true
     } catch (e: Exception) {
         false

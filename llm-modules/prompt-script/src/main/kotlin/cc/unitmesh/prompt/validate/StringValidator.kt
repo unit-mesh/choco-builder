@@ -4,7 +4,7 @@ package cc.unitmesh.prompt.validate
  * This class represents a string validation expression that evaluates to a boolean value, determining whether subsequent
  * statements should be executed or not.
  */
-class StringValidator(val expression: String, override val input: String) : Validator {
+class StringValidator(val expression: String, override val llmResult: String) : Validator {
     override fun validate(): Boolean {
         val expr = parseExpression(expression)
         val left = expr.left
@@ -12,19 +12,19 @@ class StringValidator(val expression: String, override val input: String) : Vali
         val operator = expr.operator
 
         return when (operator) {
-            CompareType.EQUALS -> input == right
-            CompareType.NOT_EQUALS -> input != right
-            CompareType.CONTAINS -> input.contains(right)
-            CompareType.STARTS_WITH -> input.startsWith(right)
-            CompareType.ENDS_WITH -> input.endsWith(right)
-            CompareType.GREATER_THAN -> input.length > right.toInt()
-            CompareType.LESS_THAN -> input.length < right.toInt()
+            CompareType.EQUALS -> llmResult == right
+            CompareType.NOT_EQUALS -> llmResult != right
+            CompareType.CONTAINS -> llmResult.contains(right)
+            CompareType.STARTS_WITH -> llmResult.startsWith(right)
+            CompareType.ENDS_WITH -> llmResult.endsWith(right)
+            CompareType.GREATER_THAN -> llmResult.length > right.toInt()
+            CompareType.LESS_THAN -> llmResult.length < right.toInt()
             CompareType.PROPERTY_ACCESS -> {
                 val propertyAccess = parsePropertyAccess(left)
                 when (propertyAccess.operator) {
-                    AccessType.LENGTH -> input.length == right.toInt()
-                    AccessType.UPPER_CASE -> input.uppercase() == right
-                    AccessType.LOWER_CASE -> input.lowercase() == right
+                    AccessType.LENGTH -> llmResult.length == right.toInt()
+                    AccessType.UPPER_CASE -> llmResult.uppercase() == right
+                    AccessType.LOWER_CASE -> llmResult.lowercase() == right
                 }
             }
         }
