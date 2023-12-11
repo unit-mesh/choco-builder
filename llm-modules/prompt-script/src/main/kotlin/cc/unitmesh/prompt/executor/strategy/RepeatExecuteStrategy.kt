@@ -3,6 +3,7 @@ package cc.unitmesh.prompt.executor.strategy
 import cc.unitmesh.prompt.executor.base.SingleJobExecuteStrategy
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
+import com.google.gson.JsonObject
 import java.nio.file.Path
 
 class RepeatExecuteStrategy(
@@ -15,7 +16,7 @@ class RepeatExecuteStrategy(
         repeat(strategy.value) { index ->
             log.info("execute job: $jobName, strategy: repeat, times: ${index}/${strategy.value}")
             val llmResult = execSingleJob(jobName, job)
-            handleJobResult(jobName, job, llmResult)
+            handleJobResult(jobName, job, llmResult, JsonObject())
         }
     }
 }

@@ -4,6 +4,7 @@ import cc.unitmesh.prompt.executor.base.SingleJobExecuteStrategy
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.Variable
+import com.google.gson.JsonObject
 import java.math.BigDecimal
 import java.nio.file.Path
 
@@ -23,7 +24,7 @@ class ConnectionExecuteStrategy(
                         log.info("execute job: $jobName, strategy: ${strategy.value}, temperature: $temperature")
 
                         val llmResult = execSingleJob(jobName, job, temperature)
-                        handleJobResult(jobName, job, llmResult)
+                        handleJobResult(jobName, job, llmResult, JsonObject())
                     }
                 }
             }

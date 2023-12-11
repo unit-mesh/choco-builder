@@ -1,18 +1,20 @@
 package cc.unitmesh.prompt.validate
 
+import com.google.gson.JsonElement
+
 class CompletionValidator(
     /**
-     * the JsonObject
+     * the origin output
      */
     override val input: String,
     /**
-     * the code completion is a object, we need to get the selected value by json path.
+     * the code completion is an object, we need to get the selected value by json path.
      */
     val selection: String,
     /**
-     * the output of code completion
+     * the input data
      */
-    val output: String,
+    val dataItem: JsonElement,
     /**
      * use for choice language compiler
      */

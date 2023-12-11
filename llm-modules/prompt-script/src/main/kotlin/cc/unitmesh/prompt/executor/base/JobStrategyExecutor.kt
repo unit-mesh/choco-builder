@@ -10,6 +10,7 @@ import cc.unitmesh.prompt.model.Job
 import com.charleskorn.kaml.PolymorphismStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
+import com.google.gson.JsonElement
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import java.math.BigDecimal
@@ -40,9 +41,9 @@ interface JobStrategyExecutor {
         return llmProvider
     }
 
-    fun handleJobResult(jobName: String, job: Job, llmResult: String) {
+    fun handleJobResult(jobName: String, job: Job, llmResult: String, dataItem: JsonElement) {
         log.debug("execute job: $jobName")
-        val validators = job.buildValidators(llmResult)
+        val validators = job.buildValidators(llmResult, dataItem)
         validators.forEach {
             val isSuccess = it.validate()
             val simpleName = it.javaClass.simpleName

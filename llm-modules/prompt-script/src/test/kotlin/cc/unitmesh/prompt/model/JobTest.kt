@@ -20,7 +20,7 @@ class JobTest {
         )
 
         // when
-        val result = job.buildValidators(input)
+        val result = job.buildValidators(input, dataItem)
 
         // then
         assertEquals(1, result.size)
@@ -42,7 +42,7 @@ class JobTest {
         )
 
         // when
-        val result = job.buildValidators(input).map { it.validate() }
+        val result = job.buildValidators(input, dataItem).map { it.validate() }
 
         // then
         assertEquals(2, result.size)

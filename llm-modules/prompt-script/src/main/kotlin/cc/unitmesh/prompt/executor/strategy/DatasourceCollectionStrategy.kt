@@ -6,7 +6,6 @@ import cc.unitmesh.prompt.executor.base.JobStrategyExecutor
 import cc.unitmesh.prompt.model.Job
 import cc.unitmesh.prompt.model.JobStrategy
 import cc.unitmesh.prompt.model.TemplateDatasource
-import cc.unitmesh.prompt.model.Variable
 import cc.unitmesh.prompt.template.TemplateDataCompile
 import cc.unitmesh.template.TemplateEngineType
 import cc.unitmesh.template.TemplateRoleSplitter
@@ -38,7 +37,7 @@ class DatasourceCollectionStrategy(
             }
 
             val llmResult = execJob(job, item, temperature)
-            handleJobResult(jobName, job, llmResult)
+            handleJobResult(jobName, job, llmResult, item)
         }
     }
 

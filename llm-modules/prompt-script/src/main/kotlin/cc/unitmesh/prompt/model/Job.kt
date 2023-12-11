@@ -1,6 +1,7 @@
 package cc.unitmesh.prompt.model
 
 import cc.unitmesh.prompt.validate.*
+import com.google.gson.JsonElement
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,7 +24,7 @@ data class Job(
     @SerialName("log-path")
     val logPath: String = "logs",
 ) {
-    fun buildValidators(input: String): List<Validator> {
+    fun buildValidators(input: String, dataItem: JsonElement): List<Validator> {
         return validate.map {
             when (it) {
                 is ValidateRule.ExtTool -> ExtToolValidator(it.value, input, it.options)
@@ -32,7 +33,7 @@ data class Job(
                 is ValidateRule.MarkdownCodeBlock -> MarkdownCodeBlockValidator(input)
                 is ValidateRule.Regex -> RegexValidator(it.value, input)
                 is ValidateRule.StringRule -> StringValidator(it.value, input)
-                is ValidateRule.CodeCompletion -> CompletionValidator("", it.selection, input, it.language)
+                is ValidateRule.CodeCompletion -> CompletionValidator(input, it.selection, dataItem, it.language)
             }
         }
     }
