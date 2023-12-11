@@ -1,4 +1,28 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.3...v) (2023-11-15)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.5...v) (2023-12-11)
+
+
+
+## [0.4.5](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.3...v0.4.5) (2023-12-11)
+
+
+### Bug Fixes
+
+* fix reults ([5e7fcc3](https://github.com/unit-mesh/chocolate-factory/commit/5e7fcc36d3d247a8f9ed6391da739e969437f6e6))
+* fix shadow issue ([eb98aa2](https://github.com/unit-mesh/chocolate-factory/commit/eb98aa2f6d884ad99214aace0984e554fd4eac2f))
+* fix tests ([6241655](https://github.com/unit-mesh/chocolate-factory/commit/62416550eba68362ff5f665231ee20441afdc747))
+* fix typos ([e362279](https://github.com/unit-mesh/chocolate-factory/commit/e362279e7c96d47a9fd71c0a6bc2bbe7695e47ca))
+
+
+### Features
+
+* add basic code completion validator ([7e060e5](https://github.com/unit-mesh/chocolate-factory/commit/7e060e51a07c6ea4547493fb3e252a1f477e6d89))
+* add jsonl support ([9384b85](https://github.com/unit-mesh/chocolate-factory/commit/9384b85cebc6cf8b1717b20f33f5e69ca729fd29))
+* add jsonl support ([46c549d](https://github.com/unit-mesh/chocolate-factory/commit/46c549d2dc17af4c43ce92aff4403361feb3f188))
+* **completion:** change interface ([caabe8f](https://github.com/unit-mesh/chocolate-factory/commit/caabe8fe2848933f9cc63169480981139ec2fc8a))
+* impl execute job ([43120b6](https://github.com/unit-mesh/chocolate-factory/commit/43120b6b5aba8ea0ebcdc7b3cf13bc86ddf64aec))
+* init basic collection function and config ([e84e5d7](https://github.com/unit-mesh/chocolate-factory/commit/e84e5d7aa474a04850f988eafc7294e645bdeb8c))
+* init completion validator ([81ec9dd](https://github.com/unit-mesh/chocolate-factory/commit/81ec9ddc76a37acfca10b0de8cd688a345b1bb66))
+* merge api tool parser from DevTi ([56b96ff](https://github.com/unit-mesh/chocolate-factory/commit/56b96ff36db75b199d57fccbaad32fcfa5f6eeb8))
 
 
 
