@@ -7,24 +7,25 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.clikt)
+
     implementation(projects.cocoaCore)
     implementation(projects.llmModules.connection)
     implementation(projects.llmModules.openai)
 
     implementation(libs.kotlin.stdlib)
-    implementation(libs.serialization.json)
-    implementation(libs.jsonpath)
     implementation(libs.rxjava3)
 
-    implementation(libs.logging.logback.classic)
+    implementation(libs.serialization.json)
+    // for json path construction
+    implementation(libs.gson)
+    implementation(libs.jsonpath)
 
     implementation(libs.kaml)
-
     implementation(libs.kotlinx.datetime)
-    implementation(libs.clikt)
-
     implementation(libs.velocity.engine)
-    implementation(libs.gson)
+
+    implementation(libs.logging.logback.classic)
 
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
