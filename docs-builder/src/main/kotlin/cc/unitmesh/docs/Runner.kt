@@ -7,6 +7,8 @@ import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
 import java.nio.file.Path
 
+fun main(args: Array<String>) = Runner().main(args)
+
 class Runner : CliktCommand() {
     private val dir by option("-d", "--dir", help = "The directory to process").default(".")
 
@@ -172,6 +174,3 @@ class Runner : CliktCommand() {
         }
     }
 }
-
-fun main(args: Array<String>) = Runner().main(args)
-

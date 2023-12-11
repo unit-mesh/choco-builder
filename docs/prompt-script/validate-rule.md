@@ -97,3 +97,16 @@ Usage example:
   value: dot -Tsvg basic.dot -o basic.svg
 ```
 
+## CodeCompletion 
+
+Represents a validation rule for using an external tool to validate a job's result, such as PlantUML or Graphviz.
+This class is implemented with validation by [cc.unitmesh.prompt.validate.CodeCompletionValidator].
+Usage example:
+
+```yaml
+- type: code-completion
+  selection: "$.beforeCursor"  // the selection is a json path expression
+  output: "hello world"        // from the selection, we will get the value "hello world"
+  language: "java"             // the language of the code, we will use the language to get the code completion
+```
+
