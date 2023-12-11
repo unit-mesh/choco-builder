@@ -2,6 +2,7 @@ package cc.unitmesh.prompt.model;
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import com.google.gson.JsonObject
 
 class JobTest {
 
@@ -20,7 +21,7 @@ class JobTest {
         )
 
         // when
-        val result = job.buildValidators(input, dataItem)
+        val result = job.buildValidators(input, JsonObject())
 
         // then
         assertEquals(1, result.size)
@@ -42,7 +43,7 @@ class JobTest {
         )
 
         // when
-        val result = job.buildValidators(input, dataItem).map { it.validate() }
+        val result = job.buildValidators(input, JsonObject()).map { it.validate() }
 
         // then
         assertEquals(2, result.size)
