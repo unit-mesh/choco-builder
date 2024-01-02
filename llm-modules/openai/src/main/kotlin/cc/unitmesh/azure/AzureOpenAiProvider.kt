@@ -27,37 +27,13 @@ class AzureOpenAiProvider(var apiKey: String, var apiHost: String) : LlmProvider
         com.theokanning.openai.completion.chat.ChatMessage(this.role.name.lowercase(), this.content)
 
     override fun completion(messages: List<LlmMsg.ChatMessage>): String {
-        val simpleOpenAIFormats = messages.map {
-            SimpleOpenAIFormat.fromChatMessage(it.toInternal())
-        }
-        val requestText = Json.encodeToString<SimpleOpenAIBody>(
-            SimpleOpenAIBody(
-                simpleOpenAIFormats,
-                0.0,
-                false
-            )
-        )
+        var output = ""
+        streamCompletion(messages)
+            .blockingForEach { response ->
+                output += response
+            }
 
-        val body = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            requestText
-        )
-
-        val builder = Request.Builder()
-        val request = builder
-            .url(apiHost)
-            .post(body)
-            .build()
-        val response = client.newCall(request).execute()
-
-        if (!response.isSuccessful) {
-            return ""
-        }
-
-        val completion: ChatCompletionResult =
-            ObjectMapper().readValue(response.body?.string(), ChatCompletionResult::class.java)
-
-        return completion.choices[0].message.content
+        return output
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
