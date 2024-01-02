@@ -1,4 +1,25 @@
-# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.5...v) (2023-12-11)
+# [](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.6...v) (2024-01-02)
+
+
+
+## [0.4.6](https://github.com/unit-mesh/chocolate-factory/compare/v0.4.5...v0.4.6) (2024-01-02)
+
+
+### Bug Fixes
+
+* add lost connection config for Azure ([405d683](https://github.com/unit-mesh/chocolate-factory/commit/405d683957a912251b5d4f4143e12339ba72ba76))
+* fix jdk version issue ([6bb1ea0](https://github.com/unit-mesh/chocolate-factory/commit/6bb1ea0cb6279894d0b1799717407f757a2b45af))
+* fix markdown code error issue ([08fd4a7](https://github.com/unit-mesh/chocolate-factory/commit/08fd4a78b5d024ad84a7b78a1bbade5aca8cf55b))
+* fix parent dir not exist for log ([742dc7e](https://github.com/unit-mesh/chocolate-factory/commit/742dc7e07cc63f66f3f631db475f52a3648f5c1a))
+* fix type issue ([725baa4](https://github.com/unit-mesh/chocolate-factory/commit/725baa44afa2f2bd15c80947880b292d0dddbfe9))
+* fix typos ([dd9aae2](https://github.com/unit-mesh/chocolate-factory/commit/dd9aae2870860270caa3d76460eca4373a6ddddb))
+* fix typos ([c58040c](https://github.com/unit-mesh/chocolate-factory/commit/c58040cd90be9d949d73e1b38a15ef375920bc57))
+* remove unused output ([4d25054](https://github.com/unit-mesh/chocolate-factory/commit/4d25054ce9678e7b3c9cd824f0b44ec53077da87))
+
+
+### Features
+
+* init azure OpenAI connection ([43de882](https://github.com/unit-mesh/chocolate-factory/commit/43de882b360c973e3b680a43cbac662f642ff42e))
 
 
 
