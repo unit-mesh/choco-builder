@@ -1,6 +1,7 @@
 package cc.unitmesh.cf.core.llms
 
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 class MockLlmProvider(val response: String = "") : LlmProvider {
     override var temperature: Double = 0.0
@@ -9,7 +10,11 @@ class MockLlmProvider(val response: String = "") : LlmProvider {
         return response
     }
 
-    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
-        return Flowable.just(response)
+    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flow<String> {
+        return callbackFlow {
+            trySend(response)
+
+            close()
+        }
     }
 }
