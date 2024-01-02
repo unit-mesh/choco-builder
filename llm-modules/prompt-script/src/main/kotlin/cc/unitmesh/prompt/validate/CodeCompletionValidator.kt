@@ -34,6 +34,8 @@ class CodeCompletionValidator(
         val beforeCursorCode: String = JsonPath.parse(dataItem.toString()).read(selection)
         val fullCode = "$beforeCursorCode\n$afterCursorCode"
 
+        logger.info("code completion: $fullCode")
+
         when (language) {
             "java" -> {
                 val datastructures = try {
