@@ -4,7 +4,7 @@ import cc.unitmesh.azure.AzureOpenAiProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.openai.OpenAiProvider
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 /**
  * for create LlmProvider
@@ -32,7 +32,7 @@ class LlmConnector(val llmType: LlmType, val apiKey: String, val apiHost: String
         return provider.completion(messages)
     }
 
-    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
+    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flow<String> {
         return provider.streamCompletion(messages)
     }
 
@@ -40,7 +40,7 @@ class LlmConnector(val llmType: LlmType, val apiKey: String, val apiHost: String
         return completion(function())
     }
 
-    fun streamCompletion(function: () -> String): Flowable<String> {
+    fun streamCompletion(function: () -> String): Flow<String> {
         return provider.streamCompletion(listOf(LlmMsg.ChatMessage(LlmMsg.ChatRole.User, function())))
     }
 }
