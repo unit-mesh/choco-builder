@@ -11,18 +11,17 @@ kotlinTest = "5.5.4"
 mockk = "1.13.5"
 assertj = "3.22.0"
 
-chapi = "2.1.3"
+chapi = "2.1.5"
 
 slf4j = "2.0.5"
 
-archguard = "2.0.7"
+archguard = "2.1.2"
 codedb = "0.1.2"
 
 logback = "1.4.5"
 kotlinLogging = "5.1.0"
 
 gson = "2.10.1"
-compose = "1.3.0"
 
 kotless = "0.2.0"
 
