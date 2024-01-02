@@ -95,6 +95,9 @@ commonmark-core = "org.commonmark:commonmark:0.21.0"
 commonmark-gfm-tables = "org.commonmark:commonmark-ext-gfm-tables:0.21.0"
 commonmark-heading-anchor = "org.commonmark:commonmark-ext-gfm-tables:0.21.0"
 
+okhttp = "com.squareup.okhttp3:okhttp:4.4.1"
+okhttp-sse = "com.squareup.okhttp3:okhttp-sse:4.4.1"
+retrofit2-converter-gson = "com.squareup.retrofit2:converter-gson:2.9.0"
 openai-gpt3 = "com.theokanning.openai-gpt3-java:service:0.14.0"
 retrofit2-converter-jackson = "com.squareup.retrofit2:converter-jackson:2.9.0"
 azure-openai = "com.azure:azure-ai-openai:1.0.0-beta.3"
@@ -177,6 +180,6 @@ test = ["test-junit-params", "test-junit-api", "kotlin-test", "test-kotlintest-a
 jackson = ["jackson-module-jsonSchema", "jackson-module-kotlin", "jackson-dataformat-yaml"]
 
 # llm bundle
-openai = ["openai-gpt3", "retrofit2-converter-jackson"]
+openai = ["openai-gpt3", "retrofit2-converter-jackson", "retrofit2-converter-gson", "jackson-databind", "okhttp", "okhttp-sse"]
 markdown = ["commonmark-core", "commonmark-gfm-tables", "commonmark-heading-anchor"]
 letsPlot = ["lets-plot-jvm", "lets-plot-kernel", "lets-plot-image-export", "lets-plot-common"]

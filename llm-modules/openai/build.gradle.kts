@@ -6,8 +6,10 @@ plugins {
 dependencies {
     implementation(projects.cocoaCore)
     implementation(libs.rxjava3)
+    implementation(libs.serialization.json)
 
     implementation(libs.bundles.openai)
+    implementation(libs.coroutines.core)
     implementation(libs.bundles.jackson)
 
     testImplementation(libs.bundles.test)

@@ -1,5 +1,6 @@
 package cc.unitmesh.rag
 
+import cc.unitmesh.azure.AzureOpenAiProvider
 import cc.unitmesh.cf.core.llms.LlmMsg
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.openai.OpenAiProvider
@@ -12,6 +13,7 @@ class LlmConnector(val llmType: LlmType, val apiKey: String, val apiHost: String
     LlmProvider {
     private val provider: LlmProvider = when (llmType) {
         LlmType.OpenAI -> OpenAiProvider(apiKey, apiHost)
+        LlmType.AzureOpenAI -> AzureOpenAiProvider(apiKey, apiHost!!)
     }
 
     constructor(type: LlmType) : this(
@@ -44,5 +46,6 @@ class LlmConnector(val llmType: LlmType, val apiKey: String, val apiHost: String
 }
 
 enum class LlmType {
-    OpenAI
+    OpenAI,
+    AzureOpenAI
 }

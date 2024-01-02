@@ -5,9 +5,10 @@ import cc.unitmesh.cf.core.llms.LlmProvider
 import com.theokanning.openai.client.OpenAiApi
 import com.theokanning.openai.completion.chat.ChatCompletionRequest
 import com.theokanning.openai.service.OpenAiService
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -65,34 +66,27 @@ class OpenAiProvider(var apiKey: String, var apiHost: String? = null) : LlmProvi
         return result
     }
 
-    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
+    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flow<String> {
         val request = prepareRequest(messages)
 
-        return Flowable.create({ emitter ->
-            val disposable = openai.streamChatCompletion(request)
-                .doOnSubscribe {}
-                .subscribe(
-                    { response ->
-                        val completion = response.choices[0].message
-                        if (completion != null && completion.content != null) {
-                            emitter.onNext(completion.content)
-                        }
-                    },
-                    { error ->
-                        emitter.onError(error)
-                    },
-                    {
-                        emitter.onComplete()
+        return callbackFlow {
+            withContext(Dispatchers.IO) {
+                openai.streamChatCompletion(request)
+                    .doOnError { error ->
+                        trySend(error.message ?: "Error occurs")
                     }
-                )
+                    .blockingForEach { response ->
+                        if (response.choices.isNotEmpty()) {
+                            val completion = response.choices[0].message
+                            if (completion != null && completion.content != null) {
+                                trySend(completion.content)
+                            }
+                        }
+                    }
 
-            emitter.setCancellable {
-                // This will be called when the Flowable is unsubscribed
-                disposable.dispose()
+                close()
             }
-        }, BackpressureStrategy.BUFFER)
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
+        }
     }
 
 }
