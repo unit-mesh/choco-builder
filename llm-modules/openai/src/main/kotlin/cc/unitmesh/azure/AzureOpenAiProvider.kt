@@ -5,12 +5,11 @@ import cc.unitmesh.cf.core.llms.LlmProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.theokanning.openai.completion.chat.ChatCompletionResult
 import com.theokanning.openai.service.SSE
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.FlowableEmitter
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.FlowableEmitter
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -62,7 +61,7 @@ class AzureOpenAiProvider(var apiKey: String, var apiHost: String) : LlmProvider
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flow<String> {
+    override fun streamCompletion(messages: List<LlmMsg.ChatMessage>): Flowable<String> {
         val simpleOpenAIFormats = messages.map {
             SimpleOpenAIFormat.fromChatMessage(it.toInternal())
         }
@@ -93,23 +92,33 @@ class AzureOpenAiProvider(var apiKey: String, var apiHost: String) : LlmProvider
                 call.enqueue(ResponseBodyCallback(emitter, emitDone))
             }, BackpressureStrategy.BUFFER)
 
-        var output = ""
-
-        return callbackFlow {
-            sseFlowable
-                .doOnError(Throwable::printStackTrace)
-                .blockingForEach { sse ->
-                    val result: ChatCompletionResult =
-                        ObjectMapper().readValue(sse.data, ChatCompletionResult::class.java)
-                    val completion = result.choices[0].message
-                    if (completion != null && completion.content != null) {
-                        output += completion.content
-                        trySend(completion.content)
+        return Flowable.create({ emitter ->
+            val disposable = sseFlowable
+                .doOnSubscribe {}
+                .subscribe(
+                    { sse ->
+                        val result: ChatCompletionResult =
+                            ObjectMapper().readValue(sse.data, ChatCompletionResult::class.java)
+                        val completion = result.choices[0].message
+                        if (completion != null && completion.content != null) {
+                            emitter.onNext(completion.content)
+                        }
+                    },
+                    { error ->
+                        emitter.onError(error)
+                    },
+                    {
+                        emitter.onComplete()
                     }
-                }
+                )
 
-            close()
-        }
+            emitter.setCancellable {
+                // This will be called when the Flowable is unsubscribed
+                disposable.dispose()
+            }
+        }, BackpressureStrategy.BUFFER)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
     }
 
 }

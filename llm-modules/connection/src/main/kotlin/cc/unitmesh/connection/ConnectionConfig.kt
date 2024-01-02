@@ -37,7 +37,11 @@ open class ConnectionConfig(
                 OpenAiConnection(apiHost = host, apiKey = key)
             }
 
-            ConnectionType.AzureOpenAI -> TODO()
+            ConnectionType.AzureOpenAI -> {
+                val host = configs.getOrDefault("api-host", "")
+                val key = secrets.getOrDefault("api-key", "")
+                AzureOpenAiConnection(apiHost = host, apiKey = key)
+            }
             ConnectionType.CustomLlm -> TODO()
             ConnectionType.ExtTool -> TODO()
             ConnectionType.MockLlm -> {

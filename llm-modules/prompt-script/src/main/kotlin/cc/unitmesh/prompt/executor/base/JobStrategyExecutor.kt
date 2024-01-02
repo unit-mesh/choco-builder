@@ -1,7 +1,9 @@
 package cc.unitmesh.prompt.executor.base
 
+import cc.unitmesh.azure.AzureOpenAiProvider
 import cc.unitmesh.cf.core.llms.LlmProvider
 import cc.unitmesh.cf.core.llms.MockLlmProvider
+import cc.unitmesh.connection.AzureOpenAiConnection
 import cc.unitmesh.connection.ConnectionConfig
 import cc.unitmesh.connection.MockLlmConnection
 import cc.unitmesh.connection.OpenAiConnection
@@ -29,6 +31,13 @@ interface JobStrategyExecutor {
         val llmProvider = when (val connection = initConnectionConfig(job)) {
             is OpenAiConnection -> {
                 val provider = OpenAiProvider(connection.apiKey, connection.apiHost)
+                if (temperature != null) {
+                    provider.temperature = temperature.toDouble()
+                }
+                provider
+            }
+            is AzureOpenAiConnection -> {
+                val provider = AzureOpenAiProvider(connection.apiKey, connection.apiHost)
                 if (temperature != null) {
                     provider.temperature = temperature.toDouble()
                 }

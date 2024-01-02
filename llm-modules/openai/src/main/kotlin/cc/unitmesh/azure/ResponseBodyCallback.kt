@@ -24,7 +24,7 @@ package cc.unitmesh.azure
 import com.theokanning.openai.service.OpenAiService
 import com.theokanning.openai.service.SSE
 import com.theokanning.openai.service.SSEFormatException
-import io.reactivex.FlowableEmitter
+import io.reactivex.rxjava3.core.FlowableEmitter
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response

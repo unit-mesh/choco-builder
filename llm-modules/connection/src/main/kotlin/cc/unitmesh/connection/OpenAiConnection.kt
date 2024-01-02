@@ -30,3 +30,14 @@ data class OpenAiConnection(
 ) {
 
 }
+
+data class AzureOpenAiConnection(
+    val apiHost: String,
+    val apiKey: String,
+) : ConnectionConfig(
+    name = "azure-openai",
+    type = ConnectionType.AzureOpenAI
+) {
+
+}
+
