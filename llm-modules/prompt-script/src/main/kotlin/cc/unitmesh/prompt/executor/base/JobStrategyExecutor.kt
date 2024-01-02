@@ -63,6 +63,12 @@ interface JobStrategyExecutor {
     fun writeToFile(resultFileName: String, llmResult: String) {
         val resultFile = this.basePath.resolve(resultFileName).toFile()
         val relativePath = this.basePath.relativize(resultFile.toPath())
+        // get parent dir and create if not exists
+        val parentDir = resultFile.parentFile
+        if (!parentDir.exists()) {
+            parentDir.mkdirs()
+        }
+
         log.info("write result to file: $relativePath")
         resultFile.writeText(llmResult)
     }
