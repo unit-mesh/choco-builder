@@ -36,7 +36,13 @@ class CodeCompletionValidator(
 
         when (language) {
             "java" -> {
-                val datastructures = JavaAnalyser().analysis(fullCode, "test.java").DataStructures
+                val datastructures = try {
+                    JavaAnalyser().analysis(fullCode, "test.java").DataStructures
+                } catch (e: Exception) {
+                    logger.error("java code completion failed: $fullCode")
+                    return false
+                }
+
                 if (datastructures.isEmpty()) {
                     logger.error("java code completion failed: $fullCode")
                     return false
@@ -44,8 +50,15 @@ class CodeCompletionValidator(
 
                 return true
             }
+
             "kotlin" -> {
-                val datastructures = KotlinAnalyser().analysis(fullCode, "test.kt").DataStructures
+                val datastructures = try {
+                    KotlinAnalyser().analysis(fullCode, "test.kt").DataStructures
+                } catch (e: Exception) {
+                    logger.error("kotlin code completion failed: $fullCode")
+                    return false
+                }
+
                 if (datastructures.isEmpty()) {
                     logger.error("kotlin code completion failed: $fullCode")
                     return false

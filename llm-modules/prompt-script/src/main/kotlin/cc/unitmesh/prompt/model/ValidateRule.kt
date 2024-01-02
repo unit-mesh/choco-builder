@@ -118,11 +118,10 @@ sealed class ValidateRule {
      * ```yaml
      * - type: code-completion
      *   selection: "$.beforeCursor"  // the selection is a json path expression
-     *   output: "hello world"        // from the selection, we will get the value "hello world"
      *   language: "java"             // the language of the code, we will use the language to get the code completion
      * ```
      */
     @SerialName("code-completion")
     @Serializable
-    data class CodeCompletion(val selection: String, val output: String, val language: String) : ValidateRule()
+    data class CodeCompletion(val selection: String, val language: String) : ValidateRule()
 }
