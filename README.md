@@ -19,6 +19,8 @@
 For native (Android/iOS/Embedded device) SDK:
 see in [https://github.com/unit-mesh/inference](https://github.com/unit-mesh/inference)
 
+![Architecture](docs/architecture.svg)
+
 ## QuickStart
 
 方式 1：本地部署

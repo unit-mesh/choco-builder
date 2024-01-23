@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="319px" viewBox="0 0 640 319" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>cf</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cf">
+            <rect id="Rectangle" stroke="#979797" fill="#FFFFFF" x="0.5" y="255.5" width="639" height="63"></rect>
+            <rect id="Rectangle" stroke="#979797" fill="#FFFFFF" x="1.5" y="71.5" width="149" height="176"></rect>
+            <rect id="Rectangle" stroke="#979797" fill="#FFFFFF" x="164.5" y="71.5" width="149" height="176"></rect>
+            <rect id="Rectangle" stroke="#979797" fill="#FFFFFF" x="327.5" y="71.5" width="149" height="176"></rect>
+            <rect id="Rectangle" stroke="#979797" fill="#FFFFFF" x="490.5" y="71.5" width="149" height="176"></rect>
+            <rect id="Rectangle" fill="#48A178" x="76" y="267" width="128" height="40"></rect>
+            <rect id="Rectangle" fill="#48A178" x="216" y="267" width="128" height="40"></rect>
+            <rect id="Rectangle" fill="#48A178" x="356" y="267" width="128" height="40"></rect>
+            <rect id="Rectangle" fill="#48A178" x="496" y="267" width="128" height="40"></rect>
+            <text id="Core" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#000000">
+                <tspan x="14" y="292">Core</tspan>
+            </text>
+            <rect id="Rectangle" stroke="#979797" fill="#FFFFFF" x="0.5" y="0.5" width="639" height="63"></rect>
+            <text id="Apps" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#000000">
+                <tspan x="12" y="32">Apps</tspan>
+            </text>
+            <text id="Workflow" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#FFFFFF">
+                <tspan x="104" y="292">Workflow</tspan>
+            </text>
+            <rect id="Rectangle" fill="#48A178" x="72" y="7" width="242" height="50"></rect>
+            <text id="Workflow" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#FFFFFF">
+                <tspan x="125" y="35">Workflow</tspan>
+            </text>
+            <g id="lm" transform="translate(12.000000, 118.000000)">
+                <rect id="Rectangle" fill="#48A178" x="0" y="0" width="128" height="40"></rect>
+                <text id="Local-Embedding" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="47.262464" y="17">Local</tspan>
+                    <tspan x="28.4995393" y="31">Embedding</tspan>
+                </text>
+                <rect id="Rectangle" fill="#48A178" x="0" y="54" width="128" height="40"></rect>
+                <text id="Connection-Manager" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="28.4589269" y="71">Connection</tspan>
+                    <tspan x="35.8693876" y="85">Manager</tspan>
+                </text>
+            </g>
+            <g id="lm" transform="translate(501.000000, 118.000000)">
+                <rect id="Rectangle" fill="#011C32" x="0" y="0" width="128" height="40"></rect>
+                <text id="RAG-Script" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="31.4820077" y="24">RAG Script</tspan>
+                </text>
+                <rect id="Rectangle" fill="#011C32" x="0" y="54" width="128" height="40"></rect>
+                <text id="PromptScript" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="23.0760077" y="78">PromptScript</tspan>
+                </text>
+            </g>
+            <g id="rag" transform="translate(174.000000, 99.000000)">
+                <rect id="Rectangle" fill="#CC850A" x="0" y="0" width="128" height="29"></rect>
+                <text id="Mivlus-Store" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="27.0044695" y="19">Mivlus Store</tspan>
+                </text>
+                <rect id="Rectangle" fill="#CC850A" x="0" y="35" width="128" height="29"></rect>
+                <text id="ElasticSearch" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="22.8700099" y="54">ElasticSearch</tspan>
+                </text>
+                <rect id="Rectangle" fill="#CC850A" x="0" y="71" width="128" height="29"></rect>
+                <text id="Pinecone-Store" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="18.4909324" y="90">Pinecone Store</tspan>
+                </text>
+                <rect id="Rectangle" fill="#CC850A" x="0" y="106" width="128" height="29"></rect>
+                <text id="Documentation" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="17.4456954" y="125">Documentation</tspan>
+                </text>
+            </g>
+            <g id="Group" transform="translate(339.000000, 99.000000)">
+                <rect id="Rectangle" fill="#DA4167" x="0" y="0" width="128" height="29"></rect>
+                <text id="AST-CodeSplitter" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="12.3737031" y="19">AST CodeSplitter</tspan>
+                </text>
+                <rect id="Rectangle" fill="#DA4167" x="0" y="35" width="128" height="29"></rect>
+                <text id="Code-Interpter" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="19.5321627" y="54">Code Interpter</tspan>
+                </text>
+                <rect id="Rectangle" fill="#DA4167" x="0" y="71" width="128" height="29"></rect>
+                <text id="Code-DSLs" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="31.6475437" y="90">Code DSLs</tspan>
+                </text>
+                <rect id="Rectangle" fill="#DA4167" x="0" y="106" width="128" height="29"></rect>
+                <text id="VCS-analysis" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="26.137392" y="125">VCS analysis</tspan>
+                </text>
+            </g>
+            <text id="NLP" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#FFFFFF">
+                <tspan x="263" y="292">NLP</tspan>
+            </text>
+            <text id="RAG" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#FFFFFF">
+                <tspan x="403" y="292">RAG</tspan>
+            </text>
+            <text id="Agent" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#FFFFFF">
+                <tspan x="536" y="292">Agent</tspan>
+            </text>
+            <text id="LM" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#000000">
+                <tspan x="64" y="91">LM</tspan>
+            </text>
+            <text id="RAG" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#000000">
+                <tspan x="223" y="91">RAG</tspan>
+            </text>
+            <text id="R&amp;D" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#000000">
+                <tspan x="386" y="91">R&amp;D</tspan>
+            </text>
+            <text id="Debug" font-family="Comfortaa-Medium, Comfortaa" font-size="16" font-weight="400" fill="#000000">
+                <tspan x="534" y="91">Debug</tspan>
+            </text>
+            <rect id="Rectangle" fill="#013D4F" x="72" y="7" width="276" height="50"></rect>
+            <rect id="Rectangle" fill="#013D4F" x="355" y="7" width="276" height="50"></rect>
+            <g id="copilot-apps" transform="translate(81.000000, 27.000000)">
+                <rect id="Rectangle" fill="#48A178" x="0" y="0" width="80" height="24"></rect>
+                <text id="AutoDev" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="14" y="16">AutoDev</tspan>
+                </text>
+                <rect id="Rectangle" fill="#48A178" x="90" y="0" width="80" height="24"></rect>
+                <text id="UnitGen" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="104" y="16">UnitGen</tspan>
+                </text>
+                <rect id="Rectangle" fill="#48A178" x="178" y="0" width="80" height="24"></rect>
+                <text id="DevOpsGenius" font-family="Comfortaa-Bold, Comfortaa" font-size="8" font-weight="bold" fill="#FFFFFF">
+                    <tspan x="191" y="14">DevOpsGenius</tspan>
+                </text>
+            </g>
+            <text id="UnitMesh-Copilot" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                <tspan x="156" y="21">UnitMesh Copilot</tspan>
+            </text>
+            <rect id="Rectangle" fill="#48A178" x="363" y="27" width="80" height="24"></rect>
+            <text id="QABot" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                <tspan x="383" y="43">QABot</tspan>
+            </text>
+            <rect id="Rectangle" fill="#48A178" x="453" y="27" width="80" height="24"></rect>
+            <text id="Code-QA" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                <tspan x="465" y="43">Code QA</tspan>
+            </text>
+            <rect id="Rectangle" fill="#48A178" x="543" y="27" width="80" height="24"></rect>
+            <text id="TestcaseGen" font-family="Comfortaa-Medium, Comfortaa" font-size="10" font-weight="400" fill="#FFFFFF">
+                <tspan x="552" y="43">TestcaseGen</tspan>
+            </text>
+            <text id="Demos-(server-module" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                <tspan x="437" y="22">Demos (server module)</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
