@@ -52,8 +52,8 @@
             </g>
             <g id="rag" transform="translate(174.000000, 99.000000)">
                 <rect id="Rectangle" fill="#CC850A" x="0" y="0" width="128" height="29"></rect>
-                <text id="Mivlus-Store" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
-                    <tspan x="27.0044695" y="19">Mivlus Store</tspan>
+                <text id="Milvus-Store" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">
+                    <tspan x="27.0044695" y="19">Milvus Store</tspan>
                 </text>
                 <rect id="Rectangle" fill="#CC850A" x="0" y="35" width="128" height="29"></rect>
                 <text id="ElasticSearch" font-family="Comfortaa-Medium, Comfortaa" font-size="12" font-weight="400" fill="#FFFFFF">

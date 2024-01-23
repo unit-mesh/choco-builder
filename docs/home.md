@@ -22,10 +22,11 @@ permalink: /
 
 > Chocolate Factory 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
 
-For native (Android/iOS/Embedded device) SDK:
-see in [https://github.com/unit-mesh/inference](https://github.com/unit-mesh/inference)
 
-![Architecture](architecture.svg)
+For native (Android/iOS/Embedded device) SDK:
+see in [https://github.com/unit-mesh/edge-infer](https://github.com/unit-mesh/edge-infer)
+
+<img src="architecture.svg" alt="Architecture" width="100%" height="auto" />
 
 ## Quick Start
 
