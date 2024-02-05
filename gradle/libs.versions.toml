@@ -11,7 +11,7 @@ kotlinTest = "5.5.4"
 mockk = "1.13.5"
 assertj = "3.22.0"
 
-chapi = "2.1.5"
+chapi = "2.3.5"
 
 slf4j = "2.0.5"
 
