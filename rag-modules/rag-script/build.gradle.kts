@@ -13,7 +13,7 @@ dependencies {
     implementation(projects.ragModules.document)
     implementation(projects.ragModules.storeElasticsearch)
     implementation(projects.codeModules.codeSplitter)
-    implementation(projects.llmModules.sentenceTransformers)
+    implementation(projects.llmModules.localEmbedding)
     implementation(projects.llmModules.openai)
 
     implementation(libs.chapi.domain)
