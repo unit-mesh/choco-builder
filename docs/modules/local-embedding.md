@@ -13,7 +13,7 @@ Local Embedding
 > Onnx 是一个跨平台机器学习推理加速器。通常用于在客户端、服务端引入小模型推理，诸如于引入 SentenceTransformers 在本地进行相似式搜索。
 > 从实现上，ONNX 使用的是 C++ 实现的，所以其它语言下使用的也是 FFI 的形式。
 
-## Sentence Transformers
+## Local Embedding
 
 > Sentence Transformers 是一个自然语言处理工具，用于将文本句子嵌入到一个高维向量空间中，以便进行各种文本相关任务，如文本相似度计算、
 > 文本分类、聚类等。它是通过预训练的深度学习模型实现的，通常使用诸如BERT、RoBERTa、DistilBERT等预训练模型作为其基础架构。
