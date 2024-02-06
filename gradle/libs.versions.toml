@@ -71,12 +71,15 @@ chapi-java = { group = "com.phodal.chapi", name = "chapi-ast-java", version.ref 
 chapi-kotlin = { group = "com.phodal.chapi", name = "chapi-ast-kotlin", version.ref = "chapi" }
 
 # archguard
-# implementation("org.archguard.aaac:lang:2.0.0-beta.5")
 archguard-scanner-core = { group = "org.archguard.scanner", name = "scanner_core", version.ref = "archguard" }
 archguard-dsl = { group = "org.archguard.aaac", name = "dsl", version.ref = "archguard" }
+
+# archguard analyser
 archguard-analyser-sca = { group = "org.archguard.scanner", name = "analyser_sca", version.ref = "archguard" }
-## analyser_diff_changes
 archguard-analyser-diffChanges = { group = "org.archguard.scanner", name = "analyser_diff_changes", version.ref = "archguard" }
+archguard-analyser-openapi = { group = "org.archguard.scanner", name = "analyser_openapi", version.ref = "archguard" }
+
+## analyser_diff_changes
 archguard-lang-kotlin = { group = "org.archguard.scanner", name = "lang_kotlin", version.ref = "archguard" }
 archguard-lang-java = { group = "org.archguard.scanner", name = "lang_java", version.ref = "archguard" }
 archguard-lang-python = { group = "org.archguard.scanner", name = "lang_python", version.ref = "archguard" }

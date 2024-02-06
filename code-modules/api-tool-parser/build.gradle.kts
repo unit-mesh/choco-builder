@@ -11,6 +11,7 @@ repositories {
 dependencies {
     implementation(libs.clikt)
     implementation(libs.serialization.json)
+    implementation(libs.archguard.analyser.openapi)
 
     // Logging
     implementation(libs.logging.slf4j.api)
