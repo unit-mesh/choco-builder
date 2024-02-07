@@ -4,23 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LanguageSummary(
-    var name: String = "",
-    var bytes: Long = 0,
-    var codeBytes: Long = 0,
-    var lines: Long = 0,
-    var code: Long = 0,
-    var comment: Long = 0,
-    var blank: Long = 0,
-    var complexity: Long = 0,
-    var count: Long = 0,
-    var weightedComplexity: Double = 0.0,
-    // we don't need to serialise this
-//    @Transient
-//    var files: List<FileJob> = listOf(),
-)
-
-@Serializable
 data class Quote(
     val start: String,
     val end: String,
