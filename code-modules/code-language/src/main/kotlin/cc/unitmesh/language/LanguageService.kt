@@ -4,6 +4,7 @@ import kotlinx.serialization.json.Json
 import java.io.File
 import kotlin.experimental.or
 
+@Deprecated("Use org.archguard.scanner.analyser.count.LanguageService instead")
 class LanguageService {
     private val extensionCache: HashMap<String, String> = hashMapOf()
     private val SHE_BANG: String = "#!"

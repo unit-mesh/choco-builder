@@ -78,6 +78,7 @@ archguard-dsl = { group = "org.archguard.aaac", name = "dsl", version.ref = "arc
 archguard-analyser-sca = { group = "org.archguard.scanner", name = "analyser_sca", version.ref = "archguard" }
 archguard-analyser-diffChanges = { group = "org.archguard.scanner", name = "analyser_diff_changes", version.ref = "archguard" }
 archguard-analyser-openapi = { group = "org.archguard.scanner", name = "analyser_openapi", version.ref = "archguard" }
+archguard-analyser-estimate = { group = "org.archguard.scanner", name = "analyser_estimate", version.ref = "archguard" }
 
 ## analyser_diff_changes
 archguard-lang-kotlin = { group = "org.archguard.scanner", name = "lang_kotlin", version.ref = "archguard" }

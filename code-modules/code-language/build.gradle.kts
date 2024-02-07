@@ -8,6 +8,8 @@ plugins {
 dependencies {
     implementation(libs.serialization.json)
 
+    implementation(libs.archguard.analyser.estimate)
+
     testImplementation(libs.bundles.test)
     testRuntimeOnly(libs.test.junit.engine)
 }
