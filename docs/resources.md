@@ -7,6 +7,16 @@ permalink: /resources
 
 # 相关资源
 
+## Embedding Engine
+
+[Qdrant](https://github.com/qdrant/qdrant) is a vector similarity search engine and vector database. 
+It provides a production-ready service with a convenient API to store, search, and manage points—vectors
+with an additional payload Qdrant is tailored to extended filtering support.
+
+- SIZE: ~30M
+
+## LLMs
+
 ### 标准化 OpenAI API 接口实现
 
 [ialacol](https://github.com/chenhunghan/ialacol) 是一个 OpenAI API 的轻量级直接替代品。ialacol is inspired by other
@@ -22,7 +32,7 @@ and [mlc-llm](https://github.com/mlc-ai/mlc-llm), with a specific focus on Kuber
 *   Optional CUDA acceleration.
 *   Compatible with [Github Copilot VSCode Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
 
-Supported Models
+### Embedding Model
 
 See Receipts below for instructions of deployments.
 
