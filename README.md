@@ -23,13 +23,23 @@ see in [https://github.com/unit-mesh/edge-infer](https://github.com/unit-mesh/ed
 
 ## QuickStart
 
-方式 1：本地部署
+方式 1：集成到 JVM 项目中
 
-```bash
-git clone https://github.com/unit-mesh/chocolate-factory
-# modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
-docker-compose up
+模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
+
+```groovy
+dependencies {
+    // 核心模块
+    implementation 'cc.unitmesh:cocoa-core:0.3.4'
+    // Pinecone
+    implementation 'cc.unitmesh:store-pinecone:0.3.4'
+    // ElasticSearch
+    implementation 'cc.unitmesh:store-elasticsearch:0.3.4'
+    //...其它模块
+}
 ```
+
+更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
 
 方式 2：使用 RAGScript
 
@@ -54,23 +64,13 @@ rag {
 }
 ```
 
-方式 3：集成到 JVM 项目中
+方式 3：本地部署示例
 
-模块列表：[https://central.sonatype.com/namespace/cc.unitmesh](https://central.sonatype.com/namespace/cc.unitmesh)
-
-```groovy
-dependencies {
-    // 核心模块
-    implementation 'cc.unitmesh:cocoa-core:0.3.4'
-    // Pinecone
-    implementation 'cc.unitmesh:store-pinecone:0.3.4'
-    // ElasticSearch
-    implementation 'cc.unitmesh:store-elasticsearch:0.3.4'
-    //...其它模块
-}
+```bash
+git clone https://github.com/unit-mesh/chocolate-factory
+# modify OPENAI_API_KEY and OPENAI_HOST in docker-compose.yml
+docker-compose up
 ```
-
-更多示例见：[examples/](https://github.com/unit-mesh/chocolate-factory-examples)
 
 ## Use Cases
 
