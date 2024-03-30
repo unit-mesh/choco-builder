@@ -38,8 +38,6 @@ kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", vers
 reflections = { group = "org.reflections", name = "reflections", version = "0.10.2" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 
-dataframe = { group = "org.jetbrains.kotlinx", name = "dataframe", version = "0.11.1" }
-
 # Kotlinx Serialization
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 

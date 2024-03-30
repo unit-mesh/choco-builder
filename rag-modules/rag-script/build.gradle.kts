@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.jvm)
     alias(libs.plugins.serialization)
 
-    id("org.jetbrains.kotlinx.dataframe") version "0.11.1"
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
 
@@ -22,7 +21,6 @@ dependencies {
     implementation(libs.serialization.json)
 
     implementation(libs.huggingface.tokenizers)
-    implementation(libs.dataframe)
 
     implementation(libs.dotenv.kotlin)
 
