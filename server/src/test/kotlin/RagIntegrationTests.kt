@@ -1,4 +1,4 @@
-import cc.unitmesh.cf.STSemantic
+import cc.unitmesh.cf.STEmbedding
 import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.rag.document.Document
@@ -13,7 +13,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class RagIntegrationTests {
-    val semantic = STSemantic.create()
+    val semantic = STEmbedding.create()
 
     private val embeddingProvider = SentenceTransformersEmbedding()
 

@@ -1,14 +1,14 @@
 package cc.unitmesh.cf.infrastructure.llms.embedding
 
 import org.springframework.stereotype.Component
-import cc.unitmesh.cf.STSemantic
+import cc.unitmesh.cf.LocalEmbedding
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.nlp.embedding.EncodingTokenizer
 
 @Component
 class SentenceTransformersEmbedding : EmbeddingProvider, EncodingTokenizer {
-    val semantic = STSemantic.create()
+    val semantic = LocalEmbedding.create()
     val tokenizer = semantic.getTokenizer()
 
     override fun embed(texts: List<String>): List<Embedding> {

@@ -5,12 +5,18 @@ import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import ai.onnxruntime.OrtUtil
+import kotlin.collections.indices
+import kotlin.collections.map
+import kotlin.collections.slice
+import kotlin.collections.toLongArray
+import kotlin.ranges.until
+import kotlin.to
 
-class STSemantic(
+open class LocalEmbedding(
     private val tokenizer: HuggingFaceTokenizer,
     private val session: OrtSession,
     private val env: OrtEnvironment,
-) : Semantic {
+) : Embedding {
     override fun getTokenizer(): HuggingFaceTokenizer {
         return tokenizer
     }
@@ -62,11 +68,11 @@ class STSemantic(
 
     companion object {
         /**
-         * Create a new instance of [STSemantic] with default model.
+         * Create a new instance of [STEmbedding] with default model.
          * We use official model: [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
          * We can use [optimum](https://github.com/huggingface/optimum) to transform the model to onnx.
          */
-        fun create(): STSemantic {
+        fun create(): LocalEmbedding {
             val classLoader = Thread.currentThread().getContextClassLoader()
 
             val tokenizerStream = classLoader.getResourceAsStream("model/tokenizer.json")!!
@@ -80,7 +86,7 @@ class STSemantic(
             val onnxPathAsByteArray = onnxStream.readAllBytes()
             val session = ortEnv.createSession(onnxPathAsByteArray, sessionOptions)
 
-            return STSemantic(tokenizer, session, ortEnv)
+            return LocalEmbedding(tokenizer, session, ortEnv)
         }
     }
 }

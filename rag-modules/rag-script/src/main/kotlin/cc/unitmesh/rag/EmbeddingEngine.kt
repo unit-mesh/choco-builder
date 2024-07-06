@@ -1,6 +1,6 @@
 package cc.unitmesh.rag
 
-import cc.unitmesh.cf.STSemantic
+import cc.unitmesh.cf.STEmbedding
 import cc.unitmesh.nlp.embedding.Embedding
 import cc.unitmesh.nlp.embedding.EmbeddingProvider
 import cc.unitmesh.nlp.embedding.text.EnglishTextEmbeddingProvider
@@ -20,7 +20,7 @@ class EmbeddingEngine(private val engine: EngineType = EngineType.SentenceTransf
 }
 
 class SentenceTransformersEmbedding : EmbeddingProvider {
-    private val semantic = STSemantic.create()
+    private val semantic = STEmbedding.create()
     override fun embed(texts: List<String>): List<Embedding> {
         return texts.map {
             semantic.embed(it).toList()
