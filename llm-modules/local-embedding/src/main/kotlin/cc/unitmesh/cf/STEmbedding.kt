@@ -10,4 +10,10 @@ class STEmbedding(
     private val session: OrtSession,
     private val env: OrtEnvironment,
 ) : LocalEmbedding(tokenizer, session, env) {
+
+    companion object {
+        fun create(): LocalEmbedding {
+            return LocalEmbedding.create()
+        }
+    }
 }

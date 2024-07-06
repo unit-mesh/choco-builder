@@ -1,3 +1,4 @@
+import cc.unitmesh.cf.LocalEmbedding
 import cc.unitmesh.cf.STEmbedding
 import cc.unitmesh.cf.infrastructure.llms.embedding.SentenceTransformersEmbedding
 import cc.unitmesh.nlp.embedding.Embedding
@@ -13,7 +14,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class RagIntegrationTests {
-    val semantic = STEmbedding.create()
+    val semantic = LocalEmbedding.create()
 
     private val embeddingProvider = SentenceTransformersEmbedding()
 
