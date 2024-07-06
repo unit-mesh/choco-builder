@@ -127,7 +127,7 @@ velocity-engine = "org.apache.velocity:velocity-engine-core:2.3"
 slf4j-simple = "org.slf4j:slf4j-simple:1.7.36"
 slf4j-api = "org.slf4j:slf4j-api:1.7.36"
 
-onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.1"
+onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.18.0"
 huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.28.0"
 jtokkit = "com.knuddels:jtokkit:1.0.0"
 
