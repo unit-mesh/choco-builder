@@ -143,10 +143,10 @@ kotless-ktor-lang = { group = "io.kotless", name = "ktor-lang", version.ref = "k
 kotless-ktor-lang-local = { group = "io.kotless", name = "ktor-lang-local", version.ref = "kotless" }
 
 # should keeep save version to src/main/kotlin/cc/unitmesh/code/interpreter/compiler/ExtendLibraries.kt
-lets-plot-jvm = "org.jetbrains.lets-plot:lets-plot-kotlin-jvm:4.4.2"
-lets-plot-kernel = "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.4.2"
-lets-plot-image-export = "org.jetbrains.lets-plot:lets-plot-image-export:4.0.0"
-lets-plot-common = "org.jetbrains.lets-plot:lets-plot-common:4.0.0"
+lets-plot-jvm = "org.jetbrains.lets-plot:lets-plot-kotlin-jvm:4.7.3"
+lets-plot-kernel = "org.jetbrains.lets-plot:lets-plot-kotlin-kernel:4.7.3"
+lets-plot-image-export = "org.jetbrains.lets-plot:lets-plot-image-export:4.3.3"
+lets-plot-common = "org.jetbrains.lets-plot:lets-plot-common:4.3.3"
 
 # implementation("io.reactivex.rxjava3:rxjava:3.1.7")
 rxjava3 = "io.reactivex.rxjava3:rxjava:3.1.7"
