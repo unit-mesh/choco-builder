@@ -6,9 +6,9 @@ import kotlin.test.Ignore
 
 class STSemanticTest {
     @Test
-    @Ignore
+//    @Ignore
     fun test_for_encode_decode() {
-        val semantic = STEmbedding.create()
+        val semantic = LocalEmbedding.create()
         val embedding = semantic.getTokenizer().encode("blog")
 
         embedding.ids shouldBe listOf(101L, 9927L, 102L)
@@ -20,9 +20,9 @@ class STSemanticTest {
     }
 
     @Test
-    @Ignore
+//    @Ignore
     fun embed_demo() {
-        val semantic = STEmbedding.create()
+        val semantic = LocalEmbedding.create()
         val embedding = semantic.embed("blog").map {
             it.toFloat()
         }

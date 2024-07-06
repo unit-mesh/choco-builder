@@ -22,7 +22,7 @@ open class LocalEmbedding(
     }
 
     override fun embed(input: String): List<Double> {
-        val tokenized = tokenizer.encode(input, true)
+        val tokenized = tokenizer.encode(input, true, true)
 
         var inputIds = tokenized.ids
         var attentionMask = tokenized.attentionMask
