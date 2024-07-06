@@ -30,11 +30,11 @@ see in [https://github.com/unit-mesh/edge-infer](https://github.com/unit-mesh/ed
 ```groovy
 dependencies {
     // 核心模块
-    implementation 'cc.unitmesh:cocoa-core:0.3.4'
+    implementation 'cc.unitmesh:cocoa-core:0.4.6'
     // Pinecone
-    implementation 'cc.unitmesh:store-pinecone:0.3.4'
+    implementation 'cc.unitmesh:store-pinecone:0.4.6'
     // ElasticSearch
-    implementation 'cc.unitmesh:store-elasticsearch:0.3.4'
+    implementation 'cc.unitmesh:store-elasticsearch:0.4.6'
     //...其它模块
 }
 ```
@@ -44,7 +44,7 @@ dependencies {
 方式 2：使用 RAGScript
 
 ```kotlin
-@file:DependsOn("cc.unitmesh:rag-script:0.3.4")
+@file:DependsOn("cc.unitmesh:rag-script:0.4.6")
 
 import cc.unitmesh.rag.*
 
@@ -76,7 +76,8 @@ docker-compose up
 
 Desktop/IDE: 
 
-- [https://github.com/unit-mesh/auto-dev](https://github.com/unit-mesh/auto-dev)
+- [https://github.com/unit-mesh/auto-dev](https://github.com/unit-mesh/auto-dev) - The AI-powered coding wizard with multilingual support 🌐, auto code generation 🏗️, and a helpful bug-slaying assistant 
+- [https://github.com/phodal/shire](https://github.com/phodal/shire) - AI Coding Agent Language
 
 Server:
 
