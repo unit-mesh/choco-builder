@@ -129,7 +129,7 @@ slf4j-api = "org.slf4j:slf4j-api:1.7.36"
 
 onnxruntime = "com.microsoft.onnxruntime:onnxruntime:1.15.1"
 huggingface-tokenizers = "ai.djl.huggingface:tokenizers:0.28.0"
-jtokkit = "com.knuddels:jtokkit:0.6.1"
+jtokkit = "com.knuddels:jtokkit:1.0.0"
 
 # 	// Serverless Kotlin Language Binding
 kotless-lang = { group = "io.kotless", name = "kotless-lang", version.ref = "kotless" }
