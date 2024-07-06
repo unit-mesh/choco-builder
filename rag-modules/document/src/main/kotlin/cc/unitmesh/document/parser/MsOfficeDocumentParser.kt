@@ -25,7 +25,6 @@ import org.apache.poi.extractor.ExtractorFactory
 import org.apache.poi.xslf.usermodel.XMLSlideShow
 import org.apache.poi.xslf.usermodel.XSLFSlide
 import org.apache.poi.xslf.usermodel.XSLFTextShape
-import org.apache.poi.xwpf.usermodel.XWPFDocument
 import java.io.InputStream
 
 
