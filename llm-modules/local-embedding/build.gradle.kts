@@ -14,5 +14,6 @@ dependencies {
     }
 
     testImplementation(libs.bundles.test)
+    testImplementation(projects.llmModules.danBertTiny)
     testRuntimeOnly(libs.test.junit.engine)
 }

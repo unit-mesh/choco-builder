@@ -23,6 +23,8 @@ include(":llm-modules:openai")
 include(":llm-modules:connection")
 include(":llm-modules:prompt-script")
 
+include(":llm-modules:dan-bert-tiny")
+
 include(":llm-tools:interpreter")
 include(":llm-tools:web-tools")
 
