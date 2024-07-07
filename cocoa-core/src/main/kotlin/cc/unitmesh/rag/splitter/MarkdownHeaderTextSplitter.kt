@@ -41,7 +41,7 @@ data class LineType(var content: String, val metadata: Map<String, Any>)
  *
  */
 class MarkdownHeaderTextSplitter(
-    headersToSplitOn: List<Pair<String, String?>>,
+    headersToSplitOn: List<Pair<String, String?>> = listOf(),
     private val returnEachLine: Boolean,
 ) {
     /**
