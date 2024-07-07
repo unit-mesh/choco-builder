@@ -34,7 +34,7 @@ import java.nio.charset.StandardCharsets
  * @property charset The character encoding used for reading the document. It defaults to UTF-8.
  */
 class TextDocumentParser(
-    private val documentType: DocumentType?,
+    private val documentType: DocumentType? = null,
     private val charset: Charset = StandardCharsets.UTF_8,
 ) : DocumentParser {
 
