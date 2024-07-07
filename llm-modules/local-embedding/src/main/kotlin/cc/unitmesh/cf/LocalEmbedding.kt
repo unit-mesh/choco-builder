@@ -28,6 +28,9 @@ open class LocalEmbedding(
         var attentionMask = tokenized.attentionMask
         var typeIds = tokenized.typeIds
 
+        /**
+         * For handling the inputIds.size >= 512, we need to slice the inputIds, attentionMask, and typeIds
+         */
         if (tokenized.ids.size >= 512) {
             inputIds = inputIds.slice(0..510).toLongArray()
             attentionMask = attentionMask.slice(0..510).toLongArray()
