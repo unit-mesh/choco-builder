@@ -18,6 +18,6 @@ class MsOfficeDocumentParserTest {
         val inputStream = this.javaClass.getResourceAsStream("/ChocolateFactory.docx")!!
         val documents = MsOfficeDocumentParser(DocumentType.DOC).parse(inputStream)
 
-        assert(documents[0].text.contains("ChocoBuilder"))
+        assert(documents[0].text.contains("ChocolateFactory"))
     }
 }
