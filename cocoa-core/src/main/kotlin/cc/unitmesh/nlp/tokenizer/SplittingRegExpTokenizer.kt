@@ -1,6 +1,6 @@
 package cc.unitmesh.nlp.tokenizer
 
-class SplittingRegExpTokenizer {
+class SplittingRegExpTokenizer : Tokenizer {
     private val SEPARATOR = "~"
 
     private object SplittingRegExps {
@@ -11,7 +11,7 @@ class SplittingRegExpTokenizer {
         val boundDigitsLocation: Regex = "(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)".toRegex()
     }
 
-    fun tokenize(identifier: String): List<String> {
+    override fun tokenize(identifier: String): List<String> {
         var transformedIdentifier = identifier
         for (regex in SplittingRegExps.wordsEndingLocations) {
             transformedIdentifier = transformedIdentifier.replace(regex, SEPARATOR)
