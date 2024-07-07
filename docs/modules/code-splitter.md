@@ -32,7 +32,7 @@ Code Splitter 模块是一个代码分割模块，用于将代码分割成多个
 - 基于规则 DSL的语法分析：LlamaIndex
     - TreeSitter: [https://tree-sitter.github.io/tree-sitter/](https://tree-sitter.github.io/tree-sitter/)
 
-## Chocolate Factory 实现
+## ChocoBuilder 实现
 
 Chunk/Document 拆分策略
 

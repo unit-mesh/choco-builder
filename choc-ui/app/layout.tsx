@@ -11,10 +11,10 @@ import { Header } from '@/components/header'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Chocolate Factory',
-    template: `%s - Chocolate Factory`
+    default: 'ChocoBuilder',
+    template: `%s - ChocoBuilder`
   },
-  description: ' Chocolate Factory is a cutting-edge LLM application engine designed to empower you in creating your very own AI assistant. ',
+  description: ' ChocoBuilder is a cutting-edge LLM application engine designed to empower you in creating your very own AI assistant. ',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' }

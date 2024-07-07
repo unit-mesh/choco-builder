@@ -9,7 +9,7 @@ nav_order: 1
 
 ## 1. 声明 Domain
 
-Chocolate Factory 通过反射来加载 Domain，所以需要在 `cc.unitmesh.cf.domains` 目录下声明 Domain。诸如于：
+ChocoBuilder 通过反射来加载 Domain，所以需要在 `cc.unitmesh.cf.domains` 目录下声明 Domain。诸如于：
 
 ```kotlin
 @Component

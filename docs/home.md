@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Home
-description: Chocolate Factory 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
+description: ChocoBuilder 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
 nav_order: 1
 permalink: /
 ---
@@ -9,7 +9,7 @@ permalink: /
 <p align="center">
   <a href="https://framework.unitmesh.cc/"><img src="logo.svg" alt="Logo" height=170></a>
 </p>
-<h1 align="center">Chocolate Factory</h1>
+<h1 align="center">ChocoBuilder (aka Chocolate Factory)</h1>
 
 <p align="center">
 <img src="https://img.shields.io/github/stars/unit-mesh/chocolate-factory" alt="stars">
@@ -18,9 +18,9 @@ permalink: /
 <a href="https://central.sonatype.com/namespace/cc.unitmesh"><img src="https://img.shields.io/maven-central/v/cc.unitmesh/cocoa-core"  alt="Maven"/></a>
 </p>
 
-# What is Chocolate Factory?
+# What is ChocoBuilder?
 
-> Chocolate Factory 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
+> ChocoBuilder (aka Chocolate Factory) 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
 
 
 For native (Android/iOS/Embedded device) SDK:
@@ -98,9 +98,9 @@ Android:
 
 ## 设计理念：领域驱动的问题求解
 
-Chocolate Factory 是基于领域驱动设计思想的，如下图所示：
+ChocoBuilder 是基于领域驱动设计思想的，如下图所示：
 
-![Chocolate Factory Concepts](images/chocolate-factory.svg)
+![ChocoBuilder Concepts](images/chocolate-factory.svg)
 
 > 软件系统的构建实则是对问题空间的求解，以此获得构建解空间的设计方案。 —— 《解构领域驱动设计》
 

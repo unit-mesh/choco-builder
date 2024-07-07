@@ -15,7 +15,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
     >
       Open source LLM helper factor built with{' '}
       <ExternalLink href="https://github.com/unit-mesh/chocolate-factory">
-        Chocolate Factory
+        ChocoBuilder
       </ExternalLink>
       .
     </p>

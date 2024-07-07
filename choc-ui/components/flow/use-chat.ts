@@ -328,7 +328,7 @@ const getStreamedResponse = async (
 
         if (!line) return
 
-        // Chocolate Factory custom response
+        // ChocoBuilder custom response
         try {
           let parsed: MessageResponse | any
           try {

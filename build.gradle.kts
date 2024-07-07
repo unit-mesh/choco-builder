@@ -74,7 +74,7 @@ configure(
                 }
                 pom {
                     name.set("ChocolateFactory")
-                    description.set("Chocolate Factory is a cutting-edge LLM toolkit designed to empower you in creating your very own AI assistant.")
+                    description.set("ChocoBuilder is a cutting-edge LLM toolkit designed to empower you in creating your very own AI assistant.")
                     url.set("https://framework.unitmesh.cc/")
                     licenses {
                         license {

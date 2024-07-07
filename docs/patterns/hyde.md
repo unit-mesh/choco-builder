@@ -24,7 +24,7 @@ HyDE 由三个步骤组成：
 
 ## 示例
 
-Chocolate Factory 实现示例：
+ChocoBuilder 实现示例：
 
 ```kotlin
 ExplainQuery(

@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://framework.unitmesh.cc/"><img src="docs/logo.svg" alt="Logo" height=170></a>
 </p>
-<h1 align="center">Chocolate Factory</h1>
+<h1 align="center">ChocoBuilder (aka Chocolate Factory)</h1>
 
 <p align="center">
 <img src="https://img.shields.io/github/stars/unit-mesh/chocolate-factory" alt="stars">
@@ -12,9 +12,9 @@
 
 [Read the docs →](https://framework.unitmesh.cc/)
 
-## What is Chocolate Factory?
+## What is ChocoBuilder?
 
-> Chocolate Factory 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
+> ChocoBuilder (origin Chocolate Factory) 是一款开源的 LLM 应用开发框架，旨在帮助您轻松打造强大的软件开发 SDLC + LLM 生成助手。
 
 For native (Android/iOS/Embedded device) SDK:
 see in [https://github.com/unit-mesh/edge-infer](https://github.com/unit-mesh/edge-infer)
@@ -93,9 +93,9 @@ See in [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) or see i
 
 ## Design Philosophy: Domain Driven Problem-Solving
 
-The key concepts of Chocolate Factory are:
+The key concepts of ChocoBuilder are:
 
-![Chocolate Factory Concepts](docs/images/chocolate-factory.svg)
+![ChocoBuilder Concepts](docs/images/chocolate-factory.svg)
 
 (PS: Origin made by Michael Plöd
 at [Aligning organization and architecture with strategic DDD](https://speakerdeck.com/mploed/aligning-organization-and-architecture-with-strategic-ddd))
@@ -110,7 +110,7 @@ A user's problem is processed by the following steps:
 
 - Online Demo: [https://framework.unitmesh.cc/](https://framework.unitmesh.cc/) (TODO)
 - Video Demo: [https://www.bilibili.com/video/BV1T14y1C7p2](https://www.bilibili.com/video/BV1T14y1C7p2)
-- Gif Demo: ![Chocolate Factory Demo](https://unitmesh.cc/cf/testcase-demo.gif)
+- Gif Demo: ![ChocoBuilder Demo](https://unitmesh.cc/cf/testcase-demo.gif)
 
 ### Example 1: Frontend Screenshot
 
