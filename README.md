@@ -30,11 +30,11 @@ see in [https://github.com/unit-mesh/edge-infer](https://github.com/unit-mesh/ed
 ```groovy
 dependencies {
     // 核心模块
-    implementation 'cc.unitmesh:cocoa-core:0.4.6'
+    implementation 'cc.unitmesh:cocoa-core:1.0.0'
     // Pinecone
-    implementation 'cc.unitmesh:store-pinecone:0.4.6'
+    implementation 'cc.unitmesh:store-pinecone:1.0.0'
     // ElasticSearch
-    implementation 'cc.unitmesh:store-elasticsearch:0.4.6'
+    implementation 'cc.unitmesh:store-elasticsearch:1.0.0'
     //...其它模块
 }
 ```
@@ -44,7 +44,7 @@ dependencies {
 方式 2：使用 RAGScript
 
 ```kotlin
-@file:DependsOn("cc.unitmesh:rag-script:0.4.6")
+@file:DependsOn("cc.unitmesh:rag-script:1.0.0")
 
 import cc.unitmesh.rag.*
 
